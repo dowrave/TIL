@@ -203,3 +203,25 @@ SELECT *
 주석입니다.*/ 
 ```
 - 모든 주석(Comment)이 그렇듯 코드 실행에 영향을 주지 않는다.
+- 다른 툴처럼 `드래그 + CTRL + /`도 가능
+
+### Challenge
+(4번 문제) : BASIC에서 나오지 않은 내용들 다룸
+
+1. 날짜 범위 지정하기
+```SQL
+WHERE (COLUMN) BETWEEN DATE('year1-month1-day1') AND DATE('year2-month2-day2') + 1
+```
+- A부터 B까지라면 `B + 1`을 해줘야 한다.
+  - 뇌피셜이긴 한데, 원하는건 B일 23:59:59까지인데 아마 B일 00:00:00까지만 체크되기 때문이지 않을까? 
+
+2. 다른 테이블의 정보 동시에 보기 : `JOIN`
+```SQL
+SELECT *
+  FROM (table_a) a
+  JOIN (table_b) b
+    ON a.column1 = b.column2
+ (이하 WHERE 어쩌구저쩌구)
+```
+
+- SQL Challenge가 제대로 작동 안하네 ㅎㅎ;
