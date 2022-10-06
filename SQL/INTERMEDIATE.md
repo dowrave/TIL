@@ -3,14 +3,15 @@
 ## Aggregate Function
 
 ### COUNT
-1. 모든 Column 수 세기
+1. 모든 ROW의 수 세기
 ```SQL
 SELECT COUNT(*) 
   FROM (table1)
 ```
 - `COUNT(1)`도 `COUNT(*)`과 동일하다.
+- 어떤 ROW에 결측치가 있더라도 해당 값 포함됨
 
-2. (Null 값 제외한) 특정 Column의 수 세기 : 
+1. (Null 값 제외한) 특정 Column의 수 세기 : 
 ```SQL
 SELECT COUNT(column1)
   FROM (table1)
@@ -263,4 +264,293 @@ SELECT COUNT(DISTINCT month) AS unique_months
 - 고유값 갯수 셀 때 `COUNT(DISTINCT ...)`를 이용한다.
 - 참고 ) AGGREGATION에서 DISTINCT를 쓰는 건 쿼리 속도를 다소(`a bit`) 저하시킬 수 있다. 
 ---------------------------
-## JOIN부터 ㄱㄱ
+## JOIN
+- SQL의 힘은 **여러 테이블을 동시에 작업하는 것**에 있다.
+- `관계형 데이터베이스` : `관계형` - 모든 테이블은 서로 연관되어 있다.
+  - 공통된 식별자가 있으면 여러 테이블을 더 쉽게 묶을 수 있다. 
+- 왜 관계형 테이블을 쓰는가?
+```
+EX) 트위터를 생각해보자. id와 "나에 관한 정보", 글, 날짜 등이 같이 저장된다. 내가 트윗을 할 때마다 해당 정보들이 새로운 row로 추가된다.
+근데 "나에 관한 정보"를 바꿨다고 생각해보자 : 이전 row들에 있는 나에 관한 정보들이 모두 바뀌어야 한다. 5000개의 트윗을 썼다면 5000개의 데이터를 수정해야 한다. 여러 사람이 동시에 이용한다면 계산이 많이 들어갈 것이다. 
+따라서 모든 유저의 정보를 별도의 테이블로 저장해두는 게 더 쉬운 방법이다. 유저의 정보가 바뀌더라도, 5000개의 row 대신 1개의 row만 수정하면 되기 때문이다. 
+```
+JOIN 사용하기
+```SQL
+SELECT teams.conference AS conference,
+       AVG(players.weight) AS average_weight
+  FROM benn.college_football_players players -- alias
+  JOIN benn.college_football_teams teams
+    ON teams.school_name = players.school_name
+ GROUP BY teams.conference
+ ORDER BY AVG(players.weight) DESC
+```
+1. `alias` 
+  - `FROM (table1) name1 ...` : 이름을 간단하게 `alias`로 지정할 수 있음 (`AS`는 Column 이름을 정할 때 쓰였음. 구분하자)
+  - 이렇게 `alias`로 지정된 테이블의 column에 접근하는 방법은 이전과 동일하다.
+2. `FROM (table1) JOIN (table2) ON(table1.col1 = table2.col2`
+  - 이 때 `table1`이 LEFT, `table2`이 RIGHT에 있다고 생각한다.
+
+## INNER JOIN
+- ![INNER JOIN](IMAGE/img_innerjoin.gif)
+- `JOIN`의 디폴트 값이다. 
+- `ON(col1 = col2)`에 해당되지 않는 값은 JOIN 결과에 포함되지 않는다.
+
+## OUTER JOIN
+- ![Visual Join](IMAGE/visual-join.png)
+- 크게 `LEFT`, `RIGHT`, `FULL OUTER`이 있다
+  - 기본적으로 모두 INNER(ON 조건을 만족하는 양쪽 테이블)은 모두 표시한다.
+  - `LEFT` : `ON` 조건을 만족하지 않는 왼쪽 테이블의 ROW도 모두 표시한다. (`FROM`의 테이블)
+  - `RIGHT` : 마찬가지. (`ON`의 테이블)
+  - `FULL OUTER` : `LEFT` + `RIGHT`, 즉 ON 조건을 만족하지 않는 양쪽 테이블의 ROW 모두를 표시한다. 
+
+### LEFT JOIN
+```SQL
+SELECT ...
+  FROM (table1) 
+  LEFT JOIN  (table2)
+    ON table1.col1 = table2.col2
+```
+-----------
+예제 1) INNER JOIN된 두 테이블에서, 각 테이블의 NULL이 아닌 ROW 수 세기
+```SQL
+-- join된 두 테이블의 null이 아닌 row 수 세기
+SELECT COUNT(companies.permalink) AS  count_companies,
+       COUNT(acquisitions.company_permalink) AS count_acquisitions
+  FROM tutorial.crunchbase_companies companies
+  JOIN tutorial.crunchbase_acquisitions acquisitions
+    ON companies.permalink = acquisitions.company_permalink
+```
+예제 2) LEFT JOIN으로 바꿔서 그 차이를 비교해보자
+- `ON`에 해당하는 COLUMN에 `COUNT()`를 적용했기 때문에 `NULL`이 아닌 ROW수가 나온다.
+- `LEFT JOIN`의 경우 `FROM` 테이블의 모든 행이 들어갈 것이고, `JOIN`에 해당하는 행 중 `ON` 조건을 만족하는 행만이 표시되고, 나머지 데이터는 `NULL` 값이 되는 것.
+예제 3) 고유한 회사의 수와, 고유한 승인된 회사의 수를 주 별로 표시하라. 정렬은 고유한 승인된 회사의 수를 내림차순으로 한다.
+```SQL
+SELECT companies.state_code,
+      COUNT(DISTINCT companies.permalink) AS count_companies,
+      COUNT(DISTINCT acquisitions.company_permalink) AS count_acquisitions
+  FROM tutorial.crunchbase_companies companies
+  LEFT JOIN tutorial.crunchbase_acquisitions acquisitions
+    ON companies.permalink = acquisitions.company_permalink
+ WHERE companies.state_code IS NOT NULL
+ GROUP BY companies.state_code -- SELECT의 순서에 따라 1
+ ORDER BY count_acquisitions DESC -- 3
+```
+- `GROUP BY`, `ORDER BY`는 각각 `1, 3`으로 표시해도 무방하다.(SELECT에서 그렇게 지정했기 때문에 이용 가능)
+----------------------------
+### RIGHT JOIN
+- 똑같으니 패스. JOIN에 있는 모든 ROW가 들어간다는 차이만 있음.
+### JOIN using WHERE or ON
+
+1. `JOIN 하기 전에 필터링하는 방법`
+```SQL
+ON companies.permalink = acquisitions.company_permalink
+AND acquisitions.company_permalink != '/company/1000memories'
+```
+ - `ON` 뒤에 `AND`를 붙여서 어느 한 쪽 테이블에만 조건문을 가할 수 있다. 
+
+2. `JOIN 후 필터링하기` : WHERE문 이용함(동일)
+```SQL
+SELECT
+  FROM
+  JOIN
+    ON
+ WHERE
+ GROUP BY
+HAVING
+ ORDER BY
+ LIMIT
+```
+- JOIN은 FROM 다음에 온다고 생각하면 
+- `SELECT - FROM - WHERE - GROUP BY - HAVING -  ORDER BY - LIMIT` 순서
+-----------------------
+예제 1) 회사 이름, 상태, 고유한 투자자의 수를 나타내는 쿼리를 작성하시오. 고유한 투자자의 수에 따라 정렬하고, 뉴욕에 있는 회사로만 한정함.
+```sql
+SELECT c.name AS company_name,
+       c.status AS status,
+       COUNT(DISTINCT i.investor_name) AS counts_investor
+  FROM tutorial.crunchbase_companies c
+  LEFT JOIN tutorial.crunchbase_investments i 
+    ON c.permalink = i.company_permalink
+ WHERE c.state_code = 'NY'
+ GROUP BY 1, 2
+ ORDER BY counts_investor DESC
+```
+헷갈린 것들 정리  
+1. `AGG FUNCTION`이 등장했을 때 **일반 COLUMN은 GROUP BY로 묶어줘야 함** : 해당 일반 COLUMN들에 대한 수치를 AGG FUNCTION이 나타준다.
+2. `LEFT JOIN`을 쓰는 이유 : 투자자가 없는 회사이더라도 표시할 필요는 있겠죠? 
+  - `INNER JOIN`으로 가니까 쿼리가 무한 로딩임. 왜인지는 잘 모르겠다.  
+
+예제 2) (말이 좀 헷갈림) 투자자를 그들이 투자한 기업 수를 내림차순하여 표시하시오. 투자자가 없는 회사도 포함할 것
+```SQL
+SELECT CASE WHEN investments.investor_name IS NULL THEN 'No Investors'
+            ELSE investments.investor_name END AS investor,
+       COUNT(DISTINCT companies.permalink) AS companies_invested_in
+  FROM tutorial.crunchbase_companies companies
+  LEFT JOIN tutorial.crunchbase_investments investments
+    ON companies.permalink = investments.company_permalink
+ GROUP BY 1
+ ORDER BY 2 DESC
+```
+--------------------
+### FULL OUTER JOIN 
+- 보통 두 테이블 간의 중첩 정도를 이해하기 위해 집계(`AGG`)와 함께 사용됨.
+```SQL
+SELECT
+  FROM
+  FULL JOIN
+    ON 
+```
+------------------
+예제 : FULL OUTER JOIN 후 매칭된 ROW의 수와 매칭되지 않은 ROW의 수를 구하시오
+```SQL
+SELECT COUNT(CASE WHEN c.permalink = i1.company_permalink THEN 1 ELSE NULL END) AS matched,
+       COUNT(CASE WHEN c.permalink IS NULL OR i1.company_permalink IS NULL THEN 1 END) AS unmatched
+  FROM tutorial.crunchbase_companies c
+  FULL JOIN tutorial.crunchbase_investments_part1 i1
+    ON c.permalink = i1.company_permalink
+```
+- 어떤 **값을 세는 Column을 별도로 빼면 됨**
+-----------------
+## UNION
+- `JOIN`이 양 옆으로 테이블을 붙인다면, `UNION`은 수직으로 테이블을 붙임
+```SQL
+SELECT *
+  FROM (table1)
+
+ UNION
+
+SELECT *
+  FROM (table2)
+```
+- 주의 : 1번째 테이블에 있는 row가 있고, 2번째 테이블에서 같은 row가 추가된다면 2번째 테이블의 row는 추가되지 않음 : 고유 row만 추가됨
+  - 만약 고유 row가 아니라 테이블을 그대로 붙이고 싶다면, `UNION ALL`을 이용할 수 있다. 
+- 주의2 : `UNION` 조건
+  1. 두 테이블의 `column` 수는 동일해야 함
+  2. 추가되는 테이블의 데이터 타입은 1번째 테이블의 데이터 타입 순서를 따라야 함
+----------------
+예제 
+```SQL
+-- 연습문제
+-- 1번째 column은 어느 데이터셋에서 왔는지
+-- 2번째는 company status
+-- 3번째는 company 당 investor 수를 나타내는 column을 나타내시오
+SELECT 'investments_part1' AS dataset_name,
+       companies.status,
+       COUNT(DISTINCT investments.investor_permalink) AS investors
+  FROM tutorial.crunchbase_companies companies
+  LEFT JOIN tutorial.crunchbase_investments_part1 investments
+    ON companies.permalink = investments.company_permalink
+ GROUP BY 1,2
+
+ UNION ALL
+ 
+ SELECT 'investments_part2' AS dataset_name,
+       companies.status,
+       COUNT(DISTINCT investments.investor_permalink) AS investors
+  FROM tutorial.crunchbase_companies companies
+  LEFT JOIN tutorial.crunchbase_investments_part2 investments
+    ON companies.permalink = investments.company_permalink
+ GROUP BY 1,2
+```
+1. JOIN이 된 상황이라면 COMPANY당 INVESTOR 수나, INVESTOR 당 COMPANY 수 모두 조회하기 굉장히 간단하다. 
+```SQL
+-- A1 당 B1의 수
+SELECT A1,
+       COUNT(B1) AS COL2
+  ...
+
+ GROUP BY A1
+ ORDER BY COL2 DESC
+----------------------------------
+-- B1 당 A1의 수
+SELECT B1,
+       COUNT(A1) AS COL2
+  ...
+
+ GROUP BY B1,
+ ORDER BY COL2 DESC
+```
+2. 만약 `UNION`하고 `ORDER BY`를 쓰고 싶다면?
+```SQL
+SELECT *
+  FROM
+( 
+    SELECT 
+      FROM
+
+     UNION ALL
+
+    SELECT
+      FROM
+
+     UNION ALL
+     ...
+
+)
+ORDER BY column
+```
+- `()`로 UNION이 적용되는 열들을 감싼 뒤, 밖에서 한번 더 SELECT하는 방식을 쓴다고 한다.
+--------------------
+## 비교 연산자와 JOIN
+```SQL
+  FROM tutorial.crunchbase_companies companies
+  LEFT JOIN tutorial.crunchbase_investments_part1 investments
+    ON companies.permalink = investments.company_permalink
+   AND investments.funded_year > companies.founded_year + 5
+```
+- `ON` 조건에는 다른 비교 연산자도 사용할 수 있다.
+- `ON`문에 `WHERE`이 오는 것과의 차이점?
+  - `ON`은 `JOIN`하기 전 한 쪽 테이블에 대해서만 수행됨
+  - `WHERE`은 `JOIN`하고 나서 수행됨
+```SQL
+  FROM tutorial.crunchbase_companies companies
+  LEFT JOIN tutorial.crunchbase_acquisitions acquisitions
+    ON companies.permalink = acquisitions.company_permalink
+   AND acquisitions.company_permalink != '/company/1000memories'
+-- VS
+  FROM tutorial.crunchbase_companies companies
+  LEFT JOIN tutorial.crunchbase_acquisitions acquisitions
+    ON companies.permalink = acquisitions.company_permalink
+ WHERE acquisitions.company_permalink != '/company/1000memories'
+    OR acquisitions.company_permalink IS NULL
+```
+- 전자의 `AND`문은 오른쪽 테이블 `acquisitions`에서만 수행됨 : 따라서 합쳐진 테이블에서, `companies`의 `1000memories`에 해당하는 데이터는 남지만 `acquisitions`의 `1000memories`에 해당하는 데이터는 필터링됨
+- 한편 후자의 `WHERE`문은 합쳐진 테이블에서 수행됨 : 따라서 `1000memories`에 해당하는 row가 통째로 필터링됨.
+  - 추가로, `WHERE`문에 의한 필터링 시 NULL 값을 가진 COLUMN이 있다면 자동으로 필터링 됨
+  - 따라서 `WHERE문을 이용하고, NULL 값을 가진 데이터를 조회하고 싶다면 NULL 조건을 넣어줘야 함`
+
+## 여러 키로 JOIN하기
+여러 키로 JOIN해야 하는 이유가 있다.  
+1. 정확도
+2. 성능
+   - SQL은 쿼리 속도를 높이기 위해 `인덱스`를 사용한다.
+```SQL
+SELECT companies.permalink,
+       companies.name,
+       investments.company_name,
+       investments.company_permalink
+  FROM tutorial.crunchbase_companies companies
+  LEFT JOIN tutorial.crunchbase_investments_part1 investments
+    ON companies.permalink = investments.company_permalink
+   AND companies.name = investments.company_name
+```
+- 마지막 `AND`문은 있든 없든 위 쿼리가 수행하는 결과는 동일하다.
+- 그러나 있는 게 더 빠르다 (근데 위 쿼리로는 큰 차이가 안 나타난다. 없는 게 빠를 때도 있음)
+  
+## Self JOIN
+- 자기 자신과 `JOIN`하는 게 유용할 때가 있다.
+```SQL
+SELECT  DISTINCT japan_investments.company_name,
+      japan_investments.company_permalink
+  FROM tutorial.crunchbase_investments_part1 japan_investments
+  JOIN tutorial.crunchbase_investments_part1 gb_investments
+    ON japan_investments.company_name = gb_investments.company_name
+   AND gb_investments.investor_country_code = 'GBR'
+   AND gb_investments.funded_at > japan_investments.funded_at
+ WHERE japan_investments.investor_country_code = 'JPN'
+ ORDER BY 1
+ ```
+ 1. 한 테이블을 다른 `ALIAS`로 `JOIN`했음
+ 2. `JOIN`하기 전, 투자자 코드 `GBR`에 대한 필터링이 오른쪽 테이블에서 이뤄지고, 등호와 부등호 조건에 의한 필터링이 이뤄진다.
+ 3. `WHERE`문에 의해, 투자자 코드 `JPN`에 해당하는 데이터만 남는다.
+ 4. 왼쪽 테이블의 `company name`에 의한 정렬이 이뤄진다.
