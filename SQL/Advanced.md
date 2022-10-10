@@ -394,4 +394,146 @@ ORDER BY 1 DESC
 - 보통 테이블을 합쳐놓고 작업하니까, `UNION`문은 `FROM`문에 서브쿼리로 집어넣을 수 있다. 
 
 ## Windows Function
-[링크](https://mode.com/sql-tutorial/sql-window-functions/)
+- `PostgreSQL` 문서의 설명
+```
+집계 함수와 비슷한 기능을 수행하나, 단일 출력 행으로 행들이 그룹화되지 않는다. 행은 별도의 ID를 유지한다. 쿼리 결과문에 접근 가능함.
+```
+### 문법
+- `AGG() OVER (...) AS column_name`
+  - 집계함수 뒤에 OVER가 오면 `WINDOW FUNCTION`임을 의미한다.
+  
+```sql
+SELECT start_terminal,
+       duration_seconds,
+       SUM(duration_seconds) OVER
+         (PARTITION BY start_terminal ORDER BY start_time)
+         AS running_total
+  FROM tutorial.dc_bikeshare_q1_2012
+ WHERE start_time < '2012-01-08'
+```
+1. 쉽게 생각하면 `GROUP BY`인데, 모든 ROW가 `start_terminal`에 의해 묶이는 게 아니라 별도의 ROW로 취급됨
+2. `PARTITION BY` : start_terminal로 묶임
+3. `ORDER BY` : start_time이 올라가는 순서로 묶임
+  - 이 때 시간이 흘러가면서 값들이 더해지기 때문에 `running_total` 값에는 누적값(`SUM`이므로 누적합)이 들어간다.
+- 이 때 `ORDER`와  `PARTITION`이 `WINDOW`를 정의한다.
+  - `WINDOW` : **계산이 이루어진 정렬된 데이터의 부분집합**
+  - 참고 : `WINDOW FUNCTION`은 `GROUP BY`문에 포함할 수 없음  
+
+`ORDER BY` 예시
+```SQL
+SELECT end_terminal,
+       duration_seconds,
+       SUM(duration_seconds) OVER
+         (PARTITION BY end_terminal 
+        -- ORDER BY duration_seconds DESC
+         ) AS running_total
+  FROM tutorial.dc_bikeshare_q1_2012
+ WHERE start_time < '2012-01-08'
+ORDER BY 2 desc
+```
+1. 주석 부분만 `ORDER BY`로 실행된다면 `각 end_terminal에 대해 duration_seconds가 큰 순서`대로 정렬됨(즉 다른 end_terminal이라면 따로 정렬됨)
+2. 위 쿼리를 그대로 실행하면 `전체에서 duration_seconds가 큰 순서`대로 정렬됨.
+
+### ROW_NUMBER()
+- 말 그대로 주어진 열의 번호를 반환함
+- 함수 내에 별다른 인자를 요구하지 않음
+```sql
+SELECT start_terminal,
+       start_time,
+       duration_seconds,
+       ROW_NUMBER() OVER (PARTITION BY start_terminal
+                          ORDER BY start_time)
+                    AS row_number
+  FROM tutorial.dc_bikeshare_q1_2012
+ WHERE start_time < '2012-01-08'
+```
+- `WINDOW FUNCTION`으로 쓰이면 `ROW_NUMBER()` 자체는 `PARTITION BY`에 있는 값이 달라질 때마다 초기화됨
+
+
+### RANK(), DENSE_RANK()
+- `ROW_NUMBER()`랑 결이 비슷한데, 차이점이라면 `ORDER BY` 에 있는 값이 동일하다면 같은 `RANK`로 취급됨.
+```SQL
+SELECT start_terminal,
+       duration_seconds,
+       RANK() OVER (PARTITION BY start_terminal
+                    ORDER BY start_time 
+                    -- DESC
+                    ) AS rank,
+      start_time
+  FROM tutorial.dc_bikeshare_q1_2012
+ WHERE start_time < '2012-01-08'
+```
+- `RANK()`는 `ORDER BY`의 순서를 따름 : 오름차순이라면 가장 빠른 시간, 내림차순이라면 가장 늦은 시간이 RANK = 1
+  - 위 예제의 경우 start_time이 동일한 데이터가 있음 : 해당 row들은 같은 rank 값을 가짐
+
+- `RANK()` VS `DENSE_RANK()` : 예를 들면 공동 2등의 데이터가 3개 있다고 하자. 
+  - `RANK()`는 `1 2 2 2 5`
+  - `DENSE_RANK()`는 `1 2 2 2 3`으로, 순위를 생략하지 않는다.
+
+### NTILE()
+- 주어진 데이터 값들을 구간으로 나누고 싶을 때 씀
+- `NTILE(나누고 싶은 범주의 수) OVER` 형태.
+  - `OVER`가 반드시 와야 함
+- 예제 ) 전체 데이터에 대해 어떤 부분이 몇 %의 위치에 있는가
+```SQL
+SELECT duration_seconds,
+       NTILE(100) OVER (ORDER BY duration_seconds)
+  FROM tutorial.dc_bikeshare_q1_2012
+ WHERE start_time < '2012-01-08'
+ ORDER BY duration_seconds DESC
+ ```
+ - 윈도우 함수를 원본 테이블에 적용하기만 하면 됨
+
+### LAG, LEAD
+- 다른 ROW에서 값을 가져와 COLUMN을 만드는 데 쓸 수 있다. `LAG/LEAD (col, 현재 row에서 가져올 row의 위치)`
+- `LAG`은 이전 ROW의 값을,
+- `LEAD`는 다음 ROW의 값을 가져온다.
+- 참고) 보통 테이블의 위치들을 바꿔서 정렬하니까 `LAG/LEAD` 문 뒤에도 `윈도우 함수`를 써서 **똑같은 정렬을 한** 테이블에서 가져온다. (단독으로 쓰지 않는다는 거임)
+- 이를 이용하면 `차이`에 해당하는 `COLUMN`값을 또 뽑을 수 있을 거임
+- 한편 1번째, 마지막 ROW의 이전, 다음 값은 없음
+- 이를 생각하면 LAG, LEAD문이 들어간 쿼리를 서브쿼리로 써서 NULL 값을 없앨 수 있다.
+```SQL
+SELECT *
+  FROM (
+    SELECT start_terminal,
+           duration_seconds,
+           duration_seconds -LAG(duration_seconds, 1) OVER
+             (PARTITION BY start_terminal ORDER BY duration_seconds)
+             AS difference
+      FROM tutorial.dc_bikeshare_q1_2012
+     WHERE start_time < '2012-01-08'
+     ORDER BY start_terminal, duration_seconds
+       ) sub
+ WHERE sub.difference IS NOT NULL
+ ```
+
+### 동일한 WINDOW를 쓴다면 이 방식을 쓰자
+아래 두 쿼리가 수행하는 바는 같다.
+```SQL
+SELECT start_terminal,
+       duration_seconds,
+       NTILE(4) OVER
+         (PARTITION BY start_terminal ORDER BY duration_seconds)
+         AS quartile,
+       NTILE(5) OVER
+         (PARTITION BY start_terminal ORDER BY duration_seconds)
+         AS quintile,
+       NTILE(100) OVER
+         (PARTITION BY start_terminal ORDER BY duration_seconds)
+         AS percentile
+  FROM tutorial.dc_bikeshare_q1_2012
+ WHERE start_time < '2012-01-08'
+ ORDER BY start_terminal, duration_seconds
+
+--
+SELECT start_terminal,
+       duration_seconds,
+       NTILE(4) OVER ntile_window AS quartile,
+       NTILE(5) OVER ntile_window AS quintile,
+       NTILE(100) OVER ntile_window AS percentile
+  FROM tutorial.dc_bikeshare_q1_2012
+ WHERE start_time < '2012-01-08'
+WINDOW ntile_window AS
+         (PARTITION BY start_terminal ORDER BY duration_seconds)
+ ORDER BY start_terminal, duration_seconds
+ ```
