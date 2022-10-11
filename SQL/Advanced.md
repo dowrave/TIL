@@ -184,7 +184,7 @@ TIME : HH:mm:SS
 ```
 - 단 `Mode`에서는 `datetime` 개념이 `timestamp`로 쓰이고 있음.
 -------------------------------
-2. `timestamp`에 `EXTRACT` 함수 적용하기
+2. `timestamp`에 `EXTRACT` 함수 적용하기(날짜 뽑기)
 ```sql
 SELECT cleaned_date, -- timestamp ex) '2014-01-31'
        EXTRACT('year'   FROM cleaned_date) AS year,
@@ -537,3 +537,188 @@ WINDOW ntile_window AS
          (PARTITION BY start_terminal ORDER BY duration_seconds)
  ORDER BY start_terminal, duration_seconds
  ```
+
+## 쿼리 성능 튜닝
+- 쿼리 속도에 영향을 주는 요소(직접 통제 가능)
+  1. 테이블 크기
+  2. ROW 수 증가하는 `JOIN`
+  3. 집계 함수
+
+- 그 외 : 통제 불가능한 요소
+  4. 다른 유저가 쿼리를 동시에 사용
+  5. DB S/W와 최적화
+
+### 1. 테이블 크기 줄이기
+- 필요한 것만 보는 게 속도를 늘일 수 있음
+- `Mode`에서 `LIMIT`를 디폴트로 두는 이유는, 외향적 데이터 탐색(`EDA : Exploratory Data Analysis`)을 할 때 100개의 row값은 다음 탐색을 어떻게 할 지 결정하는 데 충분하기 때문임
+- `LIMIT N`은 `N`개 이하의 `ROW`만이 기존에 뜬다면 성능 향상에는 도움이 되지 않는다.  
+
+`Subquery`에도 `LIMIT`을 넣을 수 있다.
+```SQL
+-- 실용적인 예시는 아님
+SELECT COUNT(*)
+  FROM (
+    SELECT *
+      FROM benn.sample_event_table
+     LIMIT 100
+       ) sub
+```
+
+### 2. 덜 복잡한 `JOIN`하기
+- `JOIN`하기 전에 테이블 크기를 줄이라는 뜻
+- 이전에 다뤘기도 하고, `SUBQUERY`로 쉽게 구현할 수 있다고 생각할 수 있음
+- `30000 ROW`에서는 크게 성능 향상이 체감되지 않음 : 적어도 `10만` 단위 이상에서 성능 향상이 체감됨
+- 주의) 항상 **정확도가 성능보다 우선이다**
+
+### 3. EXPLAIN
+- 쿼리 맨 앞에 `EXPLAIN`을 달고 시작할 수 있다
+- 성능 향상을 체크하고 싶을 때 사용함
+- 일단 설명은 이러하다
+```SQL
+EXPLAIN
+SELECT *
+  FROM benn.sample_event_table
+ WHERE event_date >= '2014-03-01'
+   AND event_date < '2014-04-01'
+ LIMIT 40
+```
+1. 맨 밑에 있는 `WHERE`문이 먼저 실행됨
+2. DB가 조건에 맞는 `ROW`들을 스캔함
+  - `TABLE` 전체를 스캔하는 `COST` 값도 따로 계산됨
+3. `LIMIT`문이 실행됨
+
+- 결과값의 가장 아래부터 실행된다고 하는 것 같음
+- 실제로 중간에 `ORDER BY`를 넣어보니까 2~3번째 줄에 뜨는데, 역순으로는 마지막에서 2~3번째가 되는 것
+
+## SQL 데이터 피봇팅
+- 축구선수들 테이블로 예제를 따라감  
+  
+서브쿼리를 쓰겠다면, 단계별로 따라가는게 좋음
+```sql
+-- ex)
+SELECT teams.conference AS conference,
+       players.year,
+       COUNT(1) AS players
+  FROM benn.college_football_players players
+  JOIN benn.college_football_teams teams
+    ON teams.school_name = players.school_name
+ GROUP BY 1,2
+ ORDER BY 1,2
+--
+SELECT *
+  FROM (
+        SELECT teams.conference AS conference,
+               players.year,
+               COUNT(1) AS players
+          FROM benn.college_football_players players
+          JOIN benn.college_football_teams teams
+            ON teams.school_name = players.school_name
+         GROUP BY 1,2
+       ) sub
+```
+- 위 2개는 같은 결과를 출력하지만 **단계적으로 하나씩 쌓는 게 나중에 디버깅할 때 편하다**.
+```sql
+SELECT conference,
+       SUM(players) AS total_players,  
+       SUM(CASE WHEN year = 'FR' THEN players ELSE NULL END) AS fr,
+       SUM(CASE WHEN year = 'SO' THEN players ELSE NULL END) AS so,
+       SUM(CASE WHEN year = 'JR' THEN players ELSE NULL END) AS jr,
+       SUM(CASE WHEN year = 'SR' THEN players ELSE NULL END) AS sr
+  FROM (
+        SELECT teams.conference AS conference,
+               players.year,
+               COUNT(1) AS players
+          FROM benn.college_football_players players
+          JOIN benn.college_football_teams teams
+            ON teams.school_name = players.school_name
+         GROUP BY 1,2
+       ) sub
+ GROUP BY 1
+ ORDER BY 2 DESC
+ ```
+
+ ### 지진 예제
+ #### 1. `VALUE`
+```SQL
+SELECT year_1, year_2
+  FROM VALUE ((1999, 2000), (2000, 2001)) v(year_1, year_2)
+
+-- 결과
+-- year_1  year_2
+--  1999    2000
+--  2000    2001
+```
+- 새로운 테이블을 만듦
+  - `VALUE()` 내에는 각 ROW에 해당하는 데이터가 옴
+  - 한꺼번에 여러 COLUMN을 만들 수도 있음 
+  - `alias`에 `v()`가 들어가는데, 사용할 각 column의 이름을 지정하는 공간임
+    - `v()` 없이 복수 개의 `alias`를 지정할 수 없음
+    - `v()` 없이 `alias`를 지정하면 들어가는 `VALUE`값에 `()`까지 같이 포함됨
+```SQL
+SELECT year
+  FROM VALUE ((1999), (2000)) year
+
+-- 결과
+-- year
+-- (1999)
+-- (2000)
+
+SELECT year
+  FROM VALUE ((1999), (2000)) v(year)
+
+-- 결과
+-- year
+-- 1999
+-- 2000
+```
+#### 2. `CROSS JOIN`
+- `Cartesian Join`이라고도 한다.
+- 한쪽 테이블의 모든 행과 다른 테이블의 모든 행을 `join`함
+  - 따라서 결과 `ROW` 수는 두 행을 모두 곱한 수가 됨
+
+  
+#### 3. 진행과정
+```SQL
+-- 1. 데이터 보기
+SELECT *
+  FROM tutorial.worldwide_earthquakes
+-- 2. VALUE 함수 보기
+SELECT year
+  FROM (VALUES (2000),(2001),(2002),(2003),(2004),(2005),(2006),
+               (2007),(2008),(2009),(2010),(2011),(2012)) v(year)
+-- 3. VALUE 테이블과 기존 테이블 합치기
+SELECT years.*,
+       earthquakes.*
+  FROM tutorial.worldwide_earthquakes earthquakes
+ CROSS JOIN (
+       SELECT year
+         FROM (VALUES (2000),(2001),(2002),(2003),(2004),(2005),(2006),
+                      (2007),(2008),(2009),(2010),(2011),(2012)) v(year)
+       ) years
+
+-- 4. CASE WHEN THEN 문을 넣어 특정 값만 뽑아내기(피벗)
+SELECT years.*,
+       earthquakes.magnitude,
+       CASE year
+         WHEN 2000 THEN year_2000
+         WHEN 2001 THEN year_2001
+         WHEN 2002 THEN year_2002
+         WHEN 2003 THEN year_2003
+         WHEN 2004 THEN year_2004
+         WHEN 2005 THEN year_2005
+         WHEN 2006 THEN year_2006
+         WHEN 2007 THEN year_2007
+         WHEN 2008 THEN year_2008
+         WHEN 2009 THEN year_2009
+         WHEN 2010 THEN year_2010
+         WHEN 2011 THEN year_2011
+         WHEN 2012 THEN year_2012
+         ELSE NULL END
+         AS number_of_earthquakes
+  FROM tutorial.worldwide_earthquakes earthquakes
+ CROSS JOIN (
+       SELECT year
+         FROM (VALUES (2000),(2001),(2002),(2003),(2004),(2005),(2006),
+                      (2007),(2008),(2009),(2010),(2011),(2012)) v(year)
+       ) years
+```
