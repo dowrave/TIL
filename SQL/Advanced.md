@@ -198,7 +198,7 @@ SELECT cleaned_date, -- timestamp ex) '2014-01-31'
   FROM tutorial.sf_crime_incidents_cleandate
 ```  
   
-3. `timestmap`에 `DATE_TRUNC` 함수 적용하기
+3. `timestamp`에 `DATE_TRUNC` 함수 적용하기
 - `DATE_TRUNC` : 함수를 해당하는 단위까지 반올림함
 ```SQL
 SELECT cleaned_date, -- '2014-03-31 17:25:00'
