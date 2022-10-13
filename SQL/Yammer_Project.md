@@ -308,4 +308,422 @@ SELECT DATE_TRUNC('week',e1.occurred_at) AS week,
 
 -----------------------------
 
-## 2.
+# 2. 검색 기능 이해
+- `Yammer`에는 어떤 페이지든 헤더에 `Search Box`가 있음. 검색은 사람, 그룹, 대화에 대해 이루어짐.
+  - 타이핑 중에도 항목에 따라 자동완성 항목들을 볼 수 있다. 이 자동완성 항목들은 분류되어 있음.
+  - `View All Results`를 누르면 결과 페이지로 넘어감
+  - 결과 페이지에서는 또 특정 그룹이나 날짜 별로 결과를 조회할 수 있는 기능이 있음
+  
+### 문제
+- 검색에 쓰이는 시간이 잘 활용되는가
+- 검색 작업을 해야 하는지 여부와 검색 작업을 한다면 어떻게 수정해야 하는가
+
+### 방향 잡기
+- 데이터를 보기 전, 유저가 검색과 어떻게 상호작용하는지 여러 가설을 세워볼 것
+  - 검색의 목적?
+  - 목적을 만족했는지는 어떻게 알 수 있을까?
+  - 검색 경험을 어떻게 정량화할 수 있을까?
+```
+* 저번 예제와 다르게 이번에는 내 가정만 세우고 진행한 뒤 실습 정답에서 세운 과정과 비교하겠음
+1. 검색의 목적
+- 어떤 사람이나 그룹, 대화
+- 사내 커뮤니티니까, 어떤 프로젝트 주제에 대한 이야기가 오갔을 수도 있겠다
+- 어쨌든 회사와 관련된 뭔가를 찾고자 검색을 이용할 것임
+
+2. 목적을 만족했는가 파악하기
+- 일단 재검색을 배제하고 생각함 : 기준을 세우기 애매할 것 같음. 테이블을 보고 생각이 바뀔 수도 있겠지만.
+- 가장 직접적으로 볼 수 있는 지표는 run 대비 search_click_X의 비율을 보는 것일 듯 : 결과가 만족스럽지 않다면 검색 결과에서 살펴보지도 않을 것 같기 때문임
+
+3. 경험 정량화하기
+- run -> search_click_X 가 실행되지 않은 케이스는 검색 목적을 만족하지 못했을 것
+- autocomplete와 run을 합친 숫자 전체가 검색한 수가 될 듯 : autocomplete의 비율이 높을수록 
+```
+### 데이터
+- `Users`, `Events`
+- 이벤트 테이블에서 참고할 만한 것
+    - `search_autocomplete` : 자동완성된 결과물을 유저가 클릭했을 때
+    - `search_run` : 검색을 실행했고 결과 페이지를 봤을 때
+    - `search_click_X` : 검색 결과 1~10 중 유저가 클릭한 숫자
+
+### 추천 가설들
+1. 유저들의 검색 경험이 일반적으로 좋은가 나쁜가
+2. 검색할 가치가 있는가
+3. 검색할 가치가 있다면 어느 부분을 개선해야 하는가
+
+- 검색 상태를 설명하는 간단한 프레젠테이션을 작성하고 결과를 그래픽으로 표시하라. 수행할 조치가 있다면 권장할 준비가 되어 있어야 한다. 관련성이 있다고 판단되는 항목을 테스트하기 충분한 정보가 없다면 주의사항을 논하라
+
+- 추천 기능이 기존 검색보다 개선되었는지를 이해하는 방법을 결정하라.
+
+---------------------
+## 실습 내용
+
+- 사실 뭘 하느냐보다도 쿼리를 어떻게 짜느냐가 더 중요함. 계획이 있어도 쿼리를 못 짜면 말짱 도루묵이기 때문임
+- 서브 쿼리를 여러 번 써야 할 거 같아서, 각 쿼리를 정리하면서 진행한다.
+
+1. 유저 별로 연속된 행동 조사하기
+```sql
+-- 1) USER_ID 별로 액션 조회하기
+SELECT u.user_id, 
+       e.occurred_at,
+       e.event_name
+  FROM tutorial.yammer_events e
+  JOIN tutorial.yammer_users u 
+    ON e.user_id = u.user_id 
+ WHERE event_name ILIKE 'search_%'
+ ORDER BY 1, 2
+
+-- 여기서 LEAD()함수를 넣고 싶지만, WINDOW FUNCTION은 WHERE 조건을 사용할 수 없다.
+-- 이를 쓰기 위해선 위 쿼리로 테이블을 뽑아낸 뒤 상위 쿼리에서 이용하는 방법 밖에 없는 듯?
+
+ -- 2) (1)을 서브쿼리로 해서 다음 시간의 행동을 같은 열에 집어넣기
+    -- 참고) 위 상태에서 LEAD()함수를 사용한다고 하면 정상적으로 적용이 안된다.
+    -- LEAD() 함수에는 WHERE 조건을 넣을 수 없기 때문이다. WHERE 조건이 적용되지 않은 보이지 않는 event_name의 시간이 불러와짐
+SELECT sub.user_id as id,
+       sub.occurred_at as time,
+       CASE WHEN sub.user_id = LEAD(sub.user_id) OVER (ORDER BY 1, 2) THEN LEAD(sub.occurred_at) OVER (ORDER BY 1, 2) 
+            ELSE NULL END AS next_action_time, -- 유저 아이디가 다음 칸과 다른 경우는 다음 시간을 빈 칸으로 두었음
+      -- CASE WHEN sub.user_id = LEAD(sub.user_id) OVER (ORDER BY 1, 2) THEN LEAD(sub.occurred_at) OVER (ORDER BY 1, 2) - sub.occurred_at 
+      --       ELSE NULL END AS time_difference,
+       CASE WHEN LEAD(sub.occurred_at) OVER (ORDER BY 1, 2) - sub.occurred_at < INTERVAL '1 min'
+             AND sub.user_id = LEAD(sub.user_id) OVER (ORDER BY 1, 2) 
+             AND sub.event_name = 'search_run' AND LEAD(sub.event_name) OVER (ORDER BY 1, 2) ILIKE 'search_click_result_%' THEN NULL
+            WHEN LEAD(sub.occurred_at) OVER (ORDER BY 1, 2) - sub.occurred_at < INTERVAL '1 min'
+             AND sub.user_id = LEAD(sub.user_id) OVER (ORDER BY 1, 2) THEN 're_searched'
+            ELSE NULL END AS re_searched,
+
+        sub.event_name
+  FROM (
+     SELECT u.user_id, 
+           e.occurred_at,
+           e.event_name
+      FROM tutorial.yammer_events e
+      JOIN tutorial.yammer_users u 
+        ON e.user_id = u.user_id 
+     WHERE event_name ILIKE 'search_%'
+    ORDER BY 1, 2 -- 이거 건드리면 결과 달라짐. 유지!
+     ) sub
+ ORDER BY 1, 2
+/* 코멘트) 
+CASE WHEN 조건문은 위부터 순차적으로 동작함(위에서 조건을 만족한 ROW는 밑 조건식에서 대상이 되지 않음)
+그래서 search_run -> click_result 가 즉각적이었다면 이는 검색을 다시 한 게 아님(검색하고 결과를 클릭한 거니까) 
+저 상황을 제외한 나머지 모든 조건은 검색 결과가 만족스럽지 못해 다시 검색한 것으로 간주했음
+*/
+
+ -- 3. 위 결과를 바탕으로 재검색 비율 뽑아내기
+SELECT COUNT(CASE WHEN sub2.re_searched = 1 THEN 1 ELSE 0 END) AS total_searched_counts,
+      COUNT(CASE WHEN sub2.re_searched = 1 THEN 1 ELSE NULL END) AS re_searched_counts,
+      COUNT(CASE WHEN sub2.re_searched = 1 THEN 1 ELSE NULL END) / COUNT(CASE WHEN sub2.re_searched = 1 THEN 1 ELSE 0 END) :: float AS re_searched_rate
+  FROM (
+      SELECT sub.user_id as id,
+       sub.occurred_at as time,
+       CASE WHEN sub.user_id = LEAD(sub.user_id) OVER (ORDER BY 1, 2) THEN LEAD(sub.occurred_at) OVER (ORDER BY 1, 2) 
+            ELSE NULL END AS next_action_time, -- 유저 아이디가 다음 칸과 다른 경우는 다음 시간을 빈 칸으로 두었음
+      -- CASE WHEN sub.user_id = LEAD(sub.user_id) OVER (ORDER BY 1, 2) THEN LEAD(sub.occurred_at) OVER (ORDER BY 1, 2) - sub.occurred_at 
+      --       ELSE NULL END AS time_difference,
+       CASE WHEN LEAD(sub.occurred_at) OVER (ORDER BY 1, 2) - sub.occurred_at < INTERVAL '1 min'
+             AND sub.user_id = LEAD(sub.user_id) OVER (ORDER BY 1, 2) 
+             AND sub.event_name = 'search_run' AND LEAD(sub.event_name) OVER (ORDER BY 1, 2) ILIKE 'search_click_result_%' THEN 0
+            WHEN LEAD(sub.occurred_at) OVER (ORDER BY 1, 2) - sub.occurred_at < INTERVAL '1 min'
+             AND sub.user_id = LEAD(sub.user_id) OVER (ORDER BY 1, 2) THEN 1
+            ELSE 0 END AS re_searched,
+      -- CASE WHEN sub.event_name = 'search_run' AND LEAD(sub.event_name) OVER (ORDER BY 1, 2) ILIKE 'search_click_result_%' 
+      --       THEN 'not_re_searched' ELSE NULL END AS not_re_searched,
+        sub.event_name
+            FROM (
+               SELECT u.user_id, 
+                     e.occurred_at,
+                     e.event_name
+                FROM tutorial.yammer_events e
+                JOIN tutorial.yammer_users u 
+                  ON e.user_id = u.user_id 
+               WHERE event_name ILIKE 'search_%'
+              ORDER BY 1, 2 -- 이거 건드리면 결과 달라지네 ㄷㄷ
+               ) sub
+           ORDER BY 1, 2
+  ) sub2
+
+  -- 코멘트 : 전체 값 중 특정 값이 차지하는 비율을 알려면 COUNT(WHEN ~~ THEN value ELSE NULL) / COUNT (WHEN ~ THEN value1 ELSE val2) 로 넣으면 된다. COUNT함수는 NULL 값을 세지 않는 특성이 있기 때문이다.
+```
+- 마지막 쿼리 결과 전체 검색 횟수가 40611회, 재검색 횟수가 25470회로 `1분 이내로 재검색한 비율`이 62.72%가 나왔다.
+- 기기나 국가 등 조건을 다양하게 줄 수 있을 것 같은데 일단 보류함
+- 이거 한다고 2시간 반 걸림
+- 여러 시행착오가 있다 : 주석으로 달아놓았다
+
+----------------------------------
+## 튜토리얼에서 제공하는 Answer
+
+### 1. 가설 설정하기
+- **문제를 간단하고 정확하게** 잡는 게 나중에 시간 절약에 도움이 된다. 
+- 검색은 사람들이 원하는 것을 쉽게 찾도록 하여 시간을 아끼고 속도를 향상시켜준다.
+  
+살펴볼 만한 여러 가능성들
+```
+1. 누가 사용하는가
+2. 검색 빈도
+  - 많이 검색되는 단어가 가치가 높을 가능성이 높음
+  - 단 짧은 시간에 반복된다면 원하는 바를 찾지 못해 검색어를 다듬고 있을 확률이 높다.
+3. 반복되는 단어들 
+  - 단어들의 유사성을 비교하는 것도 방법.
+  - 난이도가 올라가니 일단은 배제
+4. Clickthrough(ct)
+  - 하나의 검색 결과에서 많은 링크를 들어간다면 결과가 만족스럽지 못할 확률이 높다.
+    - 그렇다고 하나만 클릭한 게 검색 결과가 좋다는 얘기도 아니다 : 검색어를 수정해서 재검색한다면, 이전의 검색 결과는 좋지 않았다는 뜻이 된다.
+  - 그러나 클릭해서 들어간(Clickthrough, ct) 행위는 검색 결과가 좋았는지를 판별하는 좋은 지표가 된다. 
+5. 자동완성 ct
+  - 검색 결과 클릭과 별도로 측정되어야 한다
+```
+
+### 2. 검색 상태
+- 세션(어떤 정보를 찾기 위한 일련의 탐색 과정) 별로 검색을 이해하기 위해, 이 솔루션은 어떤 두 이벤트가 `10분` 내에 사용자의 액션이 있었다면 하나의 세션으로 간주한다.
+- 즉 `10분` 동안 사용자의 액션이 없었다면 별도의 세션으로 간주한다. 
+- 즉 10분 내에 정보를 탐색하는 횟수가 검색 알고리즘의 성능을 나타내는 지표가 될 수 있다는 것이다.
+
+1. 기간에 따른 자동완성(autocomplete)과 검색(run) 기능 수행 숫자
+```sql
+SELECT DATE_TRUNC('week',z.session_start) AS week,
+       COUNT(*) AS sessions,
+       COUNT(CASE WHEN z.autocompletes > 0 THEN z.session ELSE NULL END) AS with_autocompletes,
+       COUNT(CASE WHEN z.runs > 0 THEN z.session ELSE NULL END) AS with_runs
+  FROM (
+SELECT x.session_start,
+       x.session,
+       x.user_id,
+       COUNT(CASE WHEN x.event_name = 'search_autocomplete' THEN x.user_id ELSE NULL END) AS autocompletes,
+       COUNT(CASE WHEN x.event_name = 'search_run' THEN x.user_id ELSE NULL END) AS runs,
+       COUNT(CASE WHEN x.event_name LIKE 'search_click_%' THEN x.user_id ELSE NULL END) AS clicks
+  FROM (
+SELECT e.*,
+       session.session,
+       session.session_start
+  FROM tutorial.yammer_events e
+  LEFT JOIN (
+       SELECT user_id,
+              session,
+              MIN(occurred_at) AS session_start,
+              MAX(occurred_at) AS session_end
+         FROM (
+              SELECT bounds.*,
+              		    CASE WHEN last_event >= INTERVAL '10 MINUTE' THEN id
+              		         WHEN last_event IS NULL THEN id
+              		         ELSE LAG(id,1) OVER (PARTITION BY user_id ORDER BY occurred_at) END AS session
+                FROM (
+                     SELECT user_id,
+                            event_type,
+                            event_name,
+                            occurred_at,
+                            occurred_at - LAG(occurred_at,1) OVER (PARTITION BY user_id ORDER BY occurred_at) AS last_event,
+                            LEAD(occurred_at,1) OVER (PARTITION BY user_id ORDER BY occurred_at) - occurred_at AS next_event,
+                            ROW_NUMBER() OVER () AS id
+                       FROM tutorial.yammer_events e
+                      WHERE e.event_type = 'engagement'
+                      ORDER BY user_id,occurred_at
+                     ) bounds
+               WHERE last_event >= INTERVAL '10 MINUTE'
+                  OR next_event >= INTERVAL '10 MINUTE'
+               	 OR last_event IS NULL
+              	 	 OR next_event IS NULL   
+              ) final
+        GROUP BY 1,2
+       ) session
+    ON e.user_id = session.user_id
+   AND e.occurred_at >= session.session_start
+   AND e.occurred_at <= session.session_end
+ WHERE e.event_type = 'engagement'
+       ) x
+ GROUP BY 1,2,3
+       ) z
+ GROUP BY 1
+ ORDER BY 1
+ ```
+![run_ac](image/run_ac.PNG)
+- (느낀 점) : 일단 서브쿼리 빈도는 걱정할 필요는 없겠다. 예제는 5번 썼는데 ㅎㅎ
+- 일단 세션을 어떻게 정의했는가부터 살펴보자.
+  - 가장 안쪽 쿼리에서 다음 이벤트와 이전 이벤트를 정의했음
+    - 독립적인 ROW_NUMBER()를 `ID`로 지목하기도 했음
+  - `이전 이벤트가 10분 이후` OR `이전 이벤트가 없음` 이면 `세션 = ID`이고, 이외에는 이전 `ID`를 가져오는 게 세션 개념임 -> 따라서 세션은 연속적인 숫자가 아님
+- 그 위에서는 유저 아이디와 세션을 `GROUP BY`한 뒤, 세션 내의 `occurred_at`의 최솟값을 세션 시작점, 최댓값을 세션 종료 점으로 설정함
+- 위 테이블을 `yammer_events` 테이블을 `FROM`이라고 했을 때 `LEFT JOIN`함
+  - `ON` 조건 : event의 사건 발생 시점이 세션의 시작점보다 크고 끝점보다 작음
+- 위 테이블을 다시 서브쿼리로 넣어 세션 시작 시간, 세션 ID, 유저 ID 및 `search_autocomplete, search_run, search_click_%`에 대한 `count` 함수를 넣음
+- 마지막으로, 다시 위 테이블을 서브쿼리로 넣고
+  - 매 주에 대해
+    - 세션의 총 숫자
+    - autocomplete > 0 인 세션들의 수
+    - runs > 0 인 세션들의 수
+  - 를 집계함.
+
+세션의 25%를 autocomplete가 차지한다. run은 8% 정도만을 차지한다. 
+```sql
+SELECT DATE_TRUNC('week',z.session_start) AS week, 
+       COUNT(CASE WHEN z.autocompletes > 0 THEN z.session ELSE NULL END)/COUNT(*)::FLOAT AS with_autocompletes,
+       COUNT(CASE WHEN z.runs > 0 THEN z.session ELSE NULL END)/COUNT(*)::FLOAT AS with_runs
+-- 이하 동일 : 가장 바깥 부분만 가져옴
+```
+![pct](image/run_ac_pct.PNG)
+- 쿼리를 보면 알겠지만 얘는 `COUNT(*)`도 잘 작동한다. ;;
+- 결과 ) `AUTOCOMPLETE`의 사용 비중이 높기 때문에 해당 기능을 개선할 필요가 있을 것이다.
+
+1. `Autocomplete`은 세션 당 2회 이상 실행된다.
+```sql
+SELECT autocompletes,
+       COUNT(*) AS sessions
+  FROM (
+SELECT x.session_start,
+       x.session,
+       x.user_id,
+       COUNT(CASE WHEN x.event_name = 'search_autocomplete' THEN x.user_id ELSE NULL END) AS autocompletes,
+       COUNT(CASE WHEN x.event_name = 'search_run' THEN x.user_id ELSE NULL END) AS runs,
+       COUNT(CASE WHEN x.event_name LIKE 'search_click_%' THEN x.user_id ELSE NULL END) AS clicks
+  FROM (
+SELECT e.*,
+       session.session,
+       session.session_start
+  FROM tutorial.yammer_events e
+  LEFT JOIN (
+       SELECT user_id,
+              session,
+              MIN(occurred_at) AS session_start,
+              MAX(occurred_at) AS session_end
+         FROM (
+              SELECT bounds.*,
+              		    CASE WHEN last_event >= INTERVAL '10 MINUTE' THEN id
+              		         WHEN last_event IS NULL THEN id
+              		         ELSE LAG(id,1) OVER (PARTITION BY user_id ORDER BY occurred_at) END AS session
+                FROM (
+                     SELECT user_id,
+                            event_type,
+                            event_name,
+                            occurred_at,
+                            occurred_at - LAG(occurred_at,1) OVER (PARTITION BY user_id ORDER BY occurred_at) AS last_event,
+                            LEAD(occurred_at,1) OVER (PARTITION BY user_id ORDER BY occurred_at) - occurred_at AS next_event,
+                            ROW_NUMBER() OVER () AS id
+                       FROM tutorial.yammer_events e
+                      WHERE e.event_type = 'engagement'
+                      ORDER BY user_id,occurred_at
+                     ) bounds
+               WHERE last_event >= INTERVAL '10 MINUTE'
+                  OR next_event >= INTERVAL '10 MINUTE'
+               	 OR last_event IS NULL
+              	 	 OR next_event IS NULL   
+              ) final
+        GROUP BY 1,2
+       ) session
+    ON e.user_id = session.user_id
+   AND e.occurred_at >= session.session_start
+   AND e.occurred_at <= session.session_end
+ WHERE e.event_type = 'engagement'
+       ) x
+ GROUP BY 1,2,3
+       ) z
+ WHERE autocompletes > 0
+ GROUP BY 1
+ ORDER BY 1
+ ```
+ ![이미지](image/ac_in_sess.PNG)
+![이미지2](image/sess_runs.PNG)
+- 자동완성, 일반 검색 모두 여러 번 실행됨
+- 일반 검색의 경우 여러 번 검색하는 빈도가 더 높음 
+  - 이는 검색 결과가 매우 좋지 않거나
+  - 항상 검색을 이용하는 매우 적은 그룹의 유저들이 있음을 의미함
+  
+3. 일반 검색의 성능 더 파고 들기
+
+```sql
+SELECT clicks,
+       COUNT(*) AS sessions
+  FROM (
+        -- ...(세션 추려내는 쿼리 : 맨 위 참조)
+       ) z
+ WHERE runs > 0
+ GROUP BY 1
+ ORDER BY 1
+```
+![이미지](image/click_per_search.PNG)
+- 일반 검색이 있는 세션 중 어떤 결과도 클릭하지 않은 세션이 매우 많음 : 이는 일반 검색의 성능이 매우 좋지 않음을 시사함
+```sql
+SELECT runs,
+       AVG(clicks)::FLOAT AS average_clicks
+  FROM() -- ...
+ WHERE runs > 0
+ GROUP BY 1
+ ORDER BY 1
+```
+![이미지](image/avg_click_per_search_counts.PNG)
+- 심지어 일반 검색을 더 많이 했더라도, 더 많은 클릭으로 이어지진 않음
+
+4. 검색 순위와 클릭 빈도
+```sql
+SELECT TRIM('search_click_result_' FROM event_name)::INT AS search_result,
+       COUNT(*) AS clicks
+  FROM tutorial.yammer_events
+ WHERE event_name LIKE 'search_click_%'
+ GROUP BY 1
+ ORDER BY 1
+```
+![이미지](image/click_search_order.PNG)
+- 좋은 검색 결과는 앞쪽 3개에 클릭 수가 몰려 있어야 함
+- 비교적 균등하게 분포되었기 때문에 이 정렬 순서 또한 수정될 필요가 있음
+
+5. 일반 검색 재사용률
+```sql
+SELECT searches,
+       COUNT(*) AS users
+  FROM (
+SELECT user_id,
+       COUNT(*) AS searches 
+  FROM (
+SELECT x.session_start, -- 세션 시작 시간
+       x.session, -- 세션 고유 번호
+       x.user_id, -- 유저 고유 아이디
+       x.first_search, -- 유저 별 첫 탐색 시간
+       COUNT(CASE WHEN x.event_name = 'search_run' THEN x.user_id ELSE NULL END) AS runs -- FROM 조건에 1개월 이내에 다시 실행한 세션을 탐색함
+       -- 그 중에 RUN이 있으면 ID를 살림
+  FROM (
+SELECT e.*,
+       first.first_search, -- 첫 탐색 날짜
+       session.session, -- 세션 고유 번호
+       session.session_start -- 세션 시작 시간
+  FROM tutorial.yammer_events e
+  JOIN (
+       SELECT user_id,
+              MIN(occurred_at) AS first_search
+         FROM tutorial.yammer_events
+        WHERE event_name = 'search_run'
+        GROUP BY 1
+       ) first
+    ON first.user_id = e.user_id
+   AND first.first_search <= '2014-08-01'
+  LEFT JOIN (
+      -- 세션 테이블까지는 동일함
+       ) session
+    ON session.user_id = e.user_id
+   AND session.session_start <= e.occurred_at
+   AND session.session_end >= e.occurred_at
+   AND session.session_start <= first.first_search + INTERVAL '30 DAY'
+ WHERE e.event_type = 'engagement'
+       ) x -- 각 세션 번호와 세션의 시작점, 첫 검색일 등..
+ GROUP BY 1,2,3,4
+       ) z
+ WHERE z.runs > 0
+ GROUP BY 1
+       ) z
+ GROUP BY 1
+ ORDER BY 1
+LIMIT 100
+```
+![이미지](image/search_again_in_month.PNG)
+
+- 그 결과, 일반 검색의 재사용률(1개월 이내)은 현저히 낮다.
+- 1개월 이내에 `RUN` 쿼리를 몇 번 재사용했는가에 대한 그래프임
+
+- `AUTOCOMPLETE`과 비교
+```sql
+-- 쿼리 : 위 쿼리에서 'run -> autocomplete'으로 바꿔주기만 하면 됨
+```
+![이미지](image/ac_again.PNG)
+- 한편 `AUTOCOMPLETE`의 1개월 이내 재사용 빈도는 높음
+
+맺음)
+자동 완성 대비 일반 검색에 문제가 있고, 그 중 하나는 검색 순위에 있다. 검색 순위 알고리즘을 변경하는 것이 도움이 될 수 있다. 물론 이 예제는 수많은 답안 중 하나이고, 중요한 건 전체 검색 결과를 개선하는 데 초점을 맞춰야 한다는 것이다.
+
+----------
