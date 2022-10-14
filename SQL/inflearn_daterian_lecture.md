@@ -169,3 +169,94 @@ GROUP BY week
   - 스프레드시트로 피벗테이블을 하겠다면 SQL로 `GROUP BY`까지만 하고 그 결과를 옮기면 더 쉽고 빠르게 결과를 볼 수 있음.
 - 집계 값들을 연산하고자 할 때(특히 백분율) -> `float`로 값을 **꼭 !** 변환해야 한다. 변환 안하면 그냥 0으로 나옴.
 
+## 2. 검색 기능 문제
+- 여기서도 똑같이 쿼리를 어떻게 짜는지에 대해서만 짚고 넘어간다. 나머지 내용은 문서를 따라가고 있기 때문.
+  
+### 세션 만드는 방법
+- `Yammer`의 세션은 일련의 연속된 행동(서버와의 상호작용)으로 이루어졌으며, 이전 행동과 다음 행동의 시간 차이가 `10분` 이상이라면 두 행동은 별도의 세션이다.
+- 이것도 사실상 문서의 쿼리를 그대로 설명하는 내용이라 따로 필기할 필요는 없겠다.
+```sql
+SELECT sess.*
+  FROM 
+(
+SELECT e.user_id, 
+       e.occurred_at, 
+       e.event_name, 
+       x.session, 
+       x.session_start, 
+       x.session_end
+  FROM tutorial.yammer_events e 
+  LEFT JOIN (
+            SELECT session.user_id,
+                  session.session,
+                  MIN(occurred_at) as session_start,
+                  MAX(occurred_at) as session_end
+              FROM ( 
+                  SELECT final.*,
+                  -- 세션 정의
+                  CASE WHEN final.last_event >= INTERVAL '10 min' THEN final.id 
+                        WHEN final.last_event IS NULL THEN final.id 
+                        ELSE LAG(id) OVER (PARTITION BY user_id ORDER BY occurred_at) END AS session
+                      FROM (
+                          SELECT bound.*
+                            FROM (
+                              SELECT e.user_id
+                                    , e.occurred_at
+                                    , occurred_at - LAG(e.occurred_at, 1) OVER (PARTITION BY e.user_id ORDER BY e.occurred_at) as last_event
+                                    , LEAD(e.occurred_at, 1) OVER (PARTITION BY e.user_id ORDER BY e.occurred_at) - occurred_at as next_event
+                                    , e.event_name
+                                    , ROW_NUMBER() OVER () AS id
+                                    
+                                FROM tutorial.yammer_events e 
+                              WHERE e.event_type = 'engagement'
+                              ORDER BY user_id, occurred_at
+                                  ) bound
+                  WHERE last_event IS NULL 
+                      OR next_event IS NULL
+                      OR last_event >= INTERVAL '10 min'
+                      OR next_event >= INTERVAL '10 min'
+                ) final
+            ) session
+              GROUP BY session.user_id, session.session
+          ) x
+          ON e.user_id = x.user_id 
+         AND e.occurred_at >= x.session_start 
+         AND e.occurred_at <= x.session_end
+ ORDER BY user_id, occurred_at
+) sess
+```
+- 위 쿼리가 세션으로 각 행동들을 묶은 쿼리이고, 여기서부터 분석을 시작하면 됨
+
+- ex1) `autocomplete`과 `run`이 있는 세션의 수
+```sql
+SELECT DATE_TRUNC('week', occurred_at) AS week,
+       event_name,
+       COUNT(session) as session
+  FROM ~~sess~~
+WHERE event_name IN 'search_autocomplete, search_run'
+GROUP BY week, event_name
+ORDER BY session DESC
+```
+
+- ex2) 기간에 따른 1회 세션 당 `autocomplete`와 `run`의 평균 실행 횟수
+```sql
+SELECT week,
+       SUM(autocompletes) / COUNT(*) as avg_ac,
+       SUM(runs) / COUNT(*) as avg_runs
+  FROM 
+(
+SELECT DATE_TRUNC('week', occurred_at) as week
+     , session
+     , COUNT(CASE WHEN event_name = 'search_autocomplete' THEN session ELSE NULL END ) as autocompletes
+     , COUNT(CASE WHEN event_name = 'search_run' THEN session ELSE NULL END ) as runs
+  FROM (~~sess~~)
+WHERE event_name ILIKE 'search_%'
+GROUP BY week, session
+) y
+GROUP BY week
+```
+
+... 등등을 볼 수 있겠다. 여기까지~
+
+## 3. A/B 테스트
+- 여기는 통계에 대한 전문 내용도 나와서 감히 진행할 수 없었던 부분이니 강의를 풀로 보자.
