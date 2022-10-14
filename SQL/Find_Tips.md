@@ -28,5 +28,6 @@ ORDER BY user_id,occurred_at
   - `GROUP BY`로 `user_id`가 묶이지 않아서 못 쓴다고 생각했음.
 - 근데 위처럼 해도 쿼리가 잘 작동함
 - 왜냐면 `ORDER BY`에서 `user_id`, `occurred_at` 순서로 묶인 데이터들과 `PARTITION BY user_id ORDER BY occurred_at` 순서로 묶인 데이터들의 순서가 같기 때문임
-- `GROUP BY`는 생각할 필요가 없나 봄!
-- 
+- `GROUP BY`는 생각할 필요가 없나 봄!(일단은?)
+- 추가) `WHERE`조건에는 `ENGAGEMENT` 및 회원가입과 관련된 분류가 하나 더 있는데, 이것도 `ORDER BY`에 의해 묶이는 걸 생각하면 상관 없다. 회원가입과 유저 활동을 동시에 할 수 없기 때문임
+
