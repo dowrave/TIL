@@ -12,3 +12,8 @@ df1.merge(df2, on = '공통된 열')
 df1.merge(df2, on = '공통열1, 공통열2, 공통열3')
 ```
 
+3. `on` 없이 `index`만으로 `join`하기
+- 두 테이블에 공통된 인덱스가 있을 경우
+```python
+df1.merge(df2, left_index = True, right_index = True)
+```
