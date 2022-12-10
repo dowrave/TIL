@@ -33,16 +33,7 @@ df.isnull().sum() # 모든 열에 대한 결측치 수 체크
 df['A'].isnull().sum() # 특정 열에 대한 결측치 수 체크 
 ```
 ----------------
-### 4.  집계함수 적용한 열 추가하기(`transform`)
-```python
-# 목표 ) 각 기수 별로 출전한 경기 수를 열로 만들고 싶음
 
-# 이거 써라
-test = start_df.copy()
-test['jockey_appear'] = test.groupby('jockey')['race_date'].transform('count')
-```
-- `transform`을 쓰지 않으면 `groupby -> merge -> 겹치는 열 정리`의 돌아가는 작업을 거쳐야 한다.
-- **즉 `SQL`의 `OVER PARTITION BY` 작업은 `Pandas`에서 `Groupby()[].transform()`으로 이뤄진다는 것이다.**  
 ------------------------------
 #### 5. 2개 이상의 열에`.apply()` 적용하기
 - 오늘만 2번 헤매서 정리
@@ -112,13 +103,6 @@ df.sort_values(by = ['col1', 'col2'], ascending = [False, True])
 ```
 - 정렬할 열들을 리스트로 전달하듯, **어떻게 정렬할지도 리스트로 전달**하면 된다.
 ----------------------
-### 9. merge()
-```python
-df1.merge(df2, on = '공통된 열')
-
-# 공통된 열이 여러개라면
-df1.merge(df2, on = '공통열1, 공통열2, 공통열3')
-```
 
 -------------------------------
 
