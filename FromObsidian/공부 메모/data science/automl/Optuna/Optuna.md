@@ -8,3 +8,11 @@
 [Recipes]
 1. [[RDB 백엔드와 Study 연동]]
 2. [[MutliObjectiveFunction]]
+3. [[UserDefinedAttrs]] : 사용자 정의 속성
+4. [[cmdInterface]] : cmd에서 실행하기
+5. [[UserDefinedSampler]]
+6. [[UserDefinedPruner]]
+7. [[Callback]]
+8. [[SpecifiyHP]]
+9. [[AskTell_InterFace]]
+10. [[ReuseBestTrial]]
