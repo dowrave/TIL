@@ -1,0 +1,162 @@
+{
+  "main": {
+    "id": "5fca91c93df9f9a7",
+    "type": "split",
+    "children": [
+      {
+        "id": "699878ff49abc858",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c5318b7d0a06e42b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "공부 메모/data science/automl/Optuna/Parallel Process.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "2b6a99b796923326",
+    "type": "split",
+    "children": [
+      {
+        "id": "369f631e3f9bc674",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "88aa362ec9a6bc47",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "dc601136d6bc4948",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "postgre",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "76146cc968089589",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "right": {
+    "id": "e5d497f15d3c08ac",
+    "type": "split",
+    "children": [
+      {
+        "id": "92de8039fea5b780",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3968769786ead641",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "공부 메모/data science/automl/Optuna/Parallel Process.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "85244a0141d8c93b",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "공부 메모/data science/automl/Optuna/Parallel Process.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "0b63375f470a7807",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "c3ca2aecf7f7b673",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "공부 메모/data science/automl/Optuna/Parallel Process.md"
+              }
+            }
+          },
+          {
+            "id": "e73de016cff0e232",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {}
+            }
+          }
+        ],
+        "currentTab": 4
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200,
+    "collapsed": true
+  },
+  "active": "c5318b7d0a06e42b",
+  "lastOpenFiles": [
+    "공부 메모/data science/automl/Optuna/RDB 백엔드와 Study 연동.md",
+    "가이드 따라가기/MLflow/1. Setup MLflow in Production.md",
+    "공부 메모/기타 IT 지식/프로토콜.md",
+    "공부 메모/python/(asterisk)func.md",
+    "공부 메모/python/인덱싱.md",
+    "공부 메모/python/dict 병합하기.md",
+    "공부 메모/python/정규표현식.md",
+    "공부 메모/python/파이썬 라이브러리 버전 확인 & 업데이트.md",
+    "공부 메모/python/kwargs를 이용한 변수 전달 테크닉.md",
+    "공부 메모/python/jupyter ipynb을 py로.md"
+  ]
+}

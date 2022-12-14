@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/dowra/1.MyWorkspace/MLFlow/examples/sklearn_elasticnet_wine/mlruns/0/5f95591ec4bc4949b8591ea5abe29624/artifacts
+end_time: 1670998827938
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 5f95591ec4bc4949b8591ea5abe29624
+run_name: dazzling-mare-976
+run_uuid: 5f95591ec4bc4949b8591ea5abe29624
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1670998827733
+status: 4
+tags: []
+user_id: dowra
