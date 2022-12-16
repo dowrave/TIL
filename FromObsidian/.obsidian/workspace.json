@@ -8,43 +8,19 @@
         "type": "tabs",
         "children": [
           {
-            "id": "2957c05b8ee9e9e7",
+            "id": "4c64dbc9320c6f58",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "공부 메모/data science/MLOps/MLOps의 구성요소.md",
+                "file": "공부 메모/Docker/목차_Docker.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "d6e74a228b81ab8f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "공부 메모/data science/MLOps/목차_MLOps.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "c11d8be5506e2b56",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "공부 메모/data science/MLOps/목차_MLOps.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "15cef6df0d48bc1d",
+            "id": "7ceefbc2768815f2",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -56,43 +32,19 @@
             }
           },
           {
-            "id": "77305ac2819d371c",
+            "id": "468296f49f4d4bb3",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "공부 메모/data science/Docker/도커란 무엇인가.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "876f2f3db520a581",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "공부 메모/data science/Docker/목차_Docker.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "6f213ceacdbaf1ed",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "오늘한일/22-12-15.md",
+                "file": "오늘한일/22-12-16.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 6
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -218,17 +170,17 @@
     "width": 200,
     "collapsed": true
   },
-  "active": "6f213ceacdbaf1ed",
+  "active": "7ceefbc2768815f2",
   "lastOpenFiles": [
-    "이미지/bayesian-optimization-procedure-example.jpg",
+    "오늘한일/22-12-16.md",
     "오늘한일/22-12-15.md",
-    "이미지/Pasted image 20221122215440.png",
-    "이미지/Pasted image 20221122211501.png",
-    "이미지/Pasted image 20221122214741.png",
-    "공부 메모/data science/Docker/도커 설치, 컨테이너 실행.md",
-    "공부 메모/data science/Docker/목차_Docker.md",
-    "공부 메모/data science/Docker/도커란 무엇인가.md",
-    "왜 쿠버네티스인가.md",
-    "공부 메모/data science/MLOps/목차_MLOps.md"
+    "공부 메모/Docker/docker-compose.md",
+    "공부 메모/Docker/목차_Docker.md",
+    "공부 메모/Docker/도커 명령어.md",
+    "공부 메모/Docker/도커란 무엇인가.md",
+    "공부 메모/Docker/도커 설치, 컨테이너 실행.md",
+    "공부 메모/etc/VirtualBox 게스트 확장 설치.md",
+    "이미지/bayesian-optimization-procedure-example.jpg",
+    "이미지/Pasted image 20221122215440.png"
   ]
 }
