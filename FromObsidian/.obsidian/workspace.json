@@ -25,26 +25,38 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "오늘한일/22-12-15.md",
+                "file": "오늘한일/22-12-16.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "468296f49f4d4bb3",
+            "id": "f48f842368db6c72",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "오늘한일/22-12-16.md",
+                "file": "오늘한일/22-12-17.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "576e6db206ecc606",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "공부 메모/Docker/도커 이미지 배포.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -110,7 +122,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "오늘한일/22-12-15.md",
+                "file": "오늘한일/22-12-17.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +139,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "오늘한일/22-12-15.md",
+                "file": "오늘한일/22-12-17.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +162,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "오늘한일/22-12-15.md"
+                "file": "오늘한일/22-12-17.md"
               }
             }
           },
@@ -167,20 +179,19 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
-  "active": "7ceefbc2768815f2",
+  "active": "f48f842368db6c72",
   "lastOpenFiles": [
-    "오늘한일/22-12-16.md",
-    "오늘한일/22-12-15.md",
-    "공부 메모/Docker/docker-compose.md",
+    "트러블슈팅/jupyter lab 오류.md",
+    "트러블슈팅/MLFlow 중 Cannot import escape from jinja2.md",
+    "공부 메모/Docker/도커 이미지 배포.md",
+    "오늘한일/22-12-17.md",
+    "공부 메모/Docker/도커 이미지 생성(dockerfile).md",
     "공부 메모/Docker/목차_Docker.md",
-    "공부 메모/Docker/도커 명령어.md",
-    "공부 메모/Docker/도커란 무엇인가.md",
+    "오늘한일/22-12-16.md",
     "공부 메모/Docker/도커 설치, 컨테이너 실행.md",
-    "공부 메모/etc/VirtualBox 게스트 확장 설치.md",
-    "이미지/bayesian-optimization-procedure-example.jpg",
-    "이미지/Pasted image 20221122215440.png"
+    "공부 메모/Docker/도커란 무엇인가.md",
+    "공부 메모/Docker/docker-compose.md"
   ]
 }
