@@ -10,8 +10,14 @@
 3. [[워드프레스 배포하기]]
 4. [[kubectl 사용법]]
 5. [[Pod]]
-
-
+6. [[ReplicaSet]]
+7. [[Deployment]]
 
 ##### 참고
 [[yaml 파일 문법]]
+
+
+#### 트러블슈팅
+1. `error during connect`
+	1) `docker desktop`을 켠다
+	2)  `minikube start`를 입력한다

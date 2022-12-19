@@ -110,9 +110,10 @@ kubectl delete -f echo-pod.yml
 - 쿠버네티스는 초기화하는 동안 서비스되는 것을 막을 수 있다.
 
 #### livenessProbe
-- 컨테이너가 정상적으로 동작되는지 체크, 아니라면 컨테이너를 재시작하여 문제를 해결한다.
+- **컨테이너가 정상적으로 동작되는지 체크, 아니라면 컨테이너를 재시작하여 문제를 해결**한다.
 - 체크 방식은 여러 가지가 있으나, 여기서는 `http get` 요청 확인으로 체크함
 
+- `echo-lp.yml`
 ```yml
 apiVersion: v1
 kind: Pod
@@ -133,5 +134,170 @@ spec:
         periodSeconds: 5 # Defaults 10
         failureThreshold: 1 # Defaults 3
 ```
-- 의도적으로 존재하지 않는 `path(/not/exist)`와 `port(8080)`이 입력됨
-- 
+- 의도적으로 존재하지 않는 `path(/not/exist)`와 `port(8080)`을 입력함
+- 파일 생성 후 `kubectl apply -f echo-lp.yml` 입력
+- 이후 `kubectl get pod` 입력
+```
+$ kubectl get pod
+NAME      READY   STATUS             RESTARTS      AGE
+echo-lp   0/1     CrashLoopBackOff   2 (12s ago)   33s
+```
+- 정상적인 응답이 없었기 때문에 Pod이 여러 번 시되었고, `CrashLoopBackOff` 상태로 변경되었다.
+>상태체크는 `httpGet` 외에도 `tcpSocket`, `exec` 방법 등으로 체크할 수 있음
+
+#### readinessProbe
+- 컨테이너 준비되었는지 체크, 정상적인 준비가 되지 않았다면 Pod으로 들어오는 요청을 제외함
+- `livenessProbe`와의 차이점은, 문제가 있어도 Pod을 재시작하지 않고 요청만 제외한다는 것이다.
+- `echo-rp.yml`
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: echo-rp
+  labels:
+   app: echo
+spec:
+  containers:
+    - name: app
+      image: ghcr.io/subicura/echo:v1
+      readinessProbe:
+       httpGet:
+         path: /not/exist
+         port: 8080
+      initialDelaySeconds: 5
+      timeoutSeconds: 2
+      periodSeconds: 5
+      failureThreshold: 1
+```
+- `kubectl get pod` 입력 시 `STATUS - Running`이 뜸 / 그러나 `READY`는 `0/1`
+
+#### livenessProbe + readinessProbe
+- 보통은 이 둘을 같이 적용함
+- `echo-pod-health.yml`
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+ name: echo-health
+ labels:
+   app: echo
+spec:
+  containers:
+    - name: app
+      image: ghcr.io/subicura/echo:v1
+      livenessProbe:
+        httpGet:
+          path: /
+          port: 3000
+      readinessProbe:
+        httpGet:
+          path: /
+          port: 3000
+```
+- `3000번` 포트와 `/` 경로는 정상적이므로 Pod은 오류 없이 생성됨 
+- `STATUS - Runing`, `READY - 1/1` 확인할 것
+	- 여기서 `1/1`의 숫자 의미는 컨테이너 개수인 것 같다
+#### 다중 컨테이너
+- 1개의 Pod은 여러 컨테이너를 가질 수 있다고 했다.
+- `counter-pod-redis.yml`
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: counter
+  labels:
+    app: counter
+spec:
+  containers:
+    - name: app
+      image: ghcr.io/subicura/counter:latest
+      env:
+        - name: REDIS_HOST
+          value: "localhost"
+    - name: db
+      image: redis
+```
+- 요청 횟수를 `redis`에 저장하는 간단한 웹앱을 다중 컨테이너로 생성함
+> 환경변수 설정
+>> 환경변수 `env` 정의는 `name`과 `value`를 별도로 정의한다.
+
+- 같은 Pod에 컨테이너가 생성되므로 `counter` 앱은 redis를 `localhost`로 접근할 수 있다. 
+```sh
+# pod 생성
+kubectl apply -f counter-pod-redis.yml
+
+kubectl get pod
+
+# 로그 확인
+kubectl logs counter 
+# 단독 사용시 오류 발생 : Pod 속의 컨테이너까지 지정해줘야 한다. 
+
+kubectl logs counter app
+kubectl logs counter db
+
+
+# Pod의 app 컨테이너 접속
+kubectl exec -it counter -c app -- sh
+$ curl localhost:3000
+$ curl localhost:3000
+$ telnet localhost 6379 # 접속인 듯?
+$$ dbsize
+$$ KEYS *
+$$ GET count
+quit
+
+# Pod 제거
+kubectl delete -f counter-pod-redis.yml
+```
+
+## 실습
+- 다음 조건을 만족하는 Pod을 만드시오
+1. 
+| 키               | 값         |
+| ---------------- | ---------- |
+| Pod 이름         | mongodb    |
+| Pod Label        | app: mongo |
+| Container 이름   | mongodb    |
+| Container 이미지 | mongo:4           |
+- 특이한 점 : `yml`파일엔 대문자 못 씀
+- `mongodb.yml`
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mongodb
+  labels:
+    app: mongo
+spec:
+  containers:
+    - name: mongodb
+      image: mongo:4
+```
+2.
+| 키                 | 값           |
+| ------------------ | ------------ |
+| Pod 이름           | mariadb      |
+| Pod Label          | app: mariadb |
+| Container 이름     | mariadb      |
+| Container 이미지   | mariadb:10.7 |
+| Container 환경변수 | MYSQL_ROOT_PASSWORD:123456             |
+- 트러블 슈팅 : `Error from server (BadRequest): error when creating "mariadb.yml": Pod in version "v1" cannot be handled as a Pod: strict decoding error: unknown field "metadata.label"` 오류가 뜬 이유 : `labels`를 `label`이라고 적어서
+`mariadb.yml`
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mariadb
+  labels:
+    app: mariadb
+spec:
+  containers:
+    - name: mariadb
+      image: mariadb:10.7
+      env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "123456"
+```
+- 특이한 건 `value` 값이 숫자여도 `""`가 들어간다는 거
+
+- 끝나고 `kubectl delete pod/mariadb pod/mongodb` 해주자. 
