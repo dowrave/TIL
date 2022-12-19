@@ -4,59 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "699878ff49abc858",
+        "id": "79c5d6b02dd46c3f",
         "type": "tabs",
         "children": [
           {
-            "id": "4c64dbc9320c6f58",
+            "id": "52e4d8e3e8e0368d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "공부 메모/Docker/목차_Docker.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "7ceefbc2768815f2",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "오늘한일/22-12-16.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "f48f842368db6c72",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "오늘한일/22-12-17.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "576e6db206ecc606",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "공부 메모/Docker/도커 이미지 배포.md",
+                "file": "공부 메모/Kubernetes/Pod.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -122,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "오늘한일/22-12-17.md",
+                "file": "공부 메모/Kubernetes/Pod.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -139,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "오늘한일/22-12-17.md",
+                "file": "공부 메모/Kubernetes/Pod.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -162,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "오늘한일/22-12-17.md"
+                "file": "공부 메모/Kubernetes/Pod.md"
               }
             }
           },
@@ -175,23 +138,24 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
-  "active": "f48f842368db6c72",
+  "active": "52e4d8e3e8e0368d",
   "lastOpenFiles": [
-    "트러블슈팅/jupyter lab 오류.md",
-    "트러블슈팅/MLFlow 중 Cannot import escape from jinja2.md",
+    "공부 메모/Kubernetes/kubectl 설치.md",
+    "공부 메모/Kubernetes/Kubernetes 목차.md",
+    "공부 메모/Kubernetes/Pod.md",
+    "공부 메모/Kubernetes/kubectl 사용법.md",
+    "공부 메모/Kubernetes/워드프레스 배포하기.md",
+    "공부 메모/Kubernetes/minikube 설치, 간단한 명령어.md",
     "공부 메모/Docker/도커 이미지 배포.md",
-    "오늘한일/22-12-17.md",
-    "공부 메모/Docker/도커 이미지 생성(dockerfile).md",
-    "공부 메모/Docker/목차_Docker.md",
+    "공부 메모/etc/yaml 파일 문법.md",
     "오늘한일/22-12-16.md",
-    "공부 메모/Docker/도커 설치, 컨테이너 실행.md",
-    "공부 메모/Docker/도커란 무엇인가.md",
-    "공부 메모/Docker/docker-compose.md"
+    "공부 메모/etc/yaml 파일 들여쓰기.md"
   ]
 }
