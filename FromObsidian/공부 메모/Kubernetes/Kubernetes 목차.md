@@ -9,9 +9,11 @@
 2. [[kubectl 설치]]
 3. [[워드프레스 배포하기]]
 4. [[kubectl 사용법]]
-5. [[Pod]]
-6. [[ReplicaSet]]
-7. [[Deployment]]
+5. [[k8s_Pod]]
+6. [[k8s_ReplicaSet]]
+7. [[k8s_Deployment]]
+8. [k8s_Service]]
+9. [[중간점검 - 웹앱 직접 배포하기]]
 
 ##### 참고
 [[yaml 파일 문법]]
