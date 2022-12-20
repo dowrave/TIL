@@ -6,6 +6,7 @@
       {
         "id": "09c23fd4a0bd8589",
         "type": "tabs",
+        "dimension": 16.33986928104575,
         "children": [
           {
             "id": "786f443af4070ba9",
@@ -13,12 +14,19 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "공부 메모/Kubernetes/워드프레스 배포하기.md",
+                "file": "공부 메모/Kubernetes/k8s_Service.md",
                 "mode": "source",
                 "source": false
               }
             }
-          },
+          }
+        ]
+      },
+      {
+        "id": "2cc276ea2907ef26",
+        "type": "tabs",
+        "dimension": 83.66013071895425,
+        "children": [
           {
             "id": "f03e4c4d2564ba07",
             "type": "leaf",
@@ -31,8 +39,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -61,7 +68,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "도커",
+                "query": "redis",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -160,15 +167,15 @@
   },
   "active": "f03e4c4d2564ba07",
   "lastOpenFiles": [
+    "공부 메모/Kubernetes/k8s_Service.md",
+    "공부 메모/Kubernetes/중간점검 - 웹앱 직접 배포하기.md",
+    "트러블슈팅/k8s_ImagePullBackOff.md",
+    "공부 메모/Kubernetes/워드프레스 배포하기.md",
     "공부 메모/Kubernetes/minikube 설치, 간단한 명령어.md",
     "공부 메모/Kubernetes/Kubernetes 목차.md",
     "공부 메모/Kubernetes/kubectl 설치.md",
     "공부 메모/Kubernetes/k8s_Pod.md",
-    "공부 메모/Kubernetes/중간점검 - 웹앱 직접 배포하기.md",
-    "공부 메모/Kubernetes/워드프레스 배포하기.md",
-    "공부 메모/Kubernetes/k8s_Service.md",
     "공부 메모/Kubernetes/k8s_ReplicaSet.md",
-    "공부 메모/Kubernetes/k8s_Deployment.md",
-    "nodeport.webp"
+    "공부 메모/Kubernetes/k8s_Deployment.md"
   ]
 }
