@@ -4,36 +4,28 @@
     "type": "split",
     "children": [
       {
-        "id": "09c23fd4a0bd8589",
+        "id": "49277563337bdae1",
         "type": "tabs",
-        "dimension": 16.33986928104575,
         "children": [
           {
-            "id": "786f443af4070ba9",
+            "id": "196c2cbc75e61bec",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "공부 메모/Kubernetes/k8s_Service.md",
+                "file": "공부 메모/Kubernetes/Kubernetes 목차.md",
                 "mode": "source",
                 "source": false
               }
             }
-          }
-        ]
-      },
-      {
-        "id": "2cc276ea2907ef26",
-        "type": "tabs",
-        "dimension": 83.66013071895425,
-        "children": [
+          },
           {
-            "id": "f03e4c4d2564ba07",
+            "id": "69b82ae1978f9ec9",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "공부 메모/Kubernetes/중간점검 - 웹앱 직접 배포하기.md",
+                "file": "공부 메모/Kubernetes/k8s_Secret.md",
                 "mode": "source",
                 "source": false
               }
@@ -105,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "공부 메모/Kubernetes/중간점검 - 웹앱 직접 배포하기.md",
+                "file": "공부 메모/Kubernetes/Kubernetes 목차.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -122,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "공부 메모/Kubernetes/중간점검 - 웹앱 직접 배포하기.md",
+                "file": "공부 메모/Kubernetes/Kubernetes 목차.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -145,7 +137,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "공부 메모/Kubernetes/중간점검 - 웹앱 직접 배포하기.md"
+                "file": "공부 메모/Kubernetes/Kubernetes 목차.md"
               }
             }
           },
@@ -165,17 +157,17 @@
     "width": 200,
     "collapsed": true
   },
-  "active": "f03e4c4d2564ba07",
+  "active": "196c2cbc75e61bec",
   "lastOpenFiles": [
-    "공부 메모/Kubernetes/k8s_Service.md",
-    "공부 메모/Kubernetes/중간점검 - 웹앱 직접 배포하기.md",
-    "트러블슈팅/k8s_ImagePullBackOff.md",
-    "공부 메모/Kubernetes/워드프레스 배포하기.md",
-    "공부 메모/Kubernetes/minikube 설치, 간단한 명령어.md",
+    "공부 메모/Kubernetes/k8s_Secret.md",
     "공부 메모/Kubernetes/Kubernetes 목차.md",
+    "공부 메모/Kubernetes/k8s_ConfigMap.md",
+    "공부 메모/Kubernetes/k8s_volume(local).md",
+    "공부 메모/Kubernetes/k8s 용어.md",
     "공부 메모/Kubernetes/kubectl 설치.md",
+    "공부 메모/Docker/도커 명령어.md",
+    "공부 메모/Kubernetes/k8s_Ingress.md",
     "공부 메모/Kubernetes/k8s_Pod.md",
-    "공부 메모/Kubernetes/k8s_ReplicaSet.md",
     "공부 메모/Kubernetes/k8s_Deployment.md"
   ]
 }
