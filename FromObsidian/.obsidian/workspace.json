@@ -4,33 +4,34 @@
     "type": "split",
     "children": [
       {
-        "id": "ea7389aebde168bf",
+        "id": "703dc901d2fa1a14",
         "type": "tabs",
         "children": [
           {
-            "id": "6c612bf9d1c0f9bf",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "이미지/Pasted image 20221222192921.png"
-              }
-            }
-          },
-          {
-            "id": "297437b5519f5a72",
+            "id": "7244341785480c82",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "공부 메모/etc/IP 주소 추적하기.md",
+                "file": "공부 메모/Network/네트워크 기초/8. 패킷 전달과 거리벡터 라우팅.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "7f389d85272ea5cf",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "공부 메모/Network/네트워크 기초/9. 링크상태, 경로벡터 라우팅과 멀티 캐스팅.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -80,7 +81,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 206.5
+    "width": 206.5,
+    "collapsed": true
   },
   "right": {
     "id": "e5d497f15d3c08ac",
@@ -96,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "공부 메모/etc/IP 주소 추적하기.md",
+                "file": "공부 메모/Network/네트워크 기초/8. 패킷 전달과 거리벡터 라우팅.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "공부 메모/etc/IP 주소 추적하기.md",
+                "file": "공부 메모/Network/네트워크 기초/8. 패킷 전달과 거리벡터 라우팅.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -136,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "공부 메모/etc/IP 주소 추적하기.md"
+                "file": "공부 메모/Network/네트워크 기초/8. 패킷 전달과 거리벡터 라우팅.md"
               }
             }
           },
@@ -167,17 +169,17 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "297437b5519f5a72",
+  "active": "7244341785480c82",
   "lastOpenFiles": [
-    "공부 메모/Network/네트워크 기초/무제 파일.md",
+    "공부 메모/Network/네트워크 기초/9. 링크상태, 경로벡터 라우팅과 멀티 캐스팅.md",
+    "이미지/Pasted image 20221223143023.png",
+    "공부 메모/Network/네트워크 기초/10. 전송 프로토콜.md",
+    "Pasted image 20221223173238.png",
+    "공부 메모/Network/네트워크 기초/8. 패킷 전달과 거리벡터 라우팅.md",
+    "공부 메모/Network/네트워크 기초/7. IP주소 자동 할당, 변환과 주소 매핑, 에러 보고.md",
+    "공부 메모/Network/네트워크 기초/3. LAN 매체과 유선 LAN.md",
     "이미지/Pasted image 20221222192921.png",
-    "공부 메모/Network/네트워크 기초/6. IP 주소의 응용.md",
-    "공부 메모/Network/readme.md",
-    "공부 메모/Network/네트워크 기초/5. 이동통신과 인터넷프로토콜.md",
-    "이미지/Pasted image 20221222180809.png",
-    "Pasted image 20221222180738.png",
-    "공부 메모/Network/네트워크 기초/4. 무선 LAN과 네트워크 연결 장치.md",
-    "이미지/Pasted image 20221222165316.png",
-    "공부 메모/Network/네트워크 기초/2. 스위칭과 다중접속 프로토콜.md"
+    "공부 메모/etc/IP 주소 추적하기.md",
+    "공부 메모/Network/네트워크 기초/6. IP 주소의 응용.md"
   ]
 }
