@@ -14,7 +14,7 @@
 8. [k8s_Service]]
 9. [[중간점검 - 웹앱 직접 배포하기]]
 10. [[k8s_Ingress]]
-11. [[k8s_Volume(local)]]
+11. [[k8s_volume(local)]]
 12. [[k8s_ConfigMap]]
 13. [[k8s_Secret]]
 

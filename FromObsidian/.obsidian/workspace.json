@@ -8,30 +8,43 @@
         "type": "tabs",
         "children": [
           {
-            "id": "7244341785480c82",
+            "id": "1161f06c59ae7e9e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "공부 메모/Network/네트워크 기초/8. 패킷 전달과 거리벡터 라우팅.md",
+                "file": "공부 메모/data science/MLOps/목차_MLOps.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "7f389d85272ea5cf",
+            "id": "2598cca2adccc6f5",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "공부 메모/Network/네트워크 기초/9. 링크상태, 경로벡터 라우팅과 멀티 캐스팅.md",
+                "file": "공부 메모/data science/MLOps/목차_MLOps.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "59e1be7381c9f23c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "공부 메모/data science/MLOps/현황.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -81,8 +94,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 206.5,
-    "collapsed": true
+    "width": 206.5
   },
   "right": {
     "id": "e5d497f15d3c08ac",
@@ -98,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "공부 메모/Network/네트워크 기초/8. 패킷 전달과 거리벡터 라우팅.md",
+                "file": "공부 메모/data science/MLOps/현황.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "공부 메모/Network/네트워크 기초/8. 패킷 전달과 거리벡터 라우팅.md",
+                "file": "공부 메모/data science/MLOps/현황.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "공부 메모/Network/네트워크 기초/8. 패킷 전달과 거리벡터 라우팅.md"
+                "file": "공부 메모/data science/MLOps/현황.md"
               }
             }
           },
@@ -169,17 +181,17 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "7244341785480c82",
+  "active": "59e1be7381c9f23c",
   "lastOpenFiles": [
-    "공부 메모/Network/네트워크 기초/9. 링크상태, 경로벡터 라우팅과 멀티 캐스팅.md",
-    "이미지/Pasted image 20221223143023.png",
-    "공부 메모/Network/네트워크 기초/10. 전송 프로토콜.md",
-    "Pasted image 20221223173238.png",
-    "공부 메모/Network/네트워크 기초/8. 패킷 전달과 거리벡터 라우팅.md",
-    "공부 메모/Network/네트워크 기초/7. IP주소 자동 할당, 변환과 주소 매핑, 에러 보고.md",
-    "공부 메모/Network/네트워크 기초/3. LAN 매체과 유선 LAN.md",
-    "이미지/Pasted image 20221222192921.png",
-    "공부 메모/etc/IP 주소 추적하기.md",
-    "공부 메모/Network/네트워크 기초/6. IP 주소의 응용.md"
+    "공부 메모/data science/MLOps/목차_MLOps.md",
+    "공부 메모/data science/MLOps/왜 쿠버네티스인가.md",
+    "공부 메모/data science/MLOps/Kubeflow 설치.md",
+    "공부 메모/data science/MLOps/MLOps 시스템 구축하기(2).md",
+    "공부 메모/data science/MLOps/MLOps 시스템 구축하기.md",
+    "공부 메모/data science/MLOps/현황.md",
+    "공부 메모/Kubernetes/minikube 설치, 간단한 명령어.md",
+    "공부 메모/data science/MLOps/MLOps의 구성요소.md",
+    "공부 메모/data science/MLOps/MLOps란 무엇인가.md",
+    "공부 메모/data science/MLOps/MLFlow/Concept_MLFlow.md"
   ]
 }
