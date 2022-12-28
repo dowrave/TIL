@@ -90,9 +90,10 @@ wget https://github.com/kubernetes/minikube/releases/download/v1.24.0/minikube-l
 
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
 
-# 설치 확인
+# 설치 확인 - 여기서 minikube는 위 경로 `/usr/local/bin/minikube`를 따름
 minikube version
 ```
+[[minikube start 실행 & 관련 에러들]]
 
 ### 클러스터 : 쿠버네티스 구축
 ```sh
@@ -100,30 +101,6 @@ sudo su # root유저로 접근(--driver 옵션 때문)
 
 minikube start --driver=none --kubernetes-version=v1.21.7 --extra-config=apiserver.service-account-signing-key-file=/var/lib/minikube/certs/sa.key --extra-config=apiserver.service-account-issuer=kubernetes.default.svc
 ```
-------
-#### 에러와의 싸움
-
->에러: `Exiting due to GUEST_MISSING_CONNTRACK: Sorry, Kubernetes 1.20.2 requires conntrack to be installed in root's path` -
->> 시도 : `apt install conntrack`
->>> 에러2) `E: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?`
->>>> 해결 : 위의 `도커의 공식 CPG Key 추가` 부분(아래 쉘)
-
-```sh
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg`
-```
-
->또다른 에러 : `System has not been booted with systemd as init system (PID 1). Can't operate. Failed to connect to bus: Host is down` (`systemd` or `systemctl` 관련 에러임)
->> 해결: `sudo -e etc/wsl.conf` or 우분투 홈 `etc/wsl.conf`에 접근 + 아래 항목 추가 후 **재부팅**
-```conf
-[boot]
-systemd=true
-```
-
-> 또또다른 에러 : `Exiting due to HOST_JUJU_LOCK_PERMISSION: Failed to start host: boot lock: unable to open /tmp/juju-mkc8ab01ad3ea83211c505c81a7ee49a8e3ecb89: permission denied`
->> 해결: `sudo rm -rf /tmp/juju-mk*` &  `sudo rm -rf /tmp/minikube.*` 입력(현재 경로와 관계 없음)
-
-> 또또또다른 에러 : `[kubelet-check] Initial timeout of 40s passed.`
->> 
 
 - 사용하지 않을 애드온 비활성화
 ```sh
@@ -135,7 +112,7 @@ minikube addons list
 ```
 
 - 에러가 너무 많이 떠서 우분투에 있는 도커랑 k8s를 지우고 쿠버네티스 실습을 진행했던 환경(배쉬 쉘)에서 세팅함
--------------
+
 ### 클라이언트 : 쿠버네티스 구축
 - 마찬가지로 root user로 작업해야 함
 
@@ -149,7 +126,7 @@ minikube kubectl -- config view --flatten
 >>`sudo rm -rf /tmp/juju-mk*`
 >>`sudo rm -rf /tmp/minikube.*`
 
-
+- (재설치 시 지나가도 됨)
 - 클라이언트 노드에서 `.kube` 폴더 생성
 ```sh
 mkdir -p /home/$USER/.kube

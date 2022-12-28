@@ -7,7 +7,7 @@ cd manifests
 
 ## 각 구성 요소 설치
 - `kubeflow/manifests` 레포지토리에 설치 커맨드가 적혀 있으나, 정상적으로 설치되었는지 확인하는 방법이 없음 
-- 여기선 각 구성 요소 별로 정상적으로 설치되었는지 확인하는 법도 같이 작서함
+- 여기선 각 구성 요소 별로 정상적으로 설치되었는지 확인하는 법도 같이 작성함
 
 ### Cert-manager
 - 설치
@@ -67,7 +67,6 @@ kubectl get po -n istio-system -w
 - `authservice-0` Pod의 `running`을 기다리자
 > 상태가 계속 `pending`
 >> `describe pod/authservice-0 -n istio-system`으로 상태를 보면 `1 pod has unbound immediate PersistentVolumeClaim.`이라고 되어 있음
->> 
 
 ### Kubeflow Namespace
 ```sh
@@ -229,4 +228,3 @@ kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80
 -  [http://localhost:8080](http://localhost:8080/)으로 접속해 로그인 화면 확인
 > `Email Address` : `user@example.com`
 > `Password` : `12341234`
-
