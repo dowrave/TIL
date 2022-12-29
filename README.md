@@ -1,4 +1,4 @@
 # TIL
 
 ## 폴더 설명
-- FromObsidian : 옵시디언에 따로 저장해두는 마크다운 파일
+- `FromObsidian` : `Obsidian`으로 작성, 공부하면서 정리한 내용들을 저장 

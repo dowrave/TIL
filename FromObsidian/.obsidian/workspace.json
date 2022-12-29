@@ -4,22 +4,35 @@
     "type": "split",
     "children": [
       {
-        "id": "c7151facaa859329",
+        "id": "60f488eb9c097cba",
         "type": "tabs",
         "children": [
           {
-            "id": "656cec962805e5f8",
+            "id": "8c143bf9e0657a3e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/mlops_db 구축.md",
+                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/테이블 설정 & 데이터 삽입(~반복).md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "46d5e861c2c505f9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/2_ Model Development.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -48,7 +61,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "failed to connect",
+                "query": "dockerfile",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -69,7 +82,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 206.5
+    "width": 200
   },
   "right": {
     "id": "e5d497f15d3c08ac",
@@ -85,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/mlops_db 구축.md",
+                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/2_ Model Development.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/mlops_db 구축.md",
+                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/2_ Model Development.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/mlops_db 구축.md"
+                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/2_ Model Development.md"
               }
             }
           },
@@ -156,17 +169,17 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "656cec962805e5f8",
+  "active": "46d5e861c2c505f9",
   "lastOpenFiles": [
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/테이블 설정 & 데이터 삽입(~반복).md",
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/환경 준비.md",
     "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/mlflow_목차.md",
-    "공부 메모/Docker/도커 설치, 컨테이너 실행.md",
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/dockerfile 설정 & 컨테이너 간 네트워크 연결.md",
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/docker-compose 파일을 이용한 네트워크 연결.md",
     "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/mlops_db 구축.md",
-    "공부 메모/Docker/도커 이미지 배포.md",
-    "공부 메모/Docker/도커 이미지 생성(dockerfile).md",
+    "공부 메모/Docker/도커 설치, 컨테이너 실행.md",
     "공부 메모/data science/MLOps/kubeflow - 모두를 위한 MLOps/목차_모두의 MLOps(kubeflow).md",
-    "공부 메모/Docker/목차_Docker.md",
-    "공부 메모/Docker/도커란 무엇인가.md",
-    "공부 메모/Docker/docker-compose.md",
+    "공부 메모/Docker/도커 이미지 배포.md",
     "공부 메모/Docker/도커 명령어.md"
   ]
 }
