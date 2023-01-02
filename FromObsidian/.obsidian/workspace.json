@@ -4,40 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "60f488eb9c097cba",
+        "id": "a345f2fbe9b132b3",
         "type": "tabs",
         "children": [
           {
-            "id": "14ca1a4ef3b2ae85",
+            "id": "52528f646c86ab08",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/모델 배포.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "c3b918c46a58d6c8",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/MLflow 레지스트리에서 모델 불러오기.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "ea87e58cbecda316",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/환경 준비.md",
+                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/0. 목차_mlflow.md",
                 "mode": "source",
                 "source": false
               }
@@ -72,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "dockerfile",
+                "query": "WORKDIR",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -109,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/모델 배포.md",
+                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/0. 목차_mlflow.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -126,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/모델 배포.md",
+                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/0. 목차_mlflow.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -149,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/모델 배포.md"
+                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/0. 목차_mlflow.md"
               }
             }
           },
@@ -180,17 +156,17 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "14ca1a4ef3b2ae85",
+  "active": "52528f646c86ab08",
   "lastOpenFiles": [
-    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/목차_mlflow.md",
-    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/기본 모델 생성.md",
-    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/환경 준비.md",
-    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/DB에서 불러온 데이터로 모델 학습.md",
-    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/모델 배포.md",
-    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/MLflow 레지스트리에서 모델 불러오기.md",
-    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/테이블 설정 & 데이터 삽입(~반복).md",
-    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/dockerfile 설정 & 컨테이너 간 네트워크 연결.md",
-    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/docker-compose 파일을 이용한 네트워크 연결.md",
-    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/모델 파이프라인.md"
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/6. API Serving.md",
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/1-1. 환경 준비.md",
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/0. 목차_mlflow.md",
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/3-3. MLflow 레지스트리에서 모델 불러오기.md",
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/3-2. MLflow 레지스트리에 모델 저장.md",
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/2-3. DB에서 불러온 데이터로 모델 학습.md",
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/5-4. FastAPI on Docker.md",
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/4-1. 모델 배포.md",
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/5-1. FastAPI 튜토리얼.md",
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/3-1. MLflow Backend Store 구축.md"
   ]
 }
