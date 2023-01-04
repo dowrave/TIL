@@ -4,38 +4,52 @@
     "type": "split",
     "children": [
       {
-        "id": "a345f2fbe9b132b3",
+        "id": "e62f6d540b0cd026",
         "type": "tabs",
         "children": [
           {
-            "id": "62f07b76f5a65b55",
+            "id": "cb4ce04bfc62d27a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7. Kafka.md",
+                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/0. 목차_mlflow.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "fd7e8bab740c8c10",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "이미지/Pasted image 20230103173905.png"
-              }
-            }
-          },
-          {
-            "id": "1c480753c7c371c9",
+            "id": "26b779920c47919f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "공부 메모/etc/깃허브 PR(Pull Request) 진행하기.md",
+                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7-5. Source Connector.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "66da33c73fbd3c44",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7-6. Sink Connector.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "1a74080bef7ca5c5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7-4. Kafka System.md",
                 "mode": "source",
                 "source": false
               }
@@ -70,7 +84,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "docker describe",
+                "query": "mlops",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -107,7 +121,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7. Kafka.md",
+                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/0. 목차_mlflow.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -124,7 +138,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7. Kafka.md",
+                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/0. 목차_mlflow.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -147,7 +161,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7. Kafka.md"
+                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/0. 목차_mlflow.md"
               }
             }
           },
@@ -178,17 +192,17 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "62f07b76f5a65b55",
+  "active": "cb4ce04bfc62d27a",
   "lastOpenFiles": [
-    "이미지/Pasted image 20230103173905.png",
-    "공부 메모/etc/깃허브 PR(Pull Request) 진행하기.md",
     "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7. Kafka.md",
-    "무제 파일.md",
-    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/6-2. Model API on Docker Compose.md",
-    "공부 메모/etc/래핑Wrapping.md",
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7-4. Kafka System.md",
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7-6. Sink Connector.md",
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7-5. Source Connector.md",
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7-3. Connect & Connector.md",
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7-2. Producer & Consumer.md",
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7-1. 카프카 소개.md",
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/8. Stream.md",
     "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/0. 목차_mlflow.md",
-    "공부 메모/etc/리눅스 vi 붙여넣기.md",
-    "공부 메모/etc/실시간 데이터 처리.md",
-    "공부 메모/etc/우분투 루트 디렉토리 윈도우에서 접근하기.md"
+    "공부 메모/etc/깃허브 PR(Pull Request) 진행하기.md"
   ]
 }

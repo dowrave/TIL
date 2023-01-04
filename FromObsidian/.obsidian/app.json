@@ -2,6 +2,6 @@
   "promptDelete": false,
   "alwaysUpdateLinks": true,
   "foldHeading": true,
-  "foldIndent": false,
+  "foldIndent": true,
   "attachmentFolderPath": "이미지"
 }

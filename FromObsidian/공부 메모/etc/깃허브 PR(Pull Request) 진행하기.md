@@ -46,11 +46,11 @@ git push origin {4.에서 생성한 브랜치 이름}
 - 프로젝트에서 미리 설정된 `PR(Pull Request)` 양식이 뜬다. 여기의 양식과 규칙에 맞게 기여한 것들을 작성하면 됨
 - 작성 후 `Create Pull Request` 버튼을 눌러서 오픈소스 프로젝트에서 내 PR이 승인되어 Merge되는 걸 기다림
 
-8. PR 승인이 되었다면 Branch 삭제하기
+8. PR 승인이 되었다면 Branch 삭제하기(이거 맞나)
 - 메인 저장소에 Merge되었다면, 4.에서 생성한 PR용 브랜치는 작업이 끝났기 때문에 삭제해도 됨
 ```sh
-# local branch 삭제 
-git branch -d BRANCH_NAME
+# local branch 삭제 (현재 브랜치인 경우 삭제 안됨)
+git branch -D BRANCH_NAME
 
 
 # 둘 중 하나 : remote branch 삭제

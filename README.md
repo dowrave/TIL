@@ -2,6 +2,9 @@
 
 ## 내역 : 
 
+> `230104`
+> `/FromObsidia` : `ML엔지니어를 위한 MLops` 7-6까지 완료
+
 > `230103`
 > `/FromObsidian` : `ML엔지니어를 위한 MLops` 7-2까지 완료
 > 작동이 안되는 내용이 있어 `Pull Request`란 걸 처음 해봄
