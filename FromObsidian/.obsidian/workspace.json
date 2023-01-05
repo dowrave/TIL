@@ -8,7 +8,7 @@
         "type": "tabs",
         "children": [
           {
-            "id": "cb4ce04bfc62d27a",
+            "id": "66da33c73fbd3c44",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -20,19 +20,19 @@
             }
           },
           {
-            "id": "26b779920c47919f",
+            "id": "536cac315f2c3c7c",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7-5. Source Connector.md",
+                "file": "공부 메모/etc/WSL 우분투 윈도우 간 파일 옮기기.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "66da33c73fbd3c44",
+            "id": "3fd2cc5ad3640afb",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -44,12 +44,12 @@
             }
           },
           {
-            "id": "1a74080bef7ca5c5",
+            "id": "3e5d86d14f8c98e1",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7-4. Kafka System.md",
+                "file": "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7-6. Sink Connector.md",
                 "mode": "source",
                 "source": false
               }
@@ -84,7 +84,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "mlops",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -192,17 +192,17 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "cb4ce04bfc62d27a",
+  "active": "66da33c73fbd3c44",
   "lastOpenFiles": [
-    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7. Kafka.md",
-    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7-4. Kafka System.md",
+    "공부 메모/etc/WSL 우분투 윈도우 간 파일 옮기기.md",
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/0. 목차_mlflow.md",
     "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7-6. Sink Connector.md",
-    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7-5. Source Connector.md",
-    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7-3. Connect & Connector.md",
-    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7-2. Producer & Consumer.md",
     "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7-1. 카프카 소개.md",
     "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/8. Stream.md",
-    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/0. 목차_mlflow.md",
-    "공부 메모/etc/깃허브 PR(Pull Request) 진행하기.md"
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/8-1. Streaming Serving.md",
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7-5. Source Connector.md",
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/8-2. Grafana Dashboard.md",
+    "무제 파일 1.md",
+    "무제 파일.md"
   ]
 }

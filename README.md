@@ -2,11 +2,15 @@
 
 ## 내역 : 
 
+> `230105`
+> `/FromObsidian` : `ML엔지니어를 위한 MLops` 끝(8-2)까지 완료
+> 실습 파일은 [레포지토리](https://github.com/dowrave/MLOpsForMLE)에 추가함
+
 > `230104`
-> `/FromObsidia` : `ML엔지니어를 위한 MLops` 7-6까지 완료
+> `/FromObsidian` : `ML엔지니어를 위한 MLops` 7-6까지 완료
 
 > `230103`
-> `/FromObsidian` : `ML엔지니어를 위한 MLops` 7-2까지 완료
+> `/FromObsidian` : `ML엔지니어를 위한 MLops` 7-2까지 완료  
 > 작동이 안되는 내용이 있어 `Pull Request`란 걸 처음 해봄
 
 > `230102`  
