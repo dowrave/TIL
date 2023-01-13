@@ -8,19 +8,7 @@
         "type": "tabs",
         "children": [
           {
-            "id": "6390f5b0198e592c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "공부 메모/CodeTest/소수 판정.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "b92f4b3690ae91fb",
+            "id": "4d0e46cb5c91c5a4",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -32,36 +20,48 @@
             }
           },
           {
-            "id": "c1d9e707755ae0e6",
+            "id": "8e5f52508d9b06d6",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "공부 메모/CodeTest/정렬 알고리즘.md",
+                "file": "공부 메모/CodeTest/sort 내장함수.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "7be66f3e965d81c7",
+            "id": "7174cd32877cac6b",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "공부 메모/CodeTest/카운팅 정렬.md",
+                "file": "공부 메모/CodeTest/sort 내장함수.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "55365907b11c546c",
+            "id": "dd9265617043f632",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "공부 메모/CodeTest/퀵 정렬.md",
+                "file": "공부 메모/CodeTest/병합 정렬.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "709415629b27123a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "공부 메모/python/리스트 간 크기 비교.md",
                 "mode": "source",
                 "source": false
               }
@@ -134,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "공부 메모/CodeTest/카운팅 정렬.md",
+                "file": "공부 메모/CodeTest/병합 정렬.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -151,7 +151,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "공부 메모/CodeTest/카운팅 정렬.md",
+                "file": "공부 메모/CodeTest/병합 정렬.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -174,7 +174,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "공부 메모/CodeTest/카운팅 정렬.md"
+                "file": "공부 메모/CodeTest/병합 정렬.md"
               }
             }
           },
@@ -205,17 +205,17 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "7be66f3e965d81c7",
+  "active": "dd9265617043f632",
   "lastOpenFiles": [
+    "공부 메모/CodeTest/sort 내장함수.md",
+    "공부 메모/CodeTest/정렬.md",
     "공부 메모/CodeTest/정렬 알고리즘.md",
-    "공부 메모/CodeTest/카운팅 정렬.md",
-    "공부 메모/CodeTest/퀵 정렬.md",
-    "공부 메모/CodeTest/삽입 정렬.md",
-    "공부 메모/CodeTest/선택 정렬.md",
-    "취준 메모/데이터 분석가 준비.md",
-    "취준 메모/데이터 분석가 프로젝트에 관해.md",
     "공부 메모/CodeTest/2차원 행렬.md",
-    "공부 메모/CodeTest/소수 판정.md",
-    "공부 메모/Docker/도커 컨테이너 환경변수 조회.md"
+    "공부 메모/CodeTest/선택 정렬.md",
+    "공부 메모/CodeTest/삽입 정렬.md",
+    "공부 메모/CodeTest/퀵 정렬.md",
+    "공부 메모/python/리스트 간 크기 비교.md",
+    "공부 메모/CodeTest/dictionary 이용법.md",
+    "공부 메모/CodeTest/카운팅 정렬.md"
   ]
 }
