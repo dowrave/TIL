@@ -30,9 +30,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "f26711e5e00c8dba",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "공부 메모/CodeTest/이항계수, 조합.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -98,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "공부 메모/CodeTest/최대공약수와 최소공배수.md",
+                "file": "공부 메모/CodeTest/이항계수, 조합.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "공부 메모/CodeTest/최대공약수와 최소공배수.md",
+                "file": "공부 메모/CodeTest/이항계수, 조합.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "공부 메모/CodeTest/최대공약수와 최소공배수.md"
+                "file": "공부 메모/CodeTest/이항계수, 조합.md"
               }
             }
           },
@@ -169,8 +181,9 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "5a0e37e7132a8955",
+  "active": "f26711e5e00c8dba",
   "lastOpenFiles": [
+    "공부 메모/CodeTest/최대공약수와 최소공배수.md",
     "공부 메모/python/소수점 자릿수 제한하기.md",
     "공부 메모/python/리스트 간 크기 비교.md",
     "공부 메모/CodeTest/재귀함수.md",
@@ -179,7 +192,6 @@
     "공부 메모/CodeTest/병합 정렬.md",
     "공부 메모/CodeTest/sort 내장함수.md",
     "공부 메모/CodeTest/정렬.md",
-    "공부 메모/CodeTest/정렬 알고리즘.md",
-    "공부 메모/CodeTest/2차원 행렬.md"
+    "공부 메모/CodeTest/정렬 알고리즘.md"
   ]
 }
