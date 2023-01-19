@@ -8,43 +8,31 @@
         "type": "tabs",
         "children": [
           {
-            "id": "9e02f39f8a8b8634",
+            "id": "6f9951121ff973bc",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "공부 메모/python/소수점 자릿수 제한하기.md",
+                "file": "공부 메모/CodeTest/DFS.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "5a0e37e7132a8955",
+            "id": "506abc08d7e96d90",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "공부 메모/CodeTest/최대공약수와 최소공배수.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "f26711e5e00c8dba",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "공부 메모/CodeTest/이항계수, 조합.md",
+                "file": "공부 메모/CodeTest/n-queens.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -110,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "공부 메모/CodeTest/이항계수, 조합.md",
+                "file": "공부 메모/CodeTest/n-queens.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "공부 메모/CodeTest/이항계수, 조합.md",
+                "file": "공부 메모/CodeTest/n-queens.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "공부 메모/CodeTest/이항계수, 조합.md"
+                "file": "공부 메모/CodeTest/n-queens.md"
               }
             }
           },
@@ -181,17 +169,17 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "f26711e5e00c8dba",
+  "active": "506abc08d7e96d90",
   "lastOpenFiles": [
+    "공부 메모/CodeTest/DFS.md",
+    "공부 메모/CodeTest/BFS.md",
+    "공부 메모/CodeTest/백트래킹.md",
+    "공부 메모/CodeTest/이항계수, 조합.md",
     "공부 메모/CodeTest/최대공약수와 최소공배수.md",
     "공부 메모/python/소수점 자릿수 제한하기.md",
     "공부 메모/python/리스트 간 크기 비교.md",
     "공부 메모/CodeTest/재귀함수.md",
     "공부 메모/CodeTest/선언적 프로그래밍.md",
-    "공부 메모/CodeTest/브루트 포스.md",
-    "공부 메모/CodeTest/병합 정렬.md",
-    "공부 메모/CodeTest/sort 내장함수.md",
-    "공부 메모/CodeTest/정렬.md",
-    "공부 메모/CodeTest/정렬 알고리즘.md"
+    "공부 메모/CodeTest/브루트 포스.md"
   ]
 }
