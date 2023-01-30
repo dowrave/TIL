@@ -4,95 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "85dc025bad282b44",
+        "id": "a4d625e7fdd9cbed",
         "type": "tabs",
         "children": [
           {
-            "id": "6f9951121ff973bc",
+            "id": "dc31640859f1c1fb",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "공부 메모/CodeTest/DFS.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "506abc08d7e96d90",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "공부 메모/data science/pandas/연속적이지 않은 값들 인덱싱 & 슬라이싱하기.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "3b8d95b689a2c827",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "공부 메모/CodeTest/파이썬 2차원 리스트에서 슬라이싱.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "80a3541e1c47b625",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "공부 메모/CodeTest/파이썬 2차원 리스트에서 슬라이싱.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "568385cf1a0f0f1c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "공부 메모/CodeTest/동적 프로그래밍(DP).md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "b4bb56d011fe487f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "공부 메모/CodeTest/LIS - 가장 긴 부분 수열의 길이.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "bfd9ccdeac93fa20",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "공부 메모/CodeTest/역방향 반복문.md",
+                "file": "공부 메모/markdown/마크다운 접기.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 5
+        ]
       }
     ],
     "direction": "vertical"
@@ -121,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "슬라이싱",
+                "query": "마크다운 접기",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -138,7 +65,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -158,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "공부 메모/CodeTest/LIS - 가장 긴 부분 수열의 길이.md",
+                "file": "공부 메모/markdown/마크다운 접기.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -175,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "공부 메모/CodeTest/LIS - 가장 긴 부분 수열의 길이.md",
+                "file": "공부 메모/markdown/마크다운 접기.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -198,7 +126,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "공부 메모/CodeTest/LIS - 가장 긴 부분 수열의 길이.md"
+                "file": "공부 메모/markdown/마크다운 접기.md"
               }
             }
           },
@@ -229,8 +157,9 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "b4bb56d011fe487f",
+  "active": "dc31640859f1c1fb",
   "lastOpenFiles": [
+    "공부 메모/CodeTest/나머지(모듈로) 산술.md",
     "공부 메모/CodeTest/역방향 반복문.md",
     "공부 메모/CodeTest/LIS - 가장 긴 부분 수열의 길이.md",
     "공부 메모/CodeTest/동적 프로그래밍(DP).md",
@@ -239,7 +168,6 @@
     "공부 메모/data science/pandas/연속적이지 않은 값들 인덱싱 & 슬라이싱하기.md",
     "공부 메모/CodeTest/n-queens.md",
     "공부 메모/CodeTest/sort 내장함수.md",
-    "공부 메모/CodeTest/선언적 프로그래밍.md",
-    "공부 메모/CodeTest/DFS.md"
+    "공부 메모/CodeTest/선언적 프로그래밍.md"
   ]
 }
