@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "공부 메모/CodeTest/sort 내장함수.md",
+                "file": "공부 메모/CodeTest/자료구조 - 큐(Queue).md",
                 "mode": "source",
                 "source": false
               }
@@ -65,8 +65,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -86,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "공부 메모/CodeTest/sort 내장함수.md",
+                "file": "공부 메모/CodeTest/자료구조 - 큐(Queue).md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "공부 메모/CodeTest/sort 내장함수.md",
+                "file": "공부 메모/CodeTest/자료구조 - 큐(Queue).md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "공부 메모/CodeTest/sort 내장함수.md"
+                "file": "공부 메모/CodeTest/자료구조 - 큐(Queue).md"
               }
             }
           },
@@ -159,15 +158,15 @@
   },
   "active": "5a1e1e3b5668573e",
   "lastOpenFiles": [
-    "공부 메모/CodeTest/그리디 알고리즘.md",
     "공부 메모/CodeTest/sort 내장함수.md",
+    "공부 메모/CodeTest/자료구조 - 스택(Stack).md",
+    "공부 메모/CodeTest/자료구조 - 큐(Queue).md",
+    "공부 메모/CodeTest/그리디 알고리즘.md",
     "공부 메모/CodeTest/2차원 부분합.md",
     "공부 메모/CodeTest/체스판 문제.md",
     "이미지/Untitled (Draft)-1 (2).jpg",
     "공부 메모/markdown/마크다운 접기.md",
     "공부 메모/CodeTest/나머지(모듈로) 산술.md",
-    "공부 메모/CodeTest/역방향 반복문.md",
-    "공부 메모/CodeTest/LIS - 가장 긴 부분 수열의 길이.md",
-    "공부 메모/CodeTest/동적 프로그래밍(DP).md"
+    "공부 메모/CodeTest/역방향 반복문.md"
   ]
 }
