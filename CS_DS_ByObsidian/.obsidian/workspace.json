@@ -30,9 +30,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "1e25f77dd73bf566",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "공부 메모/CodeTest/세그먼트 트리.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -98,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "공부 메모/CodeTest/N번째 피보나치 수 구하기.md",
+                "file": "공부 메모/CodeTest/세그먼트 트리.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "공부 메모/CodeTest/N번째 피보나치 수 구하기.md",
+                "file": "공부 메모/CodeTest/세그먼트 트리.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "공부 메모/CodeTest/N번째 피보나치 수 구하기.md"
+                "file": "공부 메모/CodeTest/세그먼트 트리.md"
               }
             }
           },
@@ -169,10 +181,10 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "73b0f470612db2eb",
+  "active": "1e25f77dd73bf566",
   "lastOpenFiles": [
-    "공부 메모/CodeTest/피보나치 수열.md",
     "공부 메모/CodeTest/N번째 피보나치 수 구하기.md",
+    "공부 메모/CodeTest/피보나치 수열.md",
     "공부 메모/CodeTest/정렬.md",
     "공부 메모/CodeTest/자료구조 - 스택(Stack).md",
     "공부 메모/CodeTest/자료구조 - 큐(Queue).md",
