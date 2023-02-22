@@ -1,39 +1,76 @@
 {
   "main": {
-    "id": "5fca91c93df9f9a7",
+    "id": "7521aea8433662e4",
     "type": "split",
     "children": [
       {
-        "id": "9b7826614bb3ceed",
+        "id": "3cc8498e9c005cfb",
         "type": "tabs",
         "children": [
           {
-            "id": "f9a2ebbeff513a7f",
+            "id": "b0c26a4c863e0fef",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "공부 메모/data science/SQL/테이블 생성 쿼리.md",
+                "file": "CodingTest/SQL/README.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "7a66566b9f165cc5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "CodingTest/SQL/GROUP BY 파트.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "eafd12397fda80fe",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "SQL/임시 테이블 생성하기.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "781f1f79f8c5dfec",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "SQL/Advanced.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
   },
   "left": {
-    "id": "2b6a99b796923326",
+    "id": "e6cbf2d9d0ecef4b",
     "type": "split",
     "children": [
       {
-        "id": "369f631e3f9bc674",
+        "id": "e3911f3cfb51a8be",
         "type": "tabs",
         "children": [
           {
-            "id": "88aa362ec9a6bc47",
+            "id": "76acae6a26dba9ed",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -43,12 +80,12 @@
             }
           },
           {
-            "id": "dc601136d6bc4948",
+            "id": "1210e77f7f5de92e",
             "type": "leaf",
             "state": {
               "type": "search",
               "state": {
-                "query": "sql",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -58,7 +95,7 @@
             }
           },
           {
-            "id": "76146cc968089589",
+            "id": "2281ec123e1bb2a6",
             "type": "leaf",
             "state": {
               "type": "starred",
@@ -69,24 +106,23 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
-    "id": "e5d497f15d3c08ac",
+    "id": "2156d08b5bf5774e",
     "type": "split",
     "children": [
       {
-        "id": "92de8039fea5b780",
+        "id": "896c9ad339f98546",
         "type": "tabs",
         "children": [
           {
-            "id": "3968769786ead641",
+            "id": "1ba55ea9d958026c",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "공부 메모/data science/SQL/테이블 생성 쿼리.md",
+                "file": "CodingTest/SQL/GROUP BY 파트.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -98,19 +134,19 @@
             }
           },
           {
-            "id": "85244a0141d8c93b",
+            "id": "54570ec39e41b037",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "공부 메모/data science/SQL/테이블 생성 쿼리.md",
+                "file": "CodingTest/SQL/GROUP BY 파트.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
             }
           },
           {
-            "id": "0b63375f470a7807",
+            "id": "a6423220f0a5b402",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -121,34 +157,24 @@
             }
           },
           {
-            "id": "c3ca2aecf7f7b673",
+            "id": "70bc62670fb20845",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "공부 메모/data science/SQL/테이블 생성 쿼리.md"
+                "file": "CodingTest/SQL/GROUP BY 파트.md"
               }
             }
-          },
-          {
-            "id": "e73de016cff0e232",
-            "type": "leaf",
-            "state": {
-              "type": "advanced-tables-toolbar",
-              "state": {}
-            }
           }
-        ],
-        "currentTab": 4
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 200,
+    "width": 300,
     "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
-      "table-editor-obsidian:Advanced Tables Toolbar": false,
       "switcher:퀵 스위처 열기": false,
       "graph:그래프 뷰 열기": false,
       "canvas:Create new canvas": false,
@@ -157,17 +183,17 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "88aa362ec9a6bc47",
+  "active": "7a66566b9f165cc5",
   "lastOpenFiles": [
-    "공부 메모/data science/SQL/데이터 삽입 쿼리.md",
-    "공부 메모/data science/SQL/테이블 생성 쿼리.md",
-    "공부 메모/CodeTest/체스판 문제.md",
-    "이미지/Untitled (Draft)-1 (2).jpg",
-    "공부 메모/CodeTest/정렬.md",
-    "공부 메모/CodeTest/자료구조 - 큐(Queue).md",
-    "공부 메모/CodeTest/재귀함수.md",
-    "공부 메모/CodeTest/자료구조 - 스택(Stack).md",
-    "공부 메모/CodeTest/그래프_DFS.md",
-    "공부 메모/CodeTest/그래프_BFS.md"
+    "SQL/임시 테이블 생성하기.md",
+    "CodingTest/SQL/README.md",
+    "CodingTest/SQL/GROUP BY 파트.md",
+    "SQL/Advanced.md",
+    "SQL/INTERMEDIATE.md",
+    "SQL/inflearn_daterian_lecture.md",
+    "SQL/Find_Tips.md",
+    "SQL/IMAGE/accounts_age.PNG",
+    "SQL/IMAGE/회원가입.PNG",
+    "SQL/IMAGE/ac_again.PNG"
   ]
 }
