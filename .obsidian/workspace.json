@@ -8,48 +8,36 @@
         "type": "tabs",
         "children": [
           {
-            "id": "b0c26a4c863e0fef",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CodingTest/SQL/README.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "7a66566b9f165cc5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CodingTest/SQL/GROUP BY 파트.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "eafd12397fda80fe",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "SQL/임시 테이블 생성하기.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "781f1f79f8c5dfec",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "SQL/Advanced.md",
+                "file": "CodingTest/SQL/230222.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "51db0476e8b71437",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "CodingTest/SQL/230223.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "499a87d7713d1a4c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "SQL/BASIC.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +73,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "sql",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -122,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "CodingTest/SQL/GROUP BY 파트.md",
+                "file": "CodingTest/SQL/230223.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -139,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "CodingTest/SQL/GROUP BY 파트.md",
+                "file": "CodingTest/SQL/230223.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -162,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "CodingTest/SQL/GROUP BY 파트.md"
+                "file": "CodingTest/SQL/230223.md"
               }
             }
           }
@@ -183,17 +171,17 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "7a66566b9f165cc5",
+  "active": "51db0476e8b71437",
   "lastOpenFiles": [
-    "SQL/임시 테이블 생성하기.md",
-    "CodingTest/SQL/README.md",
-    "CodingTest/SQL/GROUP BY 파트.md",
-    "SQL/Advanced.md",
     "SQL/INTERMEDIATE.md",
+    "CodingTest/SQL/230222.md",
+    "CodingTest/SQL/230223.md",
+    "SQL/BASIC.md",
+    "CodingTest/SQL/README.md",
     "SQL/inflearn_daterian_lecture.md",
-    "SQL/Find_Tips.md",
-    "SQL/IMAGE/accounts_age.PNG",
-    "SQL/IMAGE/회원가입.PNG",
-    "SQL/IMAGE/ac_again.PNG"
+    "CS_DS_ByObsidian/공부 메모/CodeTest/다익스트라 알고리즘.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프.md",
+    "SQL/Advanced.md",
+    "SQL/임시 테이블 생성하기.md"
   ]
 }
