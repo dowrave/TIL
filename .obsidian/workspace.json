@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "3cc8498e9c005cfb",
+        "id": "9fc9c43f5eafb2aa",
         "type": "tabs",
         "children": [
           {
-            "id": "9784183a53294de4",
+            "id": "cd8dc0756945c280",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -18,8 +18,33 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "7d8381f36b3d8c99",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "CodingTest/SQL/230227.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "46cda8270e010584",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "SQL/3. Advanced.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "CodingTest/SQL/230224.md",
+                "file": "CodingTest/SQL/230227.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "CodingTest/SQL/230224.md",
+                "file": "CodingTest/SQL/230227.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "CodingTest/SQL/230224.md"
+                "file": "CodingTest/SQL/230227.md"
               }
             }
           }
@@ -146,22 +171,32 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "9784183a53294de4",
+  "active": "7d8381f36b3d8c99",
   "lastOpenFiles": [
-    "CodingTest/SQL/230223.md",
+    "SQL/3. Advanced.md",
+    "CodingTest/SQL/230227.md",
+    "SQL/2. INTERMEDIATE.md",
+    "SQL/임시 테이블 생성하기.md",
+    "SQL/1. BASIC.md",
     "CodingTest/SQL/230224.md",
+    "SQL/Define_Term.md",
+    "SQL/Find_Tips.md",
+    "SQL/inflearn_daterian_lecture.md",
+    "SQL/SQL_README.md",
+    "SQL/Yammer_Project.md",
+    "CodingTest/PYTHON/최단 경로/11657_타임머신.ipynb",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/벨만-포드.md",
+    "Pasted image 20230227150202.png",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/다익스트라.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_DFS.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/무제 파일.md",
+    "CodingTest/SQL/230223.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/lst 대신 dict 쓰기.md",
     "CodingTest/PYTHON/최단 경로/13549_숨바꼭질 3.ipynb",
     "CodingTest/PYTHON/최단 경로/9370_미확인도착지.ipynb",
     "CodingTest/PYTHON/최단 경로/1504_특정최단경로.ipynb",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/다익스트라 알고리즘.md",
-    "SQL/BASIC.md",
-    "SQL/INTERMEDIATE.md",
     "CodingTest/SQL/230222.md",
-    "CodingTest/SQL/README.md",
-    "SQL/inflearn_daterian_lecture.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프.md",
-    "SQL/Advanced.md",
-    "SQL/임시 테이블 생성하기.md"
+    "CodingTest/SQL/README.md"
   ]
 }
