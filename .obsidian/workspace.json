@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "098ba3ff3f93231d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "CodingTest/SQL/230301.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "CodingTest/SQL/230228.md",
+                "file": "CodingTest/SQL/230301.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "CodingTest/SQL/230228.md",
+                "file": "CodingTest/SQL/230301.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "CodingTest/SQL/230228.md"
+                "file": "CodingTest/SQL/230301.md"
               }
             }
           }
@@ -139,44 +152,25 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "canvas:새 캔버스 만들기": false,
-      "switcher:퀵 스위처 열기": false,
-      "graph:그래프 뷰 열기": false,
-      "daily-notes:오늘의 데일리 노트 열기": false,
-      "templates:템플릿 삽입": false,
-      "command-palette:명령어 팔레트 열기": false
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
     }
   },
-  "active": "b03f1879449815c0",
+  "active": "098ba3ff3f93231d",
   "lastOpenFiles": [
     "CodingTest/SQL/230227.md",
     "CodingTest/SQL/230228.md",
+    "CodingTest/SQL/230301.md",
     "SQL/3. Advanced.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_벨만-포드.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/그래프.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_플로이드-워셜.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/나머지(모듈로) 산술.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/동적 프로그래밍(DP).md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/그리디 알고리즘.md",
-    "CodingTest/SQL/230224.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_다익스트라.md",
-    "SQL/2. INTERMEDIATE.md",
-    "SQL/임시 테이블 생성하기.md",
-    "SQL/1. BASIC.md",
-    "SQL/Define_Term.md",
-    "SQL/Find_Tips.md",
-    "SQL/inflearn_daterian_lecture.md",
-    "SQL/SQL_README.md",
-    "SQL/Yammer_Project.md",
-    "CodingTest/PYTHON/최단 경로/11657_타임머신.ipynb",
-    "Pasted image 20230227150202.png",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_DFS.md",
-    "CodingTest/SQL/230223.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/lst 대신 dict 쓰기.md",
-    "CodingTest/PYTHON/최단 경로/13549_숨바꼭질 3.ipynb",
-    "CodingTest/PYTHON/최단 경로/9370_미확인도착지.ipynb",
-    "CodingTest/PYTHON/최단 경로/1504_특정최단경로.ipynb",
-    "CodingTest/SQL/230222.md",
-    "CodingTest/SQL/README.md"
+    "CS_DS_ByObsidian/공부 메모/CodeTest/그리디 알고리즘.md"
   ]
 }
