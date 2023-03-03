@@ -4,35 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "a9c05f8c08b2c0a8",
+        "id": "f26a458cb086efeb",
         "type": "tabs",
         "children": [
           {
-            "id": "b03f1879449815c0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CodingTest/SQL/230228.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "098ba3ff3f93231d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CodingTest/SQL/230222.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "a5c128b34c9023a9",
+            "id": "85c2616ca7e97e55",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -43,8 +19,7 @@
               }
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -73,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "sql",
+                "query": "소수",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -94,7 +69,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 325.5
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "2156d08b5bf5774e",
@@ -172,19 +148,35 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "a5c128b34c9023a9",
+  "active": "85c2616ca7e97e55",
   "lastOpenFiles": [
-    "CodingTest/SQL/230222.md",
+    "CodingTest/PYTHON/투 포인터/1644_소수의 연속합.ipynb",
+    "CodingTest/PYTHON/투 포인터/1450_냅색 문제.ipynb",
+    "CodingTest/PYTHON/투 포인터/1806_부분합.ipynb",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/나머지(모듈로) 산술.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_DFS.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_BFS.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_플로이드-워셜.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_벨만-포드.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_다익스트라.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/2차원 리스트 1차원으로 바꾸기.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/소수 판정.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/선언적 프로그래밍.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/우선순위 큐.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/이항계수, 조합.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/분할정복 - 곱셈 빨리 하기.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/피보나치 수열.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/페르마의 소정리.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/dictionary 이용법.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/2차원 부분합.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/코테_목차.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/투 포인터.md",
+    "CodingTest/SQL/230222.md",
     "CodingTest/SQL/230301.md",
     "CodingTest/SQL/230227.md",
     "CodingTest/SQL/230228.md",
     "SQL/3. Advanced.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_벨만-포드.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/그래프.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_플로이드-워셜.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/나머지(모듈로) 산술.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/동적 프로그래밍(DP).md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/그리디 알고리즘.md"
+    "CS_DS_ByObsidian/공부 메모/CodeTest/동적 프로그래밍(DP).md"
   ]
 }
