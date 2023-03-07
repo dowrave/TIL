@@ -31,7 +31,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -97,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "공부 메모/CodeTest/LIS - 가장 긴 부분 수열의 길이.md",
+                "file": "공부 메모/CodeTest/동적계획법 - 역추적.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "공부 메모/CodeTest/LIS - 가장 긴 부분 수열의 길이.md",
+                "file": "공부 메모/CodeTest/동적계획법 - 역추적.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -137,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "공부 메모/CodeTest/LIS - 가장 긴 부분 수열의 길이.md"
+                "file": "공부 메모/CodeTest/동적계획법 - 역추적.md"
               }
             }
           },
@@ -168,10 +169,10 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "f9a2ebbeff513a7f",
+  "active": "40deaffcccc00c5c",
   "lastOpenFiles": [
-    "공부 메모/CodeTest/동적계획법 - 역추적.md",
     "공부 메모/CodeTest/LIS - 가장 긴 부분 수열의 길이.md",
+    "공부 메모/CodeTest/동적계획법 - 역추적.md",
     "공부 메모/CodeTest/lst 대신 dict 쓰기.md",
     "공부 메모/CodeTest/동적 계획법(DP).md",
     "공부 메모/data science/SQL/데이터 삽입 쿼리.md",
