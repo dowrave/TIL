@@ -20,19 +20,31 @@
             }
           },
           {
-            "id": "40deaffcccc00c5c",
+            "id": "feda435a945b7b98",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "공부 메모/CodeTest/동적계획법 - 역추적.md",
+                "file": "공부 메모/data science/visualization/tableau/README.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "f3dbf1f5c54b3f2b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "공부 메모/data science/visualization/tableau/230313.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -77,6 +89,18 @@
               "type": "starred",
               "state": {}
             }
+          },
+          {
+            "id": "40deaffcccc00c5c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "공부 메모/CodeTest/동적계획법 - 역추적.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ]
       }
@@ -98,7 +122,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "공부 메모/CodeTest/동적계획법 - 역추적.md",
+                "file": "공부 메모/data science/visualization/tableau/230313.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +139,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "공부 메모/CodeTest/동적계획법 - 역추적.md",
+                "file": "공부 메모/data science/visualization/tableau/230313.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +162,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "공부 메모/CodeTest/동적계획법 - 역추적.md"
+                "file": "공부 메모/data science/visualization/tableau/230313.md"
               }
             }
           },
@@ -169,10 +193,16 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "40deaffcccc00c5c",
+  "active": "f3dbf1f5c54b3f2b",
   "lastOpenFiles": [
-    "공부 메모/CodeTest/LIS - 가장 긴 부분 수열의 길이.md",
+    "이미지/Pasted image 20230313184509.png",
+    "이미지/Pasted image 20230313184327.png",
+    "이미지/Pasted image 20230313183556.png",
+    "공부 메모/data science/visualization/tableau/README.md",
+    "공부 메모/data science/visualization/tableau/230313.md",
     "공부 메모/CodeTest/동적계획법 - 역추적.md",
+    "공부 메모/data science/visualization/tableau",
+    "공부 메모/CodeTest/LIS - 가장 긴 부분 수열의 길이.md",
     "공부 메모/CodeTest/lst 대신 dict 쓰기.md",
     "공부 메모/CodeTest/동적 계획법(DP).md",
     "공부 메모/data science/SQL/데이터 삽입 쿼리.md",

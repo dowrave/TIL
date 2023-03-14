@@ -1,0 +1,1 @@
+- 인프런에 [태블로 무료 강의](https://www.inflearn.com/course/%ED%83%9C%EB%B8%94%EB%A1%9C%EA%B0%95%EC%A2%8C-1#curriculum)가 있어서 이걸 따라가고자 한다.

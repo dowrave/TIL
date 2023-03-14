@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/투 포인터.md",
+                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/태블로 가이드 팔로우하기.md",
                 "mode": "source",
                 "source": false
               }
@@ -69,8 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "2156d08b5bf5774e",
@@ -86,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/투 포인터.md",
+                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/태블로 가이드 팔로우하기.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/투 포인터.md",
+                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/태블로 가이드 팔로우하기.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/투 포인터.md"
+                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/태블로 가이드 팔로우하기.md"
               }
             }
           }
@@ -148,8 +147,21 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "85c2616ca7e97e55",
+  "active": "76acae6a26dba9ed",
   "lastOpenFiles": [
+    "이미지/Pasted image 20230314181601.png",
+    "이미지/Pasted image 20230314174922.png",
+    "이미지/Pasted image 20230314174228.png",
+    "이미지/Pasted image 20230314172337.png",
+    "이미지/Pasted image 20230314172115.png",
+    "이미지/Pasted image 20230314171857.png",
+    "이미지/Pasted image 20230314170312.png",
+    "이미지/Pasted image 20230314165418.png",
+    "Pasted image 20230314181601.png",
+    "Pasted image 20230314174922.png",
+    "Pasted image 20230314174228.png",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/README.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/투 포인터.md",
     "CodingTest/PYTHON/투 포인터/1644_소수의 연속합.ipynb",
     "CodingTest/PYTHON/투 포인터/1450_냅색 문제.ipynb",
     "CodingTest/PYTHON/투 포인터/1806_부분합.ipynb",
@@ -170,13 +182,11 @@
     "CS_DS_ByObsidian/공부 메모/CodeTest/dictionary 이용법.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/2차원 부분합.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/코테_목차.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/투 포인터.md",
     "CodingTest/SQL/230222.md",
     "CodingTest/SQL/230301.md",
     "CodingTest/SQL/230227.md",
     "CodingTest/SQL/230228.md",
     "SQL/3. Advanced.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/동적 프로그래밍(DP).md"
+    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프.md"
   ]
 }
