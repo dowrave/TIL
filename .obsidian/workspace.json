@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "1be6c582afeeeb7f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/이진 트리 순회.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/트리.md",
+                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/이진 트리 순회.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/트리.md",
+                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/이진 트리 순회.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/트리.md"
+                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/이진 트리 순회.md"
               }
             }
           }
@@ -147,9 +160,10 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "4e196b3670c637e5",
+  "active": "1be6c582afeeeb7f",
   "lastOpenFiles": [
     "CS_DS_ByObsidian/공부 메모/CodeTest/트리.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/이진 트리 순회.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/태블로 공홈 - 학습 라이브러리.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/태블로 가이드 팔로우하기.md",
     "이미지/Pasted image 20230316155805.png",
@@ -188,7 +202,6 @@
     "CS_DS_ByObsidian/공부 메모/CodeTest/2차원 부분합.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/코테_목차.md",
     "CodingTest/SQL/230222.md",
-    "CodingTest/SQL/230301.md",
-    "CodingTest/SQL/230227.md"
+    "CodingTest/SQL/230301.md"
   ]
 }
