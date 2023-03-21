@@ -18,8 +18,45 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "22231fedadb3fbe4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/pyplot 폰트 다루기.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "9859dcb90ae5c280",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "CS_DS_ByObsidian/공부 메모/data science/실전/범주형, 수치형 데이터를 모델에 쓸 때.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "8f338ff4e5503a80",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "CS_DS_ByObsidian/공부 메모/data science/pandas/pd.to_datetime().md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -48,7 +85,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "소수",
+                "query": "normali",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -69,7 +106,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 321.5
   },
   "right": {
     "id": "2156d08b5bf5774e",
@@ -85,7 +122,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/이진 트리 순회.md",
+                "file": "CS_DS_ByObsidian/공부 메모/data science/실전/범주형, 수치형 데이터를 모델에 쓸 때.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +139,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/이진 트리 순회.md",
+                "file": "CS_DS_ByObsidian/공부 메모/data science/실전/범주형, 수치형 데이터를 모델에 쓸 때.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +162,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/이진 트리 순회.md"
+                "file": "CS_DS_ByObsidian/공부 메모/data science/실전/범주형, 수치형 데이터를 모델에 쓸 때.md"
               }
             }
           }
@@ -134,21 +171,49 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
+    "width": 257.5,
     "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
       "switcher:퀵 스위처 열기": false,
       "graph:그래프 뷰 열기": false,
-      "canvas:새 캔버스 만들기": false,
       "daily-notes:오늘의 데일리 노트 열기": false,
       "templates:템플릿 삽입": false,
+      "canvas:새 캔버스 만들기": false,
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "f2cc2c1e2ef80cfa",
+  "active": "76acae6a26dba9ed",
   "lastOpenFiles": [
+    "Analysis/미세먼지 농도와 습도/미세먼지 농도와 습도.ipynb",
+    "Analysis/미세먼지 농도와 습도/image2.PNG",
+    "Analysis/미세먼지 농도와 습도/image1.PNG",
+    "Analysis/미세먼지 농도와 습도/2022_particle.csv",
+    "Analysis/미세먼지 농도와 습도/2022_hum_particle_ver2.csv",
+    "Analysis/미세먼지 농도와 습도/2022_hum_particle.csv",
+    "Analysis/미세먼지 농도와 습도/2022_humidity.csv",
+    "Analysis/미세먼지 농도와 습도",
+    "Analysis",
+    "새 폴더",
+    "CS_DS_ByObsidian/공부 메모/data science/statistics/p-value.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/각종 그래프.md",
+    "CS_DS_ByObsidian/공부 메모/data science/pandas/pandas 시행착오.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/한글 폰트 띄우기.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/pyplot 폰트 다루기.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/sns.heatmap().md",
+    "simple_projects/google_trends/1년 간 1달 평균 미세먼지 농도와 습도.PNG",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/subplot, subplots.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/수평, 수직선 그리기.md",
+    "CS_DS_ByObsidian/공부 메모/data science/pandas/df.drop.md",
+    "CS_DS_ByObsidian/공부 메모/data science/pandas/pd.to_datetime().md",
+    "CS_DS_ByObsidian/공부 메모/data science/pandas/df.columns.md",
+    "CS_DS_ByObsidian/공부 메모/data science/pandas/df.astype().md",
+    "CS_DS_ByObsidian/공부 메모/data science/pandas/df.apply.md",
+    "CS_DS_ByObsidian/공부 메모/data science/pandas/판다스 기초.md",
+    "SQL/1. BASIC.md",
+    "CS_DS_ByObsidian/공부 메모/python/chardet.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/이진 트리 순회.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/트리.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/세그먼트 트리.md",
     "CS_DS_ByObsidian/공부 메모/data science/개념과 이론/HPO.md",
@@ -157,38 +222,15 @@
     "CS_DS_ByObsidian/공부 메모/data science/SQL vs Pandas.md",
     "CS_DS_ByObsidian/공부 메모/data science/Deepnote.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/플롯에 평균선 추가하기.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/축 범위 통일하기.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/나만의 팔레트 만들기.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/태블로 가이드 팔로우하기.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/태블로 공홈 - 학습 라이브러리.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/README.md",
-    "CS_DS_ByObsidian/공부 메모/data science/tensorflow,keras/이진 분류 딥러닝 모델 만들기.md",
-    "CS_DS_ByObsidian/공부 메모/data science/tensorflow,keras/BinaryFocalCrossentropy.md",
-    "CS_DS_ByObsidian/공부 메모/data science/tensorflow,keras/EarlyStopping.md",
-    "CS_DS_ByObsidian/공부 메모/data science/tensorflow,keras/keras_tuner.md",
-    "CS_DS_ByObsidian/공부 메모/data science/tensorflow,keras/ReduceLROnPlateau.md",
-    "CS_DS_ByObsidian/공부 메모/data science/tensorflow,keras/SigmoidFocalCrossEntropy.md",
-    "CS_DS_ByObsidian/공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/2-1. 기본 모델 생성.md",
-    "CS_DS_ByObsidian/공부 메모/data science/개념과 이론/6가지 더 전문적인 데이터 사이언스 코드 만들기.md",
-    "CS_DS_ByObsidian/공부 메모/data science/개념과 이론/좋은 분석 레포트 만들기.md",
-    "CS_DS_ByObsidian/공부 메모/data science/실전/수치형 데이터의 범주화 - 필요할까.md",
-    "CS_DS_ByObsidian/공부 메모/data science/실전/범주형, 수치형 데이터를 모델에 쓸 때.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/이진 트리 순회.md",
     "이미지/Pasted image 20230316155805.png",
     "이미지/Pasted image 20230316155746.png",
     "이미지/Pasted image 20230316155329.png",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_플로이드-워셜.md",
     "CodingTest/PYTHON/동적 계획법과 최단거리 역추적/11780_플로이드 2.ipynb",
     "CodingTest/PYTHON/동적 계획법과 최단거리 역추적/11779_최소비용구하기2.ipynb",
     "이미지/Pasted image 20230314181601.png",
     "이미지/Pasted image 20230314174922.png",
     "이미지/Pasted image 20230314174228.png",
     "이미지/Pasted image 20230314172337.png",
-    "이미지/Pasted image 20230314172115.png",
-    "이미지/Pasted image 20230314171857.png",
-    "이미지/Pasted image 20230314170312.png",
-    "CodingTest/PYTHON/투 포인터/1644_소수의 연속합.ipynb",
-    "CodingTest/PYTHON/투 포인터/1450_냅색 문제.ipynb",
-    "CodingTest/PYTHON/투 포인터/1806_부분합.ipynb"
+    "CodingTest/PYTHON/투 포인터/1644_소수의 연속합.ipynb"
   ]
 }
