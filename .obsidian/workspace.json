@@ -8,24 +8,12 @@
         "type": "tabs",
         "children": [
           {
-            "id": "22231fedadb3fbe4",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/태블로 가이드 팔로우하기.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "70e752a82f466b3a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/data science/pandas/pd.concat.md",
+                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/x값 회전하기.md",
                 "mode": "source",
                 "source": false
               }
@@ -84,7 +72,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "to_csv",
+                "query": "회전",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -101,7 +89,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -121,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/태블로 가이드 팔로우하기.md",
+                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/x값 회전하기.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -138,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/태블로 가이드 팔로우하기.md",
+                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/x값 회전하기.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -161,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/태블로 가이드 팔로우하기.md"
+                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/x값 회전하기.md"
               }
             }
           }
@@ -183,12 +172,24 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "22231fedadb3fbe4",
+  "active": "70e752a82f466b3a",
   "lastOpenFiles": [
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/sns.catplot.md",
+    "CS_DS_ByObsidian/공부 메모/data science/pandas/판다스 기초.md",
+    "CS_DS_ByObsidian/프로젝트 상자/Dacon - PlayerProspect/Private 1위.md",
+    "CS_DS_ByObsidian/공부 메모/data science/실전/범주형, 수치형 데이터를 모델에 쓸 때.md",
+    "CS_DS_ByObsidian/공부 메모/data science/pandas/pd.to_datetime().md",
+    "CS_DS_ByObsidian/프로젝트 상자/Dacon - PlayerProspect/Private 2위.md",
+    "CS_DS_ByObsidian/공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/1-4. docker-compose 파일을 이용한 네트워크 연결.md",
+    "CS_DS_ByObsidian/공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/0. 목차_mlflow.md",
+    "SQL/AnswerForChallenge/Advanced.md",
+    "simple_projects/google_trends/README.md",
+    "CS_DS_ByObsidian/이미지/이진 탐색 정리.jpg",
+    "CS_DS_ByObsidian/공부 메모/Docker/docker-compose.md",
+    "CS_DS_ByObsidian/공부 메모/Docker/도커 이미지 배포.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/태블로 가이드 팔로우하기.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/태블로 공홈 - 학습 라이브러리.md",
     "CS_DS_ByObsidian/공부 메모/data science/pandas/pandas.df.str.md",
-    "CS_DS_ByObsidian/공부 메모/data science/pandas/pd.to_datetime().md",
-    "CS_DS_ByObsidian/공부 메모/data science/실전/범주형, 수치형 데이터를 모델에 쓸 때.md",
     "CS_DS_ByObsidian/공부 메모/data science/pandas/pd.concat.md",
     "Analysis/스팀 분석/1_데이터수집.ipynb",
     "Analysis/스팀 분석",
@@ -199,7 +200,6 @@
     "CS_DS_ByObsidian/공부 메모/data science/pandas/value_counts().md",
     "CS_DS_ByObsidian/공부 메모/data science/pandas/pd.get_dummies.md",
     "CS_DS_ByObsidian/공부 메모/data science/pandas/df.groupby.md",
-    "CS_DS_ByObsidian/공부 메모/data science/pandas/판다스 기초.md",
     "CS_DS_ByObsidian/공부 메모/data science/pandas/인덱스가 숫자가 아닐 때 row number 얻기.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/pyplot 폰트 다루기.md",
     "Analysis/미세먼지 농도와 습도/image1.PNG",
@@ -213,23 +213,12 @@
     "Analysis/미세먼지 농도와 습도",
     "Analysis",
     "새 폴더",
-    "CS_DS_ByObsidian/공부 메모/data science/statistics/p-value.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/각종 그래프.md",
-    "CS_DS_ByObsidian/공부 메모/data science/pandas/pandas 시행착오.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/한글 폰트 띄우기.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/sns.heatmap().md",
     "simple_projects/google_trends/1년 간 1달 평균 미세먼지 농도와 습도.PNG",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/subplot, subplots.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/수평, 수직선 그리기.md",
-    "CS_DS_ByObsidian/공부 메모/data science/pandas/df.drop.md",
-    "CS_DS_ByObsidian/공부 메모/data science/pandas/df.columns.md",
-    "CS_DS_ByObsidian/공부 메모/data science/pandas/df.astype().md",
     "이미지/Pasted image 20230316155805.png",
     "이미지/Pasted image 20230316155746.png",
     "이미지/Pasted image 20230316155329.png",
     "이미지/Pasted image 20230314181601.png",
     "이미지/Pasted image 20230314174922.png",
-    "이미지/Pasted image 20230314174228.png",
-    "이미지/Pasted image 20230314172337.png"
+    "이미지/Pasted image 20230314174228.png"
   ]
 }
