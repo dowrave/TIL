@@ -8,12 +8,12 @@
         "type": "tabs",
         "children": [
           {
-            "id": "7acf8e71e3bc5581",
+            "id": "9113cb0f99c252fb",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_막대 - 선 그래프 동시 표시.md",
+                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Kruksal.md",
                 "mode": "source",
                 "source": false
               }
@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_정렬 순서 수정하기.md",
+                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Prim.md",
                 "mode": "source",
                 "source": false
               }
@@ -44,7 +44,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -73,7 +73,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "유니온 파인드",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -90,8 +90,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -111,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/유니온 파인드.md",
+                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Prim.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -128,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/유니온 파인드.md",
+                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Prim.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -151,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/유니온 파인드.md"
+                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Prim.md"
               }
             }
           }
@@ -173,23 +172,35 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "4a50c007f1e2d34b",
+  "active": "76acae6a26dba9ed",
   "lastOpenFiles": [
+    "CodingTest/PYTHON/최소 신장 트리/test.txt",
+    "CodingTest/PYTHON/최소 신장 트리/9372_상근이의 여행.ipynb",
+    "CodingTest/PYTHON/최소 신장 트리/1197_최소 스패닝 트리.ipynb",
+    "CodingTest/PYTHON/최소 신장 트리",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Kruksal.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Prim.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_정렬 순서 수정하기.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_다익스트라.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/유니온 파인드.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/트리.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_DFS.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/그리디 알고리즘.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_막대 - 선 그래프 동시 표시.md",
+    "CodingTest/PYTHON/유니온 파인드/20040_사이클 게임.ipynb",
     "Analysis/스팀 분석/image8.PNG",
     "Analysis/스팀 분석/image7.PNG",
     "Analysis/스팀 분석/image6.png",
     "Analysis/스팀 분석/image5.PNG",
     "Analysis/스팀 분석/image4.PNG",
     "CodingTest/PYTHON/유니온 파인드/4195_친구 네트워크.ipynb",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프.md",
     "CS_DS_ByObsidian/공부 메모/data science/pandas/pandas_조건을 만족하는 행 drop.md",
     "Analysis/스팀 분석/image3.PNG",
     "CS_DS_ByObsidian/공부 메모/data science/statistics/통계학_표본의 크기.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_정렬 순서 수정하기.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_가이드 팔로우하기.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_공홈 - 학습 라이브러리.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_막대 - 선 그래프 동시 표시.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/유니온 파인드.md",
     "CodingTest/PYTHON/유니온 파인드/test2.txt",
     "CodingTest/PYTHON/유니온 파인드/1976_여행 가자.ipynb",
     "CodingTest/PYTHON/유니온 파인드/1717_집합의 표현.ipynb",
@@ -204,22 +215,10 @@
     "CS_DS_ByObsidian/공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/1-4. docker-compose 파일을 이용한 네트워크 연결.md",
     "CS_DS_ByObsidian/공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/0. 목차_mlflow.md",
     "SQL/AnswerForChallenge/Advanced.md",
-    "simple_projects/google_trends/README.md",
     "CS_DS_ByObsidian/이미지/이진 탐색 정리.jpg",
-    "CS_DS_ByObsidian/공부 메모/Docker/docker-compose.md",
-    "CS_DS_ByObsidian/공부 메모/Docker/도커 이미지 배포.md",
-    "CS_DS_ByObsidian/공부 메모/data science/pandas/pandas.df.str.md",
-    "CS_DS_ByObsidian/공부 메모/data science/pandas/pd.concat.md",
     "Analysis/스팀 분석/1_데이터수집.ipynb",
-    "Analysis/스팀 분석",
-    "CS_DS_ByObsidian/공부 메모/data science/pandas/pd.DataFrame.md",
-    "CS_DS_ByObsidian/공부 메모/data science/pandas/pd.factorize().md",
     "Analysis/미세먼지 농도와 습도/image1.PNG",
-    "Analysis/미세먼지 농도와 습도/미세먼지 농도와 습도.ipynb",
     "Analysis/미세먼지 농도와 습도/image2.PNG",
-    "Analysis/미세먼지 농도와 습도/2022_particle.csv",
-    "Analysis/미세먼지 농도와 습도/2022_hum_particle_ver2.csv",
-    "simple_projects/google_trends/1년 간 1달 평균 미세먼지 농도와 습도.PNG",
-    "이미지/Pasted image 20230316155805.png"
+    "simple_projects/google_trends/1년 간 1달 평균 미세먼지 농도와 습도.PNG"
   ]
 }
