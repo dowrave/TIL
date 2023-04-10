@@ -4,31 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "aa3a5a06a8b50e25",
+        "id": "7c4a609ac17ebd96",
         "type": "tabs",
         "children": [
           {
-            "id": "9113cb0f99c252fb",
+            "id": "e31152f86e860832",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Prim.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "4a50c007f1e2d34b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/유니온 파인드.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -77,8 +61,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -98,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Prim.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Prim.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -137,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Prim.md"
-              }
+              "state": {}
             }
           }
         ],
@@ -147,8 +126,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 257.5,
-    "collapsed": true
+    "width": 257.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -160,13 +138,15 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "9113cb0f99c252fb",
+  "active": "e31152f86e860832",
   "lastOpenFiles": [
-    "CodingTest/PYTHON/최소 신장 트리/4386_별자리 만들기.ipynb",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Kruksal.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Prim.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/유니온 파인드.md",
+    "CodingTest/PYTHON/최소 신장 트리/1774_우주신과의 교감.ipynb",
+    "CS_DS_ByObsidian/공부 메모/python/소수점 자릿수 제한하기.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Kruksal.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Prim.md",
+    "CodingTest/PYTHON/최소 신장 트리/4386_별자리 만들기.ipynb",
     "CodingTest/PYTHON/최소 신장 트리/test.txt",
     "CodingTest/PYTHON/최소 신장 트리/9372_상근이의 여행.ipynb",
     "CodingTest/PYTHON/최소 신장 트리/1197_최소 스패닝 트리.ipynb",
@@ -192,8 +172,6 @@
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_공홈 - 학습 라이브러리.md",
     "CodingTest/PYTHON/유니온 파인드/test2.txt",
     "CodingTest/PYTHON/유니온 파인드/1976_여행 가자.ipynb",
-    "CodingTest/PYTHON/유니온 파인드/1717_집합의 표현.ipynb",
-    "CodingTest/PYTHON/유니온 파인드",
     "CS_DS_ByObsidian/공부 메모/data science/실전/범주형, 수치형 데이터를 모델에 쓸 때.md",
     "CS_DS_ByObsidian/공부 메모/data science/pandas/pd.to_datetime().md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/x값 회전하기.md",
@@ -203,7 +181,6 @@
     "CS_DS_ByObsidian/프로젝트 상자/Dacon - PlayerProspect/Private 2위.md",
     "CS_DS_ByObsidian/공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/1-4. docker-compose 파일을 이용한 네트워크 연결.md",
     "CS_DS_ByObsidian/공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/0. 목차_mlflow.md",
-    "SQL/AnswerForChallenge/Advanced.md",
     "CS_DS_ByObsidian/이미지/이진 탐색 정리.jpg",
     "Analysis/미세먼지 농도와 습도/image1.PNG",
     "Analysis/미세먼지 농도와 습도/image2.PNG",
