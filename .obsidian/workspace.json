@@ -11,8 +11,12 @@
             "id": "e31152f86e860832",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Prim.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -61,7 +65,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -81,6 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Prim.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,6 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Prim.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -118,7 +125,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Prim.md"
+              }
             }
           }
         ],
@@ -140,6 +149,8 @@
   },
   "active": "e31152f86e860832",
   "lastOpenFiles": [
+    "KMOOC 강의 정리/데이터마이닝_빈발아이템찾기.pdf",
+    "KMOOC 강의 정리/데이터마이닝_링크분석.pdf",
     "CS_DS_ByObsidian/공부 메모/CodeTest/유니온 파인드.md",
     "CodingTest/PYTHON/최소 신장 트리/1774_우주신과의 교감.ipynb",
     "CS_DS_ByObsidian/공부 메모/python/소수점 자릿수 제한하기.md",
@@ -171,7 +182,6 @@
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_가이드 팔로우하기.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_공홈 - 학습 라이브러리.md",
     "CodingTest/PYTHON/유니온 파인드/test2.txt",
-    "CodingTest/PYTHON/유니온 파인드/1976_여행 가자.ipynb",
     "CS_DS_ByObsidian/공부 메모/data science/실전/범주형, 수치형 데이터를 모델에 쓸 때.md",
     "CS_DS_ByObsidian/공부 메모/data science/pandas/pd.to_datetime().md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/x값 회전하기.md",

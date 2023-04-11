@@ -16,20 +16,17 @@ for i in range(e):
 visited = [0] * (v + 1)
 
 def prim(start_node):
-	visited[start_node] = 1
+	
 	heap = []
-	mst = []
-	for i in graph[start_node]:
-		heapq.heappush(heap, i)
-		# i의 구성은 w, b이거나 w, a, b 모두 가능
-	# ans = 0
+	mst = [] # 혹은 ans도 가능
+	heapq.heappush(heap, (0, start_node))
 
 	while heap:
 		# weight, prev_node, now_node로 구성해도 됨
-		weight, now_node = heapq.heappop(heap) 
+		w, now = heapq.heappop(heap) 
 
-		if visited[now_node] == 0:
-			visited[now_node] = 1
+		if visited[now] == 0:
+			visited[now] = 1
 			mst.append(now_node) # 역시 (prev_node, now_node)로 구성해도 됨
 			# ans += weight
 			for w, next_node in graph[now_node]:
