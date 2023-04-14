@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "68717687d6b24b6a",
+        "id": "e4415b107b413eba",
         "type": "tabs",
         "children": [
           {
-            "id": "509d4d4b80124319",
+            "id": "53122009d5685b53",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/python/URL 인코딩.md",
+                "file": "CS_DS_ByObsidian/공부 메모/data science/feature engineering/Mutual Information.md",
                 "mode": "source",
                 "source": false
               }
@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "prim",
+                "query": "값 표시",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -65,12 +65,12 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "2156d08b5bf5774e",
@@ -86,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/python/URL 인코딩.md",
+                "file": "CS_DS_ByObsidian/공부 메모/data science/feature engineering/Mutual Information.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/python/URL 인코딩.md",
+                "file": "CS_DS_ByObsidian/공부 메모/data science/feature engineering/Mutual Information.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,7 +126,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/python/URL 인코딩.md"
+                "file": "CS_DS_ByObsidian/공부 메모/data science/feature engineering/Mutual Information.md"
               }
             }
           }
@@ -147,8 +147,16 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "509d4d4b80124319",
+  "active": "53122009d5685b53",
   "lastOpenFiles": [
+    "CS_DS_ByObsidian/공부 메모/Kubernetes/중간점검 - 웹앱 직접 배포하기.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_플로이드-워셜.md",
+    "SQL/2. INTERMEDIATE.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/x값 회전하기.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/한글 폰트 띄우기.md",
+    "CS_DS_ByObsidian/공부 메모/data science/pandas/판다스 기초.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_정렬 순서 수정하기.md",
+    "CS_DS_ByObsidian/공부 메모/data science/pandas/pd.concat.md",
     "CS_DS_ByObsidian/공부 메모/python/URL 인코딩.md",
     "KMOOC 강의 정리/데이터마이닝/데이터마이닝_링크분석(1).jpg",
     "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Prim.md",
@@ -176,7 +184,6 @@
     "CodingTest/PYTHON/최소 신장 트리/9372_상근이의 여행.ipynb",
     "CodingTest/PYTHON/최소 신장 트리/1197_최소 스패닝 트리.ipynb",
     "CodingTest/PYTHON/최소 신장 트리",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_정렬 순서 수정하기.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_다익스트라.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/그래프.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/트리.md",
@@ -187,13 +194,6 @@
     "CS_DS_ByObsidian/공부 메모/data science/statistics/통계학_표본의 크기.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_가이드 팔로우하기.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_공홈 - 학습 라이브러리.md",
-    "CS_DS_ByObsidian/공부 메모/data science/실전/범주형, 수치형 데이터를 모델에 쓸 때.md",
-    "CS_DS_ByObsidian/공부 메모/data science/pandas/pd.to_datetime().md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/x값 회전하기.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/sns.catplot.md",
-    "CS_DS_ByObsidian/공부 메모/data science/pandas/판다스 기초.md",
-    "CS_DS_ByObsidian/프로젝트 상자/Dacon - PlayerProspect/Private 1위.md",
-    "CS_DS_ByObsidian/프로젝트 상자/Dacon - PlayerProspect/Private 2위.md",
-    "CS_DS_ByObsidian/공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/1-4. docker-compose 파일을 이용한 네트워크 연결.md"
+    "CS_DS_ByObsidian/공부 메모/data science/실전/범주형, 수치형 데이터를 모델에 쓸 때.md"
   ]
 }
