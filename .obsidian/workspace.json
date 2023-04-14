@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "7c4a609ac17ebd96",
+        "id": "68717687d6b24b6a",
         "type": "tabs",
         "children": [
           {
-            "id": "e31152f86e860832",
+            "id": "509d4d4b80124319",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Prim.md",
+                "file": "CS_DS_ByObsidian/공부 메모/python/URL 인코딩.md",
                 "mode": "source",
                 "source": false
               }
@@ -65,12 +65,12 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "2156d08b5bf5774e",
@@ -86,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Prim.md",
+                "file": "CS_DS_ByObsidian/공부 메모/python/URL 인코딩.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Prim.md",
+                "file": "CS_DS_ByObsidian/공부 메모/python/URL 인코딩.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,12 +126,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Prim.md"
+                "file": "CS_DS_ByObsidian/공부 메모/python/URL 인코딩.md"
               }
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
@@ -147,9 +147,11 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "e31152f86e860832",
+  "active": "509d4d4b80124319",
   "lastOpenFiles": [
+    "CS_DS_ByObsidian/공부 메모/python/URL 인코딩.md",
     "KMOOC 강의 정리/데이터마이닝/데이터마이닝_링크분석(1).jpg",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Prim.md",
     "KMOOC 강의 정리/데이터마이닝/데이터마이닝_빈발아이템(4).jpg",
     "KMOOC 강의 정리/데이터마이닝/데이터마이닝_빈발아이템(3).jpg",
     "KMOOC 강의 정리/데이터마이닝/데이터마이닝_빈발아이템(2).jpg",
@@ -159,7 +161,6 @@
     "KMOOC 강의 정리/데이터마이닝/데이터마이닝_링크분석(6).jpg",
     "KMOOC 강의 정리/데이터마이닝/데이터마이닝_링크분석(5).jpg",
     "KMOOC 강의 정리/데이터마이닝/데이터마이닝_링크분석(4).jpg",
-    "KMOOC 강의 정리/데이터마이닝/데이터마이닝_링크분석(3).jpg",
     "KMOOC 강의 정리/README.md",
     "KMOOC 강의 정리/데이터마이닝",
     "KMOOC 강의 정리/새 폴더",
@@ -170,7 +171,6 @@
     "CS_DS_ByObsidian/공부 메모/python/소수점 자릿수 제한하기.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Kruksal.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Prim.md",
     "CodingTest/PYTHON/최소 신장 트리/4386_별자리 만들기.ipynb",
     "CodingTest/PYTHON/최소 신장 트리/test.txt",
     "CodingTest/PYTHON/최소 신장 트리/9372_상근이의 여행.ipynb",
