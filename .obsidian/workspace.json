@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "fe094c26a55ba48d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/한글 폰트 띄우기.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -48,7 +61,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "값 표시",
+                "query": "한글",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -86,7 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/data science/feature engineering/Mutual Information.md",
+                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/한글 폰트 띄우기.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +116,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/data science/feature engineering/Mutual Information.md",
+                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/한글 폰트 띄우기.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,7 +139,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/data science/feature engineering/Mutual Information.md"
+                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/한글 폰트 띄우기.md"
               }
             }
           }
@@ -147,8 +160,11 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "53122009d5685b53",
+  "active": "fe094c26a55ba48d",
   "lastOpenFiles": [
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/plt.legend(범례).md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/표에 없는 값이지만 분류 기준에는 있을 때.md",
+    "CS_DS_ByObsidian/공부 메모/data science/feature engineering/Mutual Information.md",
     "CS_DS_ByObsidian/공부 메모/Kubernetes/중간점검 - 웹앱 직접 배포하기.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_플로이드-워셜.md",
     "SQL/2. INTERMEDIATE.md",
@@ -191,9 +207,6 @@
     "CS_DS_ByObsidian/공부 메모/CodeTest/그리디 알고리즘.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_막대 - 선 그래프 동시 표시.md",
     "CS_DS_ByObsidian/공부 메모/data science/pandas/pandas_조건을 만족하는 행 drop.md",
-    "CS_DS_ByObsidian/공부 메모/data science/statistics/통계학_표본의 크기.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_가이드 팔로우하기.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_공홈 - 학습 라이브러리.md",
-    "CS_DS_ByObsidian/공부 메모/data science/실전/범주형, 수치형 데이터를 모델에 쓸 때.md"
+    "CS_DS_ByObsidian/공부 메모/data science/statistics/통계학_표본의 크기.md"
   ]
 }
