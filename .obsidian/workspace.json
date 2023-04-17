@@ -30,9 +30,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "00697e28907d6976",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Hugo/Hugo 블로그 구축하기.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -78,8 +90,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -99,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/한글 폰트 띄우기.md",
+                "file": "Hugo/Hugo 블로그 구축하기.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -116,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/한글 폰트 띄우기.md",
+                "file": "Hugo/Hugo 블로그 구축하기.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -139,12 +150,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/한글 폰트 띄우기.md"
+                "file": "Hugo/Hugo 블로그 구축하기.md"
               }
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -160,16 +171,18 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "fe094c26a55ba48d",
+  "active": "00697e28907d6976",
   "lastOpenFiles": [
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/한글 폰트 띄우기.md",
+    "CS_DS_ByObsidian/공부 메모/data science/feature engineering/Mutual Information.md",
+    "Hugo/Hugo 블로그 구축하기.md",
+    "Hugo",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/plt.legend(범례).md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/표에 없는 값이지만 분류 기준에는 있을 때.md",
-    "CS_DS_ByObsidian/공부 메모/data science/feature engineering/Mutual Information.md",
     "CS_DS_ByObsidian/공부 메모/Kubernetes/중간점검 - 웹앱 직접 배포하기.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_플로이드-워셜.md",
     "SQL/2. INTERMEDIATE.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/x값 회전하기.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/한글 폰트 띄우기.md",
     "CS_DS_ByObsidian/공부 메모/data science/pandas/판다스 기초.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_정렬 순서 수정하기.md",
     "CS_DS_ByObsidian/공부 메모/data science/pandas/pd.concat.md",
@@ -199,14 +212,12 @@
     "CodingTest/PYTHON/최소 신장 트리/test.txt",
     "CodingTest/PYTHON/최소 신장 트리/9372_상근이의 여행.ipynb",
     "CodingTest/PYTHON/최소 신장 트리/1197_최소 스패닝 트리.ipynb",
-    "CodingTest/PYTHON/최소 신장 트리",
     "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_다익스트라.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/그래프.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/트리.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_DFS.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/그리디 알고리즘.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_막대 - 선 그래프 동시 표시.md",
-    "CS_DS_ByObsidian/공부 메모/data science/pandas/pandas_조건을 만족하는 행 drop.md",
-    "CS_DS_ByObsidian/공부 메모/data science/statistics/통계학_표본의 크기.md"
+    "CS_DS_ByObsidian/공부 메모/data science/pandas/pandas_조건을 만족하는 행 drop.md"
   ]
 }
