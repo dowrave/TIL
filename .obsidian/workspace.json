@@ -42,6 +42,18 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "8a1e5d0a8050ccc7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Hugo/hugo mainroad theme 살펴보기.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
         "currentTab": 2
@@ -159,7 +171,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 257.5
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -173,22 +186,34 @@
   },
   "active": "00697e28907d6976",
   "lastOpenFiles": [
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/한글 폰트 띄우기.md",
-    "CS_DS_ByObsidian/공부 메모/data science/feature engineering/Mutual Information.md",
-    "Hugo/Hugo 블로그 구축하기.md",
-    "Hugo",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/plt.legend(범례).md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/표에 없는 값이지만 분류 기준에는 있을 때.md",
-    "CS_DS_ByObsidian/공부 메모/Kubernetes/중간점검 - 웹앱 직접 배포하기.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_플로이드-워셜.md",
-    "SQL/2. INTERMEDIATE.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/x값 회전하기.md",
-    "CS_DS_ByObsidian/공부 메모/data science/pandas/판다스 기초.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_정렬 순서 수정하기.md",
-    "CS_DS_ByObsidian/공부 메모/data science/pandas/pd.concat.md",
-    "CS_DS_ByObsidian/공부 메모/python/URL 인코딩.md",
-    "KMOOC 강의 정리/데이터마이닝/데이터마이닝_링크분석(1).jpg",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/lst 대신 dict 쓰기.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/dictionary 이용법.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/DFS.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/BFS.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Kruksal.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Prim.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/동적 계획법(DP).md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/코테_목차.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/백트래킹.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/투 포인터.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/트리.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/파이썬 2차원 리스트에서 슬라이싱.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/페르마의 소정리.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/N번째 피보나치 수 구하기.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/sort 내장함수.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/LIS - 가장 긴 부분 수열의 길이.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/최대공약수와 최소공배수.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/재귀함수.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/정렬.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/알고리즘 - 분할 정복.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/소수 판정.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/세그먼트 트리.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_BFS.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_벨만-포드.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_다익스트라.md",
+    "Hugo",
+    "KMOOC 강의 정리/데이터마이닝/데이터마이닝_링크분석(1).jpg",
     "KMOOC 강의 정리/데이터마이닝/데이터마이닝_빈발아이템(4).jpg",
     "KMOOC 강의 정리/데이터마이닝/데이터마이닝_빈발아이템(3).jpg",
     "KMOOC 강의 정리/데이터마이닝/데이터마이닝_빈발아이템(2).jpg",
@@ -198,26 +223,14 @@
     "KMOOC 강의 정리/데이터마이닝/데이터마이닝_링크분석(6).jpg",
     "KMOOC 강의 정리/데이터마이닝/데이터마이닝_링크분석(5).jpg",
     "KMOOC 강의 정리/데이터마이닝/데이터마이닝_링크분석(4).jpg",
-    "KMOOC 강의 정리/README.md",
     "KMOOC 강의 정리/데이터마이닝",
     "KMOOC 강의 정리/새 폴더",
     "KMOOC 강의 정리/데이터마이닝_빈발아이템찾기.pdf",
     "KMOOC 강의 정리/데이터마이닝_링크분석.pdf",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/유니온 파인드.md",
     "CodingTest/PYTHON/최소 신장 트리/1774_우주신과의 교감.ipynb",
-    "CS_DS_ByObsidian/공부 메모/python/소수점 자릿수 제한하기.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Kruksal.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리.md",
     "CodingTest/PYTHON/최소 신장 트리/4386_별자리 만들기.ipynb",
     "CodingTest/PYTHON/최소 신장 트리/test.txt",
     "CodingTest/PYTHON/최소 신장 트리/9372_상근이의 여행.ipynb",
-    "CodingTest/PYTHON/최소 신장 트리/1197_최소 스패닝 트리.ipynb",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_다익스트라.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/트리.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_DFS.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/그리디 알고리즘.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_막대 - 선 그래프 동시 표시.md",
-    "CS_DS_ByObsidian/공부 메모/data science/pandas/pandas_조건을 만족하는 행 drop.md"
+    "CodingTest/PYTHON/최소 신장 트리/1197_최소 스패닝 트리.ipynb"
   ]
 }

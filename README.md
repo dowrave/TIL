@@ -2,6 +2,10 @@
 <details>
 <summary>23년 4월</summary>
 
+> `230418`
+> - 블로그 건설 중
+> - K-MOOC 데이터 마이닝 수강
+
 > `230417`  
 > - Hugo 블로그 생성(git submodule 이슈 때문에 하루를 다 썼다 ㅋㅋ..) 
 > - ChatGPT는 신인가?   
