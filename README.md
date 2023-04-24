@@ -2,7 +2,11 @@
 <details>
 <summary>23년 4월</summary>
 
-> `230418`
+> `230424`  
+> - Tableau Basic 강의(인프런)  
+> - [강의로 만든 차트](https://public.tableau.com/app/profile/hyeontae.lee/viz/4_16823275258540/sheet1)  
+
+> `230418 ~ 230421`
 > - 블로그 건설 중
 > - K-MOOC 데이터 마이닝 수강
 

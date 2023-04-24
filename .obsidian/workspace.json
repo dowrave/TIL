@@ -4,59 +4,35 @@
     "type": "split",
     "children": [
       {
-        "id": "e4415b107b413eba",
+        "id": "ef222e5a6e14e935",
         "type": "tabs",
         "children": [
           {
-            "id": "53122009d5685b53",
+            "id": "379ead9170ddd5e8",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/data science/feature engineering/Mutual Information.md",
+                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/Tableau Basic.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "fe094c26a55ba48d",
+            "id": "433b923e420eae49",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/한글 폰트 띄우기.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "00697e28907d6976",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Hugo/Hugo 블로그 구축하기.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "8a1e5d0a8050ccc7",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Hugo/hugo mainroad theme 살펴보기.md",
+                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_Level Of Detail.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,8 +61,8 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "한글",
-                "matchingCase": false,
+                "query": "상관계수",
+                "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
                 "extraContext": false,
@@ -122,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Hugo/Hugo 블로그 구축하기.md",
+                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_Level Of Detail.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -139,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Hugo/Hugo 블로그 구축하기.md",
+                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_Level Of Detail.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -162,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Hugo/Hugo 블로그 구축하기.md"
+                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_Level Of Detail.md"
               }
             }
           }
@@ -184,33 +160,33 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "00697e28907d6976",
+  "active": "433b923e420eae49",
   "lastOpenFiles": [
-    "CS_DS_ByObsidian/공부 메모/CodeTest/lst 대신 dict 쓰기.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/dictionary 이용법.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/DFS.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/BFS.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Kruksal.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/최소신장트리_Prim.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/동적 계획법(DP).md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/코테_목차.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/백트래킹.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/투 포인터.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/트리.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/파이썬 2차원 리스트에서 슬라이싱.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/페르마의 소정리.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/N번째 피보나치 수 구하기.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/sort 내장함수.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/LIS - 가장 긴 부분 수열의 길이.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/최대공약수와 최소공배수.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/재귀함수.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/Tableau Basic.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_Level Of Detail.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_차원과 측정값.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_연속형과 불연속형.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_하이라이트 테이블과 기타 차트.md",
+    "5. tableau_하이라이트 테이블.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_분포_산점도_히스토그램_박스플롯.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/README.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_파이 차트와 비율 바 차트.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_정렬 순서 수정하기.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/Tableau_바 차트.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_막대 - 선 그래프 동시 표시.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_라인 차트와 영역 차트.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_공홈 - 학습 라이브러리.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_가이드 팔로우하기.md",
+    "CS_DS_ByObsidian/공부 메모/data science/statistics/상관계수와 결정계수.md",
+    "README.md",
+    "tableau_파이 차트와 비율 바 차트.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/정렬.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/알고리즘 - 분할 정복.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/소수 판정.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/세그먼트 트리.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_BFS.md",
-    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_벨만-포드.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/한글 폰트 띄우기.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/나머지(모듈로) 산술.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/2차원 부분합.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/2차원 행렬.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/2차원 리스트 1차원으로 바꾸기.md",
+    "CS_DS_ByObsidian/공부 메모/CodeTest/그래프.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/그래프_다익스트라.md",
     "Hugo",
     "KMOOC 강의 정리/데이터마이닝/데이터마이닝_링크분석(1).jpg",
