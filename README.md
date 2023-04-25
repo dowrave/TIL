@@ -2,6 +2,10 @@
 <details>
 <summary>23년 4월</summary>
 
+> `230425`  
+> - K-MOOC 데이터마이닝 종료  
+> - Tableau Basic 강의(인프런 : 필터, 이중 축)
+
 > `230424`  
 > - Tableau Basic 강의(인프런)  
 > - [강의로 만든 차트](https://public.tableau.com/app/profile/hyeontae.lee/viz/4_16823275258540/sheet1)  

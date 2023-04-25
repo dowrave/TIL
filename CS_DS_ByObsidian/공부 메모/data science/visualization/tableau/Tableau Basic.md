@@ -38,3 +38,11 @@
 1. [[tableau_차원과 측정값]]
 2. [[tableau_연속형과 불연속형]]
 3. [[tableau_Level Of Detail]]
+
+### 3. 태블로의 주요 기능
+1. [[tableau_필터]]
+2. [[tableau_이중 축]]
+3. [[tableau_분석 패널]]
+4. [[tableau_지도]]
+5. [[tableau_계산된 필드]]
+6. [[tableau_IF 함수]]
