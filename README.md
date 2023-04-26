@@ -2,6 +2,9 @@
 <details>
 <summary>23년 4월</summary>
 
+> `230426`
+> - Tableau Basic 마무리, Tableau Levelup 시작
+
 > `230425`  
 > - K-MOOC 데이터마이닝 종료  
 > - Tableau Basic 강의(인프런 : 필터, 이중 축)
