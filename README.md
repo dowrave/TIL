@@ -2,6 +2,9 @@
 <details>
 <summary>23년 4월</summary>
 
+> `230427`  
+> - Tableau Levelup 진행 중 : 오늘 끝낼 예정
+
 > `230426`
 > - Tableau Basic 마무리, Tableau Levelup 시작
 
