@@ -4,52 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "2599322bc15998de",
+        "id": "935b2e6198fb040c",
         "type": "tabs",
         "children": [
           {
-            "id": "4a3e00b123c77a48",
+            "id": "fdc1993913881cf8",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_Fixed.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "8bdfec33f1d9ee44",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_Fixed.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "5acb422c6244f2d5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_VLOD.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "3f5a2f161948eb22",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_Include.md",
+                "file": "프로젝트/스팀/230428.md",
                 "mode": "source",
                 "source": false
               }
@@ -84,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#tableau_levelup",
+                "query": "tableau_levelup",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -121,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_Fixed.md",
+                "file": "프로젝트/스팀/230428.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -138,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_Fixed.md",
+                "file": "프로젝트/스팀/230428.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -161,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_Fixed.md"
+                "file": "프로젝트/스팀/230428.md"
               }
             }
           },
@@ -192,23 +156,32 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "4a3e00b123c77a48",
+  "active": "fdc1993913881cf8",
   "lastOpenFiles": [
+    "프로젝트/스팀/230428.md",
+    "프로젝트/스팀",
+    "무제 폴더",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_테이블 계산 필터_LAST.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_테이블 계산 필터_LOOKUP.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_액션(차원) 필터와 Fixed LOD.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_컨텍스트 필터.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/Tableau_LevelUp.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_Fixed.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_exclude.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_LOD 표현식 vs 테이블 계산.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_가이드 팔로우하기.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_계산 범위 설정.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_라인 차트와 영역 차트.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/Tableau Basic.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_Include.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_VLOD.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_Fixed.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_exclude.md",
     "CS_DS_ByObsidian/공부 메모/CodeTest/코테_목차.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_window 함수.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_INDEX, SIZE, RANK, TOTAL.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_계산 범위 설정.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_테이블 계산.md",
     "이미지/Pasted image 20230426171741.png",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_가이드 팔로우하기.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_계산된 필드.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_차원과 측정값.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/Tableau Basic.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_분포_산점도_히스토그램_박스플롯.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_Level Of Detail.md",
     "Optuna/README.md",
@@ -222,13 +195,6 @@
     "FeatureEngineering/Images/1.png",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_IF 함수.md",
     "tableau_IF 함수.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_공홈 - 학습 라이브러리.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_라인 차트와 영역 차트.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_막대 - 선 그래프 동시 표시.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/Tableau_바 차트.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_분석 패널.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_연속형과 불연속형.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_이중 축.md",
     "이미지/Pasted image 20230426154054.png",
     "Hugo",
     "KMOOC 강의 정리/데이터마이닝",
@@ -237,8 +203,6 @@
     "KMOOC 강의 정리/데이터마이닝_링크분석.pdf",
     "CodingTest/PYTHON/최소 신장 트리/1774_우주신과의 교감.ipynb",
     "CodingTest/PYTHON/최소 신장 트리/4386_별자리 만들기.ipynb",
-    "CodingTest/PYTHON/최소 신장 트리/test.txt",
-    "CodingTest/PYTHON/최소 신장 트리/9372_상근이의 여행.ipynb",
-    "CodingTest/PYTHON/최소 신장 트리/1197_최소 스패닝 트리.ipynb"
+    "CodingTest/PYTHON/최소 신장 트리/test.txt"
   ]
 }

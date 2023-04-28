@@ -2,6 +2,9 @@
 <details>
 <summary>23년 4월</summary>
 
+> `230428`  
+>  - 스팀 프로젝트 재개 : 죽이고 싶은 `inplace`와 n선
+
 > `230427`  
 > - Tableau Levelup 진행 중 : 오늘 끝낼 예정
 
