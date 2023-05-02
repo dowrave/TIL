@@ -4,35 +4,34 @@
     "type": "split",
     "children": [
       {
-        "id": "935b2e6198fb040c",
+        "id": "484d501d23634faf",
         "type": "tabs",
         "children": [
           {
-            "id": "fdc1993913881cf8",
+            "id": "99149eed02e8c0ad",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "프로젝트/스팀/230428.md",
+                "file": "프로젝트/스팀/230502.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "d63b693c804d090e",
+            "id": "02ca6d22d5f52c66",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "프로젝트/스팀/230501.md",
+                "file": "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_파이 차트와 비율 바 차트.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -61,7 +60,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tableau_levelup",
+                "query": "tag:#tableau_basic",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -78,7 +77,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -98,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "프로젝트/스팀/230501.md",
+                "file": "프로젝트/스팀/230502.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "프로젝트/스팀/230501.md",
+                "file": "프로젝트/스팀/230502.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "프로젝트/스팀/230501.md"
+                "file": "프로젝트/스팀/230502.md"
               }
             }
           },
@@ -151,7 +151,7 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
@@ -169,22 +169,25 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "d63b693c804d090e",
+  "active": "f6059738ada5cead",
   "lastOpenFiles": [
-    "프로젝트/스팀/230428.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_파이 차트와 비율 바 차트.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_하이라이트 테이블과 기타 차트.md",
+    "프로젝트/스팀/230502.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/Tableau Basic.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/Tableau_LevelUp.md",
+    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_계산 범위 설정.md",
     "프로젝트/스팀/230501.md",
+    "프로젝트/스팀/230428.md",
     "프로젝트/스팀",
     "무제 폴더",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_테이블 계산 필터_LAST.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_테이블 계산 필터_LOOKUP.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_액션(차원) 필터와 Fixed LOD.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_컨텍스트 필터.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/Tableau_LevelUp.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_LOD 표현식 vs 테이블 계산.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_가이드 팔로우하기.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_계산 범위 설정.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_라인 차트와 영역 차트.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/Tableau Basic.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_Include.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_VLOD.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_Fixed.md",
@@ -197,8 +200,6 @@
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_계산된 필드.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_차원과 측정값.md",
     "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_분포_산점도_히스토그램_박스플롯.md",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_Level Of Detail.md",
-    "Optuna/README.md",
     "FeatureEngineering/Images/9.png",
     "FeatureEngineering/Images/8.png",
     "FeatureEngineering/Images/7.png",
@@ -207,7 +208,6 @@
     "FeatureEngineering/Images/3.png",
     "FeatureEngineering/Images/2.png",
     "FeatureEngineering/Images/1.png",
-    "CS_DS_ByObsidian/공부 메모/data science/visualization/tableau/tableau_IF 함수.md",
     "이미지/Pasted image 20230426154054.png",
     "Hugo",
     "KMOOC 강의 정리/데이터마이닝",
