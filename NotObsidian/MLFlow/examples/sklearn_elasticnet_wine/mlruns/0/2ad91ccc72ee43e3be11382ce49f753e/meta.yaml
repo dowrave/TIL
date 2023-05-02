@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/dowra/1.MyWorkspace/MLFlow/examples/sklearn_elasticnet_wine/mlruns/0/2ad91ccc72ee43e3be11382ce49f753e/artifacts
+end_time: 1670999458931
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 2ad91ccc72ee43e3be11382ce49f753e
+run_name: persistent-wolf-272
+run_uuid: 2ad91ccc72ee43e3be11382ce49f753e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1670999444172
+status: 3
+tags: []
+user_id: dowra

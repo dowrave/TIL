@@ -1,0 +1,19 @@
+artifact_path: extra_pip_requirements
+flavors:
+  python_function:
+    data: model.None
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.xgboost
+    python_version: 3.9.13
+  xgboost:
+    code: null
+    data: model.None
+    model_class: xgboost.core.Booster
+    model_format: null
+    xgb_version: 1.7.2
+mlflow_version: 2.0.1
+model_uuid: 322af165498f4f3e8ee39ede99b07e2a
+run_id: 31aa7d7f3cfc411bb659f1cc7834f59d
+utc_time_created: '2022-12-14 07:21:00.404911'
