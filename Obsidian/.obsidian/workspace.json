@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "tableau/tableau_독서/7_ 분야별 데이터로 대시보드 만들기.md",
+                "file": "tableau/tableau_독서/7_4 구글 시트로 웹데이터 수집 및 종목 비교 차트.md",
                 "mode": "source",
                 "source": false
               }
@@ -105,7 +105,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "tableau/tableau_독서/7_ 분야별 데이터로 대시보드 만들기.md",
+                "file": "tableau/tableau_독서/7_4 구글 시트로 웹데이터 수집 및 종목 비교 차트.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -122,7 +122,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "tableau/tableau_독서/7_ 분야별 데이터로 대시보드 만들기.md",
+                "file": "tableau/tableau_독서/7_4 구글 시트로 웹데이터 수집 및 종목 비교 차트.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -145,7 +145,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "tableau/tableau_독서/7_ 분야별 데이터로 대시보드 만들기.md"
+                "file": "tableau/tableau_독서/7_4 구글 시트로 웹데이터 수집 및 종목 비교 차트.md"
               }
             }
           },
@@ -178,8 +178,14 @@
   },
   "active": "a110e82e4457f8b2",
   "lastOpenFiles": [
+    "tableau/tableau_독서/7_3 지역별 논경지 면적 변화와 헥타르.md",
+    "tableau/tableau_독서/7_4 구글 시트로 웹데이터 수집 및 종목 비교 차트.md",
     "tableau/tableau_독서/목차_데이터 시각적 분석 태블로로 끝내기.md",
+    "tableau/tableau_독서/7_1 코로나 지역별 확진자.md",
+    "tableau/tableau_독서/7_2 샘플 슈퍼스토어.md",
     "tableau/tableau_독서/7_ 분야별 데이터로 대시보드 만들기.md",
+    "무제 파일.canvas",
+    "이미지/Pasted image 20230504151100.png",
     "tableau/tableau_독서/7-1_Covid-19 지역별 확진자.md",
     "7_분야별 데이터로 대시보드 만들기.md",
     "tableau/tableau_독서/6_데이터 구하기.md",
@@ -190,7 +196,6 @@
     "tableau/tableau_독서/1_불확실성의 증가와 디지털 전환.md",
     "tableau/tableau_독서/2_ 효율적인 대시보드 계획하기.md",
     "tableau/tableau_강의/Tableau Basic.md",
-    "무제 파일.canvas",
     "tableau/tableau_독서",
     "공부 메모/data science/개념과 이론/Skewness.md",
     "tableau/tableau_강의",
@@ -205,10 +210,6 @@
     "공부 메모/python/소수점 자릿수 제한하기.md",
     "공부 메모/python/인덱싱.md",
     "공부 메모/CodeTest/페르마의 소정리.md",
-    "공부 메모/CodeTest/코테_목차.md",
-    "공부 메모/CodeTest/그래프_벨만-포드.md",
-    "공부 메모/CodeTest/그래프.md",
-    "공부 메모/CodeTest/2차원 부분합.md",
     "이미지/Pasted image 20230313184509.png",
     "이미지/Pasted image 20230313184327.png",
     "이미지/Pasted image 20230313183556.png",
