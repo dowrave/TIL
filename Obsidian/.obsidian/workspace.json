@@ -20,18 +20,31 @@
             }
           },
           {
+            "id": "4a408174a078436a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "독서/데이터 사이언티스트 실전 노트/3-2-6. 다변수 이해_공분산, 상관계수, 선형성, 공선성, 다중공선성, 차원의 저주.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "145aa470c9450e70",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "독서/데이터 사이언티스트 실전 노트/3-2-6. 다변수 이해_공분산, 상관계수, 선형성, 공선성, 다중공선성.md",
+                "file": "독서/데이터 사이언티스트 실전 노트/3-2-6. 다변수 이해_공분산, 상관계수, 선형성, 공선성, 다중공선성, 차원의 저주.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -117,7 +130,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "독서/데이터 사이언티스트 실전 노트/3-2-5. 가설 검정 과정과 모수 통계 종류, 귀무대립가설, AB테스트, 유의수준, 통계 방법, 분산분석(ANOVA), 카이제곱검정, 검정통계량 실습.md",
+                "file": "독서/데이터 사이언티스트 실전 노트/3-2-6. 다변수 이해_공분산, 상관계수, 선형성, 공선성, 다중공선성, 차원의 저주.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -134,7 +147,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "독서/데이터 사이언티스트 실전 노트/3-2-5. 가설 검정 과정과 모수 통계 종류, 귀무대립가설, AB테스트, 유의수준, 통계 방법, 분산분석(ANOVA), 카이제곱검정, 검정통계량 실습.md",
+                "file": "독서/데이터 사이언티스트 실전 노트/3-2-6. 다변수 이해_공분산, 상관계수, 선형성, 공선성, 다중공선성, 차원의 저주.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -157,7 +170,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "독서/데이터 사이언티스트 실전 노트/3-2-5. 가설 검정 과정과 모수 통계 종류, 귀무대립가설, AB테스트, 유의수준, 통계 방법, 분산분석(ANOVA), 카이제곱검정, 검정통계량 실습.md"
+                "file": "독서/데이터 사이언티스트 실전 노트/3-2-6. 다변수 이해_공분산, 상관계수, 선형성, 공선성, 다중공선성, 차원의 저주.md"
               }
             }
           },
@@ -188,9 +201,19 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "2e6c54a43dd10c78",
+  "active": "4a408174a078436a",
   "lastOpenFiles": [
-    "독서/데이터 사이언티스트 실전 노트/3-2-6. 다변수 이해_공분산, 상관계수, 선형성, 공선성, 다중공선성.md",
+    "이미지/Pasted image 20230511003959.png",
+    "이미지/Pasted image 20230511003726.png",
+    "이미지/Pasted image 20230511003200.png",
+    "이미지/Pasted image 20230511000657.png",
+    "이미지/Pasted image 20230510235717.png",
+    "이미지/Pasted image 20230510235709.png",
+    "이미지/Pasted image 20230510235346.png",
+    "이미지/Pasted image 20230510235331.png",
+    "무제 파일.canvas",
+    "독서/데이터 사이언티스트 실전 노트/3-2-6. 다변수 이해_공분산, 상관계수, 선형성, 공선성, 다중공선성, 차원의 저주.md",
+    "이미지/Pasted image 20230510235138.png",
     "독서/데이터 사이언티스트 실전 노트/3-2-5. 가설 검정 과정과 모수 통계 종류, 귀무대립가설, AB테스트, 유의수준, 통계 방법, 분산분석(ANOVA), 카이제곱검정, 검정통계량 실습.md",
     "독서/데이터 사이언티스트 실전 노트/목차_데이터 사이언티스트 실전 노트.md",
     "독서/데이터 사이언티스트 실전 노트/3-2. 기본 통계로 질문자 되기.md",
@@ -219,17 +242,10 @@
     "독서",
     "독서/tableau_독서/7_3 지역별 논경지 면적 변화와 헥타르.md",
     "독서/tableau_독서/목차_데이터 시각적 분석 태블로로 끝내기.md",
-    "독서/tableau_독서/7_1 코로나 지역별 확진자.md",
-    "무제 파일.canvas",
     "이미지/Pasted image 20230504151100.png",
     "독서/tableau_독서",
     "tableau/tableau_강의",
     "tableau/tableaubasic",
-    "이미지/이진 탐색 정리.jpg",
-    "이미지/Pasted image 20230313184509.png",
-    "이미지/Pasted image 20230313184327.png",
-    "이미지/Pasted image 20230313183556.png",
-    "tableau",
-    "이미지/Untitled (Draft)-1 (2).jpg"
+    "tableau"
   ]
 }
