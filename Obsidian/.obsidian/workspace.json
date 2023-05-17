@@ -8,18 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "cf3ce002021d8e20",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "프로젝트 상자/스팀 데이터 분석/브레인스토밍 & 기록.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "84a4ccf1d49e4ddc",
             "type": "leaf",
             "state": {
@@ -31,8 +19,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -190,12 +177,12 @@
   },
   "active": "84a4ccf1d49e4ddc",
   "lastOpenFiles": [
-    "프로젝트 상자/스팀 데이터 분석/브레인스토밍 & 기록.md",
     "프로젝트 상자/스팀 데이터 분석/무제 파일.md",
+    "프로젝트 상자/스팀 데이터 분석/브레인스토밍 & 기록.md",
+    "프로젝트 상자/스팀 데이터 분석/일지.md",
     "공부 메모/data science/pandas/value_count로 인덱싱하기.md",
     "공부 메모/data science/pandas/Unnamed 0 없게 불러오기.md",
     "문득 드는 생각/230516 - 인방과 게임 흥행.md",
-    "프로젝트 상자/스팀 데이터 분석/일지.md",
     "문득 드는 생각",
     "공부 메모/data science/pandas/pandas 시행착오.md",
     "공부 메모/data science/pandas/df.filter - 공통으로 들어간 column들 정리.md",
