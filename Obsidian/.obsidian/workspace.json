@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "value_counts",
+                "query": "가상환경",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -85,7 +85,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -179,6 +180,8 @@
   "lastOpenFiles": [
     "프로젝트 상자/스팀 데이터 분석/이슈 정리.md",
     "프로젝트 상자/스팀 데이터 분석/목표 & 일지.md",
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/0. 목차_mlflow.md",
+    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/1-4. docker-compose 파일을 이용한 네트워크 연결.md",
     "프로젝트 상자/스팀 데이터 분석/브레인스토밍 & 기록.md",
     "공부 메모/data science/pandas/value_count로 인덱싱하기.md",
     "공부 메모/data science/pandas/Unnamed 0 없게 불러오기.md",
@@ -214,8 +217,6 @@
     "독서/데이터 사이언티스트 실전 노트/3-2-4 분포 변환, 중심극한정리, 부트스트랩.md",
     "독서/데이터 사이언티스트 실전 노트/3-2-3 피처스케일링, 정규화, 표준화.md",
     "독서/데이터 사이언티스트 실전 노트/3-2-2 모수적비모수적모델, 분포, 중심경향값, 적률, 왜도, 첨도.md",
-    "독서/데이터 사이언티스트 실전 노트/3-2-1 모집단, 표본, 모델, 확률, 우도, 최대우도추정, 통계.md",
-    "독서/데이터 사이언티스트 실전 노트/3-1 데싸는 뭐하는 사람인가.md",
     "독서/데이터 사이언티스트 실전 노트",
     "독서/한 달 공부 데이터 분석",
     "독서",
