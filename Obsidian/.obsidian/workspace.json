@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "프로젝트 상자/스팀 데이터 분석/mysql shell 연결.md",
+                "file": "프로젝트 상자/스팀 데이터 분석/목표 & 일지.md",
                 "mode": "source",
                 "source": false
               }
@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "가상환경",
+                "query": "hugo 이미지",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -85,7 +85,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -105,7 +106,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "프로젝트 상자/스팀 데이터 분석/mysql shell 연결.md",
+                "file": "프로젝트 상자/스팀 데이터 분석/목표 & 일지.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -122,7 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "프로젝트 상자/스팀 데이터 분석/mysql shell 연결.md",
+                "file": "프로젝트 상자/스팀 데이터 분석/목표 & 일지.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -145,7 +146,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "프로젝트 상자/스팀 데이터 분석/mysql shell 연결.md"
+                "file": "프로젝트 상자/스팀 데이터 분석/목표 & 일지.md"
               }
             }
           },
@@ -177,7 +178,12 @@
   },
   "active": "84a4ccf1d49e4ddc",
   "lastOpenFiles": [
+    "이미지/Pasted image 20230524181456.png",
+    "Hugo/마크다운 포스트에 이미지 넣기.md",
+    "이미지/Pasted image 20230524133331.png",
     "프로젝트 상자/스팀 데이터 분석/목표 & 일지.md",
+    "이미지/Pasted image 20230524134432.png",
+    "이미지/Pasted image 20230524133430.png",
     "프로젝트 상자/스팀 데이터 분석/mysql shell 연결.md",
     "프로젝트 상자/스팀 데이터 분석/모듈 호출 궁금증.md",
     "프로젝트 상자/스팀 데이터 분석/가상환경 세팅법.md",
@@ -204,18 +210,13 @@
     "독서/데이터 사이언티스트 실전 노트/4. 데이터 사이언티스트가 하는 일.md",
     "독서/데이터 사이언티스트 실전 노트/3-2-7, 3-3. 변수 선택, 필터, 래퍼, 임베디드, 정규화, 릿지, 라쏘, 엘라스틱 넷 회귀, 지식을 대하는 태도.md",
     "독서/데이터 사이언티스트 실전 노트/3-2-6. 다변수 이해_공분산, 상관계수, 선형성, 공선성, 다중공선성, 차원의 저주, PCA, 주성분 갯수 선택.md",
-    "독서/데이터 사이언티스트 실전 노트/3-2-5. 가설 검정 과정과 모수 통계 종류, 귀무대립가설, AB테스트, 유의수준, 통계 방법, 분산분석(ANOVA), 카이제곱검정, 검정통계량 실습.md",
     "이미지/Pasted image 20230511003959.png",
     "이미지/Pasted image 20230511003726.png",
     "이미지/Pasted image 20230511003200.png",
     "이미지/Pasted image 20230511000657.png",
     "이미지/Pasted image 20230510235717.png",
     "이미지/Pasted image 20230510235709.png",
-    "이미지/Pasted image 20230510235346.png",
-    "이미지/Pasted image 20230510235331.png",
     "무제 파일.canvas",
-    "이미지/Pasted image 20230510235138.png",
-    "독서/데이터 사이언티스트 실전 노트/3-2. 기본 통계로 질문자 되기.md",
     "독서/데이터 사이언티스트 실전 노트",
     "독서/한 달 공부 데이터 분석",
     "독서",
