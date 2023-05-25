@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "hugo 이미지",
+                "query": "Not Connected",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -85,8 +85,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -178,16 +177,16 @@
   },
   "active": "84a4ccf1d49e4ddc",
   "lastOpenFiles": [
+    "프로젝트 상자/스팀 데이터 분석/이슈 정리.md",
+    "프로젝트 상자/스팀 데이터 분석/목표 & 일지.md",
+    "프로젝트 상자/스팀 데이터 분석/mysql shell 연결.md",
     "이미지/Pasted image 20230524181456.png",
     "Hugo/마크다운 포스트에 이미지 넣기.md",
     "이미지/Pasted image 20230524133331.png",
-    "프로젝트 상자/스팀 데이터 분석/목표 & 일지.md",
     "이미지/Pasted image 20230524134432.png",
     "이미지/Pasted image 20230524133430.png",
-    "프로젝트 상자/스팀 데이터 분석/mysql shell 연결.md",
     "프로젝트 상자/스팀 데이터 분석/모듈 호출 궁금증.md",
     "프로젝트 상자/스팀 데이터 분석/가상환경 세팅법.md",
-    "프로젝트 상자/스팀 데이터 분석/이슈 정리.md",
     "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/0. 목차_mlflow.md",
     "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/1-4. docker-compose 파일을 이용한 네트워크 연결.md",
     "프로젝트 상자/스팀 데이터 분석/브레인스토밍 & 기록.md",
@@ -215,7 +214,6 @@
     "이미지/Pasted image 20230511003200.png",
     "이미지/Pasted image 20230511000657.png",
     "이미지/Pasted image 20230510235717.png",
-    "이미지/Pasted image 20230510235709.png",
     "무제 파일.canvas",
     "독서/데이터 사이언티스트 실전 노트",
     "독서/한 달 공부 데이터 분석",
