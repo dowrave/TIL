@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "6a5daaf489a995d2",
+        "id": "82255833f547f360",
         "type": "tabs",
         "children": [
           {
-            "id": "84a4ccf1d49e4ddc",
+            "id": "db85feecf59397dc",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "Not Connected",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -117,18 +117,6 @@
             }
           },
           {
-            "id": "85244a0141d8c93b",
-            "type": "leaf",
-            "state": {
-              "type": "outgoing-link",
-              "state": {
-                "file": "프로젝트 상자/스팀 데이터 분석/목표 & 일지.md",
-                "linksCollapsed": false,
-                "unlinkedCollapsed": true
-              }
-            }
-          },
-          {
             "id": "0b63375f470a7807",
             "type": "leaf",
             "state": {
@@ -157,12 +145,12 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -175,11 +163,12 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "84a4ccf1d49e4ddc",
+  "active": "db85feecf59397dc",
   "lastOpenFiles": [
+    "프로젝트 상자/스팀 데이터 분석/mysql shell 연결.md",
     "프로젝트 상자/스팀 데이터 분석/이슈 정리.md",
     "프로젝트 상자/스팀 데이터 분석/목표 & 일지.md",
-    "프로젝트 상자/스팀 데이터 분석/mysql shell 연결.md",
+    "공부 메모/Docker/도커 명령어.md",
     "이미지/Pasted image 20230524181456.png",
     "Hugo/마크다운 포스트에 이미지 넣기.md",
     "이미지/Pasted image 20230524133331.png",
