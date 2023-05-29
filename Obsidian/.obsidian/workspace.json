@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "프로젝트 상자/스팀 데이터 분석/목표 & 일지.md",
+                "file": "프로젝트 상자/스팀 데이터 분석/이슈 정리.md",
                 "mode": "source",
                 "source": false
               }
@@ -105,7 +105,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "프로젝트 상자/스팀 데이터 분석/목표 & 일지.md",
+                "file": "프로젝트 상자/스팀 데이터 분석/이슈 정리.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "프로젝트 상자/스팀 데이터 분석/목표 & 일지.md"
+                "file": "프로젝트 상자/스팀 데이터 분석/이슈 정리.md"
               }
             }
           },
@@ -143,6 +143,18 @@
             "state": {
               "type": "advanced-tables-toolbar",
               "state": {}
+            }
+          },
+          {
+            "id": "a9726654358f4141",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "프로젝트 상자/스팀 데이터 분석/이슈 정리.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
             }
           }
         ]
@@ -163,11 +175,11 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "db85feecf59397dc",
+  "active": "88aa362ec9a6bc47",
   "lastOpenFiles": [
+    "프로젝트 상자/스팀 데이터 분석/목표 & 일지.md",
     "프로젝트 상자/스팀 데이터 분석/mysql shell 연결.md",
     "프로젝트 상자/스팀 데이터 분석/이슈 정리.md",
-    "프로젝트 상자/스팀 데이터 분석/목표 & 일지.md",
     "공부 메모/Docker/도커 명령어.md",
     "이미지/Pasted image 20230524181456.png",
     "Hugo/마크다운 포스트에 이미지 넣기.md",
