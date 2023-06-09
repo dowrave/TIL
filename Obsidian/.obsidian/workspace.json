@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "프로젝트 상자/스팀 데이터 분석/컨테이너 제작 과정.md",
+                "file": "프로젝트 상자/스팀 데이터 분석/목표 & 일지.md",
                 "mode": "source",
                 "source": false
               }
@@ -117,7 +117,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "프로젝트 상자/스팀 데이터 분석/컨테이너 제작 과정.md",
+                "file": "프로젝트 상자/스팀 데이터 분석/목표 & 일지.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -145,7 +145,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "프로젝트 상자/스팀 데이터 분석/컨테이너 제작 과정.md"
+                "file": "프로젝트 상자/스팀 데이터 분석/목표 & 일지.md"
               }
             }
           },
@@ -163,7 +163,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "프로젝트 상자/스팀 데이터 분석/컨테이너 제작 과정.md",
+                "file": "프로젝트 상자/스팀 데이터 분석/목표 & 일지.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -190,12 +190,12 @@
   "active": "3c94ada06b6727ce",
   "lastOpenFiles": [
     "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/1-4. docker-compose 파일을 이용한 네트워크 연결.md",
-    "프로젝트 상자/스팀 데이터 분석/컨테이너 제작 과정.md",
+    "프로젝트 상자/스팀 데이터 분석/목표 & 일지.md",
     "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/1-3. dockerfile 설정 & 컨테이너 간 네트워크 연결.md",
+    "프로젝트 상자/스팀 데이터 분석/컨테이너 제작 과정.md",
+    "프로젝트 상자/스팀 데이터 분석/버전.md",
     "프로젝트 상자/스팀 데이터 분석/docker 관련 안 되는 경우들.md",
     "프로젝트 상자/스팀 데이터 분석/이슈 정리.md",
-    "프로젝트 상자/스팀 데이터 분석/버전.md",
-    "프로젝트 상자/스팀 데이터 분석/목표 & 일지.md",
     "프로젝트 상자/스팀 데이터 분석/도커 & 컨테이너 실행 자동화.md",
     "프로젝트 상자/스팀 데이터 분석/sudo su 없이 도커 접근하기.md",
     "프로젝트 상자/스팀 데이터 분석/가상환경 세팅법.md",
