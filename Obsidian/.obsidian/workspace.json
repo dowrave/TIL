@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "프로젝트 상자/스팀 데이터 분석/일지.md",
+                "file": "프로젝트 상자/스팀 데이터 분석/컨테이너 실행 중 다시 빌드하기.md",
                 "mode": "source",
                 "source": false
               }
@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "필터 여러",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -105,7 +105,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "프로젝트 상자/스팀 데이터 분석/일지.md",
+                "file": "프로젝트 상자/스팀 데이터 분석/컨테이너 실행 중 다시 빌드하기.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "프로젝트 상자/스팀 데이터 분석/일지.md"
+                "file": "프로젝트 상자/스팀 데이터 분석/컨테이너 실행 중 다시 빌드하기.md"
               }
             }
           },
@@ -151,7 +151,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "프로젝트 상자/스팀 데이터 분석/일지.md",
+                "file": "프로젝트 상자/스팀 데이터 분석/컨테이너 실행 중 다시 빌드하기.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -175,16 +175,16 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "88aa362ec9a6bc47",
+  "active": "40a2c57641e2b927",
   "lastOpenFiles": [
-    "프로젝트 상자/스팀 데이터 분석/이슈 정리.md",
-    "프로젝트 상자/스팀 데이터 분석/목표.md",
-    "프로젝트 상자/스팀 데이터 분석/일지.md",
-    "프로젝트 상자/스팀 데이터 분석/아이디어(Medium).md",
-    "프로젝트 상자/스팀 데이터 분석/버전.md",
-    "프로젝트 상자/스팀 데이터 분석/도커 & 컨테이너 실행 자동화.md",
-    "프로젝트 상자/스팀 데이터 분석/모듈 호출 궁금증.md",
     "프로젝트 상자/스팀 데이터 분석/가상환경 세팅법.md",
+    "프로젝트 상자/스팀 데이터 분석/모듈 호출 궁금증.md",
+    "프로젝트 상자/스팀 데이터 분석/도커 & 컨테이너 실행 자동화.md",
+    "프로젝트 상자/스팀 데이터 분석/목표.md",
+    "프로젝트 상자/스팀 데이터 분석/버전.md",
+    "프로젝트 상자/스팀 데이터 분석/이슈 정리.md",
+    "프로젝트 상자/스팀 데이터 분석/아이디어(Medium).md",
+    "프로젝트 상자/스팀 데이터 분석/일지.md",
     "독서/tableau_독서/2_ 효율적인 대시보드 계획하기.md",
     "독서/tableau_독서/7_3 지역별 논경지 면적 변화와 헥타르.md",
     "독서/tableau_독서/7_4 구글 시트로 웹데이터 수집 및 종목 비교 차트.md",
