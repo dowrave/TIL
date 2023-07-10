@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "프로젝트 상자/스팀 데이터 분석/컨테이너 실행 중 다시 빌드하기.md",
+                "file": "프로젝트 상자/스팀 데이터 분석/일지.md",
                 "mode": "source",
                 "source": false
               }
@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "마크다운 접기",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -105,7 +105,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "프로젝트 상자/스팀 데이터 분석/컨테이너 실행 중 다시 빌드하기.md",
+                "file": "프로젝트 상자/스팀 데이터 분석/일지.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "프로젝트 상자/스팀 데이터 분석/컨테이너 실행 중 다시 빌드하기.md"
+                "file": "프로젝트 상자/스팀 데이터 분석/일지.md"
               }
             }
           },
@@ -151,7 +151,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "프로젝트 상자/스팀 데이터 분석/컨테이너 실행 중 다시 빌드하기.md",
+                "file": "프로젝트 상자/스팀 데이터 분석/일지.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -177,6 +177,11 @@
   },
   "active": "40a2c57641e2b927",
   "lastOpenFiles": [
+    "무제 파일 1.canvas",
+    "공부 메모/markdown/마크다운 접기.md",
+    "프로젝트 상자/스팀 데이터 분석/일지.md",
+    "프로젝트 상자/스팀 데이터 분석/무제 파일.md",
+    "프로젝트 상자/스팀 데이터 분석/컨테이너 실행 중 다시 빌드하기.md",
     "프로젝트 상자/스팀 데이터 분석/가상환경 세팅법.md",
     "프로젝트 상자/스팀 데이터 분석/모듈 호출 궁금증.md",
     "프로젝트 상자/스팀 데이터 분석/도커 & 컨테이너 실행 자동화.md",
@@ -184,11 +189,9 @@
     "프로젝트 상자/스팀 데이터 분석/버전.md",
     "프로젝트 상자/스팀 데이터 분석/이슈 정리.md",
     "프로젝트 상자/스팀 데이터 분석/아이디어(Medium).md",
-    "프로젝트 상자/스팀 데이터 분석/일지.md",
     "독서/tableau_독서/2_ 효율적인 대시보드 계획하기.md",
     "독서/tableau_독서/7_3 지역별 논경지 면적 변화와 헥타르.md",
     "독서/tableau_독서/7_4 구글 시트로 웹데이터 수집 및 종목 비교 차트.md",
-    "프로젝트 상자/스팀 데이터 분석/컨테이너 실행 중 다시 빌드하기.md",
     "프로젝트 상자/스팀 데이터 분석/컨테이너 제작 과정.md",
     "프로젝트 상자/스팀 데이터 분석/sudo su 없이 도커 접근하기.md",
     "프로젝트 상자/스팀 데이터 분석/mysql shell 연결.md",
@@ -200,9 +203,6 @@
     "독서/데이터 사이언티스트 실전 노트/4-1. 직장인 - 업무 이해 및 기록, 커뮤니케이션.md",
     "독서/데이터 사이언티스트 실전 노트/5_ 포트폴리오, 분류 & 회귀 성능 평가 지표 - 에러 수식, 오차 행렬, 포폴 재검토 시 자문할 점.md",
     "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/1-4. docker-compose 파일을 이용한 네트워크 연결.md",
-    "tableau/tableau_강의/Tableau_바 차트.md",
-    "공부 메모/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/1-3. dockerfile 설정 & 컨테이너 간 네트워크 연결.md",
-    "독서/tableau_독서/7_1 코로나 지역별 확진자.md",
     "이미지/Pasted image 20230524181456.png",
     "이미지/Pasted image 20230524133331.png",
     "이미지/Pasted image 20230524134432.png",
