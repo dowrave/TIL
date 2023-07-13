@@ -1,0 +1,51 @@
+using System;
+
+namespace ConsoleApp1
+{
+	class SortObject // 배열 정렬 기능 타입 정의
+	{
+		int [] numbers;
+		
+		public SortObject(int[] numbers)
+		{
+			this.numbers = numbers;
+		}
+
+		public void Sort() // 선택 정렬 메서드
+		{
+			int temp;
+			for (int i = 0; i < numbers.Length; i++)
+			{
+				int lowPos = i;
+				for (int j = i +1; j < numbers.Length; j++)
+				{
+					if (numbers[j] < numbers[lowPos])
+					{
+						lowPos = j;
+					}
+				}
+				temp = numbers[lowPos];
+				numbers[lowPos] = numbers[i];
+				numbers[i] = temp;
+			}
+		}
+
+		public void Display() // numbers 요소들 화면에 출력
+		{
+			for (int i = 0; i < numbers.Length; i++){
+				Console.Write(numbers[i] + ", ");
+			}
+		}
+	}
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			int[] intArray = new int[] {5, 2, 3, 1, 0, 4};
+			
+			SortObject so = new SortObject(intArray);
+			so.Sort();
+			so.Display();
+		}
+	}
+}

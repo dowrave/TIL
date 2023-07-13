@@ -1,0 +1,48 @@
+
+namespace learn
+{
+    class Mainapp 
+    {
+        static void Main(string[] args)
+        {
+            DrawingObject line = new Line(new Point(10, 10), new Point(20, 20));
+            line.Draw();
+        }
+    }
+    class Point
+        {
+            int x, y;
+            public Point(int x, int y)
+            {
+                this.x = x; this.y = y;
+            }
+
+            public override string ToString()
+            {
+                return "X : " + x + ", Y : " + y; 
+            }
+        }
+
+abstract class DrawingObject // 추상 클래스
+{
+	public abstract void Draw(); // 추상 메서드
+
+	public void Move() {Console.WriteLine("Move");} // 일반 메서드 정의 가능
+}
+
+class Line : DrawingObject
+{
+	Point pt1, pt2;
+	public Line(Point pt1, Point pt2)
+	{
+		this.pt1 = pt1;
+		this.pt2 = pt2;
+	}
+
+	public override void Draw() // 추상 클래스의 추상 메서드를 "반드시" 정의해야함
+	{
+		Console.WriteLine("Line " + pt1.ToString() + " ~ " + pt2.ToString());
+	}
+}
+
+}
