@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "프로젝트 상자/스팀 데이터 분석/일지.md",
+                "file": "Unity/1.  유니티 알아보기.md",
                 "mode": "source",
                 "source": false
               }
@@ -105,7 +105,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "프로젝트 상자/스팀 데이터 분석/일지.md",
+                "file": "Unity/1.  유니티 알아보기.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "프로젝트 상자/스팀 데이터 분석/일지.md"
+                "file": "Unity/1.  유니티 알아보기.md"
               }
             }
           },
@@ -151,7 +151,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "프로젝트 상자/스팀 데이터 분석/일지.md",
+                "file": "Unity/1.  유니티 알아보기.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -177,9 +177,11 @@
   },
   "active": "40a2c57641e2b927",
   "lastOpenFiles": [
+    "프로젝트 상자/스팀 데이터 분석/일지.md",
+    "Unity/1.  유니티 알아보기.md",
+    "Unity",
     "무제 파일 1.canvas",
     "공부 메모/markdown/마크다운 접기.md",
-    "프로젝트 상자/스팀 데이터 분석/일지.md",
     "프로젝트 상자/스팀 데이터 분석/무제 파일.md",
     "프로젝트 상자/스팀 데이터 분석/컨테이너 실행 중 다시 빌드하기.md",
     "프로젝트 상자/스팀 데이터 분석/가상환경 세팅법.md",

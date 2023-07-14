@@ -1,15 +1,30 @@
-class Computer
-{
-}
+using System;
 
-interface IMonitor
+namespace ConsoleApp1
 {
-	void TurnOn();
-}
 
-interface IKeyboard {}
 
-class Notebook : Computer, IMonitor, IKeyboard
-{
-	public void TurnOn() {} // 추상 메서드와 달리 override를 쓰지 않는다.
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			int x = 1;
+			int y = 2;
+
+ 		}
+	}
+
+	class swap
+	{
+		int x;
+		int y;
+		public swap(int X, int Y)
+		{
+			this.x = X;
+			this.y = Y;
+		}
+
+		public
+
+	}
 }
