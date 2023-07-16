@@ -15,7 +15,7 @@ SELECT DATE_TRUNC('week', occurred_at) AS week,
  GROUP BY 1
  ORDER BY 1 desc
 ```
-![visualization](IMAGE/users_per_week.PNG)
+![visualization](users_per_week.PNG)
 * **중요 : 더 깊게 들어가기 전에, 유저 감소의 가능한 원인을 생각해보자(가설을 세우라는 것!)**
     - 앞으로 할 일은 이 가설을 검증해보는 것이 될 것이다
     - **가설을 잘 세우는 건 중요**함 : **데이터를 살펴보는 시간을 줄일 수 있기 때문**이다. 
@@ -84,7 +84,7 @@ SELECT DATE_TRUNC('week', occurred_at) AS week,
     - 근데 유저의 국적을 추적할 방법이 없음(사용 언어 뿐)
     - 그나마 기업의 국적을 추적하는 방법을 생각했는데, 다국적 기업일 수도 있음(실제로 회사는 인도인데 사용 언어는 독일어, 한국어, 영어, 아랍어 등 다양하게 나옴) 
 2) 지난 1년간 `engagement`에 관여한 아이디가 가장 많은 국적을 조사
-![국가별](IMAGE/top10_by_nation.PNG)
+![국가별](top10_by_nation.PNG)
 ```sql
 SELECT sub2.location,
        sub2.week,
@@ -123,7 +123,7 @@ SELECT DATE_TRUNC('week', created_at) as week,
  ORDER BY 1
  ```
 - 회원 가입이 막혔는지를 보는 쿼리.
-- ![회원 가입](IMAGE/회원가입.PNG)
+- ![회원 가입](회원가입.PNG)
 
 미국을 더 깊게 파보면
 ```sql
@@ -144,7 +144,7 @@ SELECT sub.week,
   group by 1
   order by 1
 ```
-![미국 가입자 수 추이](IMAGE/us_sign_up.PNG)
+![미국 가입자 수 추이](us_sign_up.PNG)
 - 가입했는데 승인이 안 된 `pending`의 증가세가 있지만, 이게 중요한 요소인가는 모르겠음.
 - 한편 서브쿼리에 `engagement` 조건을 넣으면 (당연하게도) `pending = 0`이 뜸.
 ------------------------
@@ -160,7 +160,7 @@ SELECT DATE_TRUNC('day',created_at) AS day,
  GROUP BY 1
  ORDER BY 1
  ```
-![ans_1](IMAGE/ans_1.PNG)
+![ans_1](ans_1.PNG)
 - 일 단위로 가입자 수를 나타낸 그래프이다.
 - 요일 단위로 추적했을 때 평일은 높고 주말은 낮은 추이를 보인다.
 - 유저 수 감소에 중요한 요소는 아님을 알 수 있음 : 비슷, 혹은 증가하는 추이를 보이기 때문임
@@ -200,7 +200,7 @@ SELECT DATE_TRUNC('week',z.occurred_at) AS "week",
  ORDER BY 1
 LIMIT 100
 ```
-![account_age](IMAGE/accounts_age.PNG)
+![account_age](accounts_age.PNG)
 - 서브쿼리에서는 3가지 특성을 새로 만들었다.
   1. 계정을 활성화한 주
   2. 계정 활성화한 후 주문까지 걸린 기간(두 timestamp 간의 날짜 차이를 `day`로 나타냄)
@@ -229,7 +229,7 @@ SELECT DATE_TRUNC('week', occurred_at) AS week,
  ORDER BY 1
 LIMIT 100
 ```
-![device_categories](IMAGE/device_category.PNG)
+![device_categories](device_category.PNG)
 - `events` 테이블에 있는 장치들을 분류한 뒤 해당 값들을 `week`에 대해 집계한 결과다.
 - 전반적으로 감소하는 추세지만, 특히 `phone`의 감소 추세를 볼 수 있다. 
 - `engagement`에 대한 조사이므로, `phone`을 이용한 트래픽에 문제가 있음을 알 수 있다 : 이 시점에서 모바일 어플리케이션에 어떤 문제가 있는가를 주변인에게 물어볼 수 있을 것
@@ -246,7 +246,7 @@ SELECT DATE_TRUNC('week', occurred_at) AS week,
  GROUP BY 1
  ORDER BY 1
 ```
-![이메일](IMAGE/email_actions.PNG)
+![이메일](email_actions.PNG)
 - `clickthrough`이 낮아졌음 : 해당 항목은 이메일의 링크를 클릭했느냐 여부였음 -> 해당 항목에 문제가 생겼음을 알 수 있다.
 
 #### 5. 이메일 열기 & Clickthrough 분석
@@ -282,7 +282,7 @@ SELECT DATE_TRUNC('week',e1.occurred_at) AS week,
        ) a
  ORDER BY 1
 ```
-![열기_ct](IMAGE/open_ct_rate.PNG)
+![열기_ct](open_ct_rate.PNG)
 쿼리 분석  
 1. 서브쿼리
 - 이메일 액션은 4가지가 있음
@@ -535,7 +535,7 @@ SELECT e.*,
  GROUP BY 1
  ORDER BY 1
  ```
-![run_ac](image/run_ac.PNG)
+![run_ac](run_ac.PNG)
 - (느낀 점) : 일단 서브쿼리 빈도는 걱정할 필요는 없겠다. 예제는 5번 썼는데 ㅎㅎ
 - 일단 세션을 어떻게 정의했는가부터 살펴보자.
   - 가장 안쪽 쿼리에서 다음 이벤트와 이전 이벤트를 정의했음
@@ -559,7 +559,7 @@ SELECT DATE_TRUNC('week',z.session_start) AS week,
        COUNT(CASE WHEN z.runs > 0 THEN z.session ELSE NULL END)/COUNT(*)::FLOAT AS with_runs
 -- 이하 동일 : 가장 바깥 부분만 가져옴
 ```
-![pct](image/run_ac_pct.PNG)
+![pct](run_ac_pct.PNG)
 - 쿼리를 보면 알겠지만 얘는 `COUNT(*)`도 잘 작동한다. ;;
 - 결과 ) `AUTOCOMPLETE`의 사용 비중이 높기 때문에 해당 기능을 개선할 필요가 있을 것이다.
 
@@ -619,8 +619,8 @@ SELECT e.*,
  GROUP BY 1
  ORDER BY 1
  ```
- ![이미지](image/ac_in_sess.PNG)
-![이미지2](image/sess_runs.PNG)
+ ![이미지](ac_in_sess.PNG)
+![이미지2](sess_runs.PNG)
 - 자동완성, 일반 검색 모두 여러 번 실행됨
 - 일반 검색의 경우 여러 번 검색하는 빈도가 더 높음 
   - 이는 검색 결과가 매우 좋지 않거나
@@ -638,7 +638,7 @@ SELECT clicks,
  GROUP BY 1
  ORDER BY 1
 ```
-![이미지](image/click_per_search.PNG)
+![이미지](click_per_search.PNG)
 - 일반 검색이 있는 세션 중 어떤 결과도 클릭하지 않은 세션이 매우 많음 : 이는 일반 검색의 성능이 매우 좋지 않음을 시사함
 ```sql
 SELECT runs,
@@ -648,7 +648,7 @@ SELECT runs,
  GROUP BY 1
  ORDER BY 1
 ```
-![이미지](image/avg_click_per_search_counts.PNG)
+![이미지](avg_click_per_search_counts.PNG)
 - 심지어 일반 검색을 더 많이 했더라도, 더 많은 클릭으로 이어지진 않음
 
 4. 검색 순위와 클릭 빈도
@@ -660,7 +660,7 @@ SELECT TRIM('search_click_result_' FROM event_name)::INT AS search_result,
  GROUP BY 1
  ORDER BY 1
 ```
-![이미지](image/click_search_order.PNG)
+![이미지](click_search_order.PNG)
 - 좋은 검색 결과는 앞쪽 3개에 클릭 수가 몰려 있어야 함
 - 비교적 균등하게 분포되었기 때문에 이 정렬 순서 또한 수정될 필요가 있음
 
@@ -711,7 +711,7 @@ SELECT e.*,
  ORDER BY 1
 LIMIT 100
 ```
-![이미지](image/search_again_in_month.PNG)
+![이미지](search_again_in_month.PNG)
 
 - 그 결과, 일반 검색의 재사용률(1개월 이내)은 현저히 낮다.
 - 1개월 이내에 `RUN` 쿼리를 몇 번 재사용했는가에 대한 그래프임
@@ -720,7 +720,7 @@ LIMIT 100
 ```sql
 -- 쿼리 : 위 쿼리에서 'run -> autocomplete'으로 바꿔주기만 하면 됨
 ```
-![이미지](image/ac_again.PNG)
+![이미지](ac_again.PNG)
 - 한편 `AUTOCOMPLETE`의 1개월 이내 재사용 빈도는 높음
 
 맺음)
