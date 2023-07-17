@@ -11,11 +11,40 @@
             "id": "64834b3cb3796c0b",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "2. Area/게임 제작/Unity/2-2. 알파 타입 버전.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "7f39977a5f02bab2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "2. Area/게임 제작/Unity/2-2. 알파 타입 버전.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "530300a2081ca4e1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "2. Area/게임 제작/Unity/2-2. 알파 타입 버전.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -44,7 +73,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "마크다운 접기",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -85,7 +114,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 280.5
+    "width": 200
   },
   "right": {
     "id": "e5d497f15d3c08ac",
@@ -101,6 +130,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "2. Area/게임 제작/Unity/2-2. 알파 타입 버전.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +157,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "2. Area/게임 제작/Unity/2-2. 알파 타입 버전.md"
+              }
             }
           },
           {
@@ -144,6 +176,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "2. Area/게임 제작/Unity/2-2. 알파 타입 버전.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -153,7 +186,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -167,8 +201,14 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "64834b3cb3796c0b",
+  "active": "530300a2081ca4e1",
   "lastOpenFiles": [
+    "2. Area/게임 제작/Unity/2-3. 베타 타입 버전.md",
+    "2. Area/게임 제작/Unity/2-2. 알파 타입 버전.md",
+    "2. Area/게임 제작/Unity/2-1. 슈팅 게임 제작.md",
+    "무제 파일 2.canvas",
+    "무제 파일 1.canvas",
+    "무제 파일.canvas",
     "1. Projects/스팀 데이터 분석/가상화 버전.md",
     "1. Projects/스팀 데이터 분석/목표.md",
     "1. Projects/스팀 데이터 분석/도커 & 컨테이너 실행 자동화.md",
@@ -199,11 +239,6 @@
     "2. Area/코테",
     "2. Area/게임 제작",
     "2. Area/데이터",
-    "4. Archive/etc/맵리듀스.md",
-    "4. Archive/etc/빅데이터 플랫폼 프로젝트.md",
-    "4. Archive/etc/위도 & 경도로 속도 계산하기(실사용).md",
-    "무제 파일.canvas",
-    "무제 파일 1.canvas",
     "4. Archive",
     "3. Resource",
     "2. Area",
