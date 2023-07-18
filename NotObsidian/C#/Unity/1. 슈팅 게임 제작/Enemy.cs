@@ -14,7 +14,12 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+
         
+    }
+    void OnEnable()
+    {
+
         int randValue = Random.Range(0, 10);
         if (randValue < 3)
         {
@@ -29,7 +34,6 @@ public class Enemy : MonoBehaviour
             dir = Vector3.down;
         }
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -47,20 +51,31 @@ public class Enemy : MonoBehaviour
         // 폭발 효과를 위치시킴
         explosion.transform.position = transform.position;
 
-        Destroy(other.gameObject);
-        Destroy(gameObject);
+
+        // 부딪히면 비활성화시켜서 다시 탄창에 넣는다
+
+        // 부딪힌 상대의 이름이 Bullet이라면
+        if (other.gameObject.name.Contains("Bullet"))
+        {
+            // 부딪힌 물체 비활성화
+            other.gameObject.SetActive(false);
+        }
+
+        // 아니라면 제거
+        else
+        {
+            Destroy(other.gameObject);
+        }
+
+        // Destroy(gameObject);
+        gameObject.SetActive(false); // 풀에 자원 반납
+
+        PlayerFire player = GameObject.Find("Player").GetComponent<PlayerFire>();
+        player.bulletObjectPool.Add(other.gameObject);
 
         // 적을 잡을 때마다 점수 표시
 
-        // 1. Scene에서 scoreManager 객체 찾아오기
-        GameObject smObject = GameObject.Find("ScoreManager");
-
-        // 2. ScoreManager 게임 오브젝트에서 얻어온다.
-        ScoreManager sm = smObject.GetComponent<ScoreManager>();
-
-        // 3. ScoreManager 호출
-        sm.SetScore(sm.GetScore() + 1);
-
+        ScoreManager.Instance.Score++;
 
     }
 
