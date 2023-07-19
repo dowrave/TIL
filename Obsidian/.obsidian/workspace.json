@@ -4,28 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "6d3c0900a4e85921",
+        "id": "eb7f0067847ca3ec",
         "type": "tabs",
         "children": [
           {
-            "id": "64834b3cb3796c0b",
+            "id": "bc2b4f4edc3c3129",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2. Area/게임 제작/Unity/2-3. 베타 타입 버전.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "19744bd55414833c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "2. Area/게임 제작/Csharp/2. 클래스, 캡슐화.md",
+                "file": "1. Projects/스팀 데이터 분석/도움말/파일로 설치한 패키지.md",
                 "mode": "source",
                 "source": false
               }
@@ -101,8 +89,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "e5d497f15d3c08ac",
@@ -118,7 +105,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2. Area/게임 제작/Unity/2-3. 베타 타입 버전.md",
+                "file": "1. Projects/스팀 데이터 분석/도움말/파일로 설치한 패키지.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -146,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2. Area/게임 제작/Unity/2-3. 베타 타입 버전.md"
+                "file": "1. Projects/스팀 데이터 분석/도움말/파일로 설치한 패키지.md"
               }
             }
           },
@@ -164,7 +151,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2. Area/게임 제작/Unity/2-3. 베타 타입 버전.md",
+                "file": "1. Projects/스팀 데이터 분석/도움말/파일로 설치한 패키지.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -189,8 +176,26 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "64834b3cb3796c0b",
+  "active": "bc2b4f4edc3c3129",
   "lastOpenFiles": [
+    "1. Projects/스팀 데이터 분석/일지/7월.md",
+    "1. Projects/스팀 데이터 분석/도움말/파일로 설치한 패키지.md",
+    "1. Projects/스팀 데이터 분석/일지/6월.md",
+    "1. Projects/스팀 데이터 분석/일지/5월.md",
+    "1. Projects/스팀 데이터 분석/일지",
+    "1. Projects/스팀 데이터 분석/가상화 버전.md",
+    "1. Projects/스팀 데이터 분석/목표.md",
+    "1. Projects/스팀 데이터 분석/도움말/도커 & 컨테이너 실행 자동화.md",
+    "1. Projects/스팀 데이터 분석/도움말/이슈 정리.md",
+    "1. Projects/스팀 데이터 분석/도움말/컨테이너 실행 중 다시 빌드하기.md",
+    "1. Projects/스팀 데이터 분석/아이디어(Medium).md",
+    "1. Projects/스팀 데이터 분석/도움말/모듈 호출 궁금증.md",
+    "1. Projects/스팀 데이터 분석/도움말/가상환경 세팅법.md",
+    "1. Projects/스팀 데이터 분석/도움말/sudo su 없이 도커 접근하기.md",
+    "1. Projects/스팀 데이터 분석/도움말/docker 관련 안 되는 경우들.md",
+    "1. Projects/스팀 데이터 분석/도움말/컨테이너 제작 과정.md",
+    "1. Projects/스팀 데이터 분석/도움말",
+    "1. Projects/스팀 데이터 분석/일지",
     "2. Area/게임 제작/Csharp/2. 클래스, 캡슐화.md",
     "2. Area/게임 제작/Unity/2-3. 베타 타입 버전.md",
     "2. Area/게임 제작/Unity/2-2. 알파 타입 버전.md",
@@ -202,34 +207,15 @@
     "무제 파일 2.canvas",
     "무제 파일 1.canvas",
     "무제 파일.canvas",
-    "1. Projects/스팀 데이터 분석/가상화 버전.md",
-    "1. Projects/스팀 데이터 분석/목표.md",
-    "1. Projects/스팀 데이터 분석/도커 & 컨테이너 실행 자동화.md",
     "4. Archive/독서/tableau_독서/7_3 지역별 논경지 면적 변화와 헥타르.md",
     "4. Archive/project_steam",
     "4. Archive/독서/tableau_독서/7_2 샘플 슈퍼스토어.md",
-    "4. Archive/독서/tableau_독서/7_1 코로나 지역별 확진자.md",
-    "4. Archive/독서/tableau_독서/7_ 분야별 데이터로 대시보드 만들기.md",
-    "4. Archive/독서/데이터과학 입문/키워드 정리.md",
-    "2. Area/데이터/data science/데이터 사이언티스트 실전 노트/3-2-6. 다변수 이해_공분산, 상관계수, 선형성, 공선성, 다중공선성, 차원의 저주, PCA, 주성분 갯수 선택.md",
-    "2. Area/데이터/data science/데이터 사이언티스트 실전 노트/3-2-5. 가설 검정 과정과 모수 통계 종류, 귀무대립가설, AB테스트, 유의수준, 통계 방법, 분산분석(ANOVA), 카이제곱검정, 검정통계량 실습.md",
-    "2. Area/데이터/data science/데이터 사이언티스트 실전 노트/4-1. 직장인 - 업무 이해 및 기록, 커뮤니케이션.md",
-    "2. Area/데이터/data science/데이터 사이언티스트 실전 노트/5_ 포트폴리오, 분류 & 회귀 성능 평가 지표 - 에러 수식, 오차 행렬, 포폴 재검토 시 자문할 점.md",
-    "2. Area/데이터/data science/데이터 사이언티스트 실전 노트/4-2. 웹 API, 불확실성, 모델 해석 능력, 자동화, 파이프라인.md",
-    "2. Area/데이터/data science/데이터 사이언티스트 실전 노트/3-2-1 모집단, 표본, 모델, 확률, 우도, 최대우도추정, 통계.md",
-    "2. Area/데이터/data science/데이터 사이언티스트 실전 노트/3-1 데싸는 뭐하는 사람인가.md",
-    "2. Area/데이터/data science/데이터 사이언티스트 실전 노트/데이터_취업을 위한 체크리스트.md",
-    "4. Archive/독서/정신건강론.md",
     "2. Area/독서",
-    "2. Area/게임 제작/Csharp/1. 기초.md",
     "config",
     "99. templates",
     "2. Area/코테",
     "2. Area/게임 제작",
     "2. Area/데이터",
-    "4. Archive",
-    "3. Resource",
-    "2. Area",
     "3. Resource/Image/Pasted image 20230524181456.png",
     "3. Resource/Image/Pasted image 20230524133331.png",
     "3. Resource/Image/Pasted image 20230524134432.png",
