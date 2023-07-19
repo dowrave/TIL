@@ -11,11 +11,14 @@
             "id": "64834b3cb3796c0b",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "canvas",
               "state": {
-                "file": "2. Area/게임 제작/Unity/2-3. 베타 타입 버전.md",
-                "mode": "source",
-                "source": false
+                "file": "무제 파일.canvas",
+                "viewState": {
+                  "x": 0,
+                  "y": 0,
+                  "zoom": 0
+                }
               }
             }
           },
@@ -101,8 +104,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "e5d497f15d3c08ac",
@@ -118,7 +120,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2. Area/게임 제작/Unity/2-3. 베타 타입 버전.md",
+                "file": "무제 파일.canvas",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -146,7 +148,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2. Area/게임 제작/Unity/2-3. 베타 타입 버전.md"
+                "file": "무제 파일.canvas"
               }
             }
           },
@@ -164,7 +166,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2. Area/게임 제작/Unity/2-3. 베타 타입 버전.md",
+                "file": "무제 파일.canvas",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -191,8 +193,9 @@
   },
   "active": "64834b3cb3796c0b",
   "lastOpenFiles": [
-    "2. Area/게임 제작/Csharp/2. 클래스, 캡슐화.md",
     "2. Area/게임 제작/Unity/2-3. 베타 타입 버전.md",
+    "무제 파일.canvas",
+    "2. Area/게임 제작/Csharp/2. 클래스, 캡슐화.md",
     "2. Area/게임 제작/Unity/2-2. 알파 타입 버전.md",
     "2. Area/게임 제작/Csharp/5. 구조체, ref, out, 열거형.md",
     "2. Area/게임 제작/Csharp/5. 구조체.md",
@@ -201,7 +204,6 @@
     "2. Area/게임 제작/Unity/2-1. 슈팅 게임 제작.md",
     "무제 파일 2.canvas",
     "무제 파일 1.canvas",
-    "무제 파일.canvas",
     "1. Projects/스팀 데이터 분석/가상화 버전.md",
     "1. Projects/스팀 데이터 분석/목표.md",
     "1. Projects/스팀 데이터 분석/도커 & 컨테이너 실행 자동화.md",
@@ -221,7 +223,6 @@
     "2. Area/데이터/data science/데이터 사이언티스트 실전 노트/데이터_취업을 위한 체크리스트.md",
     "4. Archive/독서/정신건강론.md",
     "2. Area/독서",
-    "2. Area/게임 제작/Csharp/1. 기초.md",
     "config",
     "99. templates",
     "2. Area/코테",
