@@ -1,19 +1,19 @@
 {
   "main": {
-    "id": "5fca91c93df9f9a7",
+    "id": "3267ffac54c281b6",
     "type": "split",
     "children": [
       {
-        "id": "eb7f0067847ca3ec",
+        "id": "b543f350f1c043be",
         "type": "tabs",
         "children": [
           {
-            "id": "bc2b4f4edc3c3129",
+            "id": "05cc4554368d5413",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "1. Projects/스팀 데이터 분석/도움말/파일로 설치한 패키지.md",
+                "file": "2. Area/케라스 창시자에게 배우는 딥러닝/2. 신경망의 수학적 요소.md",
                 "mode": "source",
                 "source": false
               }
@@ -25,15 +25,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "2b6a99b796923326",
+    "id": "8cccfb9e9c2f50a7",
     "type": "split",
     "children": [
       {
-        "id": "369f631e3f9bc674",
+        "id": "ff258d999806ec96",
         "type": "tabs",
         "children": [
           {
-            "id": "88aa362ec9a6bc47",
+            "id": "05d7e6e280c4e34e",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -43,12 +43,12 @@
             }
           },
           {
-            "id": "dc601136d6bc4948",
+            "id": "08ab44ade16d25ed",
             "type": "leaf",
             "state": {
               "type": "search",
               "state": {
-                "query": "프로퍼티",
+                "query": "망 사용료",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -58,7 +58,7 @@
             }
           },
           {
-            "id": "76146cc968089589",
+            "id": "4b3decefe6717c42",
             "type": "leaf",
             "state": {
               "type": "starred",
@@ -66,19 +66,7 @@
             }
           },
           {
-            "id": "40deaffcccc00c5c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "2. Area/코테/동적계획법 - 역추적.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "89e7d11543095617",
+            "id": "f4cee4116e05d4d9",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -89,31 +77,27 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 221.5
   },
   "right": {
-    "id": "e5d497f15d3c08ac",
+    "id": "e94ea327b6cf935a",
     "type": "split",
     "children": [
       {
-        "id": "92de8039fea5b780",
+        "id": "2cfb61060ca52438",
         "type": "tabs",
         "children": [
           {
-            "id": "3968769786ead641",
+            "id": "5b1732dfafeaed76",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-<<<<<<< HEAD
-                "file": "무제 파일.canvas",
-=======
-                "file": "1. Projects/스팀 데이터 분석/도움말/파일로 설치한 패키지.md",
->>>>>>> 4bdb617fbf5e79979c004923e3bfd2eddf5f0ef5
+                "file": "2. Area/케라스 창시자에게 배우는 딥러닝/2. 신경망의 수학적 요소.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
-                "showSearch": false,
+                "showSearch": true,
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
@@ -121,7 +105,19 @@
             }
           },
           {
-            "id": "0b63375f470a7807",
+            "id": "1e83c07ba245393f",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "2. Area/케라스 창시자에게 배우는 딥러닝/2. 신경망의 수학적 요소.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "c156c5ddf45fbf92",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -132,40 +128,12 @@
             }
           },
           {
-            "id": "c3ca2aecf7f7b673",
+            "id": "17f7fe6a3c02c66a",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-<<<<<<< HEAD
-                "file": "무제 파일.canvas"
-=======
-                "file": "1. Projects/스팀 데이터 분석/도움말/파일로 설치한 패키지.md"
->>>>>>> 4bdb617fbf5e79979c004923e3bfd2eddf5f0ef5
-              }
-            }
-          },
-          {
-            "id": "e73de016cff0e232",
-            "type": "leaf",
-            "state": {
-              "type": "advanced-tables-toolbar",
-              "state": {}
-            }
-          },
-          {
-            "id": "a9726654358f4141",
-            "type": "leaf",
-            "state": {
-              "type": "outgoing-link",
-              "state": {
-<<<<<<< HEAD
-                "file": "무제 파일.canvas",
-=======
-                "file": "1. Projects/스팀 데이터 분석/도움말/파일로 설치한 패키지.md",
->>>>>>> 4bdb617fbf5e79979c004923e3bfd2eddf5f0ef5
-                "linksCollapsed": false,
-                "unlinkedCollapsed": true
+                "file": "2. Area/케라스 창시자에게 배우는 딥러닝/2. 신경망의 수학적 요소.md"
               }
             }
           }
@@ -173,81 +141,69 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
+    "width": 224,
     "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
-      "canvas:새 캔버스 만들기": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false,
+      "templater-obsidian:Templater": false,
       "switcher:퀵 스위처 열기": false,
       "graph:그래프 뷰 열기": false,
+      "canvas:새 캔버스 만들기": false,
       "daily-notes:오늘의 데일리 노트 열기": false,
       "templates:템플릿 삽입": false,
-      "command-palette:명령어 팔레트 열기": false,
-      "table-editor-obsidian:Advanced Tables Toolbar": false,
-      "templater-obsidian:Templater": false
+      "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "bc2b4f4edc3c3129",
+  "active": "05cc4554368d5413",
   "lastOpenFiles": [
-<<<<<<< HEAD
-=======
+    "2. Area/케라스 창시자에게 배우는 딥러닝/1. 딥러닝이란 무엇인가.md",
+    "2. Area/케라스 창시자에게 배우는 딥러닝/2. 신경망의 수학적 요소.md",
     "1. Projects/스팀 데이터 분석/일지/7월.md",
-    "1. Projects/스팀 데이터 분석/도움말/파일로 설치한 패키지.md",
-    "1. Projects/스팀 데이터 분석/일지/6월.md",
-    "1. Projects/스팀 데이터 분석/일지/5월.md",
-    "1. Projects/스팀 데이터 분석/일지",
-    "1. Projects/스팀 데이터 분석/가상화 버전.md",
-    "1. Projects/스팀 데이터 분석/목표.md",
-    "1. Projects/스팀 데이터 분석/도움말/도커 & 컨테이너 실행 자동화.md",
-    "1. Projects/스팀 데이터 분석/도움말/이슈 정리.md",
-    "1. Projects/스팀 데이터 분석/도움말/컨테이너 실행 중 다시 빌드하기.md",
-    "1. Projects/스팀 데이터 분석/아이디어(Medium).md",
-    "1. Projects/스팀 데이터 분석/도움말/모듈 호출 궁금증.md",
-    "1. Projects/스팀 데이터 분석/도움말/가상환경 세팅법.md",
-    "1. Projects/스팀 데이터 분석/도움말/sudo su 없이 도커 접근하기.md",
-    "1. Projects/스팀 데이터 분석/도움말/docker 관련 안 되는 경우들.md",
-    "1. Projects/스팀 데이터 분석/도움말/컨테이너 제작 과정.md",
-    "1. Projects/스팀 데이터 분석/도움말",
-    "1. Projects/스팀 데이터 분석/일지",
-    "2. Area/게임 제작/Csharp/2. 클래스, 캡슐화.md",
->>>>>>> 4bdb617fbf5e79979c004923e3bfd2eddf5f0ef5
-    "2. Area/게임 제작/Unity/2-3. 베타 타입 버전.md",
+    "2. Area/케라스 창시자에게 배우는 딥러닝",
+    "2. Area/데이터/무제 폴더",
     "무제 파일.canvas",
-    "2. Area/게임 제작/Csharp/2. 클래스, 캡슐화.md",
-    "2. Area/게임 제작/Unity/2-2. 알파 타입 버전.md",
-    "2. Area/게임 제작/Csharp/5. 구조체, ref, out, 열거형.md",
-    "2. Area/게임 제작/Csharp/5. 구조체.md",
-    "2. Area/게임 제작/Csharp/4. 추상클래스, 델리게이트, 인터페이스.md",
-    "2. Area/게임 제작/Csharp/6. 멤버 유형 확장.md",
-    "2. Area/게임 제작/Unity/2-1. 슈팅 게임 제작.md",
-    "무제 파일 2.canvas",
-    "무제 파일 1.canvas",
-<<<<<<< HEAD
-    "1. Projects/스팀 데이터 분석/가상화 버전.md",
-    "1. Projects/스팀 데이터 분석/목표.md",
-    "1. Projects/스팀 데이터 분석/도커 & 컨테이너 실행 자동화.md",
-=======
-    "무제 파일.canvas",
->>>>>>> 4bdb617fbf5e79979c004923e3bfd2eddf5f0ef5
-    "4. Archive/독서/tableau_독서/7_3 지역별 논경지 면적 변화와 헥타르.md",
-    "4. Archive/project_steam",
-    "4. Archive/독서/tableau_독서/7_2 샘플 슈퍼스토어.md",
-    "2. Area/독서",
-    "config",
-    "99. templates",
-    "2. Area/코테",
-    "2. Area/게임 제작",
-    "2. Area/데이터",
-    "3. Resource/Image/Pasted image 20230524181456.png",
-    "3. Resource/Image/Pasted image 20230524133331.png",
-    "3. Resource/Image/Pasted image 20230524134432.png",
-    "3. Resource/Image/Pasted image 20230524133430.png",
-    "3. Resource/Image/Pasted image 20230511183145.png",
-    "3. Resource/Image/Pasted image 20230511003959.png",
-    "3. Resource/Image/Pasted image 20230511003726.png",
-    "3. Resource/Image/Pasted image 20230511003200.png",
-    "3. Resource/Image/Pasted image 20230511000657.png",
-    "3. Resource/Image/Pasted image 20230510235717.png"
+    "4. Archive/tableau/tableau_강의/tableau_하이라이트 테이블과 기타 차트.md",
+    "4. Archive/tableau/tableau_강의/tableau_필터.md",
+    "4. Archive/tableau/tableau_강의/tableau_파이 차트와 비율 바 차트.md",
+    "4. Archive/tableau/tableau_강의/tableau_테이블 계산.md",
+    "4. Archive/tableau/tableau_강의/tableau_테이블 계산 필터_LOOKUP.md",
+    "4. Archive/tableau/tableau_강의/tableau_테이블 계산 필터_LAST.md",
+    "4. Archive/tableau/tableau_강의/tableau_컨텍스트 필터.md",
+    "4. Archive/tableau/tableau_강의/tableau_차원과 측정값.md",
+    "4. Archive/tableau/tableau_강의/Tableau_바 차트.md",
+    "4. Archive/tableau/tableau_강의/tableau_지도.md",
+    "4. Archive/tableau/tableau_강의/tableau_정렬 순서 수정하기.md",
+    "4. Archive/tableau/tableau_강의/tableau_이중 축.md",
+    "4. Archive/tableau/tableau_강의/tableau_연속형과 불연속형.md",
+    "4. Archive/tableau/tableau_강의/tableau_액션(차원) 필터와 Fixed LOD.md",
+    "4. Archive/tableau/tableau_강의/tableau_분포_산점도_히스토그램_박스플롯.md",
+    "4. Archive/tableau/tableau_강의/tableau_분석 패널.md",
+    "4. Archive/tableau/tableau_강의/tableau_막대 - 선 그래프 동시 표시.md",
+    "4. Archive/tableau/tableau_강의/tableau_라인 차트와 영역 차트.md",
+    "4. Archive/tableau/tableau_강의/tableau_계산된 필드.md",
+    "4. Archive/tableau/tableau_강의/tableau_계산 범위 설정.md",
+    "4. Archive/tableau/tableau_강의/tableau_가이드 팔로우하기.md",
+    "4. Archive/tableau/tableau_강의/tableau_window 함수.md",
+    "4. Archive/tableau/tableau_강의/tableau_VLOD.md",
+    "4. Archive/tableau/tableau_강의",
+    "4. Archive/tableau",
+    "4. Archive/python",
+    "4. Archive/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps",
+    "4. Archive/data science/MLOps/kubeflow - 모두를 위한 MLOps",
+    "4. Archive/data science/automl/Optuna",
+    "4. Archive/data science/실전",
+    "4. Archive/data science/데이터 사이언티스트 실전 노트",
+    "4. Archive/SQL/IMAGE/accounts_age.PNG",
+    "4. Archive/SQL/IMAGE/회원가입.PNG",
+    "4. Archive/SQL/IMAGE/visual-join.png",
+    "4. Archive/SQL/IMAGE/us_sign_up.PNG",
+    "4. Archive/SQL/IMAGE/users_per_week.PNG",
+    "4. Archive/SQL/IMAGE/top10_by_nation.PNG",
+    "4. Archive/SQL/IMAGE/sess_runs.PNG",
+    "4. Archive/SQL/IMAGE/search_again_in_month.PNG",
+    "4. Archive/SQL/IMAGE/run_ac_pct.PNG",
+    "4. Archive/SQL/IMAGE/run_ac.PNG"
   ]
 }
