@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2. Area/케라스 창시자에게 배우는 딥러닝/6. 일반적인 머신러닝 워크플로우.md",
+                "file": "2. Area/케라스 창시자에게 배우는 딥러닝/8. 컴퓨터 비전을 위한 딥러닝.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2. Area/케라스 창시자에게 배우는 딥러닝/6. 일반적인 머신러닝 워크플로우.md",
+                "file": "2. Area/케라스 창시자에게 배우는 딥러닝/8. 컴퓨터 비전을 위한 딥러닝.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,7 +113,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2. Area/케라스 창시자에게 배우는 딥러닝/6. 일반적인 머신러닝 워크플로우.md"
+                "file": "2. Area/케라스 창시자에게 배우는 딥러닝/8. 컴퓨터 비전을 위한 딥러닝.md"
               }
             }
           },
@@ -131,7 +131,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2. Area/케라스 창시자에게 배우는 딥러닝/6. 일반적인 머신러닝 워크플로우.md",
+                "file": "2. Area/케라스 창시자에게 배우는 딥러닝/8. 컴퓨터 비전을 위한 딥러닝.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -158,13 +158,19 @@
   },
   "active": "f5a3aeb0fc542bb4",
   "lastOpenFiles": [
-    "2. Area/케라스 창시자에게 배우는 딥러닝/5. 머신러닝의 기본 요소.md",
+    "2. Area/케라스 창시자에게 배우는 딥러닝/7. 케라스 완전 정복.md",
+    "2. Area/케라스 창시자에게 배우는 딥러닝/8. 컴퓨터 비전을 위한 딥러닝.md",
     "2. Area/케라스 창시자에게 배우는 딥러닝/6. 일반적인 머신러닝 워크플로우.md",
+    "2. Area/케라스 창시자에게 배우는 딥러닝/5. 머신러닝의 기본 요소.md",
+    "3. Resource/Image/Pasted image 20230722185712.png",
+    "2. Area/케라스 창시자에게 배우는 딥러닝/3. 케라스와 텐서플로우 소개.md",
+    "3. Resource/Image/Pasted image 20230722165338.png",
+    "3. Resource/Image/Pasted image 20230722165023.png",
+    "3. Resource/Image/Pasted image 20230722164946.png",
     "3. Resource/Image/Pasted image 20230721171152.png",
     "2. Area/케라스 창시자에게 배우는 딥러닝/4. 신경망 시작하기 - 분류와 회귀.md",
     "2. Area/케라스 창시자에게 배우는 딥러닝/1. 딥러닝이란 무엇인가.md",
     "2. Area/케라스 창시자에게 배우는 딥러닝/readme.md.md",
-    "2. Area/케라스 창시자에게 배우는 딥러닝/3. 케라스와 텐서플로우 소개.md",
     "2. Area/케라스 창시자에게 배우는 딥러닝/2. 신경망의 수학적 요소.md",
     "3. Resource/Image/Pasted image 20230720234103.png",
     "3. Resource/Image/Pasted image 20230720223135.png",
@@ -195,15 +201,9 @@
     "4. Archive/tableau/tableau_강의/tableau_테이블 계산 필터_LOOKUP.md",
     "4. Archive/tableau/tableau_강의/tableau_테이블 계산 필터_LAST.md",
     "4. Archive/tableau/tableau_강의/tableau_컨텍스트 필터.md",
-    "4. Archive/tableau/tableau_강의/tableau_차원과 측정값.md",
-    "4. Archive/tableau/tableau_강의/tableau_지도.md",
     "4. Archive/SQL/IMAGE/회원가입.PNG",
     "4. Archive/SQL/IMAGE/visual-join.png",
     "4. Archive/SQL/IMAGE/us_sign_up.PNG",
-    "4. Archive/SQL/IMAGE/users_per_week.PNG",
-    "4. Archive/SQL/IMAGE/top10_by_nation.PNG",
-    "4. Archive/SQL/IMAGE/sess_runs.PNG",
-    "4. Archive/SQL/IMAGE/search_again_in_month.PNG",
     "무제 파일 2.canvas",
     "무제 파일 1.canvas",
     "무제 파일.canvas"
