@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2. Area/케라스 창시자에게 배우는 딥러닝/10. 시계열을 위한 딥러닝.md",
+                "file": "2. Area/케라스 창시자에게 배우는 딥러닝/11. 텍스트를 위한 딥러닝.md",
                 "mode": "source",
                 "source": false
               }
@@ -97,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2. Area/케라스 창시자에게 배우는 딥러닝/10. 시계열을 위한 딥러닝.md",
+                "file": "2. Area/케라스 창시자에게 배우는 딥러닝/11. 텍스트를 위한 딥러닝.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2. Area/케라스 창시자에게 배우는 딥러닝/10. 시계열을 위한 딥러닝.md"
+                "file": "2. Area/케라스 창시자에게 배우는 딥러닝/11. 텍스트를 위한 딥러닝.md"
               }
             }
           },
@@ -143,7 +143,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2. Area/케라스 창시자에게 배우는 딥러닝/10. 시계열을 위한 딥러닝.md",
+                "file": "2. Area/케라스 창시자에게 배우는 딥러닝/11. 텍스트를 위한 딥러닝.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -170,8 +170,10 @@
   },
   "active": "552af7c744400642",
   "lastOpenFiles": [
-    "2. Area/케라스 창시자에게 배우는 딥러닝/1. 딥러닝이란 무엇인가.md",
     "2. Area/케라스 창시자에게 배우는 딥러닝/10. 시계열을 위한 딥러닝.md",
+    "2. Area/케라스 창시자에게 배우는 딥러닝/11. 텍스트를 위한 딥러닝.md",
+    "3. Resource/Image/20230725_190356.jpg",
+    "2. Area/케라스 창시자에게 배우는 딥러닝/1. 딥러닝이란 무엇인가.md",
     "2. Area/케라스 창시자에게 배우는 딥러닝/2. 신경망의 수학적 요소.md",
     "2. Area/케라스 창시자에게 배우는 딥러닝/3. 케라스와 텐서플로우 소개.md",
     "2. Area/케라스 창시자에게 배우는 딥러닝/4. 신경망 시작하기 - 분류와 회귀.md",
@@ -190,7 +192,6 @@
     "3. Resource/Image/Pasted image 20230724164202.png",
     "3. Resource/Image/Pasted image 20230724164158.png",
     "3. Resource/Image/Pasted image 20230724164155.png",
-    "3. Resource/Image/Pasted image 20230724164153.png",
     "2023-07-20.md",
     "1. Projects/스팀 데이터 분석/도움말/파일로 설치한 패키지.md",
     "1. Projects/스팀 데이터 분석/일지/7월.md",
@@ -214,7 +215,6 @@
     "4. Archive/tableau/tableau_강의/tableau_하이라이트 테이블과 기타 차트.md",
     "4. Archive/tableau/tableau_강의/tableau_필터.md",
     "4. Archive/tableau/tableau_강의/tableau_파이 차트와 비율 바 차트.md",
-    "4. Archive/tableau/tableau_강의/tableau_테이블 계산.md",
     "무제 파일 2.canvas",
     "무제 파일 1.canvas",
     "무제 파일.canvas"
