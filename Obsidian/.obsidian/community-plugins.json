@@ -1,5 +1,7 @@
 [
   "table-editor-obsidian",
   "templater-obsidian",
-  "obsidian-plugin-toc"
+  "obsidian-plugin-toc",
+  "cm-editor-syntax-highlight-obsidian",
+  "obsidian-code-block-enhancer"
 ]

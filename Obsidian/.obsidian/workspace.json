@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "3080e83f693913ae",
+        "id": "967837afe504c00d",
         "type": "tabs",
         "children": [
           {
-            "id": "16861acad074245f",
+            "id": "a9a07055c99c2839",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2. Area/케라스 창시자에게 배우는 딥러닝/14. 결론.md",
+                "file": "2. Area/AB 테스트/2. 실험의 실행과 분석 - 엔드투엔드 예제.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2. Area/케라스 창시자에게 배우는 딥러닝/14. 결론.md",
+                "file": "2. Area/AB 테스트/2. 실험의 실행과 분석 - 엔드투엔드 예제.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,7 +113,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2. Area/케라스 창시자에게 배우는 딥러닝/14. 결론.md"
+                "file": "2. Area/AB 테스트/2. 실험의 실행과 분석 - 엔드투엔드 예제.md"
               }
             }
           },
@@ -131,18 +131,18 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2. Area/케라스 창시자에게 배우는 딥러닝/14. 결론.md",
+                "file": "2. Area/AB 테스트/2. 실험의 실행과 분석 - 엔드투엔드 예제.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -156,10 +156,21 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "16861acad074245f",
+  "active": "a9a07055c99c2839",
   "lastOpenFiles": [
-    "2. Area/케라스 창시자에게 배우는 딥러닝/13. 실전 문제 해결을 위한 모범 사례.md",
+    "2. Area/AB 테스트/readme.md.md",
+    "2. Area/AB 테스트/2. 실험의 실행과 분석 - 엔드투엔드 예제.md",
+    "3. Resource/Image/20230731_220741.jpg",
+    "2. Area/AB 테스트/1. 소개와 동기.md",
+    "4. Archive/필수 알고리즘 with 파이썬/검수가 너무 안된 책이라 중단.md",
+    "2. Area/AB 테스트",
+    "4. Archive/필수 알고리즘 with 파이썬/스택과 큐.md",
+    "4. Archive/필수 알고리즘 with 파이썬/이중 연결 리스트.md",
+    "4. Archive/필수 알고리즘 with 파이썬/연결 리스트.md",
+    "4. Archive/필수 알고리즘 with 파이썬/알고리즘 정의와 분석 방법.md",
     "2. Area/케라스 창시자에게 배우는 딥러닝/14. 결론.md",
+    "4. Archive/독서/데이터과학 입문/키워드 정리.md",
+    "2. Area/케라스 창시자에게 배우는 딥러닝/13. 실전 문제 해결을 위한 모범 사례.md",
     "2. Area/케라스 창시자에게 배우는 딥러닝/12. 생성 모델을 위한 딥러닝.md",
     "3. Resource/Image/Pasted image 20230726213411.png",
     "3. Resource/Image/combination_image_at_iteration_4000.png",
@@ -183,17 +194,6 @@
     "3. Resource/Image/Pasted image 20230724202714.png",
     "3. Resource/Image/Pasted image 20230724174255.jpg",
     "3. Resource/Image/filters_for_layer_block3_sepconv1.png",
-    "3. Resource/Image/Pasted image 20230724170943.png",
-    "2023-07-20.md",
-    "1. Projects/스팀 데이터 분석/도움말/파일로 설치한 패키지.md",
-    "1. Projects/스팀 데이터 분석/일지/7월.md",
-    "4. Archive/data science/visualization/같은 플롯 위에 다른 그래프 그리기.md",
-    "4. Archive/data science/visualization/plt.legend(범례).md",
-    "4. Archive/data science/pandas/df.melt.md",
-    "4. Archive/data science/visualization/축 범위 통일하기.md",
-    "4. Archive/data science/visualization/그래프 위에 값 표시하기.md",
-    "4. Archive/프로젝트 상자/스팀 데이터 분석/컨테이너 재빌드.md",
-    "4. Archive/프로젝트 상자/스팀 데이터 분석/데이터베이스 용량 보기.md",
     "4. Archive/프로젝트 상자/스팀 데이터 분석",
     "4. Archive/프로젝트 상자/Kaggle - 2022 Derby",
     "4. Archive/프로젝트 상자/Dacon - PlayerProspect",
@@ -203,7 +203,6 @@
     "4. Archive/공부 메모/data science/실전",
     "4. Archive/공부 메모/data science/개념과 이론",
     "4. Archive/공부 메모/data science/visualization",
-    "4. Archive/공부 메모/data science/tensorflow,keras",
     "무제 파일 2.canvas",
     "무제 파일 1.canvas",
     "무제 파일.canvas"
