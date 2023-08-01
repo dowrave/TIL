@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "967837afe504c00d",
+        "id": "5b2c07514313f5d9",
         "type": "tabs",
         "children": [
           {
-            "id": "a9a07055c99c2839",
+            "id": "98ebd18e3ae027c3",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "4. Archive/AB 테스트/5. 속도의 중요성 엔드-투-엔드 사례 연구.md",
+                "file": "2. Area/코딩 테스트/숫자 이어붙이는 문제 팁.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "4. Archive/AB 테스트/5. 속도의 중요성 엔드-투-엔드 사례 연구.md",
+                "file": "2. Area/코딩 테스트/숫자 이어붙이는 문제 팁.md",
                 "collapseAll": true,
                 "extraContext": true,
                 "sortOrder": "alphabetical",
@@ -113,7 +113,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "4. Archive/AB 테스트/5. 속도의 중요성 엔드-투-엔드 사례 연구.md"
+                "file": "2. Area/코딩 테스트/숫자 이어붙이는 문제 팁.md"
               }
             }
           },
@@ -131,7 +131,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "4. Archive/AB 테스트/5. 속도의 중요성 엔드-투-엔드 사례 연구.md",
+                "file": "2. Area/코딩 테스트/숫자 이어붙이는 문제 팁.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -156,10 +156,17 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "88aa362ec9a6bc47",
+  "active": "98ebd18e3ae027c3",
   "lastOpenFiles": [
-    "4. Archive/AB 테스트/4. 실험 플랫폼과 문화.md",
+    "2. Area/코딩 테스트/defaultdict 사용하기.md",
+    "2. Area/코딩 테스트/숫자 이어붙이는 문제 팁.md",
+    "2. Area/코딩 테스트",
+    "1. Projects/스팀 데이터 분석/일지/7월.md",
     "4. Archive/AB 테스트/5. 속도의 중요성 엔드-투-엔드 사례 연구.md",
+    "1. Projects/스팀 데이터 분석/일지/8월.md",
+    "1. Projects/스팀 데이터 분석/일지/5월.md",
+    "1. Projects/스팀 데이터 분석/가상화 버전.md",
+    "4. Archive/AB 테스트/4. 실험 플랫폼과 문화.md",
     "2. Area/AB 테스트/무제 폴더",
     "4. Archive/AB 테스트/3. 트위먼의 법칙과 실험의 신뢰도.md",
     "4. Archive/AB 테스트/2. 실험의 실행과 분석 - 엔드투엔드 예제.md",
@@ -185,12 +192,6 @@
     "2. Area/케라스 창시자에게 배우는 딥러닝/8. 컴퓨터 비전을 위한 딥러닝.md",
     "2. Area/케라스 창시자에게 배우는 딥러닝/10. 시계열을 위한 딥러닝.md",
     "3. Resource/Image/20230725_190356.jpg",
-    "2. Area/케라스 창시자에게 배우는 딥러닝/1. 딥러닝이란 무엇인가.md",
-    "2. Area/케라스 창시자에게 배우는 딥러닝/2. 신경망의 수학적 요소.md",
-    "2. Area/케라스 창시자에게 배우는 딥러닝/3. 케라스와 텐서플로우 소개.md",
-    "2. Area/케라스 창시자에게 배우는 딥러닝/4. 신경망 시작하기 - 분류와 회귀.md",
-    "2. Area/케라스 창시자에게 배우는 딥러닝/5. 머신러닝의 기본 요소.md",
-    "2. Area/케라스 창시자에게 배우는 딥러닝/6. 일반적인 머신러닝 워크플로우.md",
     "3. Resource/Image/Pasted image 20230724211451.png",
     "3. Resource/Image/Pasted image 20230724202828.png",
     "3. Resource/Image/Pasted image 20230724202714.png",
@@ -203,7 +204,6 @@
     "4. Archive/이미지",
     "4. Archive/공부 메모/data science/automl/Optuna",
     "4. Archive/공부 메모/data science/실전",
-    "4. Archive/공부 메모/data science/개념과 이론",
     "무제 파일 2.canvas",
     "무제 파일 1.canvas",
     "무제 파일.canvas"
