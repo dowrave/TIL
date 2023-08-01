@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2. Area/AB 테스트/2. 실험의 실행과 분석 - 엔드투엔드 예제.md",
+                "file": "4. Archive/AB 테스트/5. 속도의 중요성 엔드-투-엔드 사례 연구.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,11 +85,11 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2. Area/AB 테스트/2. 실험의 실행과 분석 - 엔드투엔드 예제.md",
-                "collapseAll": false,
-                "extraContext": false,
+                "file": "4. Archive/AB 테스트/5. 속도의 중요성 엔드-투-엔드 사례 연구.md",
+                "collapseAll": true,
+                "extraContext": true,
                 "sortOrder": "alphabetical",
-                "showSearch": false,
+                "showSearch": true,
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
@@ -113,7 +113,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2. Area/AB 테스트/2. 실험의 실행과 분석 - 엔드투엔드 예제.md"
+                "file": "4. Archive/AB 테스트/5. 속도의 중요성 엔드-투-엔드 사례 연구.md"
               }
             }
           },
@@ -131,18 +131,18 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2. Area/AB 테스트/2. 실험의 실행과 분석 - 엔드투엔드 예제.md",
+                "file": "4. Archive/AB 테스트/5. 속도의 중요성 엔드-투-엔드 사례 연구.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -156,14 +156,18 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "a9a07055c99c2839",
+  "active": "88aa362ec9a6bc47",
   "lastOpenFiles": [
-    "2. Area/AB 테스트/readme.md.md",
-    "2. Area/AB 테스트/2. 실험의 실행과 분석 - 엔드투엔드 예제.md",
+    "4. Archive/AB 테스트/4. 실험 플랫폼과 문화.md",
+    "4. Archive/AB 테스트/5. 속도의 중요성 엔드-투-엔드 사례 연구.md",
+    "2. Area/AB 테스트/무제 폴더",
+    "4. Archive/AB 테스트/3. 트위먼의 법칙과 실험의 신뢰도.md",
+    "4. Archive/AB 테스트/2. 실험의 실행과 분석 - 엔드투엔드 예제.md",
+    "4. Archive/AB 테스트/readme.md.md",
     "3. Resource/Image/20230731_220741.jpg",
-    "2. Area/AB 테스트/1. 소개와 동기.md",
+    "4. Archive/AB 테스트/1. 소개와 동기.md",
     "4. Archive/필수 알고리즘 with 파이썬/검수가 너무 안된 책이라 중단.md",
-    "2. Area/AB 테스트",
+    "4. Archive/AB 테스트",
     "4. Archive/필수 알고리즘 with 파이썬/스택과 큐.md",
     "4. Archive/필수 알고리즘 with 파이썬/이중 연결 리스트.md",
     "4. Archive/필수 알고리즘 with 파이썬/연결 리스트.md",
@@ -187,8 +191,6 @@
     "2. Area/케라스 창시자에게 배우는 딥러닝/4. 신경망 시작하기 - 분류와 회귀.md",
     "2. Area/케라스 창시자에게 배우는 딥러닝/5. 머신러닝의 기본 요소.md",
     "2. Area/케라스 창시자에게 배우는 딥러닝/6. 일반적인 머신러닝 워크플로우.md",
-    "2. Area/케라스 창시자에게 배우는 딥러닝/7. 케라스 완전 정복.md",
-    "2. Area/케라스 창시자에게 배우는 딥러닝/9. 컴퓨터 비전을 위한 고급 딥러닝.md",
     "3. Resource/Image/Pasted image 20230724211451.png",
     "3. Resource/Image/Pasted image 20230724202828.png",
     "3. Resource/Image/Pasted image 20230724202714.png",
@@ -202,7 +204,6 @@
     "4. Archive/공부 메모/data science/automl/Optuna",
     "4. Archive/공부 메모/data science/실전",
     "4. Archive/공부 메모/data science/개념과 이론",
-    "4. Archive/공부 메모/data science/visualization",
     "무제 파일 2.canvas",
     "무제 파일 1.canvas",
     "무제 파일.canvas"
