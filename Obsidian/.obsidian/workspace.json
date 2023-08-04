@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2. Area/코딩 테스트/파이썬 순열, 조합, 중복순열, 중복조합.md",
+                "file": "2. Area/파이썬과 케라스로 배우는 강화학습/2. 강화학습 기초 1 - MDP와 벨만 방정식.md",
                 "mode": "source",
                 "source": false
               }
@@ -69,7 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 310.5
   },
   "right": {
     "id": "e5d497f15d3c08ac",
@@ -85,11 +85,11 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2. Area/코딩 테스트/파이썬 순열, 조합, 중복순열, 중복조합.md",
+                "file": "2. Area/파이썬과 케라스로 배우는 강화학습/2. 강화학습 기초 1 - MDP와 벨만 방정식.md",
                 "collapseAll": true,
-                "extraContext": true,
+                "extraContext": false,
                 "sortOrder": "alphabetical",
-                "showSearch": true,
+                "showSearch": false,
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
@@ -113,7 +113,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2. Area/코딩 테스트/파이썬 순열, 조합, 중복순열, 중복조합.md"
+                "file": "2. Area/파이썬과 케라스로 배우는 강화학습/2. 강화학습 기초 1 - MDP와 벨만 방정식.md"
               }
             }
           },
@@ -131,7 +131,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2. Area/코딩 테스트/파이썬 순열, 조합, 중복순열, 중복조합.md",
+                "file": "2. Area/파이썬과 케라스로 배우는 강화학습/2. 강화학습 기초 1 - MDP와 벨만 방정식.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -141,8 +141,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -158,8 +157,13 @@
   },
   "active": "98ebd18e3ae027c3",
   "lastOpenFiles": [
-    "2. Area/코딩 테스트/1자리 숫자들로 만들 수 있는 모든 수.md",
+    "2. Area/파이썬과 케라스로 배우는 강화학습/무제 파일 1.md",
+    "2. Area/파이썬과 케라스로 배우는 강화학습/1. 강화 학습 개요.md",
+    "2. Area/파이썬과 케라스로 배우는 강화학습/2. 강화학습 기초 1 - MDP와 벨만 방정식.md",
+    "2. Area/케라스 창시자에게 배우는 딥러닝/14. 결론.md",
     "2. Area/코딩 테스트/파이썬 순열, 조합, 중복순열, 중복조합.md",
+    "2. Area/파이썬과 케라스로 배우는 강화학습",
+    "2. Area/코딩 테스트/1자리 숫자들로 만들 수 있는 모든 수.md",
     "2. Area/코딩 테스트/숫자 이어붙이는 문제 팁.md",
     "2. Area/코딩 테스트/어떤 수의 약수 리스트 얻기.md",
     "2. Area/코딩 테스트/defaultdict 사용하기.md",
@@ -184,10 +188,6 @@
     "4. Archive/AB 테스트",
     "4. Archive/필수 알고리즘 with 파이썬/스택과 큐.md",
     "4. Archive/필수 알고리즘 with 파이썬/이중 연결 리스트.md",
-    "4. Archive/필수 알고리즘 with 파이썬/연결 리스트.md",
-    "4. Archive/필수 알고리즘 with 파이썬/알고리즘 정의와 분석 방법.md",
-    "2. Area/케라스 창시자에게 배우는 딥러닝/14. 결론.md",
-    "4. Archive/독서/데이터과학 입문/키워드 정리.md",
     "3. Resource/Image/Pasted image 20230726213411.png",
     "3. Resource/Image/combination_image_at_iteration_4000.png",
     "3. Resource/Image/dream.png",
@@ -203,7 +203,6 @@
     "4. Archive/프로젝트 상자",
     "4. Archive/이미지",
     "4. Archive/공부 메모/data science/automl/Optuna",
-    "4. Archive/공부 메모/data science/실전",
     "무제 파일 2.canvas",
     "무제 파일 1.canvas",
     "무제 파일.canvas"
