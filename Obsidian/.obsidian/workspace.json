@@ -13,14 +13,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2. Area/파이썬과 케라스로 배우는 강화학습/3. 강화학습 기초 2 - 그리드월드와 DP.md",
+                "file": "2. Area/파이썬과 케라스로 배우는 강화학습/4. 강화학습 기초 3 - 그리드월드와 큐러닝.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "06775f6e762e4dad",
+            "id": "b22e4ad9317c3b0e",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -60,7 +60,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "에라토스체네스의 체",
+                "query": "최소 신장 트리",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -97,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2. Area/파이썬과 케라스로 배우는 강화학습/3. 강화학습 기초 2 - 그리드월드와 DP.md",
+                "file": "2. Area/파이썬과 케라스로 배우는 강화학습/4. 강화학습 기초 3 - 그리드월드와 큐러닝.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2. Area/파이썬과 케라스로 배우는 강화학습/3. 강화학습 기초 2 - 그리드월드와 DP.md"
+                "file": "2. Area/파이썬과 케라스로 배우는 강화학습/4. 강화학습 기초 3 - 그리드월드와 큐러닝.md"
               }
             }
           },
@@ -143,7 +143,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2. Area/파이썬과 케라스로 배우는 강화학습/3. 강화학습 기초 2 - 그리드월드와 DP.md",
+                "file": "2. Area/파이썬과 케라스로 배우는 강화학습/4. 강화학습 기초 3 - 그리드월드와 큐러닝.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -171,8 +171,23 @@
   "active": "98ebd18e3ae027c3",
   "lastOpenFiles": [
     "2. Area/파이썬과 케라스로 배우는 강화학습/2. 강화학습 기초 1 - MDP와 벨만 방정식.md",
-    "2. Area/파이썬과 케라스로 배우는 강화학습/1. 강화 학습 개요.md",
+    "2. Area/파이썬과 케라스로 배우는 강화학습/4. 강화학습 기초 3 - 그리드월드와 큐러닝.md",
     "2. Area/파이썬과 케라스로 배우는 강화학습/3. 강화학습 기초 2 - 그리드월드와 DP.md",
+    "2. Area/파이썬과 케라스로 배우는 강화학습/1. 강화 학습 개요.md",
+    "2. Area/코딩 테스트/Kruskal 알고리즘.md",
+    "4. Archive/data science/feature engineering/Mutual Information.md",
+    "무제 파일 1.canvas",
+    "4. Archive/코테/최소신장트리_Kruksal.md",
+    "4. Archive/코테/최소신장트리.md",
+    "4. Archive/코테/그래프_다익스트라.md",
+    "4. Archive/코테/그래프.md",
+    "4. Archive/코테/그래프_플로이드-워셜.md",
+    "4. Archive/코테/그리디 알고리즘.md",
+    "4. Archive/코테/그래프_벨만-포드.md",
+    "4. Archive/코테/그래프_DFS.md",
+    "무제 파일.canvas",
+    "2. Area/코딩 테스트/파이썬 순열, 조합, 중복순열, 중복조합.md",
+    "2. Area/코딩 테스트/어떤 수의 약수 리스트 얻기.md",
     "3. Resource/Image/Pasted image 20230805183739.png",
     "3. Resource/Image/Pasted image 20230805180148.png",
     "3. Resource/Image/Pasted image 20230805175737.png",
@@ -181,11 +196,9 @@
     "3. Resource/Image/Pasted image 20230805171203.png",
     "2. Area/파이썬과 케라스로 배우는 강화학습/무제 파일 1.md",
     "2. Area/케라스 창시자에게 배우는 딥러닝/14. 결론.md",
-    "2. Area/코딩 테스트/파이썬 순열, 조합, 중복순열, 중복조합.md",
     "2. Area/파이썬과 케라스로 배우는 강화학습",
     "2. Area/코딩 테스트/1자리 숫자들로 만들 수 있는 모든 수.md",
     "2. Area/코딩 테스트/숫자 이어붙이는 문제 팁.md",
-    "2. Area/코딩 테스트/어떤 수의 약수 리스트 얻기.md",
     "2. Area/코딩 테스트/defaultdict 사용하기.md",
     "에라토스체네스의 체.md",
     "4. Archive/코테/소수 판정.md",
@@ -193,18 +206,8 @@
     "4. Archive/코테/최대공약수와 최소공배수.md",
     "2. Area/코딩 테스트",
     "1. Projects/스팀 데이터 분석/일지/7월.md",
-    "4. Archive/AB 테스트/5. 속도의 중요성 엔드-투-엔드 사례 연구.md",
-    "1. Projects/스팀 데이터 분석/일지/8월.md",
-    "1. Projects/스팀 데이터 분석/일지/5월.md",
-    "1. Projects/스팀 데이터 분석/가상화 버전.md",
-    "4. Archive/AB 테스트/4. 실험 플랫폼과 문화.md",
     "2. Area/AB 테스트/무제 폴더",
-    "4. Archive/AB 테스트/3. 트위먼의 법칙과 실험의 신뢰도.md",
-    "4. Archive/AB 테스트/2. 실험의 실행과 분석 - 엔드투엔드 예제.md",
-    "4. Archive/AB 테스트/readme.md.md",
     "3. Resource/Image/20230731_220741.jpg",
-    "4. Archive/AB 테스트/1. 소개와 동기.md",
-    "4. Archive/필수 알고리즘 with 파이썬/검수가 너무 안된 책이라 중단.md",
     "4. Archive/AB 테스트",
     "3. Resource/Image/Pasted image 20230726213411.png",
     "3. Resource/Image/combination_image_at_iteration_4000.png",
@@ -215,8 +218,6 @@
     "4. Archive/프로젝트 상자",
     "4. Archive/이미지",
     "4. Archive/공부 메모/data science/automl/Optuna",
-    "무제 파일 2.canvas",
-    "무제 파일 1.canvas",
-    "무제 파일.canvas"
+    "무제 파일 2.canvas"
   ]
 }
