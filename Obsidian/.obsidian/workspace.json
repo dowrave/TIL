@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects/스팀 데이터 분석/도움말/파일로 설치한 패키지.md",
+                "file": "1. Projects/스팀 데이터 분석/도움말/컨테이너 실행 중 다시 빌드하기.md",
                 "mode": "source",
                 "source": false
               }
@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "plt.legend",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -101,7 +101,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1. Projects/스팀 데이터 분석/도움말/파일로 설치한 패키지.md",
+                "file": "1. Projects/스팀 데이터 분석/도움말/컨테이너 실행 중 다시 빌드하기.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -129,7 +129,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1. Projects/스팀 데이터 분석/도움말/파일로 설치한 패키지.md"
+                "file": "1. Projects/스팀 데이터 분석/도움말/컨테이너 실행 중 다시 빌드하기.md"
               }
             }
           },
@@ -147,7 +147,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1. Projects/스팀 데이터 분석/도움말/파일로 설치한 패키지.md",
+                "file": "1. Projects/스팀 데이터 분석/도움말/컨테이너 실행 중 다시 빌드하기.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -174,6 +174,11 @@
   },
   "active": "bc2b4f4edc3c3129",
   "lastOpenFiles": [
+    "1. Projects/스팀 데이터 분석/도움말/컨테이너 제작 과정.md",
+    "1. Projects/스팀 데이터 분석/도움말/sudo su 없이 도커 접근하기.md",
+    "1. Projects/스팀 데이터 분석/도움말/mysql shell 연결.md",
+    "1. Projects/스팀 데이터 분석/도움말/docker 관련 안 되는 경우들.md",
+    "1. Projects/스팀 데이터 분석/도움말/파일로 설치한 패키지.md",
     "1. Projects/스팀 데이터 분석/일지/7월.md",
     "4. Archive/data science/visualization/같은 플롯 위에 다른 그래프 그리기.md",
     "4. Archive/data science/visualization/plt.legend(범례).md",
@@ -205,11 +210,6 @@
     "4. Archive/tableau/tableau_강의/tableau_정렬 순서 수정하기.md",
     "4. Archive/tableau/tableau_강의/tableau_이중 축.md",
     "4. Archive/tableau/tableau_강의/tableau_연속형과 불연속형.md",
-    "4. Archive/tableau/tableau_강의/tableau_액션(차원) 필터와 Fixed LOD.md",
-    "4. Archive/tableau/tableau_강의/tableau_분포_산점도_히스토그램_박스플롯.md",
-    "4. Archive/tableau/tableau_강의/tableau_분석 패널.md",
-    "4. Archive/tableau/tableau_강의/Tableau_바 차트.md",
-    "4. Archive/tableau/tableau_강의/tableau_막대 - 선 그래프 동시 표시.md",
     "4. Archive/SQL/IMAGE/회원가입.PNG",
     "4. Archive/SQL/IMAGE/visual-join.png",
     "4. Archive/SQL/IMAGE/us_sign_up.PNG",
