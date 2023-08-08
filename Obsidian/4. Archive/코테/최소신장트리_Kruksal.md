@@ -1,3 +1,6 @@
+- **그래프 내의 모든 정점을 가장 적은 비용으로 연결**한다.
+
+
 ```python
 # 정점 수 v, 간선 수 e
 # edge_arr = [(w, a, b), ...]
@@ -8,9 +11,9 @@ def kruksal():
 	edge_arr.sort() 
 	
 	# 2. 간선 선택
-	# 사이클 점검을 위해 union find를 넣음
 	parent = [i for i in range(v + 1)]
 	
+	# union-find : 사이클 체크
 	def find(x):
 		if parent[x] != x:
 			parent[x] = find(parent[x])
@@ -35,8 +38,7 @@ def kruksal():
 			continue
 	
 		union(a, b)
-	
-	# 이후에 이걸 어떻게 쓰느냐는 문제마다 달라짐
+
 ```
 
 > 1. 간선을 가중치의 오름차순으로 정렬한다

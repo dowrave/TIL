@@ -1,0 +1,69 @@
+// 10보다 작은 3과 5의 배수를 모두 더하면 23일 때, 1000보다 작은 자연수 중 3 또는 5의 배수를 모두 더하면 얼마일까요?
+
+using System;
+using learn;
+
+namespace learn
+{
+    class Mainapp 
+    {
+        static void Main(string[] args)
+        {
+            Kilogram kg1 = new Kilogram(300);
+            Gram g1 = new Gram(50);
+
+            Gram g2 = kg1;
+            Kilogram kg2 = g1;
+
+            Console.WriteLine(g2);
+            Console.WriteLine(kg2);
+
+            Gram g3 = (Gram)kg1;
+            Kilogram kg3 = (Kilogram)g1;
+            
+            Console.WriteLine(g3);
+            Console.WriteLine(kg3);
+
+
+        }
+    }
+
+    public class Weight
+    {
+        protected float mass;
+
+        public float Mass {get {return mass;}}
+   
+        public Weight(float mass)
+        {
+            this.mass = mass;
+        }
+
+        
+    }
+
+    public class Kilogram : Weight
+    {
+
+        public Kilogram(float mass) : base(mass) {}
+        public override string ToString(){return mass + "Kg";}
+
+        static public implicit operator Gram(Kilogram kilogram)
+        {
+            return new Gram(kilogram.Mass * 1000);
+        }
+    }
+
+    public class Gram : Weight
+    {
+        public Gram(float mass) : base(mass) {}
+        public override string ToString(){return mass + "g";}
+
+        static public implicit operator Kilogram(Gram gram)
+        {
+            return new Kilogram(gram.Mass / 1000);
+        }
+
+    }
+
+}
