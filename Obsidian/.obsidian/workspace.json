@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "6d4aac7a4cb7fc8f",
+        "id": "359eb73c9353acb9",
         "type": "tabs",
         "children": [
           {
-            "id": "2d79e7b7b4f6ef55",
+            "id": "5acdd63aace6d584",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -101,7 +101,11 @@
             "state": {
               "type": "backlink",
               "state": {
+<<<<<<< HEAD
                 "file": "2. Area/코딩 테스트/전역, 지역 변수 관리.md",
+=======
+                "file": "2. Area/코딩 테스트/heapq.md",
+>>>>>>> 18ea3e038528fae4efd2536fa63076242d29115d
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -129,7 +133,11 @@
             "state": {
               "type": "outline",
               "state": {
+<<<<<<< HEAD
                 "file": "2. Area/코딩 테스트/전역, 지역 변수 관리.md"
+=======
+                "file": "2. Area/코딩 테스트/heapq.md"
+>>>>>>> 18ea3e038528fae4efd2536fa63076242d29115d
               }
             }
           },
@@ -147,7 +155,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+<<<<<<< HEAD
                 "file": "2. Area/코딩 테스트/전역, 지역 변수 관리.md",
+=======
+                "file": "2. Area/코딩 테스트/heapq.md",
+>>>>>>> 18ea3e038528fae4efd2536fa63076242d29115d
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -172,8 +184,9 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "2d79e7b7b4f6ef55",
+  "active": "5acdd63aace6d584",
   "lastOpenFiles": [
+<<<<<<< HEAD
     "2. Area/파이썬과 케라스로 배우는 강화학습/참고 문헌.md",
     "2. Area/코딩 테스트/전역, 지역 변수 관리.md",
     "2. Area/파이썬과 케라스로 배우는 강화학습/7. 아타리 - DQN, A3C.md",
@@ -187,22 +200,42 @@
     "2. Area/파이썬과 케라스로 배우는 강화학습/5. 그리드월드와 근사함수, 딥살사, REINFORCE.md",
     "2. Area/파이썬과 케라스로 배우는 강화학습/6. 카트폴 - DQN, 액터-크리틱.md",
     "1. Projects/스팀 데이터 분석/일지/8월.md",
-    "2. Area/코딩 테스트/1자리 숫자들로 만들 수 있는 모든 수.md",
-    "2. Area/코딩 테스트/파이썬 순열, 조합, 중복순열, 중복조합.md",
-    "2. Area/코딩 테스트/어떤 수의 약수 리스트 얻기.md",
-    "2. Area/코딩 테스트/숫자 이어붙이는 문제 팁.md",
-    "2. Area/코딩 테스트/Kruskal 알고리즘.md",
-    "2. Area/코딩 테스트/heapq.md",
+=======
     "2. Area/코딩 테스트/defaultdict 사용하기.md",
-    "2. Area/코딩 테스트",
-    "4. Archive/필수 알고리즘 with 파이썬/이중 연결 리스트.md",
-    "4. Archive/필수 알고리즘 with 파이썬/연결 리스트.md",
-    "4. Archive/필수 알고리즘 with 파이썬",
-    "4. Archive/AB 테스트/readme.md.md",
+>>>>>>> 18ea3e038528fae4efd2536fa63076242d29115d
+    "2. Area/코딩 테스트/1자리 숫자들로 만들 수 있는 모든 수.md",
+    "2. Area/코딩 테스트/숫자 이어붙이는 문제 팁.md",
+    "4. Archive/코테/n-queens.md",
+    "4. Archive/코테/코테_목차.md",
+    "4. Archive/코테/동적 계획법(DP).md",
+    "4. Archive/코테/백트래킹.md",
     "4. Archive/AB 테스트/5. 속도의 중요성 엔드-투-엔드 사례 연구.md",
+    "4. Archive/AB 테스트/readme.md.md",
     "4. Archive/AB 테스트/4. 실험 플랫폼과 문화.md",
+<<<<<<< HEAD
     "4. Archive/AB 테스트/3. 트위먼의 법칙과 실험의 신뢰도.md",
     "4. Archive/AB 테스트/2. 실험의 실행과 분석 - 엔드투엔드 예제.md",
+=======
+    "4. Archive/AB 테스트/1. 소개와 동기.md",
+    "4. Archive/코테/그래프_플로이드-워셜.md",
+    "4. Archive/코테/그래프_DFS.md",
+    "4. Archive/코테/그래프_벨만-포드.md",
+    "4. Archive/코테/그래프.md",
+    "4. Archive/코테/2차원 행렬.md",
+    "4. Archive/코테/2차원 부분합.md",
+    "4. Archive/코테/2차원 리스트 1차원으로 바꾸기.md",
+    "4. Archive/코테/매개변수 탐색.md",
+    "4. Archive/코테/분할정복 - 곱셈 빨리 하기.md",
+    "4. Archive/코테/병합 정렬.md",
+    "4. Archive/코테/브루트 포스.md",
+    "4. Archive/코테/삽입 정렬.md",
+    "4. Archive/코테/선언적 프로그래밍.md",
+    "4. Archive/코테/선택 정렬.md",
+    "4. Archive/코테/세그먼트 트리.md",
+    "무제 파일.canvas",
+    "2. Area/코딩 테스트",
+    "4. Archive/필수 알고리즘 with 파이썬",
+>>>>>>> 18ea3e038528fae4efd2536fa63076242d29115d
     "4. Archive/AB 테스트",
     "3. Resource/Image/filters_for_layer_block3_sepconv1.png",
     "3. Resource/Image/dream.png",
