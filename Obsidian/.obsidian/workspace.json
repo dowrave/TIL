@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2. Area/파이썬과 케라스로 배우는 강화학습/참고 문헌.md",
+                "file": "2. Area/코딩 테스트/전역, 지역 변수 관리.md",
                 "mode": "source",
                 "source": false
               }
@@ -101,7 +101,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2. Area/파이썬과 케라스로 배우는 강화학습/참고 문헌.md",
+                "file": "2. Area/코딩 테스트/전역, 지역 변수 관리.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -129,7 +129,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2. Area/파이썬과 케라스로 배우는 강화학습/참고 문헌.md"
+                "file": "2. Area/코딩 테스트/전역, 지역 변수 관리.md"
               }
             }
           },
@@ -147,7 +147,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2. Area/파이썬과 케라스로 배우는 강화학습/참고 문헌.md",
+                "file": "2. Area/코딩 테스트/전역, 지역 변수 관리.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -174,8 +174,9 @@
   },
   "active": "2d79e7b7b4f6ef55",
   "lastOpenFiles": [
-    "2. Area/파이썬과 케라스로 배우는 강화학습/7. 아타리 - DQN, A3C.md",
     "2. Area/파이썬과 케라스로 배우는 강화학습/참고 문헌.md",
+    "2. Area/코딩 테스트/전역, 지역 변수 관리.md",
+    "2. Area/파이썬과 케라스로 배우는 강화학습/7. 아타리 - DQN, A3C.md",
     "1. Projects/스팀 데이터 분석/가상화 버전.md",
     "README.md",
     "무제 파일.canvas",
@@ -202,7 +203,6 @@
     "4. Archive/AB 테스트/4. 실험 플랫폼과 문화.md",
     "4. Archive/AB 테스트/3. 트위먼의 법칙과 실험의 신뢰도.md",
     "4. Archive/AB 테스트/2. 실험의 실행과 분석 - 엔드투엔드 예제.md",
-    "4. Archive/AB 테스트/1. 소개와 동기.md",
     "4. Archive/AB 테스트",
     "3. Resource/Image/filters_for_layer_block3_sepconv1.png",
     "3. Resource/Image/dream.png",
