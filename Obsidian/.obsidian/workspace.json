@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2. Area/코딩 테스트/행렬 회전 알고리즘.md",
+                "file": "4. Archive/코테/그래프_플로이드-워셜.md",
                 "mode": "source",
                 "source": false
               }
@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "망 사용료",
+                "query": "플로이드",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -73,7 +73,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -93,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2. Area/코딩 테스트/행렬 회전 알고리즘.md",
+                "file": "4. Archive/코테/그래프_플로이드-워셜.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2. Area/코딩 테스트/행렬 회전 알고리즘.md",
+                "file": "4. Archive/코테/그래프_플로이드-워셜.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +134,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2. Area/코딩 테스트/행렬 회전 알고리즘.md"
+                "file": "4. Archive/코테/그래프_플로이드-워셜.md"
               }
             }
           }
@@ -158,6 +159,15 @@
   },
   "active": "05cc4554368d5413",
   "lastOpenFiles": [
+    "4. Archive/코테/그래프.md",
+    "4. Archive/코테/그리디 알고리즘.md",
+    "4. Archive/코테/그래프_플로이드-워셜.md",
+    "4. Archive/코테/그래프_BFS.md",
+    "4. Archive/코테/그래프_벨만-포드.md",
+    "4. Archive/코테/그래프_다익스트라.md",
+    "2. Area/코딩 테스트/이분 탐색 - 문제와 코드.md",
+    "4. Archive/코테/이분 탐색.md",
+    "4. Archive/코테/매개변수 탐색.md",
     "2. Area/코딩 테스트/행렬 회전 알고리즘.md",
     "메모상자/공부 메모/EDA.md",
     "메모상자/공부 메모/pandas.df.str.md",
