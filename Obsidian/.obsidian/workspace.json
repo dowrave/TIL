@@ -4,28 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "0a9a4c9dc3c00f65",
+        "id": "8db92ef6871679ff",
         "type": "tabs",
         "children": [
           {
-            "id": "ccffa88234a31838",
+            "id": "b27784c85e3b19e2",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects/스팀 데이터 분석/일지/8월.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "6e46b0a7795e3a31",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "2. Area/깃허브 투컴 원프로젝트.md",
+                "file": "1. Projects/스팀 데이터 분석/목표.md",
                 "mode": "source",
                 "source": false
               }
@@ -60,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "플로이드",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -105,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1. Projects/스팀 데이터 분석/일지/8월.md",
+                "file": "1. Projects/스팀 데이터 분석/목표.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -122,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1. Projects/스팀 데이터 분석/일지/8월.md",
+                "file": "1. Projects/스팀 데이터 분석/목표.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -145,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1. Projects/스팀 데이터 분석/일지/8월.md"
+                "file": "1. Projects/스팀 데이터 분석/목표.md"
               }
             }
           }
@@ -168,10 +156,11 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "ccffa88234a31838",
+  "active": "b27784c85e3b19e2",
   "lastOpenFiles": [
-    "2. Area/깃허브 투컴 원프로젝트.md",
     "1. Projects/스팀 데이터 분석/일지/8월.md",
+    "4. Archive/Docker/볼륨.md",
+    "2. Area/깃허브 투컴 원프로젝트.md",
     "2. Area/케라스 창시자에게 배우는 딥러닝/11. 텍스트를 위한 딥러닝.md",
     "1. Projects/스팀 데이터 분석/일지/7월.md",
     "4. Archive/코테/그래프_플로이드-워셜.md",
