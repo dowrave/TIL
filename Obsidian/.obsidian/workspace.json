@@ -4,28 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "52f0caafb4a4fe45",
+        "id": "8384f31138249c5d",
         "type": "tabs",
         "children": [
           {
-            "id": "0fd6de62de0c7949",
+            "id": "05cc4554368d5413",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
                 "file": "1. Projects/스팀 데이터 분석/일지/9월.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "8d9c3dff813a1648",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1. Projects/스팀 데이터 분석/일지/8월.md",
                 "mode": "source",
                 "source": false
               }
@@ -60,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "xlnet",
+                "query": "망 사용료",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -78,7 +66,7 @@
             }
           },
           {
-            "id": "2f1d165b33c19fc9",
+            "id": "57feca91a70fdf0a",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -148,21 +136,12 @@
                 "file": "1. Projects/스팀 데이터 분석/일지/9월.md"
               }
             }
-          },
-          {
-            "id": "92b07b547ae19f2b",
-            "type": "leaf",
-            "state": {
-              "type": "advanced-tables-toolbar",
-              "state": {}
-            }
           }
-        ],
-        "currentTab": 4
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 200,
+    "width": 224,
     "collapsed": true
   },
   "left-ribbon": {
@@ -177,44 +156,19 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "0fd6de62de0c7949",
+  "active": "05cc4554368d5413",
   "lastOpenFiles": [
-<<<<<<< HEAD
     "1. Projects/스팀 데이터 분석/일지/8월.md",
-    "1. Projects/스팀 데이터 분석/일지/7월.md",
-    "1. Projects/스팀 데이터 분석/일지/6월.md",
-    "1. Projects/스팀 데이터 분석/일지/5월.md",
-=======
-    "1. Projects/스팀 데이터 분석/도움말/코랩 - GCS와 드라이브 경로 구분하기.md",
->>>>>>> 8a3937219ad46c1a1613e1db9835d5e1dbe7af54
     "1. Projects/스팀 데이터 분석/일지/9월.md",
-    "1. Projects/스팀 데이터 분석/일지/8월.md",
-    "1. Projects/스팀 데이터 분석/도움말/tf 1.x버전 기능 사용하기.md",
-    "2. Area/케라스 창시자에게 배우는 딥러닝/11. 텍스트를 위한 딥러닝.md",
-    "2. Area/케라스 창시자에게 배우는 딥러닝/12. 생성 모델을 위한 딥러닝.md",
-    "2. Area/케라스 창시자에게 배우는 딥러닝/13. 실전 문제 해결을 위한 모범 사례.md",
-    "2. Area/케라스 창시자에게 배우는 딥러닝/14. 결론.md",
-    "2. Area/케라스 창시자에게 배우는 딥러닝/1. 딥러닝이란 무엇인가.md",
-    "2. Area/케라스 창시자에게 배우는 딥러닝/10. 시계열을 위한 딥러닝.md",
-    "2. Area/게임 제작/Unity/2-2. 알파 타입 버전.md",
-    "2. Area/게임 제작/Unity/2-3. 베타 타입 버전.md",
-    "3. Resource/Image/Pasted image 20230828172841.png",
-    "1. Projects/스팀 데이터 분석/도움말/클래스 불균형 - 가중치 보정하기.md",
-    "1. Projects/스팀 데이터 분석/도움말/코랩 파이썬 파일 마운트 후 import.md",
-    "1. Projects/스팀 데이터 분석/목표.md",
-    "4. Archive/Docker/볼륨.md",
-    "2. Area/깃허브 투컴 원프로젝트.md",
-    "4. Archive/코테/그래프_플로이드-워셜.md",
-    "4. Archive/코테/그래프.md",
-    "4. Archive/코테/그리디 알고리즘.md",
-    "4. Archive/코테/그래프_BFS.md",
-    "4. Archive/코테/그래프_벨만-포드.md",
-    "4. Archive/코테/그래프_다익스트라.md",
-<<<<<<< HEAD
-    "2. Area/코딩 테스트/이분 탐색 - 문제와 코드.md"
-=======
-    "2. Area/코딩 테스트/이분 탐색 - 문제와 코드.md",
-    "4. Archive/코테/이분 탐색.md"
->>>>>>> 8a3937219ad46c1a1613e1db9835d5e1dbe7af54
+    "메모상자/공부 메모/EDA.md",
+    "메모상자/공부 메모/pandas.df.str.md",
+    "메모상자/공부 메모/SQL과 판다스 비교.md",
+    "메모상자/정규표현식.md",
+    "메모상자/공부 메모/6가지 더 전문적인 데이터 사이언스 코드 만들기.md",
+    "메모상자/공부 메모/좋은 분석 레포트 만들기.md",
+    "메모상자/공부 메모/AB 테스트.md",
+    "메모상자/독서 메모/빠르게 실패하기/주요 내용들.md",
+    "메모상자/생각 메모/전형 안내 메일과 긴장감.md",
+    "메모상자/독서 메모/넘버스 스틱!/Untitled.md"
   ]
 }
