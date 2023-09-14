@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects/스팀 데이터 분석/일지/9월.md",
+                "file": "1. Projects/스팀 데이터 분석/일지/이슈 수정해나가기.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1. Projects/스팀 데이터 분석/일지/9월.md",
+                "file": "1. Projects/스팀 데이터 분석/일지/이슈 수정해나가기.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1. Projects/스팀 데이터 분석/일지/9월.md",
+                "file": "1. Projects/스팀 데이터 분석/일지/이슈 수정해나가기.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,17 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1. Projects/스팀 데이터 분석/일지/9월.md"
+                "file": "1. Projects/스팀 데이터 분석/일지/이슈 수정해나가기.md"
+              }
+            }
+          },
+          {
+            "id": "e2182f48bec71e99",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency"
               }
             }
           }
@@ -158,8 +168,19 @@
   },
   "active": "05cc4554368d5413",
   "lastOpenFiles": [
-    "1. Projects/스팀 데이터 분석/일지/8월.md",
+    "3. Resource/Image/Pasted image 20230914193808.png",
+    "3. Resource/Image/Pasted image 20230914193807.png",
     "1. Projects/스팀 데이터 분석/일지/9월.md",
+    "1. Projects/스팀 데이터 분석/일지/이슈 수정해나가기.md",
+    "3. Resource/Image/Pasted image 20230914143948.png",
+    "3. Resource/Image/Pasted image 20230914143753.png",
+    "3. Resource/Image/Pasted image 20230914143651.png",
+    "3. Resource/Image/Pasted image 20230914143612.png",
+    "1. Projects/스팀 데이터 분석/도움말/이슈 정리.md",
+    "1. Projects/스팀 데이터 분석/목표.md",
+    "1. Projects/스팀 데이터 분석/가상화 버전.md",
+    "1. Projects/스팀 데이터 분석/도움말/텐서플로우 코드 버전 업그레이드.md",
+    "1. Projects/스팀 데이터 분석/일지/8월.md",
     "메모상자/공부 메모/EDA.md",
     "메모상자/공부 메모/pandas.df.str.md",
     "메모상자/공부 메모/SQL과 판다스 비교.md",
