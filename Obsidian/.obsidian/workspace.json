@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects/스팀 데이터 분석/일지/9월.md",
+                "file": "1. Projects/스팀 데이터 분석/일지/10월.md",
                 "mode": "source",
                 "source": false
               }
@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "망 사용료",
+                "query": "hyperban",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1. Projects/스팀 데이터 분석/일지/9월.md",
+                "file": "1. Projects/스팀 데이터 분석/일지/10월.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1. Projects/스팀 데이터 분석/일지/9월.md",
+                "file": "1. Projects/스팀 데이터 분석/일지/10월.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1. Projects/스팀 데이터 분석/일지/9월.md"
+                "file": "1. Projects/스팀 데이터 분석/일지/10월.md"
               }
             }
           },
@@ -166,23 +166,34 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "05d7e6e280c4e34e",
+  "active": "b6202351188bf9f9",
   "lastOpenFiles": [
     "무제 파일.md",
+    "README.md",
+    "3. Resource/Image/Pasted image 20231010182114.png",
+    "4. Archive/data science/개념과 이론/HyperBand.md",
+    "1. Projects/스팀 데이터 분석/일지/10월.md",
+    "4. Archive/data science/개념과 이론/HPO.md",
+    "4. Archive/data science/개념과 이론/BayesianOptimization.md",
+    "3. Resource/Image/Pasted image 20231010141600.png",
     "1. Projects/스팀 데이터 분석/일지/9월.md",
-    "1. Projects/스팀 데이터 분석/도움말/from_logits.md",
-    "1. Projects/스팀 데이터 분석/도움말/오차 함수 선택.md",
-    "1. Projects/스팀 데이터 분석/일지/이슈 수정 내역.md",
     "1. Projects/스팀 데이터 분석/일지/8월.md",
-    "1. Projects/스팀 데이터 분석/도움말/텐서플로우 코드 버전 업그레이드.md",
+    "1. Projects/스팀 데이터 분석/도움말/이슈 정리.md",
+    "1. Projects/스팀 데이터 분석/도움말/오차 함수 선택.md",
+    "1. Projects/스팀 데이터 분석/도움말/컨테이너 실행 중 다시 빌드하기.md",
+    "1. Projects/스팀 데이터 분석/도움말/컨테이너 제작 과정.md",
+    "1. Projects/스팀 데이터 분석/도움말/코랩 - GCS와 드라이브 경로 구분하기.md",
+    "1. Projects/스팀 데이터 분석/도움말/sudo su 없이 도커 접근하기.md",
     "1. Projects/스팀 데이터 분석/도움말/tf 1.x버전 기능 사용하기.md",
+    "1. Projects/스팀 데이터 분석/도움말/from_logits.md",
+    "1. Projects/스팀 데이터 분석/일지/이슈 수정 내역.md",
+    "1. Projects/스팀 데이터 분석/도움말/텐서플로우 코드 버전 업그레이드.md",
     "3. Resource/Image/Pasted image 20230914193808.png",
     "3. Resource/Image/Pasted image 20230914193807.png",
     "3. Resource/Image/Pasted image 20230914143948.png",
     "3. Resource/Image/Pasted image 20230914143753.png",
     "3. Resource/Image/Pasted image 20230914143651.png",
     "3. Resource/Image/Pasted image 20230914143612.png",
-    "1. Projects/스팀 데이터 분석/도움말/이슈 정리.md",
     "1. Projects/스팀 데이터 분석/목표.md",
     "1. Projects/스팀 데이터 분석/가상화 버전.md",
     "메모상자/공부 메모/EDA.md",
@@ -190,10 +201,6 @@
     "메모상자/공부 메모/SQL과 판다스 비교.md",
     "메모상자/정규표현식.md",
     "메모상자/공부 메모/6가지 더 전문적인 데이터 사이언스 코드 만들기.md",
-    "메모상자/공부 메모/좋은 분석 레포트 만들기.md",
-    "메모상자/공부 메모/AB 테스트.md",
-    "메모상자/독서 메모/빠르게 실패하기/주요 내용들.md",
-    "메모상자/생각 메모/전형 안내 메일과 긴장감.md",
-    "메모상자/독서 메모/넘버스 스틱!/Untitled.md"
+    "메모상자/공부 메모/좋은 분석 레포트 만들기.md"
   ]
 }
