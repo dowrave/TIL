@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
+                "file": "2. Area/django/3. 블로그 앱 만들기.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "README.md",
+                "file": "2. Area/django/3. 블로그 앱 만들기.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "README.md",
+                "file": "2. Area/django/3. 블로그 앱 만들기.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "README.md"
+                "file": "2. Area/django/3. 블로그 앱 만들기.md"
               }
             }
           },
@@ -151,8 +151,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 224,
-    "collapsed": true
+    "width": 224
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -168,8 +167,10 @@
   },
   "active": "b6202351188bf9f9",
   "lastOpenFiles": [
-    "무제 파일.md",
+    "3. Resource/Image/Pasted image 20231101153505.png",
     "README.md",
+    "2. Area/django/3. 블로그 앱 만들기.md",
+    "무제 파일.md",
     "2. Area/django/2. 북마크 앱 만들기.md",
     "3. Resource/Image/Pasted image 20231031175149.png",
     "3. Resource/Image/Pasted image 20231031175110.png",
@@ -203,7 +204,6 @@
     "3. Resource/Image/Pasted image 20230914143753.png",
     "1. Projects/스팀 데이터 분석/목표.md",
     "1. Projects/스팀 데이터 분석/가상화 버전.md",
-    "메모상자/공부 메모/EDA.md",
-    "메모상자/공부 메모/pandas.df.str.md"
+    "메모상자/공부 메모/EDA.md"
   ]
 }

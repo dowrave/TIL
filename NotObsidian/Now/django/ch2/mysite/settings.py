@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bookmark.apps.BookmarkConfig', # 추가
+    'bookmark.apps.BookmarkConfig',
+    'blog.apps.BlogConfig',
 
 ]
 
@@ -106,11 +107,14 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-# LANGUAGE_CODE = 'en-us'
-LANGUAGE_CODE = 'ko-kr'
+LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'ko-kr'
 
 # TIME_ZONE = 'UTC'
 TIME_ZONE = 'Asia/Seoul'
+
+DATE_FORMAT = "F j, Y"
+DATETIME_FORMAT = "F j, Y, H:i"
 
 USE_I18N = True
 
