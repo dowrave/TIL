@@ -17,9 +17,12 @@ Including another URLconf
 # from django.conf.urls import url # 아예 없어짐(4버전부터)
 from django.urls import include, re_path # url 대신 re_path 사용 O
 from django.contrib import admin
+from mysite.views import HomeView
 import os 
 
+
 urlpatterns = [
+    re_path(r'^$', HomeView.as_view(), name = 'home'),
     re_path(r'^admin/', admin.site.urls),
     re_path(r'^bookmark/', include(('bookmark.urls', 'bookmark'), namespace = 'bookmark')),
     re_path(r'^blog/', include(('blog.urls', 'blog'), namespace = 'blog')),

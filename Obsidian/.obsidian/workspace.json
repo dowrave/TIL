@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2. Area/django/3. 블로그 앱 만들기.md",
+                "file": "2. Area/django/7. 블로그 앱 확장 - 태그 달기.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2. Area/django/3. 블로그 앱 만들기.md",
+                "file": "2. Area/django/7. 블로그 앱 확장 - 태그 달기.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2. Area/django/3. 블로그 앱 만들기.md",
+                "file": "2. Area/django/7. 블로그 앱 확장 - 태그 달기.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2. Area/django/3. 블로그 앱 만들기.md"
+                "file": "2. Area/django/7. 블로그 앱 확장 - 태그 달기.md"
               }
             }
           },
@@ -167,9 +167,13 @@
   },
   "active": "b6202351188bf9f9",
   "lastOpenFiles": [
+    "2. Area/django/6. 가상 환경 사용하기.md",
+    "2. Area/django/7. 블로그 앱 확장 - 태그 달기.md",
+    "2. Area/django/5. 기존 앱 개선하기 - Bookmark 앱, Blog 앱.md",
+    "2. Area/django/4. 프로젝트 첫 페이지 만들기.md",
+    "2. Area/django/3. 블로그 앱 만들기.md",
     "3. Resource/Image/Pasted image 20231101153505.png",
     "README.md",
-    "2. Area/django/3. 블로그 앱 만들기.md",
     "무제 파일.md",
     "2. Area/django/2. 북마크 앱 만들기.md",
     "3. Resource/Image/Pasted image 20231031175149.png",
@@ -200,10 +204,6 @@
     "1. Projects/스팀 데이터 분석/도움말/텐서플로우 코드 버전 업그레이드.md",
     "3. Resource/Image/Pasted image 20230914193808.png",
     "3. Resource/Image/Pasted image 20230914193807.png",
-    "3. Resource/Image/Pasted image 20230914143948.png",
-    "3. Resource/Image/Pasted image 20230914143753.png",
-    "1. Projects/스팀 데이터 분석/목표.md",
-    "1. Projects/스팀 데이터 분석/가상화 버전.md",
-    "메모상자/공부 메모/EDA.md"
+    "3. Resource/Image/Pasted image 20230914143948.png"
   ]
 }

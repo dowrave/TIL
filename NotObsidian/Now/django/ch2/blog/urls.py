@@ -13,7 +13,7 @@ urlpatterns = [
     re_path(r'^post/(?P<slug>[-\w]+)/$', PostDV.as_view(), name = 'post_detail'),
 
     # Example: /archive/
-    re_path(r'archive/$', PostAV.as_view(), name = 'archive'),
+    re_path(r'archive/$', PostAV.as_view(), name = 'post_archive'),
 
     # Example: /2012/
     re_path(r'^(?P<year>\d{4})/$', PostYAV.as_view(), name = 'post_year_archive'),
