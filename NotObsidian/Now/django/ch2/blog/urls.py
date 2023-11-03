@@ -25,6 +25,15 @@ urlpatterns = [
     re_path(r'^(?P<year>\d{4})/(?P<month>[a-z]{3})/(?P<day>\d{1,2})/$', PostDAV.as_view(), name = 'post_day_archive'),
 
     # Example: /today/
-    re_path(r'^today/$', PostTAV.as_view(), name = 'post_today_archive')
+    re_path(r'^today/$', PostTAV.as_view(), name = 'post_today_archive'),
+
+    # Example : /tag/
+    re_path(r'^tag/$', TagTV.as_view(), name = 'tag_cloud'),
+    
+    # Example : /tag/tagname/
+    re_path(r'^tag/(?P<tag>[^/]+(?u))/$', PostTOL.as_view(), name = 'tagged_object_list'),
+
+    # Example : /search/
+    re_path(r'^search/$', SearchFormView.as_view(), name = 'search')
 
 ]

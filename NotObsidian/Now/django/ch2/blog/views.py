@@ -1,10 +1,21 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.dates import ArchiveIndexView, YearArchiveView, MonthArchiveView, DayArchiveView, TodayArchiveView
+from tagging.models import Tag, TaggedItem
+from tagging.views import TaggedObjectList
 
 from blog.models import Post
 
+from django.views.generic.edit import FormView
+from blog.forms import PostSearchForm
+from django.db.models import Q
+from django.shortcuts import render
+
 # Create your views here.
+
+#--- TemplateView
+class TagTV(TemplateView):
+    template_name = 'tagging/tagging_cloud.html'
 
 #--- ListView
 class PostLV(ListView):
@@ -12,6 +23,10 @@ class PostLV(ListView):
     template_name = 'blog/post_all.html' # 지정 X 시 blog/post_list.html
     context_object_name = 'posts' # 템플릿에 넘겨주는 컨텍스트 변수명. 디폴트인 object_list도 여전히 사용 가능
     paginate_by = 2 # 한 페이지에 보여주는 객체 리스트의 숫자. 페이징 기능 활성화 & 이동 버튼 자동 활성화.
+
+class PostTOL(TaggedObjectList):
+    model = Post
+    template_name = 'tagging/tagging_post_list.html'
 
 #--- DetailView
 class PostDV(DetailView):
@@ -38,3 +53,18 @@ class PostDAV(DayArchiveView):
 class PostTAV(TodayArchiveView):
     model = Post
     date_field = 'modify_date'
+
+class SearchFormView(FormView):
+    form_class = PostSearchForm
+    template_name = 'blog/post_search.html'
+
+    def form_valid(self, form):
+        schWord = '%s' % self.request.POST['search_word']
+        post_list = Post.objects.filter(Q(title__icontains = schWord) | Q(description__icontains = schWord) | Q(content__icontains = schWord)).distinct()
+
+        context = {}
+        context['form'] = form
+        context['search_term'] = schWord
+        context['object_list'] = post_list
+
+        return render(self.request, self.template_name, context)

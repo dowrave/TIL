@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from tagging.fields import TagField
 
 # Create your models here.
 
@@ -10,6 +11,8 @@ class Post(models.Model):
     content = models.TextField('CONTENT')
     create_date = models.DateTimeField('Create Date', auto_now_add = True)
     modify_date= models.DateTimeField('Modify Date', auto_now = True)
+    tag = TagField()
+
 
     class Meta:
         verbose_name = 'POST'
