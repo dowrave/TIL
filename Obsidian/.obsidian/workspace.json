@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2. Area/django/9. 블로그 앱 확장 - 검색 기능.md",
+                "file": "2. Area/django/10. 실전 프로그램 개발 - Photo 앱.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2. Area/django/9. 블로그 앱 확장 - 검색 기능.md",
+                "file": "2. Area/django/10. 실전 프로그램 개발 - Photo 앱.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2. Area/django/9. 블로그 앱 확장 - 검색 기능.md",
+                "file": "2. Area/django/10. 실전 프로그램 개발 - Photo 앱.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2. Area/django/9. 블로그 앱 확장 - 검색 기능.md"
+                "file": "2. Area/django/10. 실전 프로그램 개발 - Photo 앱.md"
               }
             }
           },
@@ -167,8 +167,9 @@
   },
   "active": "b6202351188bf9f9",
   "lastOpenFiles": [
-    "2. Area/django/8. 블로그 앱 확장 - 댓글 달기.md",
     "2. Area/django/9. 블로그 앱 확장 - 검색 기능.md",
+    "2. Area/django/10. 실전 프로그램 개발 - Photo 앱.md",
+    "2. Area/django/8. 블로그 앱 확장 - 댓글 달기.md",
     "2. Area/django/7. 블로그 앱 확장 - 태그 달기.md",
     "2. Area/django/3. 블로그 앱 만들기.md",
     "2. Area/django/6. 가상 환경 사용하기.md",
@@ -201,7 +202,6 @@
     "1. Projects/스팀 데이터 분석/도움말/코랩 - GCS와 드라이브 경로 구분하기.md",
     "1. Projects/스팀 데이터 분석/도움말/sudo su 없이 도커 접근하기.md",
     "1. Projects/스팀 데이터 분석/도움말/tf 1.x버전 기능 사용하기.md",
-    "1. Projects/스팀 데이터 분석/도움말/from_logits.md",
     "3. Resource/Image/Pasted image 20230914193808.png",
     "3. Resource/Image/Pasted image 20230914193807.png",
     "3. Resource/Image/Pasted image 20230914143948.png"

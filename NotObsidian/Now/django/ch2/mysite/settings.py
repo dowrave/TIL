@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'tagging.apps.TaggingConfig',
     'disqus',
     'django.contrib.sites',
+    'photo.apps.PhotoConfig',
 
 ]
 

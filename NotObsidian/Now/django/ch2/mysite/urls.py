@@ -18,6 +18,8 @@ Including another URLconf
 from django.urls import include, re_path # url 대신 re_path 사용 O
 from django.contrib import admin
 from mysite.views import HomeView
+from django.conf.urls.static import static
+from django.conf import settings
 import os 
 
 
@@ -26,5 +28,6 @@ urlpatterns = [
     re_path(r'^admin/', admin.site.urls),
     re_path(r'^bookmark/', include(('bookmark.urls', 'bookmark'), namespace = 'bookmark')),
     re_path(r'^blog/', include(('blog.urls', 'blog'), namespace = 'blog')),
-]
+    re_path(r'^photo/', include(('photo.urls', 'photo'), namespace = 'photo')), 
 
+] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
