@@ -13,7 +13,11 @@
             "state": {
               "type": "markdown",
               "state": {
+<<<<<<< HEAD
                 "file": "1. Projects/스팀 데이터 분석/도움말/컨테이너 실행 중 다시 빌드하기.md",
+=======
+                "file": "2. Area/django/10. 실전 프로그램 개발 - Photo 앱.md",
+>>>>>>> 6617745468b0f0b175b5c0b441862225564e0460
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +97,11 @@
             "state": {
               "type": "backlink",
               "state": {
+<<<<<<< HEAD
                 "file": "1. Projects/스팀 데이터 분석/도움말/컨테이너 실행 중 다시 빌드하기.md",
+=======
+                "file": "2. Area/django/10. 실전 프로그램 개발 - Photo 앱.md",
+>>>>>>> 6617745468b0f0b175b5c0b441862225564e0460
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +118,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+<<<<<<< HEAD
                 "file": "1. Projects/스팀 데이터 분석/도움말/컨테이너 실행 중 다시 빌드하기.md",
+=======
+                "file": "2. Area/django/10. 실전 프로그램 개발 - Photo 앱.md",
+>>>>>>> 6617745468b0f0b175b5c0b441862225564e0460
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +145,11 @@
             "state": {
               "type": "outline",
               "state": {
+<<<<<<< HEAD
                 "file": "1. Projects/스팀 데이터 분석/도움말/컨테이너 실행 중 다시 빌드하기.md"
+=======
+                "file": "2. Area/django/10. 실전 프로그램 개발 - Photo 앱.md"
+>>>>>>> 6617745468b0f0b175b5c0b441862225564e0460
               }
             }
           },
@@ -151,8 +167,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 224,
-    "collapsed": true
+    "width": 224
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -168,10 +183,33 @@
   },
   "active": "b6202351188bf9f9",
   "lastOpenFiles": [
+<<<<<<< HEAD
     "1. Projects/스팀 데이터 분석/일지/11월.md",
     "1. Projects/스팀 데이터 분석/일지/10월.md",
     "무제 파일.md",
+=======
+    "2. Area/django/9. 블로그 앱 확장 - 검색 기능.md",
+    "2. Area/django/10. 실전 프로그램 개발 - Photo 앱.md",
+    "2. Area/django/8. 블로그 앱 확장 - 댓글 달기.md",
+    "2. Area/django/7. 블로그 앱 확장 - 태그 달기.md",
+    "2. Area/django/3. 블로그 앱 만들기.md",
+    "2. Area/django/6. 가상 환경 사용하기.md",
+    "2. Area/django/5. 기존 앱 개선하기 - Bookmark 앱, Blog 앱.md",
+    "2. Area/django/4. 프로젝트 첫 페이지 만들기.md",
+    "3. Resource/Image/Pasted image 20231101153505.png",
+>>>>>>> 6617745468b0f0b175b5c0b441862225564e0460
     "README.md",
+    "무제 파일.md",
+    "2. Area/django/2. 북마크 앱 만들기.md",
+    "3. Resource/Image/Pasted image 20231031175149.png",
+    "3. Resource/Image/Pasted image 20231031175110.png",
+    "3. Resource/Image/Pasted image 20231031155203.png",
+    "3. Resource/Image/Pasted image 20231031154941.png",
+    "2. Area/django/1. 장고 개발의 기본 사항.md",
+    "1. Projects/스팀 데이터 분석/일지/10월.md",
+    "2. Area/django",
+    "2. Area/23하반기취준/넥토리얼 데이터 분석가.md",
+    "2. Area/23하반기취준",
     "3. Resource/Image/Pasted image 20231010182114.png",
     "4. Archive/data science/개념과 이론/HyperBand.md",
     "4. Archive/data science/개념과 이론/HPO.md",
@@ -186,11 +224,9 @@
     "1. Projects/스팀 데이터 분석/도움말/코랩 - GCS와 드라이브 경로 구분하기.md",
     "1. Projects/스팀 데이터 분석/도움말/sudo su 없이 도커 접근하기.md",
     "1. Projects/스팀 데이터 분석/도움말/tf 1.x버전 기능 사용하기.md",
-    "1. Projects/스팀 데이터 분석/도움말/from_logits.md",
-    "1. Projects/스팀 데이터 분석/일지/이슈 수정 내역.md",
-    "1. Projects/스팀 데이터 분석/도움말/텐서플로우 코드 버전 업그레이드.md",
     "3. Resource/Image/Pasted image 20230914193808.png",
     "3. Resource/Image/Pasted image 20230914193807.png",
+<<<<<<< HEAD
     "3. Resource/Image/Pasted image 20230914143948.png",
     "3. Resource/Image/Pasted image 20230914143753.png",
     "3. Resource/Image/Pasted image 20230914143651.png",
@@ -202,5 +238,8 @@
     "메모상자/공부 메모/SQL과 판다스 비교.md",
     "메모상자/정규표현식.md",
     "메모상자/공부 메모/6가지 더 전문적인 데이터 사이언스 코드 만들기.md"
+=======
+    "3. Resource/Image/Pasted image 20230914143948.png"
+>>>>>>> 6617745468b0f0b175b5c0b441862225564e0460
   ]
 }
