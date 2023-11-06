@@ -153,5 +153,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# Auth 관련
+#LOGIN_URL = '/accounts/login/'
+#LOGOUT_URL = '/accounts/logout/'
+LOGIN_REDIRECT_URL = '/'
+
+# DISQUS 설정 관련
 DISQUS_WEBSITE_SHORTNAME = 'pythonwebprogramming'
 SITE_ID = 1
