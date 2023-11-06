@@ -34,6 +34,18 @@ urlpatterns = [
     re_path(r'^tag/(?P<tag>[^/]+(?u))/$', PostTOL.as_view(), name = 'tagged_object_list'),
 
     # Example : /search/
-    re_path(r'^search/$', SearchFormView.as_view(), name = 'search')
+    re_path(r'^search/$', SearchFormView.as_view(), name = 'search'),
+
+    # Example : /add/
+    re_path(r'^add/$', PostCreateView.as_view(), name='add'),
+
+    # Example : /change/
+    re_path(r'^change/$', PostChangeLV.as_view(), name = 'change'),
+
+    # Example : /99/update/
+    re_path(r'^(?P<pk>[0-9]+)/update/$', PostUpdateView.as_view(), name = 'update'),
+
+    # Example : /99/delete/
+    re_path(r'^(?P<pk>[0-9]+)/delete/$', PostDeleteView.as_view(), name = 'delete'),
 
 ]

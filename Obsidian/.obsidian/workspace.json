@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "6fd29d6dbee530b9",
+        "id": "42d61c03b7cf32f7",
         "type": "tabs",
         "children": [
           {
-            "id": "05cc4554368d5413",
+            "id": "42f930c2a4e0383d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2. Area/django/11. 실전 프로그램 개발 - 인증 기능.md",
+                "file": "2. Area/django/12. 실전 프로그램 개발 - 콘텐츠 편집 기능(북마크, 블로그 앱).md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2. Area/django/11. 실전 프로그램 개발 - 인증 기능.md",
+                "file": "2. Area/django/12. 실전 프로그램 개발 - 콘텐츠 편집 기능(북마크, 블로그 앱).md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2. Area/django/11. 실전 프로그램 개발 - 인증 기능.md",
+                "file": "2. Area/django/12. 실전 프로그램 개발 - 콘텐츠 편집 기능(북마크, 블로그 앱).md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2. Area/django/11. 실전 프로그램 개발 - 인증 기능.md"
+                "file": "2. Area/django/12. 실전 프로그램 개발 - 콘텐츠 편집 기능(북마크, 블로그 앱).md"
               }
             }
           },
@@ -166,10 +166,11 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "05cc4554368d5413",
+  "active": "42f930c2a4e0383d",
   "lastOpenFiles": [
-    "2. Area/django/10. 실전 프로그램 개발 - Photo 앱.md",
+    "2. Area/django/12. 실전 프로그램 개발 - 콘텐츠 편집 기능(북마크, 블로그 앱).md",
     "2. Area/django/11. 실전 프로그램 개발 - 인증 기능.md",
+    "2. Area/django/10. 실전 프로그램 개발 - Photo 앱.md",
     "메모상자/공부 메모/EDA.md",
     "메모상자/공부 메모/pandas.df.str.md",
     "메모상자/공부 메모/SQL과 판다스 비교.md",
