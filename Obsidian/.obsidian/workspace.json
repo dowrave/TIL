@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2. Area/django/12. 실전 프로그램 개발 - 콘텐츠 편집 기능(북마크, 블로그 앱).md",
+                "file": "2. Area/django/13.  실전 프로그램 개발 - 콘텐츠 편집 기능(Photo 앱).md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2. Area/django/12. 실전 프로그램 개발 - 콘텐츠 편집 기능(북마크, 블로그 앱).md",
+                "file": "2. Area/django/13.  실전 프로그램 개발 - 콘텐츠 편집 기능(Photo 앱).md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2. Area/django/12. 실전 프로그램 개발 - 콘텐츠 편집 기능(북마크, 블로그 앱).md",
+                "file": "2. Area/django/13.  실전 프로그램 개발 - 콘텐츠 편집 기능(Photo 앱).md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2. Area/django/12. 실전 프로그램 개발 - 콘텐츠 편집 기능(북마크, 블로그 앱).md"
+                "file": "2. Area/django/13.  실전 프로그램 개발 - 콘텐츠 편집 기능(Photo 앱).md"
               }
             }
           },
@@ -168,6 +168,10 @@
   },
   "active": "42f930c2a4e0383d",
   "lastOpenFiles": [
+    "2. Area/django/추가 정리/models.ForeignKey(on_delete = ).md",
+    "2. Area/django/1. 장고 개발의 기본 사항.md",
+    "2. Area/django/13.  실전 프로그램 개발 - 콘텐츠 편집 기능(Photo 앱).md",
+    "2. Area/django/추가 정리",
     "2. Area/django/12. 실전 프로그램 개발 - 콘텐츠 편집 기능(북마크, 블로그 앱).md",
     "2. Area/django/11. 실전 프로그램 개발 - 인증 기능.md",
     "2. Area/django/10. 실전 프로그램 개발 - Photo 앱.md",

@@ -20,23 +20,24 @@
     <table id="applist">
         <tr>
             <td><b><i><a href="{% url 'bookmark:index' %}">Bookmark</a></i></b></td>
-            <td>You can write your own post and share to others. Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt velit dolore, animi unde possimus temporibus sequi officia iste labore dolorem neque quae enim quod repellendus aspernatur perspiciatis blanditiis excepturi dicta?</td>
-            <td><b><i><a href="#">Add</a></i></b></td>
-            <td><b><i><a href="#">Change</a></i></b></td>
+            <td>You can store your own bookmarks by Bookmark Application. It's also possible to update or delete your bookmarks.</td>
+            <td class="Edit"><i><a href="{% url 'bookmark:add' %}">Add</a></i></td>
+            <td class="Edit"><i><a href="{% url 'bookmark:change' %}">Change</a></i></td>
+
         </tr>
 
         <tr>
             <td><b><i><a href="{% url 'blog:index' %}">Blog</a></i></b></td>
-            <td>You can write your own post and share to others. Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt velit dolore, animi unde possimus temporibus sequi officia iste labore dolorem neque quae enim quod repellendus aspernatur perspiciatis blanditiis excepturi dicta?</td>
-            <td><b><i><a href="#">Add</a></i></b></td>
-            <td><b><i><a href="#">Change</a></i></b></td>
+            <td>This application makes it possible to log daily events or write your own interests such as hobbies, techniques, etc. </td>
+            <td class="Edit"><i><a href="{% url 'blog:add' %}">Add</a></i></td>
+            <td class="Edit"><i><a href="{% url 'blog:change' %}">Change</a></i></td>
         </tr>
 
         <tr>
-            <td><b><i><a href="#">Photo</a></i></b></td>
-            <td>You can write your own post and share to others. Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt velit dolore, animi unde possimus temporibus sequi officia iste labore dolorem neque quae enim quod repellendus aspernatur perspiciatis blanditiis excepturi dicta?</td>
-            <td><b><i><a href="#">Add</a></i></b></td>
-            <td><b><i><a href="#">Change</a></i></b></td>
+            <td><b><i><a href="{% url 'photo:index' %}">Photo</a></i></b></td>
+            <td>You can upload your own photos through this application. If you delete an album, all photos within it will be deleted.</td>
+            <td class="Edit"><i><a href="{% url 'photo:album_add' %}">Add</a></i></td>
+            <td class="Edit"><i><a href="{% url 'photo:album_change' %}">Change</a></i></td>
         </tr>
 
     </table>
