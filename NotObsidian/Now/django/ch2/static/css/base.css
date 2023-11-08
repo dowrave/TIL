@@ -68,6 +68,10 @@ div#footer {
 }
 
 /* MENU */
+div#menu {
+    text-align: center; /* 메뉴 아이템 가로 중앙 정렬 */
+}
+
 div#menu a:link, div#menu a:visited{
     color: #36c;
 }
@@ -82,12 +86,14 @@ div#menu > li {
 }
 
 /* pulldown Menu */
-div#menu li ul {
+div#menu > li ul {
     display: none;
     position: absolute;
-    margin: 0;
-    padding: 10px 10px 5px 10px;
+    margin-left: 38px;
+    margin-top: 3px;
+    padding: 10px 10px 5px 10px; 
     list-style: none;
+    border-top: 1px solid #ccc;
     border-right: 1px solid #ccc;
     border-left: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
