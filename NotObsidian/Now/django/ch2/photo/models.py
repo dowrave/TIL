@@ -20,6 +20,14 @@ class Album(models.Model):
     def get_absolute_url(self):
         return reverse('photo:album_detail', args = (self.id, ))
     
+# N:N 구축을 위한 모델
+class Publication(models.Model):
+    title = models.CharField(max_length = 30)
+    albums = models.ManyToManyField(Album)
+
+    def __str__(self):
+        return self.title
+
 
 class Photo(models.Model):
     album = models.ForeignKey(Album, on_delete= models.CASCADE)
@@ -38,3 +46,21 @@ class Photo(models.Model):
     
     def get_absolute_url(self):
         return reverse('photo:photo_detail', args = (self.id, ))
+    
+
+# 1:1 구축
+class Place(models.Model):
+    name = models.CharField(max_length = 50)
+    address = models.CharField(max_length = 80)
+
+    def __str__(self):
+        return '%s the place' % self.name
+    
+class Restaurant(models.Model):
+    place = models.OneToOneField(Place, on_delete = models.CASCADE)
+    name = models.CharField(max_length= 50,
+                            default = 'DefRestName')
+    serves_pizza = models.BooleanField(default = False)
+
+    def __str__(self):
+        return '%s the restaurant' % self.name

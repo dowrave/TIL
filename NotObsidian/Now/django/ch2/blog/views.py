@@ -28,6 +28,22 @@ class PostLV(ListView):
     context_object_name = 'posts' # 템플릿에 넘겨주는 컨텍스트 변수명. 디폴트인 object_list도 여전히 사용 가능
     paginate_by = 2 # 한 페이지에 보여주는 객체 리스트의 숫자. 페이징 기능 활성화 & 이동 버튼 자동 활성화.
 
+class TestPostLV(ListView):
+    # model = Post
+    queryset = Post.objects.all()[:5]
+    # template_name = 'blog/post_all.html'
+    template_name = 'blog/post_test.html'
+    context_object_name = 'posts'
+    paginate_by = 2
+
+    def get_queryset(self):
+        return Post.objects.filter(Q(content__icontains = self.kwargs['word'])).distinct()
+    
+    def get_context_data(self, **kwargs):
+        context = super(TestPostLV, self).get_context_data(**kwargs)
+        context['SearchWord'] = self.kwargs['word']
+        return context
+
 class PostTOL(TaggedObjectList):
     model = Post
     template_name = 'tagging/tagging_post_list.html'

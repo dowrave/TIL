@@ -48,4 +48,7 @@ urlpatterns = [
     # Example : /99/delete/
     re_path(r'^(?P<pk>[0-9]+)/delete/$', PostDeleteView.as_view(), name = 'delete'),
 
+    # Example: /test/word/
+    re_path(r'^test/(?P<word>[\w]+)/$', TestPostLV.as_view(), name='post_test'),
+
 ]
