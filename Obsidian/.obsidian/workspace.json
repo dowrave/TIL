@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2. Area/django/17. 장고 핵심 기능 - Form.md",
+                "file": "2. Area/js/2. 변수와 자료형.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2. Area/django/17. 장고 핵심 기능 - Form.md",
+                "file": "2. Area/js/2. 변수와 자료형.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2. Area/django/17. 장고 핵심 기능 - Form.md",
+                "file": "2. Area/js/2. 변수와 자료형.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2. Area/django/17. 장고 핵심 기능 - Form.md"
+                "file": "2. Area/js/2. 변수와 자료형.md"
               }
             }
           },
@@ -166,10 +166,13 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "05d7e6e280c4e34e",
+  "active": "1619af322b8fcf85",
   "lastOpenFiles": [
-    "2. Area/django/16. 장고 핵심 기능 - Template.md",
+    "2. Area/js/1. 자바스크립트 시작하기.md",
+    "2. Area/js/2. 변수와 자료형.md",
     "2. Area/django/17. 장고 핵심 기능 - Form.md",
+    "2. Area/js",
+    "2. Area/django/16. 장고 핵심 기능 - Template.md",
     "2. Area/django/15. 장고 핵심 기능 - View.md",
     "3. Resource/Canvas/ListView 상속계층도.canvas",
     "3. Resource/Canvas",
