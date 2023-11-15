@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2. Area/js/5. DOM의 기초.md",
+                "file": "2. Area/js/6. 이벤트와 이벤트 처리기.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2. Area/js/5. DOM의 기초.md",
+                "file": "2. Area/js/6. 이벤트와 이벤트 처리기.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2. Area/js/5. DOM의 기초.md",
+                "file": "2. Area/js/6. 이벤트와 이벤트 처리기.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2. Area/js/5. DOM의 기초.md"
+                "file": "2. Area/js/6. 이벤트와 이벤트 처리기.md"
               }
             }
           },
@@ -168,8 +168,9 @@
   },
   "active": "1619af322b8fcf85",
   "lastOpenFiles": [
-    "2. Area/js/4. 함수와 스코프.md",
     "2. Area/js/5. DOM의 기초.md",
+    "2. Area/js/6. 이벤트와 이벤트 처리기.md",
+    "2. Area/js/4. 함수와 스코프.md",
     "3. Resource/Image/Pasted image 20231114135100.png",
     "2. Area/js/3.  연산자와 제어문.md",
     "2. Area/js/2. 변수와 자료형.md",
@@ -197,7 +198,6 @@
     "메모상자/공부 메모/6가지 더 전문적인 데이터 사이언스 코드 만들기.md",
     "메모상자/공부 메모/좋은 분석 레포트 만들기.md",
     "메모상자/공부 메모/AB 테스트.md",
-    "메모상자/독서 메모/빠르게 실패하기/주요 내용들.md",
-    "메모상자/생각 메모/전형 안내 메일과 긴장감.md"
+    "메모상자/독서 메모/빠르게 실패하기/주요 내용들.md"
   ]
 }

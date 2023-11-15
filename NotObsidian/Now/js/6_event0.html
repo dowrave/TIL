@@ -1,0 +1,50 @@
+<html>
+    <body>
+        <button>안녕하새오 버튼이애오</button>
+        <br/>
+
+            <fieldset >
+            과연 그 결과는?
+            <div class="result"></div>
+
+            </fieldset>
+
+        <br/>
+        <div>
+            <select name="yes" id="no">
+                <option value="가">가</option>
+                <option value="나">나</option>
+                <option value="다">다</option>
+            </select>
+        </div>
+
+    </body>
+
+    <script>
+        const button = document.querySelector('button');
+        const body = document.body;
+        const result =  document.querySelector('.result');
+        const selectMenu = document.querySelector("#no");
+
+        window.onload = alert("안녕하세요?");
+
+
+        button.onclick = function() {
+            document.body.style.backgroundColor = "green";
+        };
+
+        body.addEventListener("keydown", (e) => {
+            result.innerText = `
+            code : ${e.code},
+            key : ${e.key}
+            `;
+        });
+
+        function displaySelect() {
+            let selectedText = selectMenu.options[selectMenu.selectedIndex].innerText;
+            alert(`[${selectedText}]를 선택했습니다.`);
+        }
+        
+        selectMenu.onchange = displaySelect;
+    </script>
+</html>

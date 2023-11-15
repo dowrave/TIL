@@ -1,3 +1,5 @@
+/* #이 id고 .이 class다. 쥰내 헷갈림 */
+
 h1 {
     font-size: 2rem;
     margin-bottom: 20px;
@@ -6,4 +8,8 @@ h1 {
 .clicked {
         background-color: yellow;
         color: blue;
+}
+
+.hidden {
+        display:none
 }
