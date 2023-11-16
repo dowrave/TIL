@@ -29,28 +29,29 @@ displayDate.innerHTML = `${year}년 ${month}월 ${Date}일 <span style="font-wei
 
 // 시간
 let clock = () => {
-const displayTime = document.querySelector("#clock");
+    const displayTime = document.querySelector("#clock");
 
-let current = new Date();
-let hrs = current.getHours();
-let mins = current.getMinutes();
-let secs = current.getSeconds();
+    let current = new Date();
+    let hrs = current.getHours();
+    let mins = current.getMinutes();
+    let secs = current.getSeconds();
 
-let period = "AM";
-if (hrs === 0) {
-    hrs = 12;
-} else if (hrs > 12) {
-    hrs = hrs - 12;
-    period = "PM";
+    let period = "AM";
+    if (hrs === 0) {
+        hrs = 12;
+    } else if (hrs > 12) {
+        hrs = hrs - 12;
+        period = "PM";
+    }
+
+    hrs = (hrs < 10) ? "0" + hrs : hrs;
+    mins = (mins < 10) ? "0" + mins : mins;
+    secs = (secs < 10) ? "0" + secs : secs;
+
+    // 텍스트로 표시하기
+    // console.log(`${period} ${hrs} : ${mins} : ${secs}`);
+    displayTime.innerText = `${period} ${hrs} : ${mins} : ${secs}`;
 }
 
-hrs = (hrs < 10) ? "0" + hrs : hrs;
-mins = (mins < 10) ? "0" + mins : mins;
-secs = (secs < 10) ? "0" + secs : secs;
-
-// 텍스트로 표시하기
-// console.log(`${period} ${hrs} : ${mins} : ${secs}`);
-displayTime.innerText = `${period} ${hrs} : ${mins} : ${secs}`;
-}
-
+// 1초마다 실행
 setInterval(clock, 1000);
