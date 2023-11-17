@@ -8,12 +8,12 @@
         "type": "tabs",
         "children": [
           {
-            "id": "1619af322b8fcf85",
+            "id": "54b37a31f2943613",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2. Area/js/9. 객체 알아보기.md",
+                "file": "2. Area/js/11. 배열과 객체 심화.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2. Area/js/9. 객체 알아보기.md",
+                "file": "2. Area/js/11. 배열과 객체 심화.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2. Area/js/9. 객체 알아보기.md",
+                "file": "2. Area/js/11. 배열과 객체 심화.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2. Area/js/9. 객체 알아보기.md"
+                "file": "2. Area/js/11. 배열과 객체 심화.md"
               }
             }
           },
@@ -166,8 +166,11 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "1619af322b8fcf85",
+  "active": "05d7e6e280c4e34e",
   "lastOpenFiles": [
+    "2. Area/js/10. 문자열과 배열.md",
+    "2. Area/js/11. 배열과 객체 심화.md",
+    "2. Area/js/9. 객체 알아보기.md",
     "2. Area/js/1. 자바스크립트 시작하기.md",
     "2. Area/js/2. 변수와 자료형.md",
     "2. Area/js/3.  연산자와 제어문.md",
@@ -176,7 +179,6 @@
     "2. Area/js/6. 이벤트와 이벤트 처리기.md",
     "2. Area/js/7. DOM 활용하기.md",
     "2. Area/js/8. 자주 사용하는 내장 객체.md",
-    "2. Area/js/9. 객체 알아보기.md",
     "3. Resource/Image/Pasted image 20231115182516.png",
     "3. Resource/Image/Pasted image 20231115182300.png",
     "3. Resource/Image/Pasted image 20231114135100.png",
@@ -198,8 +200,6 @@
     "2. Area/django/11. 실전 프로그램 개발 - 인증 기능.md",
     "메모상자/공부 메모/EDA.md",
     "메모상자/공부 메모/pandas.df.str.md",
-    "메모상자/공부 메모/SQL과 판다스 비교.md",
-    "메모상자/정규표현식.md",
-    "메모상자/공부 메모/6가지 더 전문적인 데이터 사이언스 코드 만들기.md"
+    "메모상자/공부 메모/SQL과 판다스 비교.md"
   ]
 }
