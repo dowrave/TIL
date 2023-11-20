@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "ff13a9ba3a4009a2",
+        "id": "a9a0dbf983103c4c",
         "type": "tabs",
         "children": [
           {
-            "id": "54b37a31f2943613",
+            "id": "0bf9a5f709636f68",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2. Area/js/12. HTTP 통신과 JSON.md",
+                "file": "2. Area/js/15. 캔버스로 그래픽 요소 다루기.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2. Area/js/12. HTTP 통신과 JSON.md",
+                "file": "2. Area/js/15. 캔버스로 그래픽 요소 다루기.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2. Area/js/12. HTTP 통신과 JSON.md",
+                "file": "2. Area/js/15. 캔버스로 그래픽 요소 다루기.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2. Area/js/12. HTTP 통신과 JSON.md"
+                "file": "2. Area/js/15. 캔버스로 그래픽 요소 다루기.md"
               }
             }
           },
@@ -166,10 +166,20 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "54b37a31f2943613",
+  "active": "0bf9a5f709636f68",
   "lastOpenFiles": [
-    "2. Area/js/11. 배열과 객체 심화.md",
+    "2. Area/js/14. 캔버스로 도형, 텍스트, 이미지 그리기.md",
+    "2. Area/js/15. 캔버스로 그래픽 요소 다루기.md",
+    "3. Resource/Image/Pasted image 20231120174341.png",
+    "3. Resource/Image/Pasted image 20231120174302.png",
+    "3. Resource/Image/Pasted image 20231120174057.png",
+    "3. Resource/Image/Pasted image 20231120174052.png",
+    "3. Resource/Image/Pasted image 20231120174001.png",
+    "2. Area/js/README.md.md",
+    "2. Area/js/13. 비동기 프로그래밍.md",
+    "jsonplaceholder.typicode.com.md",
     "2. Area/js/12. HTTP 통신과 JSON.md",
+    "2. Area/js/11. 배열과 객체 심화.md",
     "2. Area/js/10. 문자열과 배열.md",
     "2. Area/js/9. 객체 알아보기.md",
     "2. Area/js/1. 자바스크립트 시작하기.md",
@@ -195,11 +205,6 @@
     "2. Area/django/10. 실전 프로그램 개발 - Photo 앱.md",
     "2. Area/django/추가 정리/css 수정하기.md",
     "2. Area/django/추가 정리/models.ForeignKey(on_delete = ).md",
-    "2. Area/django/1. 장고 개발의 기본 사항.md",
-    "2. Area/django/추가 정리",
-    "2. Area/django/12. 실전 프로그램 개발 - 콘텐츠 편집 기능(북마크, 블로그 앱).md",
-    "2. Area/django/11. 실전 프로그램 개발 - 인증 기능.md",
-    "메모상자/공부 메모/EDA.md",
-    "메모상자/공부 메모/pandas.df.str.md"
+    "2. Area/django/추가 정리"
   ]
 }
