@@ -1,0 +1,14 @@
+<body>
+    <h1> 전국 캠핑장 현황 </h1>
+    <div id="map" style="width:100%;height:550px;"></div>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8cc64219a39e72251c57208f21c9e9ad"></script>
+    
+    <script>
+        
+        const url = 'https://apis.data.go.kr/B551011/GoCamping/basedList?serviceKey=NLHX%2F7ZjEldvWw4fyF3Coqi4s5Fdh4id9awuASdi8Vt0i%2FScGBwggKQTIJOz8%2FHQgqayBJOVRv7ge84NJnRPzQ%3D%3D&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=ASD&_type=JSON'
+
+        fetch(url)
+            .then(function(result) {result.json()});
+
+    </script>
+</body>

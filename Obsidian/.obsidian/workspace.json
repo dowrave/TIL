@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "a9a0dbf983103c4c",
+        "id": "d5caaeab4e13dcec",
         "type": "tabs",
         "children": [
           {
-            "id": "0bf9a5f709636f68",
+            "id": "02004852e2a79ce6",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2. Area/js/15. 캔버스로 그래픽 요소 다루기.md",
+                "file": "2. Area/js/18. 공개 API 활용하기.md",
                 "mode": "source",
                 "source": false
               }
@@ -77,7 +77,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 221.5
+    "width": 271.5
   },
   "right": {
     "id": "e94ea327b6cf935a",
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2. Area/js/15. 캔버스로 그래픽 요소 다루기.md",
+                "file": "2. Area/js/18. 공개 API 활용하기.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2. Area/js/15. 캔버스로 그래픽 요소 다루기.md",
+                "file": "2. Area/js/18. 공개 API 활용하기.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2. Area/js/15. 캔버스로 그래픽 요소 다루기.md"
+                "file": "2. Area/js/18. 공개 API 활용하기.md"
               }
             }
           },
@@ -166,10 +166,19 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "0bf9a5f709636f68",
+  "active": "02004852e2a79ce6",
   "lastOpenFiles": [
-    "2. Area/js/14. 캔버스로 도형, 텍스트, 이미지 그리기.md",
+    "3. Resource/Image/Pasted image 20231121171753.png",
+    "3. Resource/Image/Pasted image 20231121171742.png",
+    "3. Resource/Image/Pasted image 20231121171644.png",
+    "2. Area/js/17. 웹 API 활용하기.md",
+    "2. Area/js/18. 공개 API 활용하기.md",
+    "2. Area/js/16. 캔버스에서 애니메이션 실행하기.md",
+    "2. Area/js/9. 객체 알아보기.md",
+    "2. Area/js/10. 문자열과 배열.md",
+    "2. Area/js/11. 배열과 객체 심화.md",
     "2. Area/js/15. 캔버스로 그래픽 요소 다루기.md",
+    "2. Area/js/14. 캔버스로 도형, 텍스트, 이미지 그리기.md",
     "3. Resource/Image/Pasted image 20231120174341.png",
     "3. Resource/Image/Pasted image 20231120174302.png",
     "3. Resource/Image/Pasted image 20231120174057.png",
@@ -179,9 +188,6 @@
     "2. Area/js/13. 비동기 프로그래밍.md",
     "jsonplaceholder.typicode.com.md",
     "2. Area/js/12. HTTP 통신과 JSON.md",
-    "2. Area/js/11. 배열과 객체 심화.md",
-    "2. Area/js/10. 문자열과 배열.md",
-    "2. Area/js/9. 객체 알아보기.md",
     "2. Area/js/1. 자바스크립트 시작하기.md",
     "2. Area/js/2. 변수와 자료형.md",
     "2. Area/js/3.  연산자와 제어문.md",
@@ -201,10 +207,6 @@
     "3. Resource/Canvas",
     "4. Archive/Kubernetes/Kubernetes 목차.md",
     "2. Area/django/14. 장고 핵심 기능 - Model.md",
-    "2. Area/django/13.  실전 프로그램 개발 - 콘텐츠 편집 기능(Photo 앱).md",
-    "2. Area/django/10. 실전 프로그램 개발 - Photo 앱.md",
-    "2. Area/django/추가 정리/css 수정하기.md",
-    "2. Area/django/추가 정리/models.ForeignKey(on_delete = ).md",
     "2. Area/django/추가 정리"
   ]
 }
