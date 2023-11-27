@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2. Area/react/5. 리액트 클래스 컴포넌트.md",
+                "file": "2. Area/react/7. 고차 함수와 렌더링 최적화.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2. Area/react/5. 리액트 클래스 컴포넌트.md",
+                "file": "2. Area/react/7. 고차 함수와 렌더링 최적화.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2. Area/react/5. 리액트 클래스 컴포넌트.md",
+                "file": "2. Area/react/7. 고차 함수와 렌더링 최적화.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2. Area/react/5. 리액트 클래스 컴포넌트.md"
+                "file": "2. Area/react/7. 고차 함수와 렌더링 최적화.md"
               }
             }
           },
@@ -156,21 +156,32 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "table-editor-obsidian:Advanced Tables Toolbar": false,
-      "templater-obsidian:Templater": false,
       "switcher:퀵 스위처 열기": false,
       "graph:그래프 뷰 열기": false,
       "canvas:새 캔버스 만들기": false,
       "daily-notes:오늘의 데일리 노트 열기": false,
       "templates:템플릿 삽입": false,
-      "command-palette:명령어 팔레트 열기": false
+      "command-palette:명령어 팔레트 열기": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false,
+      "templater-obsidian:Templater": false
     }
   },
   "active": "02004852e2a79ce6",
   "lastOpenFiles": [
+    "3. Resource/Image/Pasted image 20231127175501.png",
+    "2. Area/react/6. 리액트 훅.md",
+    "2. Area/react/7. 고차 함수와 렌더링 최적화.md",
+    "1. Projects/스팀 데이터 분석/도움말/컨테이너 실행 중 다시 빌드하기.md",
+    "3. Resource/Image/Pasted image 20231127141939.png",
+    "3. Resource/Image/Pasted image 20231127141914.png",
+    "2. Area/react/5. 리액트 클래스 컴포넌트.md",
+    "2. Area/react/무제 폴더",
+    "1. Projects/스팀 데이터 분석/도움말/sudo su 없이 도커 접근하기.md",
+    "1. Projects/스팀 데이터 분석/도움말/mysql shell 연결.md",
+    "1. Projects/스팀 데이터 분석/도움말/from_logits.md",
+    "1. Projects/스팀 데이터 분석/도움말/docker 관련 안 되는 경우들.md",
     "3. Resource/Image/Pasted image 20231124191717.png",
     "2. Area/react/4. 리액트 컴포넌트.md",
-    "2. Area/react/5. 리액트 클래스 컴포넌트.md",
     "2. Area/react/3. 리액트 시작하기.md",
     "3. Resource/Image/Pasted image 20231122202833.png",
     "3. Resource/Image/Pasted image 20231122201546.png",
@@ -184,8 +195,6 @@
     "2. Area/js/18. 공개 API 활용하기.md",
     "2. Area/react",
     "3. Resource/Image/Pasted image 20231121171753.png",
-    "3. Resource/Image/Pasted image 20231121171742.png",
-    "3. Resource/Image/Pasted image 20231121171644.png",
     "2. Area/js/17. 웹 API 활용하기.md",
     "2. Area/js/16. 캔버스에서 애니메이션 실행하기.md",
     "2. Area/js/9. 객체 알아보기.md",
@@ -193,18 +202,10 @@
     "2. Area/js/11. 배열과 객체 심화.md",
     "2. Area/js/15. 캔버스로 그래픽 요소 다루기.md",
     "2. Area/js/14. 캔버스로 도형, 텍스트, 이미지 그리기.md",
-    "3. Resource/Image/Pasted image 20231120174341.png",
     "2. Area/js/README.md.md",
     "2. Area/js/13. 비동기 프로그래밍.md",
     "jsonplaceholder.typicode.com.md",
     "2. Area/js/12. HTTP 통신과 JSON.md",
-    "2. Area/js/1. 자바스크립트 시작하기.md",
-    "2. Area/js/2. 변수와 자료형.md",
-    "2. Area/js/3.  연산자와 제어문.md",
-    "2. Area/js/4. 함수와 스코프.md",
-    "2. Area/js/5. DOM의 기초.md",
-    "2. Area/js/6. 이벤트와 이벤트 처리기.md",
-    "2. Area/js/7. DOM 활용하기.md",
     "2. Area/js",
     "3. Resource/Canvas/ListView 상속계층도.canvas",
     "3. Resource/Canvas",

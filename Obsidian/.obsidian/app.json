@@ -4,5 +4,6 @@
   "foldHeading": true,
   "foldIndent": true,
   "attachmentFolderPath": "3. Resource/Image",
-  "spellcheck": false
+  "spellcheck": false,
+  "showLineNumber": false
 }
