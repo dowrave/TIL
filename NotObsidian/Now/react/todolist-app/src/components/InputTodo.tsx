@@ -1,14 +1,20 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import TodoContext from '../TodoContext'
 
-type InputTodoProps = {
-    addTodo : (todo: string) => void;
-}
+// type InputTodoProps = {
+//     addTodo : (todo: string) => void;
+// }
 
-const InputTodo = (props: InputTodoProps) => {
+const InputTodo = () => {
     const [todo, setTodo] = useState<string>("");
 
+    // Context API : useContext 훅으로 TodoContext의 value 값을 받아낸다.
+    const value = useContext(TodoContext);
+
+    // value 속성의 actions의 addTodo 함수를 호출한다.
     const addHandler = () => {
-        props.addTodo(todo);
+        // props.addTodo(todo);
+        value?.actions.addTodo(todo); 
         setTodo("");
     }
 
