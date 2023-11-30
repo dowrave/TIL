@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2. Area/react/9. 리액트 라우터.md",
+                "file": "2. Area/react/11. axios를 이용한 HTTP 통신.md",
                 "mode": "source",
                 "source": false
               }
@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "망 사용료",
+                "query": "outlet",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2. Area/react/9. 리액트 라우터.md",
+                "file": "2. Area/react/11. axios를 이용한 HTTP 통신.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2. Area/react/9. 리액트 라우터.md",
+                "file": "2. Area/react/11. axios를 이용한 HTTP 통신.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2. Area/react/9. 리액트 라우터.md"
+                "file": "2. Area/react/11. axios를 이용한 HTTP 통신.md"
               }
             }
           },
@@ -168,9 +168,16 @@
   },
   "active": "02004852e2a79ce6",
   "lastOpenFiles": [
+    "2. Area/react/README.md.md",
+    "2. Area/react/11. axios를 이용한 HTTP 통신.md",
+    "2. Area/react/10. ★라우팅을 적용한 예제 실습.md",
+    "3. Resource/Image/Pasted image 20231130163913.png",
+    "3. Resource/Image/Pasted image 20231130163354.png",
+    "3. Resource/Image/Pasted image 20231130163314.png",
+    "3. Resource/Image/Pasted image 20231130151324.png",
+    "2. Area/react/9. 리액트 라우터.md",
     "3. Resource/Image/Pasted image 20231129203335.png",
     "2. Area/react/8. Context API.md",
-    "2. Area/react/9. 리액트 라우터.md",
     "3. Resource/Image/Pasted image 20231128154640.png",
     "3. Resource/Image/Pasted image 20231128154527.png",
     "3. Resource/Image/Pasted image 20231128154439.png",
@@ -179,22 +186,16 @@
     "3. Resource/Image/Pasted image 20231127175501.png",
     "2. Area/react/6. 리액트 훅.md",
     "1. Projects/스팀 데이터 분석/도움말/컨테이너 실행 중 다시 빌드하기.md",
-    "3. Resource/Image/Pasted image 20231127141939.png",
-    "3. Resource/Image/Pasted image 20231127141914.png",
     "2. Area/react/5. 리액트 클래스 컴포넌트.md",
     "2. Area/react/무제 폴더",
     "1. Projects/스팀 데이터 분석/도움말/sudo su 없이 도커 접근하기.md",
     "1. Projects/스팀 데이터 분석/도움말/mysql shell 연결.md",
     "1. Projects/스팀 데이터 분석/도움말/from_logits.md",
     "1. Projects/스팀 데이터 분석/도움말/docker 관련 안 되는 경우들.md",
-    "3. Resource/Image/Pasted image 20231124191717.png",
     "2. Area/react/4. 리액트 컴포넌트.md",
     "2. Area/react/3. 리액트 시작하기.md",
-    "3. Resource/Image/Pasted image 20231122202833.png",
-    "3. Resource/Image/Pasted image 20231122201546.png",
     "2. Area/react/2. ES6과 타임스크립트 기초.md",
     "2. Area/react/1. 리액트 소개.md",
-    "2. Area/react/README.md.md",
     "2. Area/js/18. 공개 API 활용하기.md",
     "2. Area/react",
     "2. Area/js/17. 웹 API 활용하기.md",
@@ -204,8 +205,6 @@
     "2. Area/js/11. 배열과 객체 심화.md",
     "2. Area/js/15. 캔버스로 그래픽 요소 다루기.md",
     "2. Area/js/14. 캔버스로 도형, 텍스트, 이미지 그리기.md",
-    "2. Area/js/README.md.md",
-    "2. Area/js/13. 비동기 프로그래밍.md",
     "2. Area/js",
     "3. Resource/Canvas/ListView 상속계층도.canvas",
     "3. Resource/Canvas",
