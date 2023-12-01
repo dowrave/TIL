@@ -1,12 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-// import App from './App.tsx'
 import 'bootstrap/dist/css/bootstrap.css'
-import AppContainer from './AppContainer'
 import './index.css'
+
+import App from './App.tsx'
+// import AppContainer from './AppContainer'
+
+import Appstore from './redux/Appstore.ts'
+import { Provider } from 'react-redux'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <AppContainer />
+    <Provider store={Appstore}>
+      <App />
+    </Provider>
   </React.StrictMode>,
 )

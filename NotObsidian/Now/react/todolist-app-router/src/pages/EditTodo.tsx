@@ -1,15 +1,26 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { CallbacksType, StatesType, TodoItemType } from "../AppContainer"
 
-type PropsType = { callbacks: CallbacksType; states: StatesType}
+// import { CallbacksType, StatesType, TodoItemType } from "../AppContainer"
+import TodoActionCreator from '../redux/TodoActionCreator';
+import { connect } from 'react-redux';
+import { TodoStateType, TodoItemType } from '../redux/TodoReducer'
+import { AnyAction, Dispatch } from 'redux'
+import RootStatesType from '../redux/AppStore'
+
+// type PropsType = { callbacks: CallbacksType; states: StatesType}
+type PropsType = {
+    updateTodo : (id: number, todo: string, desc: string, done: boolean) => void;
+    todoList: Array<TodoItemType>;
+}
 type TodoParam = { id?: string };
 
-const EditTodo = ({callbacks, states}: PropsType ) => {
+const EditTodo = ({ todoList, updateTodo }: PropsType ) => {
 
     const navigate = useNavigate();
     let { id } = useParams<TodoParam>();
-    let todoItem = states.todoList.find((item) => item.id === parseInt(id ? id : "0"));
+    // let todoItem = states.todoList.find((item) => item.id === parseInt(id ? id : "0"));
+    let todoItem = todoList.find((item) => item.id === parseInt(id ? id : "0"));
 
     if (!todoItem) {
         navigate("/todos");
@@ -26,9 +37,11 @@ const EditTodo = ({callbacks, states}: PropsType ) => {
         }
 
         let { id, todo, desc, done } = todoOne;
-        callbacks.updateTodo(id, todo, desc, done, () => {
-            navigate("/todos");
-        });
+        // callbacks.updateTodo(id, todo, desc, done, () => {
+        //     navigate("/todos");
+        // });
+        updateTodo(id, todo, desc, done);
+        navigate("/todos");
     };
 
   return (
@@ -70,4 +83,15 @@ const EditTodo = ({callbacks, states}: PropsType ) => {
   )
 }
 
-export default EditTodo;
+// export default EditTodo;
+const mapStateToProps = (state: RootStatesType) => ({
+    todoList : state.todos.todoList
+});
+
+const mapDispatchToProps = (dispatch : Dispatch<AnyAction>) => ({
+    updateTodo: (id: number, todo: string, desc: string, done: boolean) =>
+    dispatch(TodoActionCreator.updateTodo({ id, todo, desc, done })),
+});
+const EditTodoContainer = connect(mapStateToProps, mapDispatchToProps)(EditTodo);
+
+export default EditTodoContainer;

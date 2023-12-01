@@ -1,10 +1,17 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { CallbacksType } from '../AppContainer'
+import TodoActionCreator from '../redux/TodoActionCreator'
+import { connect } from 'react-redux'
+import { AnyAction, Dispatch } from 'redux'
+// import { CallbacksType } from '../AppContainer'
 
-type PropsType = { callbacks: CallbacksType }
 
-const AddTodo = ({ callbacks } : PropsType) => {
+// type PropsType = { callbacks: CallbacksType }
+type PropsType = {
+    addTodo: (todo: string, desc: string) => void;
+}
+
+const AddTodo = ({ addTodo } : PropsType) => {
     const navigate = useNavigate();
 
     let [todo, setTodo] = useState<string>("");
@@ -15,9 +22,10 @@ const AddTodo = ({ callbacks } : PropsType) => {
             alert("반드시 할 일, 설명을 입력해야 합니다.");
             return
         }
-		callbacks.addTodo(todo, desc, () => {
-			navigate("/todos");
-		});
+		// callbacks.addTodo(todo, desc, () => {
+		// 	navigate("/todos");
+		// });
+        addTodo(todo, desc);
     }
 
     return (
@@ -53,4 +61,11 @@ const AddTodo = ({ callbacks } : PropsType) => {
     )
 }
 
-export default AddTodo;
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
+    addTodo: (todo: string, desc: string) => 
+        dispatch(TodoActionCreator.addTodo({ todo, desc })),
+    
+})
+
+const AddTodoContainer = connect(null, mapDispatchToProps)(AddTodo);
+export default AddTodoContainer;
