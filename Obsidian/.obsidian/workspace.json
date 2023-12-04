@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "d5caaeab4e13dcec",
+        "id": "775a888e0d2edc90",
         "type": "tabs",
         "children": [
           {
-            "id": "02004852e2a79ce6",
+            "id": "8e62a0bcfbbc2f2d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2. Area/react/1. 리액트 소개.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/django + react 예제.md",
                 "mode": "source",
                 "source": false
               }
@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "outlet",
+                "query": "useEffect",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2. Area/react/1. 리액트 소개.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/django + react 예제.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2. Area/react/1. 리액트 소개.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/django + react 예제.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2. Area/react/1. 리액트 소개.md"
+                "file": "1. Projects/포폴 겸 블로그 만들기/django + react 예제.md"
               }
             }
           },
@@ -165,17 +165,32 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "05d7e6e280c4e34e",
+  "active": "8e62a0bcfbbc2f2d",
   "lastOpenFiles": [
-    "2. Area/react/2. ES6과 타임스크립트 기초.md",
-    "2. Area/react/3. 리액트 시작하기.md",
-    "2. Area/react/4. 리액트 컴포넌트.md",
     "2. Area/react/5. 리액트 클래스 컴포넌트.md",
+    "2. Area/react/4. 리액트 컴포넌트.md",
+    "1. Projects/포폴 겸 블로그 만들기/django + react 예제.md",
+    "2. Area/django/7. 블로그 앱 확장 - 태그 달기.md",
+    "2. Area/react/11. axios를 이용한 HTTP 통신.md",
+    "1. Projects/포폴 겸 블로그 만들기/django + react 설치.md",
+    "1. Projects/포폴 겸 블로그 만들기/시작 전 전체적인 구상.md",
+    "1. Projects/포폴 겸 블로그 만들기/연습",
+    "2. Area/react/10. ★라우팅을 적용한 예제 실습.md",
     "2. Area/react/6. 리액트 훅.md",
+    "2. Area/react/2. ES6과 타임스크립트 기초.md",
+    "2. Area/django/2. 북마크 앱 만들기.md",
+    "4. Archive/케라스 창시자에게 배우는 딥러닝/8. 컴퓨터 비전을 위한 딥러닝.md",
+    "2. Area/js/10. 문자열과 배열.md",
+    "2. Area/react/3. 리액트 시작하기.md",
+    "2. Area/django/10. 실전 프로그램 개발 - Photo 앱.md",
+    "2. Area/django/9. 블로그 앱 확장 - 검색 기능.md",
+    "2. Area/django/8. 블로그 앱 확장 - 댓글 달기.md",
+    "2. Area/django/3. 블로그 앱 만들기.md",
+    "2. Area/react/1. 리액트 소개.md",
+    "1. Projects/포폴 겸 블로그 만들기",
     "2. Area/react/7. 고차 함수와 렌더링 최적화.md",
     "2. Area/react/8. Context API.md",
     "2. Area/react/9. 리액트 라우터.md",
-    "2. Area/react/10. ★라우팅을 적용한 예제 실습.md",
     "2. Area/react/13. 리액트 18 더 알아보기.md",
     "2. Area/react/12. 리덕스를 이용한 상태 관리.md",
     "3. Resource/Image/새 폴더 1 - 0 (5).jpg",
@@ -188,23 +203,10 @@
     "3. Resource/Image/새 폴더 1 - 0 (2).jpg",
     "3. Resource/Image/새 폴더 1 - 0 (1).jpg",
     "3. Resource/Image/새 폴더 1 - 0.jpg",
-    "2. Area/react/11. axios를 이용한 HTTP 통신.md",
     "2. Area/react/README.md.md",
     "1. Projects/스팀 데이터 분석/도움말/컨테이너 실행 중 다시 빌드하기.md",
     "2. Area/react/무제 폴더",
-    "1. Projects/스팀 데이터 분석/도움말/sudo su 없이 도커 접근하기.md",
-    "1. Projects/스팀 데이터 분석/도움말/mysql shell 연결.md",
-    "1. Projects/스팀 데이터 분석/도움말/from_logits.md",
-    "1. Projects/스팀 데이터 분석/도움말/docker 관련 안 되는 경우들.md",
-    "2. Area/react/1. 리액트 소개.md",
-    "2. Area/js/18. 공개 API 활용하기.md",
     "2. Area/react",
-    "2. Area/js/17. 웹 API 활용하기.md",
-    "2. Area/js/16. 캔버스에서 애니메이션 실행하기.md",
-    "2. Area/js/9. 객체 알아보기.md",
-    "2. Area/js/10. 문자열과 배열.md",
-    "2. Area/js/11. 배열과 객체 심화.md",
-    "2. Area/js/15. 캔버스로 그래픽 요소 다루기.md",
     "2. Area/js",
     "3. Resource/Canvas/ListView 상속계층도.canvas",
     "3. Resource/Canvas",
