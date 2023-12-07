@@ -8,24 +8,12 @@
         "type": "tabs",
         "children": [
           {
-            "id": "8e62a0bcfbbc2f2d",
+            "id": "0cc92e51778f10a7",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/일지/231206.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "8d4d6ed34e808335",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "2. Area/react/10. ★라우팅을 적용한 예제 실습.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/해야 할 일(구상).md",
                 "mode": "source",
                 "source": false
               }
@@ -105,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/일지/231206.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/해야 할 일(구상).md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -122,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/일지/231206.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/해야 할 일(구상).md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -145,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/일지/231206.md"
+                "file": "1. Projects/포폴 겸 블로그 만들기/해야 할 일(구상).md"
               }
             }
           },
@@ -177,22 +165,26 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "8e62a0bcfbbc2f2d",
+  "active": "0cc92e51778f10a7",
   "lastOpenFiles": [
-    "1. Projects/포폴 겸 블로그 만들기/일지/231205.md",
-    "1. Projects/포폴 겸 블로그 만들기/자료 검색/tailwind CSS 관련.md",
     "1. Projects/포폴 겸 블로그 만들기/시작 전 전체적인 구상.md",
+    "1. Projects/포폴 겸 블로그 만들기/해야 할 일(구상).md",
+    "1. Projects/포폴 겸 블로그 만들기/자료 검색/tailwind CSS 관련.md",
     "2. Area/react/10. ★라우팅을 적용한 예제 실습.md",
+    "2. Area/react/9. 리액트 라우터.md",
+    "1. Projects/포폴 겸 블로그 만들기/자료 검색/무제 파일.md",
+    "2. Area/react/12. 리덕스를 이용한 상태 관리.md",
+    "1. Projects/포폴 겸 블로그 만들기/일지/무제 파일.md",
+    "1. Projects/포폴 겸 블로그 만들기/일지/231206.md",
+    "1. Projects/포폴 겸 블로그 만들기/일지/231205.md",
     "2. Area/js/8. 자주 사용하는 내장 객체.md",
     "2. Area/js/6. 이벤트와 이벤트 처리기.md",
     "2. Area/js/5. DOM의 기초.md",
     "2. Area/react/4. 리액트 컴포넌트.md",
     "2. Area/react/3. 리액트 시작하기.md",
-    "1. Projects/포폴 겸 블로그 만들기/일지/231206.md",
     "1. Projects/포폴 겸 블로그 만들기/자료 검색",
     "1. Projects/포폴 겸 블로그 만들기/django + react 예제.md",
     "1. Projects/포폴 겸 블로그 만들기/django + react 설치.md",
-    "2. Area/react/9. 리액트 라우터.md",
     "1. Projects/포폴 겸 블로그 만들기/일지",
     "2. Area/react/6. 리액트 훅.md",
     "2. Area/react/5. 리액트 클래스 컴포넌트.md",
@@ -204,10 +196,6 @@
     "4. Archive/케라스 창시자에게 배우는 딥러닝/8. 컴퓨터 비전을 위한 딥러닝.md",
     "2. Area/js/10. 문자열과 배열.md",
     "2. Area/django/10. 실전 프로그램 개발 - Photo 앱.md",
-    "2. Area/django/9. 블로그 앱 확장 - 검색 기능.md",
-    "2. Area/django/8. 블로그 앱 확장 - 댓글 달기.md",
-    "2. Area/django/3. 블로그 앱 만들기.md",
-    "2. Area/react/1. 리액트 소개.md",
     "1. Projects/포폴 겸 블로그 만들기",
     "3. Resource/Image/새 폴더 1 - 0 (5).jpg",
     "3. Resource/Image/Pasted image 20231201165358.png",

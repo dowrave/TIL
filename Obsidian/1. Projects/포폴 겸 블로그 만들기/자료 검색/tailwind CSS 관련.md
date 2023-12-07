@@ -18,3 +18,12 @@ Tailwind CSS에 대한 다양한 자료와 예제는 다음과 같은 리소스�
    - [Awesome Tailwind CSS](https://github.com/aniftyco/awesome-tailwindcss): GitHub 저장소로, 다양한 Tailwind CSS 프로젝트 및 도구를 모아놓은 목록입니다.
 
 이러한 자료들을 참고하면서 Tailwind CSS를 활용하는 방법을 익히고, 웹 프로젝트에서 적절하게 활용할 수 있을 것입니다.
+
+
+---
+
+### 영역 전체 차지하게 하기
+- `flex w-screen h-screen`을 주면 화면 너비와 화면 높이만큼을 해당 영역이 차지하게 도미
+
+### 요소 일정하게 나눠 갖기
+- 상위 태그에 `flex`가 있고, 하위 태그에 `flex-1`이 있으면 하위태그들이 상위 태그 하나를 골고루 나눠 갖는다.
