@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/해야 할 일(구상).md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Tailwind CSS - fixed, sticky.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/해야 할 일(구상).md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Tailwind CSS - fixed, sticky.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/해야 할 일(구상).md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Tailwind CSS - fixed, sticky.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/해야 할 일(구상).md"
+                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Tailwind CSS - fixed, sticky.md"
               }
             }
           },
@@ -147,11 +147,13 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
-    "width": 224
+    "width": 224,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -167,10 +169,13 @@
   },
   "active": "0cc92e51778f10a7",
   "lastOpenFiles": [
-    "1. Projects/포폴 겸 블로그 만들기/시작 전 전체적인 구상.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Tailwind CSS - flex.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Tailwind CSS - fixed, sticky.md",
     "1. Projects/포폴 겸 블로그 만들기/해야 할 일(구상).md",
-    "1. Projects/포폴 겸 블로그 만들기/자료 검색/tailwind CSS 관련.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식",
     "2. Area/react/10. ★라우팅을 적용한 예제 실습.md",
+    "1. Projects/포폴 겸 블로그 만들기/시작 전 전체적인 구상.md",
+    "1. Projects/포폴 겸 블로그 만들기/자료 검색/tailwind CSS 관련.md",
     "2. Area/react/9. 리액트 라우터.md",
     "1. Projects/포폴 겸 블로그 만들기/자료 검색/무제 파일.md",
     "2. Area/react/12. 리덕스를 이용한 상태 관리.md",
@@ -194,8 +199,6 @@
     "2. Area/react/2. ES6과 타임스크립트 기초.md",
     "2. Area/django/2. 북마크 앱 만들기.md",
     "4. Archive/케라스 창시자에게 배우는 딥러닝/8. 컴퓨터 비전을 위한 딥러닝.md",
-    "2. Area/js/10. 문자열과 배열.md",
-    "2. Area/django/10. 실전 프로그램 개발 - Photo 앱.md",
     "1. Projects/포폴 겸 블로그 만들기",
     "3. Resource/Image/새 폴더 1 - 0 (5).jpg",
     "3. Resource/Image/Pasted image 20231201165358.png",
