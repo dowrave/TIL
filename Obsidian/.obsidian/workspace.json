@@ -8,31 +8,55 @@
         "type": "tabs",
         "children": [
           {
-            "id": "ac1758be705e50a0",
+            "id": "e37dd3c497eac107",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/게시판 만들기.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 게시판 리스트 구현하기.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "688a0de9f2de35f1",
+            "id": "e529bddb669210a7",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django -.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 슬러그.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "f09edd985e76f442",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 게시판 리스트 구현하기.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "72ece276af42a9ef",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "2. Area/django/3. 블로그 앱 만들기.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -61,7 +85,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "on_delete",
+                "query": "urls.py ?P",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -106,7 +130,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django -.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 게시판 리스트 구현하기.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -123,7 +147,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django -.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 게시판 리스트 구현하기.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -146,7 +170,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django -.md"
+                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 게시판 리스트 구현하기.md"
               }
             }
           },
@@ -180,35 +204,35 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "688a0de9f2de35f1",
+  "active": "f09edd985e76f442",
   "lastOpenFiles": [
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django - DB 초기화.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django -.md",
-    "2. Area/django/추가 정리/models.ForeignKey(on_delete = ).md",
-    "2. Area/django/10. 실전 프로그램 개발 - Photo 앱.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/게시판 만들기.md",
-    "1. Projects/포폴 겸 블로그 만들기/django + react 예제.md",
-    "1. Projects/포폴 겸 블로그 만들기/django + react 설치.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 슬러그.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 게시판 리스트 구현하기.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React - useParams.md",
     "2. Area/django/3. 블로그 앱 만들기.md",
-    "2. Area/react/6. 리액트 훅.md",
-    "2. Area/react/4. 리액트 컴포넌트.md",
-    "2. Area/react/3. 리액트 시작하기.md",
-    "2. Area/django/14. 장고 핵심 기능 - Model.md",
-    "2. Area/django/15. 장고 핵심 기능 - View.md",
-    "2. Area/django/13.  실전 프로그램 개발 - 콘텐츠 편집 기능(Photo 앱).md",
     "2. Area/django/12. 실전 프로그램 개발 - 콘텐츠 편집 기능(북마크, 블로그 앱).md",
-    "2. Area/django/11. 실전 프로그램 개발 - 인증 기능.md",
-    "2. Area/django/7. 블로그 앱 확장 - 태그 달기.md",
-    "2. Area/django/9. 블로그 앱 확장 - 검색 기능.md",
-    "2. Area/django/8. 블로그 앱 확장 - 댓글 달기.md",
-    "2. Area/django/5. 기존 앱 개선하기 - Bookmark 앱, Blog 앱.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Tailwind CSS - fixed, sticky.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - CORS 헤더 관련 이슈.md",
+    "2. Area/react/11. axios를 이용한 HTTP 통신.md",
+    "2. Area/react/10. ★라우팅을 적용한 예제 실습.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django - CORS 관련 설정.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Tailwind CSS - 영역 크기 설정.md",
+    "1. Projects/포폴 겸 블로그 만들기/자료 검색/tailwind CSS 관련.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Tailwind CSS - flex.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django - DB 초기화.md",
+    "2. Area/react/3. 리액트 시작하기.md",
+    "2. Area/react/4. 리액트 컴포넌트.md",
+    "1. Projects/포폴 겸 블로그 만들기/django + react 예제.md",
+    "2. Area/react/8. Context API.md",
+    "2. Area/react/7. 고차 함수와 렌더링 최적화.md",
     "1. Projects/포폴 겸 블로그 만들기/해야 할 일(구상).md",
     "1. Projects/포폴 겸 블로그 만들기/시작 전 전체적인 구상.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/게시판 만들기.md",
+    "2. Area/react/6. 리액트 훅.md",
+    "2. Area/react/5. 리액트 클래스 컴포넌트.md",
+    "2. Area/django/추가 정리/models.ForeignKey(on_delete = ).md",
+    "2. Area/django/10. 실전 프로그램 개발 - Photo 앱.md",
+    "1. Projects/포폴 겸 블로그 만들기/django + react 설치.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식",
-    "2. Area/react/10. ★라우팅을 적용한 예제 실습.md",
-    "1. Projects/포폴 겸 블로그 만들기/자료 검색/tailwind CSS 관련.md",
     "1. Projects/포폴 겸 블로그 만들기/자료 검색",
     "1. Projects/포폴 겸 블로그 만들기/일지",
     "1. Projects/포폴 겸 블로그 만들기/연습",
