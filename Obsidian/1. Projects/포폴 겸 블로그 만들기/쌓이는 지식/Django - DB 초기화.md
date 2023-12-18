@@ -18,3 +18,10 @@ python manage.py flush
 ### 만약 위 방법으로도 안 먹힌다면
 - 위 방법 + SQL을 완전히 초기화(기본 : `db.sqlite3`)하고 진행해야 함
 - `sqlite3`을 쓴다면 해당 파일을 그냥 삭제하면 된다. 프로젝트의 루트 디렉토리에 있음.
+- 만약 `migrations` 폴더도 지우고, `db.sqlite3`도 지웠는데 `No Changes Detected`가 발생한다면
+```sh
+python manage.py makemigrations {app_name}
+```
+> 을 한번 쳐보자.
+
+
