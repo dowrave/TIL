@@ -8,18 +8,31 @@
         "type": "tabs",
         "children": [
           {
-            "id": "e37dd3c497eac107",
+            "id": "0ba1eaae4b03ac5e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Quill - base64 인코딩 데이터를 Blob로.md",
+                "file": "2. Area/react/6. 리액트 훅.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "b59a31a91c22a420",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 이미지 업로드 구현하기.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -48,7 +61,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "토글",
+                "query": "useCallback",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -93,7 +106,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Quill - base64 인코딩 데이터를 Blob로.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 이미지 업로드 구현하기.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Quill - base64 인코딩 데이터를 Blob로.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 이미지 업로드 구현하기.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +146,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Quill - base64 인코딩 데이터를 Blob로.md"
+                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 이미지 업로드 구현하기.md"
               }
             }
           },
@@ -167,34 +180,34 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "e37dd3c497eac107",
+  "active": "b59a31a91c22a420",
   "lastOpenFiles": [
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 프론트엔드에서 올린 이미지 백엔드에 저장.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 게시판 리스트 구현하기.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/몰루 - CORS 헤더 관련 이슈.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Quill - base64 인코딩 데이터를 Blob로.md",
-    "1. Projects/포폴 겸 블로그 만들기/오늘의 할 일.md",
+    "2. Area/react/6. 리액트 훅.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React - useCallback.md",
+    "2. Area/react/4. 리액트 컴포넌트.md",
+    "2. Area/react/12. 리덕스를 이용한 상태 관리.md",
+    "2. Area/react/11. axios를 이용한 HTTP 통신.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 이미지 업로드 구현하기.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 페이지네이션 구현하기.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 프론트엔드에서 올린 이미지 백엔드에 저장.md",
+    "1. Projects/포폴 겸 블로그 만들기/오늘 한 일.md",
+    "1. Projects/포폴 겸 블로그 만들기/무제 파일.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React - useState의 비동기 Setter 함수.md",
+    "2. Area/react/3. 리액트 시작하기.md",
+    "1. Projects/포폴 겸 블로그 만들기/시작 전 전체적인 구상.md",
+    "1. Projects/포폴 겸 블로그 만들기/해야 할 일(구상).md",
     "2. Area/react/10. ★라우팅을 적용한 예제 실습.md",
     "2. Area/react/7. 고차 함수와 렌더링 최적화.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React - useParams.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React - 이벤트 핸들러와 함수 레퍼런스 전달.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 게시판 리스트 구현하기.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 페이지네이션 구현하기.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 슬러그.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/몰루 - CORS 헤더 관련 이슈.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/게시판 만들기.md",
     "1. Projects/포폴 겸 블로그 만들기/자료 검색/tailwind CSS 관련.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Tailwind CSS - flex.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Tailwind CSS - fixed, sticky.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Tailwind CSS - 영역 크기 설정.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django - CORS 관련 설정.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django - DB 초기화.md",
-    "1. Projects/포폴 겸 블로그 만들기/해야 할 일(구상).md",
-    "1. Projects/포폴 겸 블로그 만들기/시작 전 전체적인 구상.md",
-    "2. Area/react/6. 리액트 훅.md",
-    "2. Area/react/5. 리액트 클래스 컴포넌트.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React - 리터럴 관련 이슈.md",
-    "2. Area/react/3. 리액트 시작하기.md",
-    "2. Area/django/3. 블로그 앱 만들기.md",
-    "4. Archive/data science/MLOps/mlflow - ML엔지니어를 위한 MLOps/7-3. Connect & Connector.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식",
     "1. Projects/포폴 겸 블로그 만들기/자료 검색",
     "1. Projects/포폴 겸 블로그 만들기/일지",
