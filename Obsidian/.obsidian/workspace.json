@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/★Quill - 코드 블럭에 highlight.js 적용하기.md",
                 "mode": "source",
                 "source": false
               }
@@ -55,7 +55,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -84,7 +85,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "useState",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -109,7 +110,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -204,8 +206,10 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "0ba1eaae4b03ac5e",
+  "active": "08ab44ade16d25ed",
   "lastOpenFiles": [
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/★Quill - 코드 블럭에 highlight.js 적용하기.md",
+    "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React - useParams.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React - useState의 비동기 Setter 함수.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Tailwind CSS - 영역 크기 설정.md",
@@ -221,7 +225,6 @@
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 게시판 리스트 구현하기.md",
     "1. Projects/포폴 겸 블로그 만들기/django + react 설치.md",
     "2. Area/react/6. 리액트 훅.md",
-    "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
     "1. Projects/포폴 겸 블로그 만들기/자료 검색/게시글 레이아웃 구상.md",
     "1. Projects/포폴 겸 블로그 만들기/자료 검색/tailwind CSS 관련.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django - Serializer 통합하기.md",
@@ -231,7 +234,6 @@
     "2. Area/react/4. 리액트 컴포넌트.md",
     "2. Area/react/12. 리덕스를 이용한 상태 관리.md",
     "2. Area/react/11. axios를 이용한 HTTP 통신.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 페이지네이션 구현하기.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식",
     "1. Projects/포폴 겸 블로그 만들기/자료 검색",
     "1. Projects/포폴 겸 블로그 만들기/일지",
