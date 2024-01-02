@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/★Quill - 코드 블럭에 highlight.js 적용하기.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
                 "mode": "source",
                 "source": false
               }
@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
+                "file": "2. Area/react/10. ★라우팅을 적용한 예제 실습.md",
                 "mode": "source",
                 "source": false
               }
@@ -55,8 +55,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -85,7 +84,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "useState",
+                "query": "React 삭제",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -110,8 +109,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -206,10 +204,14 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "b59a31a91c22a420",
+  "active": "0ba1eaae4b03ac5e",
   "lastOpenFiles": [
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/★Quill - 코드 블럭에 highlight.js 적용하기.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django - Null = True와 Blank = True.md",
     "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/★Quill - 코드 블럭에 highlight.js 적용하기.md",
+    "2. Area/react/10. ★라우팅을 적용한 예제 실습.md",
+    "1. Projects/포폴 겸 블로그 만들기/자료 검색/tailwind CSS 관련.md",
+    "2. Area/react/4. 리액트 컴포넌트.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React - useParams.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React - useState의 비동기 Setter 함수.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Tailwind CSS - 영역 크기 설정.md",
@@ -226,14 +228,10 @@
     "1. Projects/포폴 겸 블로그 만들기/django + react 설치.md",
     "2. Area/react/6. 리액트 훅.md",
     "1. Projects/포폴 겸 블로그 만들기/자료 검색/게시글 레이아웃 구상.md",
-    "1. Projects/포폴 겸 블로그 만들기/자료 검색/tailwind CSS 관련.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django - Serializer 통합하기.md",
     "2. Area/django/9. 블로그 앱 확장 - 검색 기능.md",
     "2. Area/django/11. 실전 프로그램 개발 - 인증 기능.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React - useCallback.md",
-    "2. Area/react/4. 리액트 컴포넌트.md",
-    "2. Area/react/12. 리덕스를 이용한 상태 관리.md",
-    "2. Area/react/11. axios를 이용한 HTTP 통신.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식",
     "1. Projects/포폴 겸 블로그 만들기/자료 검색",
     "1. Projects/포폴 겸 블로그 만들기/일지",
