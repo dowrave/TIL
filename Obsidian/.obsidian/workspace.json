@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React + redux - 새로고침해도 로그인 유지하기.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
                 "mode": "source",
                 "source": false
               }
@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 로그인(인증)이 필요한 기능 구현하기.md",
                 "mode": "source",
                 "source": false
               }
@@ -43,8 +43,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -73,7 +72,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "redux",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -193,12 +192,13 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "5e5cea4a11451de6",
+  "active": "8e59e7124296474b",
   "lastOpenFiles": [
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React + redux - 새로고침해도 로그인 유지하기.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 로그인 상태 관리하기.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 로그인(인증)이 필요한 기능 구현하기.md",
     "2. Area/react/12. 리덕스를 이용한 상태 관리.md",
     "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 로그인 상태 관리하기.md",
     "무제 파일.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django - Response vs JsonResponse.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/tailwind CSS - border와 outline.md",
@@ -220,7 +220,6 @@
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 이미지 업로드 구현하기.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 글 업로드하기.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 글 미리보기.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 게시판 만들기.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식",
     "1. Projects/포폴 겸 블로그 만들기/자료 검색",
     "1. Projects/포폴 겸 블로그 만들기/일지",
