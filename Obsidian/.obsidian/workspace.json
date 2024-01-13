@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "onChange",
+                "query": "12.",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -73,7 +73,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -168,14 +169,14 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "05d7e6e280c4e34e",
+  "active": "875abdb64a5ca1ca",
   "lastOpenFiles": [
     "2. Area/react/12. 리덕스를 이용한 상태 관리.md",
+    "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 로그인(인증)이 필요한 기능 구현하기.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django - Serializer 필드.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django - Response vs JsonResponse.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django - Serializer 통합하기.md",
-    "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/★Quill - 코드 블럭에 highlight.js 적용하기.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 슬러그.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/★React - useState의 비동기 Setter 함수.md",
