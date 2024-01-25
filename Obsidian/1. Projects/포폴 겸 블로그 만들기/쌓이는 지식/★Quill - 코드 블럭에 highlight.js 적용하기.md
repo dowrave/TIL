@@ -1,42 +1,7 @@
-- Quill 자체에서 코드블럭을 제공하지만, 검은 블럭에 흰 글씨만 쓸 수 있게 해줄 뿐 코드 하이라이트 기능은 제공하지 않는다. 이를 적용한 과정.
-- `highlight.js`를 적용하라고 공식 문서에도 나와 있는데, ReactQuill에 대한 건 아닌 것 같다. 관련해서 다룬 글도 있었는데, 나한테는 적용되지 않았다. 왜인지는 몰?루.
+- `240123` 기준, 아예 전체를 다시 수정한다
+- 기존에는 `highlight.js`의 자동 보정 기능을 넣어서 구현했으나, 어떤 언어를 사용하는지 명확하게 나와있지 않았음
 
-## 기본 방법
-
-### 1. `highlight.js`를 설치함
-```sh
-npm install highlight.js
-```
-
-### 2. 불러오고 적용하기
-```tsx
-import hljs from 'highlight.js';
-import 'highlight.js/styles/github.css';  // 테마는 다양하게 있으니 그 중 하나를 선택한다.
-
-    const modules = {
-            syntax: {
-                highlight: text => hljs.highlightAuto(text).value
-            },
-            ...
-    }
-
-	return (
-	<div>
-		<ReactQuill
-		ref = {quillRef}
-		theme = 'snow'
-		modules = {modules}
-		formats = {formats}
-		value={content}
-		/>
-	</div>
-	)
-
-```
-> `main.tsx`에 지정하라는 말도 있고, `highlight.js`를 적용할 컴포넌트에 불러오라는 말도 있는데, 내 경우 둘 모두 지정했다. **`main.tsx`에만 지정하면 `highlight.js`를 등록하라는 오류와 함께 작동하지 않았음.**
-
-
-#### 기타 이슈
-- `modules`에 `syntax: true`를 넣으라는 말도 있었는데 나한텐 해당 없었음
-- `ReactQuill` 컴포넌트에는 `onChange`를 지정할 수 있다. 원래는 상위 컴포넌트로부터 `setContent` 를 받은 다음 `onChange`에 적용했으나, 그렇게 구현한 경우 `syntax`와 충돌이 발생하는지 1글자라도 타이핑하는 등 위 컴포넌트가 다시 렌더링되는 상황이면 컴포넌트가 아예 사라지는 문제가 발생했음. <-- **이거 때문에 며칠 허비함**
-
+1. `code-block`을 누른 다음 나오는 첫 줄에 언어를 입력
+2. 2번째 줄부터는 코드를 입력한다
+3. 코드블럭을 커서가 벗어난다면 `highlight.js`가 첫 줄의 언어를 인식하고, 나머지 줄의 코드를 하이라이트 한다
+	- 이 때, 하이라이트 기능만을 수행한다 : 즉, `code-block` 내부에 들어가 있는 텍스트의 색만 바꾸는 기능을 해야 하며, 맨 윗줄의 프로그래밍 언어까지 하이라이트 기능 수행 후에도 남아있어야 한다.
