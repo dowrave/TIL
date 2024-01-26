@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "react",
+                "query": "서버 사이드 렌더링",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -73,7 +73,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -170,8 +171,9 @@
   },
   "active": "875abdb64a5ca1ca",
   "lastOpenFiles": [
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/CSS - 폰트 나열하는 이유.md",
+    "2. Area/react/13. 리액트 18 더 알아보기.md",
     "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/CSS - 폰트 나열하는 이유.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/ReactQuill - 상위 컴포넌트 상태 변경에 의한 하위 컴포넌트 리렌더링 막기.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Typescript - 함수 내 에러 처리.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/★Quill - 코드 블럭에 highlight.js 적용하기.md",
@@ -192,7 +194,6 @@
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django - Serializer 통합하기.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 슬러그.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/★React - useState의 비동기 Setter 함수.md",
-    "2. Area/react/13. 리액트 18 더 알아보기.md",
     "2. Area/react/10. ★라우팅을 적용한 예제 실습.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/ㄲ.md",
     "2. Area/react/4. 리액트 컴포넌트.md",
