@@ -18,8 +18,17 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "e3709d04b7778210",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {}
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -73,8 +82,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -151,7 +159,7 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
@@ -169,11 +177,11 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "875abdb64a5ca1ca",
+  "active": "c156c5ddf45fbf92",
   "lastOpenFiles": [
-    "2. Area/react/13. 리액트 18 더 알아보기.md",
     "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/CSS - 폰트 나열하는 이유.md",
+    "2. Area/react/13. 리액트 18 더 알아보기.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/ReactQuill - 상위 컴포넌트 상태 변경에 의한 하위 컴포넌트 리렌더링 막기.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Typescript - 함수 내 에러 처리.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/★Quill - 코드 블럭에 highlight.js 적용하기.md",
