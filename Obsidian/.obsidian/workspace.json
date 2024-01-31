@@ -18,17 +18,8 @@
                 "source": false
               }
             }
-          },
-          {
-            "id": "e3709d04b7778210",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -158,12 +149,12 @@
               }
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 224
+    "width": 224,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -177,8 +168,9 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "c156c5ddf45fbf92",
+  "active": "875abdb64a5ca1ca",
   "lastOpenFiles": [
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React - 코드블럭 복사기능.md",
     "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/CSS - 폰트 나열하는 이유.md",
     "2. Area/react/13. 리액트 18 더 알아보기.md",
@@ -204,7 +196,6 @@
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/★React - useState의 비동기 Setter 함수.md",
     "2. Area/react/10. ★라우팅을 적용한 예제 실습.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/ㄲ.md",
-    "2. Area/react/4. 리액트 컴포넌트.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식",
     "1. Projects/포폴 겸 블로그 만들기/자료 검색",
     "1. Projects/포폴 겸 블로그 만들기/일지",
