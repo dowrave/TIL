@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "097b2588fb123766",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -93,7 +106,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/★복합 - 리프레시 토큰 안전하게 보관하기.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/★복합 - 리프레시 토큰 안전하게 보관하기.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +146,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/★복합 - 리프레시 토큰 안전하게 보관하기.md"
+                "file": "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md"
               }
             }
           },
@@ -168,10 +181,12 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "875abdb64a5ca1ca",
+  "active": "097b2588fb123766",
   "lastOpenFiles": [
-    "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/★복합 - 리프레시 토큰 안전하게 보관하기.md",
+    "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django - CORS 관련 설정.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/몰루 - CORS 헤더 관련 이슈.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/TS - map 함수.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django - annotate.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/CSS - z-index와 스택 컨텍스트.md",
@@ -194,8 +209,6 @@
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django - user 테이블 옮기기.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React - 상태 관리 - redux로 이사가기.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React - 의존성 배열과 함수.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 로그인(인증)이 필요한 기능 구현하기.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django - Serializer 필드.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식",
     "1. Projects/포폴 겸 블로그 만들기/자료 검색",
     "1. Projects/포폴 겸 블로그 만들기/일지",
