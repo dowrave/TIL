@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
+                "file": "1. Projects/스팀 데이터 분석/일지/8월.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
+                "file": "1. Projects/스팀 데이터 분석/일지/8월.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
+                "file": "1. Projects/스팀 데이터 분석/일지/8월.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md"
+                "file": "1. Projects/스팀 데이터 분석/일지/8월.md"
               }
             }
           },
@@ -170,8 +170,15 @@
   },
   "active": "875abdb64a5ca1ca",
   "lastOpenFiles": [
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/TS - 타입 선언 방식.md",
+    "1. Projects/스팀 데이터 분석/일지/7월.md",
+    "1. Projects/스팀 데이터 분석/일지/6월.md",
+    "1. Projects/스팀 데이터 분석/일지/10월.md",
+    "1. Projects/스팀 데이터 분석/일지/9월.md",
+    "1. Projects/스팀 데이터 분석/일지/11월.md",
+    "1. Projects/스팀 데이터 분석/일지/이슈 수정 내역.md",
     "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Tailwind CSS - 사전에 정의되지 않은 커스텀 클래스 문법에 맞춰 추가하기.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/TS - 타입 선언 방식.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/TS - interface와 type.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/TS - 제네릭.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/TS - 헤더 접는 기능.md",
@@ -189,13 +196,6 @@
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Quill - 이미지 업로드.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/★Quill - 코드 블럭에 highlight.js 적용하기.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React - 코드블럭 복사기능.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/CSS - 폰트 나열하는 이유.md",
-    "2. Area/react/13. 리액트 18 더 알아보기.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/ReactQuill - 상위 컴포넌트 상태 변경에 의한 하위 컴포넌트 리렌더링 막기.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Typescript - 함수 내 에러 처리.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Quill -.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/★React + Quill - ReactQuill의 렌더링이 사라지는 이슈.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Typescript - type과 interface의 차이점.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식",
     "1. Projects/포폴 겸 블로그 만들기/자료 검색",
     "1. Projects/포폴 겸 블로그 만들기/일지",
