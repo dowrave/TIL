@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "3663bc7d2553dee9",
+        "id": "3ccc875ece09640a",
         "type": "tabs",
         "children": [
           {
-            "id": "875abdb64a5ca1ca",
+            "id": "e0bf4f550562bd0e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects/스팀 데이터 분석/일지/8월.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1. Projects/스팀 데이터 분석/일지/8월.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1. Projects/스팀 데이터 분석/일지/8월.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1. Projects/스팀 데이터 분석/일지/8월.md"
+                "file": "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md"
               }
             }
           },
@@ -168,8 +168,9 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "875abdb64a5ca1ca",
+  "active": "e0bf4f550562bd0e",
   "lastOpenFiles": [
+    "1. Projects/스팀 데이터 분석/일지/8월.md",
     "1. Projects/스팀 데이터 분석/일지/7월.md",
     "1. Projects/스팀 데이터 분석/일지/6월.md",
     "1. Projects/스팀 데이터 분석/일지/10월.md",
@@ -195,7 +196,6 @@
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - Subsection 커마.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Quill - 이미지 업로드.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/★Quill - 코드 블럭에 highlight.js 적용하기.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React - 코드블럭 복사기능.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식",
     "1. Projects/포폴 겸 블로그 만들기/자료 검색",
     "1. Projects/포폴 겸 블로그 만들기/일지",
