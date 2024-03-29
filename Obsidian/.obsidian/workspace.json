@@ -168,13 +168,15 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "e0bf4f550562bd0e",
+  "active": "05d7e6e280c4e34e",
   "lastOpenFiles": [
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Docker - 파이썬 이미지(ChatGPT).md",
+    "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Docker - WSL부터 Docker 설치까지.md",
     "1. Projects/포폴 겸 블로그 만들기/Django - DB 이전하기.md",
     "1. Projects/포폴 겸 블로그 만들기/django + react 예제.md",
     "1. Projects/포폴 겸 블로그 만들기/django + react 설치.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/가상환경 - pyenv-win 설치.md",
-    "1. Projects/포폴 겸 블로그 만들기/해야 할 일과 오늘 할 일.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django - sqlite와 MySQL의 시간대 처리 차이(by ChatGPT).md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django - sqlite와 MySQL의 문자열 처리 차이(by ChatGPT).md",
     "DB - sqlite와 MySQL의 문자열 처리 차이](by ChatGPT).md",
@@ -194,8 +196,6 @@
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/복합 - 헤더 노출시키기.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/★Django - 미들웨어와 리프레시 토큰.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/★복합 - 리프레시 토큰 안전하게 보관하기.md",
-    "무제 파일.md",
-    "config/template.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식",
     "1. Projects/포폴 겸 블로그 만들기/자료 검색",
     "1. Projects/포폴 겸 블로그 만들기/일지",
