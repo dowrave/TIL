@@ -17,6 +17,12 @@ mysqldump -u [username] -p [database_name] > backup.sql
 > 	- 인식하지 못한다면 Path에 환경변수로 해당 경로를 추가하고 쉘을 껐다 키거나, 아예 컴퓨터를 재부팅한다.
 > 2. 위에서도 언급했듯, `Windows PowerShell`로 실행했을 때 `utf-8` 인코딩을 설정하더라도 해당 파일이 깨져서 뒤의 작업이 제대로 이뤄지지 않을 수 있다.
 
+> 컨테이너에 접근할 경우, 추가로 `-P`(포트) 와, `-h`(호스트)를 추가해서 전달한다.
+```sh
+mysqldump -u [username] -p [password] -h [host] -P [port] [database_name] > [backupfile_name].sql
+```
+
+
 ### 2단계: 백업 파일을 컨테이너로 복사
 
 생성된 백업 파일을 Docker 컨테이너 내부로 복사합니다. 이 작업은 `docker cp` 명령어를 사용하여 수행할 수 있습니다.
