@@ -18,21 +18,8 @@
                 "source": false
               }
             }
-          },
-          {
-            "id": "757aa81fc49b9867",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/MySQL - DB 이전하기.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -106,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/MySQL - DB 이전하기.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/이번 달 작업 기록.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -123,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/MySQL - DB 이전하기.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/이번 달 작업 기록.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -146,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/MySQL - DB 이전하기.md"
+                "file": "1. Projects/포폴 겸 블로그 만들기/이번 달 작업 기록.md"
               }
             }
           },
@@ -181,11 +168,11 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "757aa81fc49b9867",
+  "active": "4b228b1521b67421",
   "lastOpenFiles": [
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/MySQL - DB 이전하기.md",
     "1. Projects/포폴 겸 블로그 만들기/이번 달 작업 기록.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Docker - Desktop 깔았다 지우고 WSL로 도커 실행 시 발생하는 문제.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/MySQL - DB 이전하기.md",
     "DB - sqlite와 MySQL의 문자열 처리 차이](by ChatGPT).md",
     "1. Projects/포폴 겸 블로그 만들기/Django - DB 이전하기.md",
     "1. Projects/포폴 겸 블로그 만들기/월별 작업 기록/24년 3월.md",
