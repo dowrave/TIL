@@ -19,7 +19,7 @@ mysqldump -u [username] -p [database_name] > backup.sql
 
 > 컨테이너에 접근할 경우, 추가로 `-P`(포트) 와, `-h`(호스트)를 추가해서 전달한다.
 ```sh
-mysqldump -u [username] -p [password] -h [host] -P [port] [database_name] > [backupfile_name].sql
+mysqldump -u [username] -p -h [host] -P [port] [database_name] > [backupfile_name].sql
 ```
 
 
