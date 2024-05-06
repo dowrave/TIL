@@ -13,26 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/django + react 설치.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "ab260b9d3d76dd97",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/이번 달 작업 기록.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - 프론트엔드에서 다른 s3 버킷 스토리지의 파일 가져오기.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -61,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "WSL",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -106,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/이번 달 작업 기록.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - 프론트엔드에서 다른 s3 버킷 스토리지의 파일 가져오기.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -123,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/이번 달 작업 기록.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - 프론트엔드에서 다른 s3 버킷 스토리지의 파일 가져오기.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -146,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/이번 달 작업 기록.md"
+                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - 프론트엔드에서 다른 s3 버킷 스토리지의 파일 가져오기.md"
               }
             }
           },
@@ -181,34 +168,34 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "ab260b9d3d76dd97",
+  "active": "2da4b713a884072e",
   "lastOpenFiles": [
+    "1. Projects/포폴 겸 블로그 만들기/이번 달 작업 기록.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - 프론트엔드에서 다른 s3 버킷 스토리지의 파일 가져오기.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - 비용 관리.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/★) 무지성 WSL2 + Docker 재설치.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Docker - WSL부터 Docker 설치까지.md",
+    "1. Projects/스팀 데이터 분석/도움말/컨테이너 제작 과정.md",
+    "1. Projects/스팀 데이터 분석/도움말/도커 & 컨테이너 실행 자동화.md",
+    "1. Projects/포폴 겸 블로그 만들기/월별 작업 기록/24년 4월.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Docker - Desktop 깔았다 지우고 WSL로 도커 실행 시 발생하는 문제.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Docker 청소하기.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - EC2에 Django 배포하기.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - RDS(MySQL) 설정하기.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - 네트워크 대충 알기.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - Lambda 함수 시행착오.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - Lambda 함수 띄우기.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - Systems Manager Parameter Store로 환경 변수 세팅하기.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - S3 + Cloudfront 프론트엔드 설정하기.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/django + react 설치.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/MySQL - DB 이전하기.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/django + react 예제.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django - DB 이전하기.md",
-    "1. Projects/포폴 겸 블로그 만들기/이번 달 작업 기록.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - RDS(MySQL) 설정하기.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - EC2에 Django 배포하기.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - S3 + Cloudfront 프론트엔드 설정하기.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/MySQL - DB 이전하기.md",
-    "1. Projects/포폴 겸 블로그 만들기/월별 작업 기록/24년 4월.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - VPC, 네트워크 설정.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - 작업 내용.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Docker - WSL부터 Docker 설치까지.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/웹 - 오디오 스트리밍.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/웹 - 유튜브 뮤직 등.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/웹 - 오디오와 캐시.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/웹 - F5 vs Ctrl F5.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/TS - 오디오 이벤트 관련.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React - 오디오 재생 바 만들기.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - 인스턴스.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Docker - Desktop 깔았다 지우고 WSL로 도커 실행 시 발생하는 문제.md",
-    "DB - sqlite와 MySQL의 문자열 처리 차이](by ChatGPT).md",
-    "1. Projects/포폴 겸 블로그 만들기/월별 작업 기록/24년 3월.md",
-    "1. Projects/포폴 겸 블로그 만들기/월별 작업 기록/24년 2월.md",
-    "1. Projects/포폴 겸 블로그 만들기/월별 작업 기록/24년 1월.md",
-    "1. Projects/포폴 겸 블로그 만들기/월별 작업 기록/23년 12월.md",
-    "2. Area/react/8. Context API.md",
     "1. Projects/포폴 겸 블로그 만들기/월별 작업 기록",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식",
     "1. Projects/포폴 겸 블로그 만들기/자료 검색",
