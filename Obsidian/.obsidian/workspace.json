@@ -4,22 +4,35 @@
     "type": "split",
     "children": [
       {
-        "id": "4226e0984a9bed54",
+        "id": "2ff3371cf346edf1",
         "type": "tabs",
         "children": [
           {
-            "id": "2da4b713a884072e",
+            "id": "2e6bbcc11e0d9498",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - 프론트엔드에서 다른 s3 버킷 스토리지의 파일 가져오기.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/WSL, Docker/Docker) 포트 지정.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "8382d4d17babf281",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1. Projects/포폴 겸 블로그 만들기/이번 달 작업 기록.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -48,7 +61,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "WSL",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -93,7 +106,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - 프론트엔드에서 다른 s3 버킷 스토리지의 파일 가져오기.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/이번 달 작업 기록.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - 프론트엔드에서 다른 s3 버킷 스토리지의 파일 가져오기.md",
+                "file": "1. Projects/포폴 겸 블로그 만들기/이번 달 작업 기록.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +146,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - 프론트엔드에서 다른 s3 버킷 스토리지의 파일 가져오기.md"
+                "file": "1. Projects/포폴 겸 블로그 만들기/이번 달 작업 기록.md"
               }
             }
           },
@@ -168,40 +181,44 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "2da4b713a884072e",
+  "active": "8382d4d17babf281",
   "lastOpenFiles": [
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/WSL, Docker/Docker) 포트 지정.md",
     "1. Projects/포폴 겸 블로그 만들기/이번 달 작업 기록.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - 프론트엔드에서 다른 s3 버킷 스토리지의 파일 가져오기.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - 비용 관리.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/★) 무지성 WSL2 + Docker 재설치.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Docker - WSL부터 Docker 설치까지.md",
-    "1. Projects/스팀 데이터 분석/도움말/컨테이너 제작 과정.md",
-    "1. Projects/스팀 데이터 분석/도움말/도커 & 컨테이너 실행 자동화.md",
-    "1. Projects/포폴 겸 블로그 만들기/월별 작업 기록/24년 4월.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Docker - Desktop 깔았다 지우고 WSL로 도커 실행 시 발생하는 문제.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Docker 청소하기.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - EC2에 Django 배포하기.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - RDS(MySQL) 설정하기.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - 네트워크 대충 알기.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - Lambda 함수 시행착오.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - Lambda 함수 띄우기.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - Systems Manager Parameter Store로 환경 변수 세팅하기.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - S3 + Cloudfront 프론트엔드 설정하기.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/django + react 설치.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/MySQL - DB 이전하기.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/django + react 예제.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/Django - DB 이전하기.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - VPC, 네트워크 설정.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS - 작업 내용.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/웹 - 오디오 스트리밍.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/웹 - 유튜브 뮤직 등.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/웹 - 오디오와 캐시.md",
+    "1. Projects/포폴 겸 블로그 만들기/자료 검색/tailwind CSS 관련.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/WSL, Docker/Docker - Desktop 깔았다 지우고 WSL로 도커 실행 시 발생하는 문제.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/WSL, Docker/★) 무지성 WSL2 + Docker 재설치.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS/AWS - EC2 인스턴스에 SSL 인증하기.md",
+    "1. Projects/포폴 겸 블로그 만들기/자료 검색/게시글 레이아웃 구상.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/TypeScript/TS - 오디오 이벤트 관련.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/몰루 - CORS 헤더 관련 이슈.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/TypeScript",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/WSL, Docker/Docker - 파이썬 이미지(ChatGPT).md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React, Django, 웹/★Django - 미들웨어와 리프레시 토큰.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/기타",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React, Django, 웹/Quill - 이미지 업로드.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/WSL, Docker",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/MySQL/MySQL - DB 이전하기.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/MySQL",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React, Django, 웹/CSS - 폰트 나열하는 이유.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS/AWS - 네트워크 대충 알기.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React, Django, 웹/복합 - Subsection 커마.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React, Django, 웹/복합 - 게시판 리스트 구현하기.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React, Django, 웹/★React - useState의 비동기 Setter 함수.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React, Django, 웹/★복합 - 리프레시 토큰 안전하게 보관하기.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS/AWS - 프론트엔드에서 다른 s3 버킷 스토리지의 파일 가져오기.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React, Django, 웹",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React, Django, 웹/복합 - 글 미리보기.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS/AWS - 인스턴스와 포트 관련.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/무제 폴더/무제 파일.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/무제 폴더 1",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React, Django, 웹/Django - 이미지 static과 media의 차이.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS/AWS - 비용 관리.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/WSL, Docker/Docker - WSL부터 Docker 설치까지.md",
     "1. Projects/포폴 겸 블로그 만들기/월별 작업 기록",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식",
     "1. Projects/포폴 겸 블로그 만들기/자료 검색",
-    "1. Projects/포폴 겸 블로그 만들기/월별 작업 기록",
-    "1. Projects/포폴 겸 블로그 만들기/연습",
-    "1. Projects/포폴 겸 블로그 만들기",
     "3. Resource/Image/새 폴더 1 - 0 (5).jpg",
     "3. Resource/Image/Pasted image 20231201165358.png",
     "3. Resource/Image/새 폴더 1 - 0 (4).jpg",
@@ -212,10 +229,6 @@
     "3. Resource/Image/새 폴더 1 - 0 (2).jpg",
     "3. Resource/Image/새 폴더 1 - 0 (1).jpg",
     "3. Resource/Image/새 폴더 1 - 0.jpg",
-    "2. Area/react/무제 폴더",
-    "2. Area/react",
-    "2. Area/js",
-    "3. Resource/Canvas/ListView 상속계층도.canvas",
-    "3. Resource/Canvas"
+    "3. Resource/Canvas/ListView 상속계층도.canvas"
   ]
 }

@@ -43,4 +43,17 @@
 ### 진행 중 ) mp3 파일(리스트) 불러오기
 - `boto3`에서 액세스키랑 시크릿 액세스키를 제대로 못 얻는다는데, 난 그걸 넣는 로직도 구현한 적이 없다. 관련 디버깅이 필요함.
 - 재생 목록 가져오는 것에서 에러가 나고 있음.
-- 
+
+> 디버깅 중
+> - `settings.py`의 내용 수정
+	- `SongView`에서 파일을 못 읽는 게 아니다. 즉, `serializer`에서 에러가 날 가능성이 높음
+	- 지금 과정이 데이터를 가져오는 과정이 아님에도 시리얼라이저에서 얻은 데이터의 개수가 0개인데, 이는 `settings.py`에서 `AWS_ACCESS_KEY`와 `AWS_SECRET_ACCESS_KEY`로 변수명을 설정했기 때문이다. 
+	- `boto3` : `settings.py`에서 `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY_ID`로 변수 명을 인식한다.
+> - 다음 오류 ) `NotImplementedError: This backend doesn't support absolute paths.`
+> 	- 로컬에서는 `song.audio_file.path`를 썼지만, 지금은 `s3` 버킷의 `url`에 접근해야 하므로 아래처럼 수정해야 함
+```python
+	file_url = song.audio_file.url # AWS의 경우 다른 인스턴스인 s3에 있는 값이므로
+	response = requests.get(file_url)
+	file_content = response.content
+```
+>	- 이외에도 `with open()`문과 관련한 오류가 있었는데, 결론은 `StreamingHttpResponse`를 쓰면 `with open()`문을 쓰지 말고, 파일 이름을 그냥 지정해두면 됨.
