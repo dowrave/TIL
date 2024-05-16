@@ -4,23 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "2ff3371cf346edf1",
+        "id": "93eba95125267216",
         "type": "tabs",
         "children": [
           {
-            "id": "2e6bbcc11e0d9498",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/WSL, Docker/Docker) 포트 지정.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "8382d4d17babf281",
+            "id": "87a10458cff19d29",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -31,8 +19,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -181,10 +168,16 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "8382d4d17babf281",
+  "active": "87a10458cff19d29",
   "lastOpenFiles": [
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/WSL, Docker/Docker) 포트 지정.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS/AWS - 접근 권한 관련.md",
     "1. Projects/포폴 겸 블로그 만들기/이번 달 작업 기록.md",
+    "1. Projects/포폴 겸 블로그 만들기/짜투리 코드들/AWS - 테스트 코드.md",
+    "1. Projects/포폴 겸 블로그 만들기/짜투리 코드들",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS/AWS - DNS 서비스의 쿼리.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS/AWS - EC2와 로드밸런서 연결하기.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/WSL, Docker/Docker) 포트 지정.md",
+    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS/AWS - 보안 그룹의 소스가 다른 보안 그룹이다.md",
     "1. Projects/포폴 겸 블로그 만들기/자료 검색/tailwind CSS 관련.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/WSL, Docker/Docker - Desktop 깔았다 지우고 WSL로 도커 실행 시 발생하는 문제.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/WSL, Docker/★) 무지성 WSL2 + Docker 재설치.md",
@@ -210,15 +203,9 @@
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React, Django, 웹",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React, Django, 웹/복합 - 글 미리보기.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS/AWS - 인스턴스와 포트 관련.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/무제 폴더/무제 파일.md",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/무제 폴더 1",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/React, Django, 웹/Django - 이미지 static과 media의 차이.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/AWS/AWS - 비용 관리.md",
-    "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식/WSL, Docker/Docker - WSL부터 Docker 설치까지.md",
     "1. Projects/포폴 겸 블로그 만들기/월별 작업 기록",
     "1. Projects/포폴 겸 블로그 만들기/쌓이는 지식",
-    "1. Projects/포폴 겸 블로그 만들기/자료 검색",
     "3. Resource/Image/새 폴더 1 - 0 (5).jpg",
     "3. Resource/Image/Pasted image 20231201165358.png",
     "3. Resource/Image/새 폴더 1 - 0 (4).jpg",
