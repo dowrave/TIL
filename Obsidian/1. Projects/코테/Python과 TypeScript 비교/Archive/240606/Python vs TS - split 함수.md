@@ -25,7 +25,7 @@ text.split("\n")
 ```ts
 [ '', 'The', 'Curious', 'Case', 'of', 'Benjamin', 'Button' ]
 ```
-> 이런 값들을 제거하려면 `trim()`후 `split(" ")`을 해주면 된다.
-> **`trim()` 함수는 문자열 양쪽 끝의 공백 문자를 제거한다.**
+> 이런 값들을 제거하려면 `string.trim()`후 `split(" ")`을 해주면 된다.
+> **`string.trim()` 함수는 문자열 양쪽 끝의 공백 문자를 제거한다.**
 
 
