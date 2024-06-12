@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects, Ongoing/오늘 한 일.md",
+                "file": "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/5장 - 게임 오브젝트 제어하기.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1. Projects, Ongoing/오늘 한 일.md",
+                "file": "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/5장 - 게임 오브젝트 제어하기.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1. Projects, Ongoing/오늘 한 일.md",
+                "file": "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/5장 - 게임 오브젝트 제어하기.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1. Projects, Ongoing/오늘 한 일.md"
+                "file": "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/5장 - 게임 오브젝트 제어하기.md"
               }
             }
           },
@@ -170,8 +170,29 @@
   },
   "active": "4593b0cc0b069fa2",
   "lastOpenFiles": [
-    "README.md",
+    "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/4장 - C샵 시작하기.md",
+    "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/5장 - 게임 오브젝트 제어하기.md",
+    "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/3장 - 유니티 엔진의 동작 원리.md",
+    "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/2장 - 유니티 인터페이스 둘러보기.md",
+    "3. Resource/Image/Pasted image 20240612154426.png",
+    "3. Resource/Image/Pasted image 20240612152809.png",
+    "3. Resource/Image/Pasted image 20240612152806.png",
+    "3. Resource/Image/Pasted image 20240612151246.png",
+    "3. Resource/Image/Pasted image 20240612150903.png",
+    "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/1장 - 유니티 준비하기.md",
+    "3. Resource/Image/Pasted image 20240612143949.png",
+    "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/무제 폴더",
+    "4. Archive/취업을 위한 코테/성공적인 취업을 위한 가이드.md",
+    "4. Archive/취업을 위한 코테/이 책에서 다루는 주요 알고리즘.md",
+    "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스",
+    "4. Archive/취업을 위한 코테/16~20년 코테 기출 문제 분석.md",
+    "4. Archive/취업을 위한 코테/코테 개요.md",
+    "1. Projects, Ongoing/코테(24년6월~)/에라토스테네스의 체.md",
+    "4. Archive/취업을 위한 코테",
+    "1. Projects, Ongoing/코테(24년6월~)/이진 탐색.md",
     "1. Projects, Ongoing/오늘 한 일.md",
+    "1. Projects, Ongoing/코테(24년6월~)",
+    "README.md",
     "4. Archive/코테 - Python과 TS 모두 쓰려 함/전체 일정.md",
     "4. Archive/코테 - Python과 TS 모두 쓰려 함/Python과 TypeScript 비교/Archive/240607/문자의 아스키 코드 읽기.md",
     "4. Archive/코테 - Python과 TS 모두 쓰려 함/Python과 TypeScript 비교/Archive/240606/map 함수.md",
@@ -189,33 +210,12 @@
     "4. Archive/코테 - Python과 TS 모두 쓰려 함/Python과 TypeScript 비교/Archive/240606/Python vs TS - split 함수.md",
     "4. Archive/코테 - Python과 TS 모두 쓰려 함/Python과 TypeScript 비교/Archive/240606/사칙연산.md",
     "4. Archive/코테 - Python과 TS 모두 쓰려 함/Python과 TypeScript 비교/Archive",
-    "4. Archive/코테 - Python과 TS 모두 쓰려 함/Python과 TypeScript 비교/Archive/240606/백준 문제 읽기.md",
-    "4. Archive/코테 - Python과 TS 모두 쓰려 함/Python과 TypeScript 비교/Archive/240606/join 함수.md",
     "4. Archive/코테 - Python과 TS 모두 쓰려 함/Python과 TypeScript 비교",
-    "1. Projects/코테/백준 - 파이썬으로 문제 읽어오기.md",
-    "1. Projects, Ongoing/포폴 겸 블로그 만들기/이번 달 작업 기록.md",
     "4. Archive/코테 - Python과 TS 모두 쓰려 함",
-    "1. Projects, Ongoing/포폴 겸 블로그 만들기/월별 작업 기록/24년 5월.md",
-    "1. Projects, Ongoing/포폴 겸 블로그 만들기/월별 작업 기록/23년 12월.md",
-    "4. Archive/스팀 데이터 분석/일지/10월.md",
-    "4. Archive/스팀 데이터 분석/일지/9월.md",
-    "4. Archive/스팀 데이터 분석/일지/11월.md",
-    "4. Archive/스팀 데이터 분석/일지/7월.md",
-    "4. Archive/스팀 데이터 분석/일지/8월.md",
-    "1. Projects, Ongoing/포폴 겸 블로그 만들기/짜투리 코드들",
-    "1. Projects, Ongoing/포폴 겸 블로그 만들기/쌓이는 지식/TypeScript",
-    "1. Projects, Ongoing/포폴 겸 블로그 만들기/쌓이는 지식/기타",
-    "1. Projects, Ongoing/포폴 겸 블로그 만들기/쌓이는 지식/WSL, Docker",
     "3. Resource/Image/새 폴더 1 - 0 (5).jpg",
     "3. Resource/Image/Pasted image 20231201165358.png",
     "3. Resource/Image/새 폴더 1 - 0 (4).jpg",
     "3. Resource/Image/Pasted image 20231201161626.png",
-    "3. Resource/Image/새 폴더 1 - 0 (3).jpg",
-    "3. Resource/Image/Pasted image 20231201145632.png",
-    "3. Resource/Image/Pasted image 20231201145525.png",
-    "3. Resource/Image/새 폴더 1 - 0 (2).jpg",
-    "3. Resource/Image/새 폴더 1 - 0 (1).jpg",
-    "3. Resource/Image/새 폴더 1 - 0.jpg",
     "3. Resource/Canvas/ListView 상속계층도.canvas"
   ]
 }
