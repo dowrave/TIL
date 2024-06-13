@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/5장 - 게임 오브젝트 제어하기.md",
+                "file": "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/6장 - (게임 닷지) 플레이어 제작.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/5장 - 게임 오브젝트 제어하기.md",
+                "file": "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/6장 - (게임 닷지) 플레이어 제작.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/5장 - 게임 오브젝트 제어하기.md",
+                "file": "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/6장 - (게임 닷지) 플레이어 제작.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/5장 - 게임 오브젝트 제어하기.md"
+                "file": "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/6장 - (게임 닷지) 플레이어 제작.md"
               }
             }
           },
@@ -170,8 +170,12 @@
   },
   "active": "4593b0cc0b069fa2",
   "lastOpenFiles": [
-    "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/4장 - C샵 시작하기.md",
+    "3. Resource/Image/Pasted image 20240614001647.png",
+    "3. Resource/Image/Pasted image 20240614001632.png",
+    "3. Resource/Image/Pasted image 20240613233853.png",
     "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/5장 - 게임 오브젝트 제어하기.md",
+    "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/6장 - (게임 닷지) 플레이어 제작.md",
+    "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/4장 - C샵 시작하기.md",
     "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/3장 - 유니티 엔진의 동작 원리.md",
     "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/2장 - 유니티 인터페이스 둘러보기.md",
     "3. Resource/Image/Pasted image 20240612154426.png",
@@ -207,15 +211,11 @@
     "4. Archive/코테 - Python과 TS 모두 쓰려 함/Python과 TypeScript 비교/Archive/240606/반복되는 문자.md",
     "4. Archive/코테 - Python과 TS 모두 쓰려 함/Python과 TypeScript 비교/Archive/240607",
     "4. Archive/코테 - Python과 TS 모두 쓰려 함/Python과 TypeScript 비교/Archive/240606",
-    "4. Archive/코테 - Python과 TS 모두 쓰려 함/Python과 TypeScript 비교/Archive/240606/Python vs TS - split 함수.md",
-    "4. Archive/코테 - Python과 TS 모두 쓰려 함/Python과 TypeScript 비교/Archive/240606/사칙연산.md",
     "4. Archive/코테 - Python과 TS 모두 쓰려 함/Python과 TypeScript 비교/Archive",
     "4. Archive/코테 - Python과 TS 모두 쓰려 함/Python과 TypeScript 비교",
     "4. Archive/코테 - Python과 TS 모두 쓰려 함",
     "3. Resource/Image/새 폴더 1 - 0 (5).jpg",
     "3. Resource/Image/Pasted image 20231201165358.png",
-    "3. Resource/Image/새 폴더 1 - 0 (4).jpg",
-    "3. Resource/Image/Pasted image 20231201161626.png",
     "3. Resource/Canvas/ListView 상속계층도.canvas"
   ]
 }
