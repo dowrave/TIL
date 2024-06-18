@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects, Ongoing/오늘 한 일.md",
+                "file": "1. Projects, Ongoing/코테(24년6월~)/힙.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1. Projects, Ongoing/오늘 한 일.md",
+                "file": "1. Projects, Ongoing/코테(24년6월~)/힙.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1. Projects, Ongoing/오늘 한 일.md",
+                "file": "1. Projects, Ongoing/코테(24년6월~)/힙.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1. Projects, Ongoing/오늘 한 일.md"
+                "file": "1. Projects, Ongoing/코테(24년6월~)/힙.md"
               }
             }
           },
@@ -149,12 +149,12 @@
               }
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 224
+    "width": 224,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -171,11 +171,18 @@
   "active": "4593b0cc0b069fa2",
   "lastOpenFiles": [
     "1. Projects, Ongoing/코테(24년6월~)/DFS와 BFS.md",
+    "1. Projects, Ongoing/코테(24년6월~)/힙.md",
+    "1. Projects, Ongoing/코테(24년6월~)/에라토스테네스의 체.md",
+    "1. Projects, Ongoing/코테(24년6월~)/이진 탐색.md",
+    "1. Projects, Ongoing/코테(24년6월~)/플로이드 - 워셜.md",
+    "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/11장 - (유니런) 플레이어 제작.md",
+    "3. Resource/Image/Pasted image 20240617231117.png",
+    "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/6장 - (닷지) 플레이어 제작.md",
+    "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/7장 - (닷지) 탄알 제작.md",
+    "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/8장 - (닷지) 게임 매니저, UI, 최종 완성.md",
+    "1. Projects, Ongoing/오늘 한 일.md",
     "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/10장 - 공간과 움직임.md",
     "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/9장 - 방향, 크기, 회전.md",
-    "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/8장 - (게임 닷지) 게임 매니저, UI, 최종 완성.md",
-    "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/7장 - (게임 닷지) 탄알 제작.md",
-    "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/6장 - (게임 닷지) 플레이어 제작.md",
     "3. Resource/Image/Pasted image 20240614001647.png",
     "3. Resource/Image/Pasted image 20240614001632.png",
     "3. Resource/Image/Pasted image 20240613233853.png",
@@ -196,26 +203,19 @@
     "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스",
     "4. Archive/취업을 위한 코테/16~20년 코테 기출 문제 분석.md",
     "4. Archive/취업을 위한 코테/코테 개요.md",
-    "1. Projects, Ongoing/코테(24년6월~)/에라토스테네스의 체.md",
     "4. Archive/취업을 위한 코테",
-    "1. Projects, Ongoing/코테(24년6월~)/이진 탐색.md",
-    "1. Projects, Ongoing/오늘 한 일.md",
     "1. Projects, Ongoing/코테(24년6월~)",
     "README.md",
     "4. Archive/코테 - Python과 TS 모두 쓰려 함/전체 일정.md",
     "4. Archive/코테 - Python과 TS 모두 쓰려 함/Python과 TypeScript 비교/Archive/240607/문자의 아스키 코드 읽기.md",
     "4. Archive/코테 - Python과 TS 모두 쓰려 함/Python과 TypeScript 비교/Archive/240606/map 함수.md",
     "4. Archive/코테 - Python과 TS 모두 쓰려 함/Python과 TypeScript 비교/Archive/240610/스택.md",
-    "4. Archive/코테 - Python과 TS 모두 쓰려 함/코테 연습용) 로컬에서 ts 실행하기.md",
-    "4. Archive/코테 - Python과 TS 모두 쓰려 함/백준 - 파일 읽는 코드.md",
-    "4. Archive/코테 - Python과 TS 모두 쓰려 함/Python과 TypeScript 비교/Archive/240607/타입스크립트의 반복문.md",
     "4. Archive/코테 - Python과 TS 모두 쓰려 함/Python과 TypeScript 비교/Archive/240610",
     "4. Archive/코테 - Python과 TS 모두 쓰려 함/Python과 TypeScript 비교/Archive/240607",
     "4. Archive/코테 - Python과 TS 모두 쓰려 함/Python과 TypeScript 비교/Archive/240606",
     "4. Archive/코테 - Python과 TS 모두 쓰려 함/Python과 TypeScript 비교/Archive",
     "4. Archive/코테 - Python과 TS 모두 쓰려 함/Python과 TypeScript 비교",
     "4. Archive/코테 - Python과 TS 모두 쓰려 함",
-    "3. Resource/Image/새 폴더 1 - 0 (5).jpg",
     "3. Resource/Canvas/ListView 상속계층도.canvas"
   ]
 }
