@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects, Ongoing/작업 일지.md",
+                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - 어떤 오브젝트의 자식 오브젝트 생성하기.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1. Projects, Ongoing/작업 일지.md",
+                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - 어떤 오브젝트의 자식 오브젝트 생성하기.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1. Projects, Ongoing/작업 일지.md",
+                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - 어떤 오브젝트의 자식 오브젝트 생성하기.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1. Projects, Ongoing/작업 일지.md"
+                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - 어떤 오브젝트의 자식 오브젝트 생성하기.md"
               }
             }
           },
@@ -170,8 +170,10 @@
   },
   "active": "b0ba56b046c898df",
   "lastOpenFiles": [
-    "4. Archive/독서/불안을 이기는 심리학.md",
     "1. Projects, Ongoing/작업 일지.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - 어떤 오브젝트의 자식 오브젝트 생성하기.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/GetComponentsInChildren에 관해.md",
+    "4. Archive/독서/불안을 이기는 심리학.md",
     "4. Archive/독서/정신건강론.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/생각정리/240715 - 적 생성 및 이동 로직.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/진행 상황.md",
@@ -204,8 +206,6 @@
     "4. Archive/레트로의 유니티 게임 프로그래밍 에센스/18장 - (멀티 좀비 서바이버) 네트워크 이론과 로비 구현.md",
     "3. Resource/Image/Pasted image 20240625161951.png",
     "4. Archive/레트로의 유니티 게임 프로그래밍 에센스/17장 - (좀비 서바이버) 최종 완성과 포스트 프로세싱.md",
-    "4. Archive/레트로의 유니티 게임 프로그래밍 에센스/14장 - (좀비 서바이버) 레발 아트와 플레이어 준비.md",
-    "4. Archive/레트로의 유니티 게임 프로그래밍 에센스/12장 - (유니런) 배경 스크롤링과 게임 매니저.md",
     "3. Resource/Image/Pasted image 20240621155105.png",
     "3. Resource/Image/Pasted image 20240621152053.png",
     "3. Resource/Image/Pasted image 20240621152025.png",
