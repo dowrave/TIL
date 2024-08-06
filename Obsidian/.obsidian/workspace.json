@@ -153,8 +153,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 224,
-    "collapsed": true
+    "width": 224
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -170,10 +169,11 @@
   },
   "active": "b0ba56b046c898df",
   "lastOpenFiles": [
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - Canvas(Screen Space - Overlay).md",
+    "1. Projects, Ongoing/작업 일지.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - UI 매니저.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - Rect Transform.md",
     "3. Resource/Image/Pasted image 20240805151638.png",
-    "1. Projects, Ongoing/작업 일지.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/무제 파일.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/체력 게이지 관련 설정들.md",
     "3. Resource/Image/Pasted image 20240805151250.png",
     "3. Resource/Image/Pasted image 20240805151233.png",
@@ -183,7 +183,6 @@
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함",
     "4. Archive/레트로의 유니티 게임 프로그래밍 에센스/15장 - (좀비 서바이버) 총과 슈터.md",
     "4. Archive/레트로의 유니티 게임 프로그래밍 에센스/16장 - (좀비 서바이버) 생명과 좀비 AI.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - UI 매니저.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/알고리즘 - A스타 알고리즘.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/생각정리/240715 - 적 생성 및 이동 로직.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/게임의 컨셉.md",
