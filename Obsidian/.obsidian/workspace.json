@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "7281c19bc9ca010a",
+        "id": "f1520e45918abe08",
         "type": "tabs",
         "children": [
           {
-            "id": "b0ba56b046c898df",
+            "id": "ec34f2412b889d44",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/AI) 240813 정리.md",
+                "file": "1. Projects, Ongoing/일지.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/AI) 240813 정리.md",
+                "file": "1. Projects, Ongoing/일지.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/AI) 240813 정리.md",
+                "file": "1. Projects, Ongoing/일지.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/AI) 240813 정리.md"
+                "file": "1. Projects, Ongoing/일지.md"
               }
             }
           },
@@ -167,15 +167,16 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "05d7e6e280c4e34e",
+  "active": "ec34f2412b889d44",
   "lastOpenFiles": [
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/240808 정리.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/240814 정리.md",
     "1. Projects, Ongoing/일지.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/240813 정리.md",
     "240813 정리.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/AI) 240813 정리.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/AI) 240812 정리.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/240812 정리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - 시간의 흐름.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - Transform.Find().md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/AI) 240808 정리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - 필드와 프로퍼티.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - Canvas(Screen Space - Overlay).md",
@@ -202,7 +203,6 @@
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - 어떤 오브젝트의 자식 오브젝트 생성하기.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/GetComponentsInChildren에 관해.md",
     "4. Archive/독서/불안을 이기는 심리학.md",
-    "4. Archive/독서/정신건강론.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/생각정리",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/구현 전 생각 일지",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다",
