@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects, Ongoing/일지.md",
+                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 9월/240901 정리.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1. Projects, Ongoing/일지.md",
+                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 9월/240901 정리.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1. Projects, Ongoing/일지.md",
+                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 9월/240901 정리.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1. Projects, Ongoing/일지.md"
+                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 9월/240901 정리.md"
               }
             }
           },
@@ -170,8 +170,12 @@
   },
   "active": "ec34f2412b889d44",
   "lastOpenFiles": [
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 8월/240829 정리.md",
     "1. Projects, Ongoing/일지.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 9월/240901 정리.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 9월",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 8월/무제 폴더",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/마우스버튼다운, 클릭 동작 정리.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 8월/240829 정리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 8월/240830 정리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/마름모 인디케이터 화면과 일치시키기.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 8월/240808 정리.md",
@@ -196,8 +200,6 @@
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 8월/240819 정리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 8월/240816 - OperatorUI 관련.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - Canvas의 SortingLayer.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 8월/240815 정리.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 8월/240814 정리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)",
     "3. Resource/Image/Pasted image 20240805151638.png",
     "3. Resource/Image/Pasted image 20240805151250.png",
@@ -211,11 +213,9 @@
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기",
     "www.youtube.com/user",
-    "www.youtube.com",
     "3. Resource/Image/Pasted image 20240625165924.png",
     "3. Resource/Image/Pasted image 20240625165923.png",
     "3. Resource/Image/Pasted image 20240625165705.png",
-    "1. Projects, Ongoing/레트로의 유니티 게임 프로그래밍 에센스/무제 폴더",
     "3. Resource/Canvas/ListView 상속계층도.canvas"
   ]
 }
