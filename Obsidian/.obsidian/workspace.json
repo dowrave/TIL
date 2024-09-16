@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects, Ongoing/일지.md",
+                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 9월/240916 정리.md",
                 "mode": "source",
                 "source": false
               }
@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "scriptable",
+                "query": "tag:#독서",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1. Projects, Ongoing/일지.md",
+                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 9월/240916 정리.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1. Projects, Ongoing/일지.md",
+                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 9월/240916 정리.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1. Projects, Ongoing/일지.md"
+                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 9월/240916 정리.md"
               }
             }
           },
@@ -170,8 +170,11 @@
   },
   "active": "ec34f2412b889d44",
   "lastOpenFiles": [
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 9월/240913 정리.md",
     "1. Projects, Ongoing/일지.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 9월/240916 정리.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 9월/240913 정리.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/CSharp - 제네릭.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/CSharp - 형 변환(Type Casting).md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - 접근자.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 9월/240912 정리.md",
     "3. Resource/Image/Pasted image 20240912230100.png",
@@ -199,9 +202,6 @@
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 8월/240808 정리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 8월",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 8월/240828 정리.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/알고리즘 - A스타 알고리즘.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - 마름모 그리기.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 8월/240827 정리.md",
     "3. Resource/Image/Pasted image 20240823143007.png",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)",
     "3. Resource/Image/Pasted image 20240805151638.png",
