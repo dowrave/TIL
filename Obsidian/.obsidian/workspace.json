@@ -4,19 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "f1520e45918abe08",
+        "id": "6b8491bd343b5e74",
         "type": "tabs",
         "children": [
           {
-            "id": "ec34f2412b889d44",
+            "id": "b9473341f42644d8",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1. Projects, Ongoing/일지.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "새 탭"
             }
           }
         ]
@@ -39,7 +37,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-folder-closed",
+              "title": "파일 탐색기"
             }
           },
           {
@@ -54,7 +54,9 @@
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-search",
+              "title": "검색"
             }
           },
           {
@@ -62,7 +64,9 @@
             "type": "leaf",
             "state": {
               "type": "starred",
-              "state": {}
+              "state": {},
+              "icon": "lucide-file",
+              "title": "플러그인이 더 이상 활성화되지 않음"
             }
           },
           {
@@ -70,7 +74,9 @@
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {}
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
             }
           }
         ]
@@ -93,7 +99,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1. Projects, Ongoing/일지.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,7 +106,9 @@
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-coming-in",
+              "title": "백링크"
             }
           },
           {
@@ -110,10 +117,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1. Projects, Ongoing/일지.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-going-out",
+              "title": "나가는 링크"
             }
           },
           {
@@ -124,7 +132,9 @@
               "state": {
                 "sortOrder": "frequency",
                 "useHierarchy": true
-              }
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
             }
           },
           {
@@ -132,9 +142,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1. Projects, Ongoing/일지.md"
-              }
+              "state": {},
+              "icon": "lucide-list",
+              "title": "개요"
             }
           },
           {
@@ -146,7 +156,9 @@
                 "sortOrder": "frequency",
                 "showSearch": false,
                 "searchQuery": ""
-              }
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
             }
           }
         ],
@@ -168,12 +180,13 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "ec34f2412b889d44",
+  "active": "b9473341f42644d8",
   "lastOpenFiles": [
+    "1. Projects, Ongoing/일지.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 10월/241018 정리.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 10월/241016 정리.md",
     "3. Resource/Image/Pasted image 20241017174910.png",
     "3. Resource/Image/Pasted image 20241017174831.png",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 10월/241016 정리.md",
-    "1. Projects, Ongoing/일지.md",
     "3. Resource/Image/Pasted image 20241016175315.png",
     "3. Resource/Image/Pasted image 20241016164952.png",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 10월/241015 정리.md",
@@ -193,7 +206,6 @@
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 10월/241007 정리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 10월/241004 정리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - URP와 노드 설명.md",
-    "3. Resource/Image/Pasted image 20241004164342.png",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - 패키지 다운로드.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 10월/241002 정리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 10월/241001 정리.md",
