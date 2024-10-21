@@ -11,10 +11,14 @@
             "id": "b9473341f42644d8",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "1. Projects, Ongoing/일지.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "새 탭"
+              "title": "일지"
             }
           }
         ]
@@ -182,6 +186,7 @@
   },
   "active": "b9473341f42644d8",
   "lastOpenFiles": [
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 10월/241021 정리.md",
     "1. Projects, Ongoing/일지.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 10월/241018 정리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 10월/241016 정리.md",
@@ -218,7 +223,6 @@
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 9월/240927 정리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/월별 작업 일지(수기)/24년 7월.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 9월/240926 정리.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 9월/240925 정리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/무제 폴더",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/월별 작업 일지(수기)",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 9월",
