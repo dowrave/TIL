@@ -121,11 +121,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1. Projects, Ongoing/일지.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "나가는 링크"
+              "title": "일지의 나가는 링크"
             }
           },
           {
@@ -170,7 +171,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 224
+    "width": 204.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -186,8 +187,9 @@
   },
   "active": "b9473341f42644d8",
   "lastOpenFiles": [
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 10월/241022 정리.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 10월/241023 정리.md",
     "1. Projects, Ongoing/일지.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 10월/241022 정리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 10월/241021 정리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 10월/241018 정리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 10월/241016 정리.md",
@@ -222,7 +224,6 @@
     "4. Archive/레트로의 유니티 게임 프로그래밍 에센스/2장 - 유니티 인터페이스 둘러보기.md",
     "4. Archive/레트로의 유니티 게임 프로그래밍 에센스/11장 - (유니런) 플레이어 제작.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 9월/240927 정리.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/월별 작업 일지(수기)/24년 7월.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/무제 폴더",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/월별 작업 일지(수기)",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 9월",
