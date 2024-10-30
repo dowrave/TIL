@@ -171,8 +171,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 204.5,
-    "collapsed": true
+    "width": 204.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -188,8 +187,12 @@
   },
   "active": "b9473341f42644d8",
   "lastOpenFiles": [
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - PNG에서 Sprite로 변환하는 과정.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - GameObject와 Transform.md",
     "1. Projects, Ongoing/일지.md",
+    "3. Resource/Image/Caster512 (3) (2).png",
+    "3. Resource/Image/Medic512 (2).png",
+    "3. Resource/Image/Defender512 (1) (2).png",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - PNG에서 Sprite로 변환하는 과정.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - Sprite 항목 설명.md",
     "3. Resource/Image/Pasted image 20241029190412.png",
     "3. Resource/Image/Pasted image 20241029190407.png",
@@ -198,13 +201,10 @@
     "3. Resource/Image/Sniper64.png",
     "3. Resource/Image/Guard512.png",
     "3. Resource/Image/Sniper512.png",
-    "3. Resource/Image/Vanguard512.png",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - UI용 스프라이트를 만들 때 참고 사항.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 10월/241029 정리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/시행착오 - 아이콘과 스프라이트.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 10월/241028 정리.md",
-    "3. Resource/Image/Pasted image 20241028175510.png",
-    "3. Resource/Image/Pasted image 20241028175315.png",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - Generate Mipmaps.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 10월/241026 정리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 10월/241025 정리.md",
