@@ -13,26 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 11월/241107.md",
+                "file": "1. Projects, Ongoing/일지.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "241107"
-            }
-          },
-          {
-            "id": "a24c8e44d213163a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 11월/241106.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "241106"
+              "title": "일지"
             }
           }
         ]
@@ -201,11 +187,12 @@
   },
   "active": "a46c5e095602297f",
   "lastOpenFiles": [
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 11월/241108.md",
     "1. Projects, Ongoing/일지.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 11월/241106.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 11월/241107.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - 생명 주기 메서드.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - gameObject의 활성화 관련.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 11월/241106.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/화면 너비 비율 1대3 맞추기.md",
     "3. Resource/Image/Pasted image 20241106212611.png",
     "3. Resource/Image/Pasted image 20241106212548.png",
@@ -240,7 +227,6 @@
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/시행착오 - 아이콘과 스프라이트.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 10월/241028 정리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - Generate Mipmaps.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 10월/241026 정리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 10월",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/무제 폴더",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/월별 작업 일지(수기)",
