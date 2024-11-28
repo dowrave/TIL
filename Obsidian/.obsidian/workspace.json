@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "078041000d513de4",
+        "id": "29a0cec7f768186b",
         "type": "tabs",
         "children": [
           {
-            "id": "754c9fc577aa31df",
+            "id": "ab951f23b57c1d15",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 11월/241127.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "241127"
+              "title": "새 탭"
             }
           }
         ]
@@ -165,9 +161,19 @@
               "icon": "lucide-archive",
               "title": "All properties"
             }
+          },
+          {
+            "id": "9d33aaf55156e823",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {},
+              "icon": "spreadsheet",
+              "title": "Advanced Tables"
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
@@ -185,25 +191,30 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "754c9fc577aa31df",
+  "active": "ab951f23b57c1d15",
   "lastOpenFiles": [
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/투명 마스크 만들기.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - 스텐실 마스크.md",
+    "README.md",
+    "2024-11-29.md",
     "1. Projects, Ongoing/일지.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 11월/241128.md",
+    "3. Resource/Image/Pasted image 20241129001112.png",
+    "3. Resource/Image/Pasted image 20241128232648.png",
+    "3. Resource/Image/Pasted image 20241128232545.png",
+    "3. Resource/Image/Pasted image 20241128232006.png",
+    "3. Resource/Image/Pasted image 20241128231547.png",
+    "3. Resource/Image/Pasted image 20241128231516.png",
+    "3. Resource/Image/Pasted image 20241128231212.png",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 11월/241127.md",
+    "3. Resource/Image/Pasted image 20241128231051.png",
+    "3. Resource/Image/Pasted image 20241128224623.png",
+    "3. Resource/Image/Pasted image 20241128222456.png",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 11월/241126.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 11월/241125.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/오퍼레이터 성장 시스템 만들기.md",
-    "3. Resource/Image/Pasted image 20241125183227.png",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - ScriptableObject의 역할.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - 2D 스켈레톤 애니메이션 기초.md",
-    "3. Resource/Image/Pasted image 20241122224722.png",
-    "3. Resource/Image/Pasted image 20241122224631.png",
-    "3. Resource/Image/Pasted image 20241122224619.png",
-    "3. Resource/Image/Pasted image 20241122224211.png",
-    "3. Resource/Image/Pasted image 20241122221253.png",
-    "3. Resource/Image/Pasted image 20241122220629.png",
-    "3. Resource/Image/Pasted image 20241122220422.png",
-    "3. Resource/Image/Pasted image 20241122220137.png",
-    "3. Resource/Image/Pasted image 20241122215449.png",
     "4. Archive/독서/유니티 게임 디자인 바이블/2D 본 애니메이션.md",
     "4. Archive/독서/유니티 게임 디자인 바이블/초급편.md",
     "4. Archive/독서/유니티 게임 디자인 바이블/외부 연계 툴 추천.md",
@@ -219,11 +230,6 @@
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 11월/241120.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 11월/241119.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 11월/241118.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - DOTween.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 11월/241115.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 11월/241114.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/CSharp - 리스트.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 11월/241113.md",
     "4. Archive/무제 폴더",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 11월",
     "2. Area/Music",
