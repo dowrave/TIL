@@ -55,3 +55,17 @@ animationSequence.Append(textContainer.DOAnchorPosX(0, textSlideDuration) .SetEa
 animationSequence.Append(textContainer.DOAnchorPosX(-textOffset, textSlideDuration) .SetEase(Ease.InQuad)); // 가속도를 붙여 퇴장
 ```
 
+## Append와 Join의 차이
+- 시퀀스를 구성할 때, `Append`와 `Join`이라는 메서드가 있다.
+```cs
+Sequence sequence = DOTween.Sequence();
+// 1초동안 페이드 인 시작
+sequence.Append(canvasGroup.DOFade(1f, 1f));  
+// 페이드 인과 동시에 1초동안 이동 시작
+sequence.Join(transform.DOMoveX(5f, 1f));
+```
+> 설명에서 보이듯, 
+> **- `Append`은 이전 애니메이션이 종료된 후에 실행된다.**
+> **- `Join`은 이전 애니메이션과 동시에 실행된다.**
+
+
