@@ -181,7 +181,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 204.5
+    "width": 204.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -197,8 +198,9 @@
   },
   "active": "ab951f23b57c1d15",
   "lastOpenFiles": [
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/회전하는 화살 만들기.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 12월/241226.md",
     "1. Projects, Ongoing/일지.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/회전하는 화살 만들기.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 12월/241224.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 12월/241223.md",
     "3. Resource/Image/Pasted image 20241223225522.png",
@@ -232,7 +234,6 @@
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/오퍼레이터 성장 시스템 만들기.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - 시간의 흐름.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 8월/240822 정리.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/월별 작업 일지(수기)/24년 11월.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 12월",
     "4. Archive/독서/유니티 게임 디자인 바이블",
     "4. Archive/무제 폴더",
