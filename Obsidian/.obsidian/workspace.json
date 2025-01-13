@@ -20,6 +20,16 @@
               "icon": "lucide-file",
               "title": "일지"
             }
+          },
+          {
+            "id": "9f1c2704f16f99f2",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "새 탭"
+            }
           }
         ]
       }
@@ -181,7 +191,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 204.5
+    "width": 204.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -197,8 +208,10 @@
   },
   "active": "d4ab06c10e887bea",
   "lastOpenFiles": [
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/25년 1월/250109.md",
+    "3. Resource/Image/Pasted image 20250113195635.png",
     "1. Projects, Ongoing/일지.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/25년 1월/250113.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/25년 1월/250109.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트/셰이더 그래프 - 중심 기준으로 확대 , 축소 반복.md",
     "3. Resource/Image/Pasted image 20250109192714.png",
     "3. Resource/Image/Pasted image 20250109192607.png",
@@ -232,8 +245,6 @@
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/아이템, 아이템 인벤토리 구현하기.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/UI/시행착오 - 아이콘과 스프라이트.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/UI/마름모 인디케이터 화면과 일치시키기.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/UI/글자의 크기에 따른 배경 맞추기.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/공격 모션 추가한 설정.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/UI",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트",
