@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "ba93efab5e45667c",
+        "id": "4828b9e6b8c12c3e",
         "type": "tabs",
         "children": [
           {
-            "id": "9f1c2704f16f99f2",
+            "id": "f6f04e8aadc7c4b7",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -195,10 +195,14 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "9f1c2704f16f99f2",
+  "active": "f6f04e8aadc7c4b7",
   "lastOpenFiles": [
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/25년 1월/250117.md",
+    "3. Resource/Image/Pasted image 20250118151436.png",
+    "1. Projects, Ongoing/독서 - 게임 기획의 정석Designing Games/1. 경험의 엔진.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/무제 파일.md",
+    "1. Projects, Ongoing/독서 - 게임 기획의 정석Designing Games",
     "1. Projects, Ongoing/일지.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/25년 1월/250117.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/월별 작업 일지(직접 작성)/24년 8월.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/월별 작업 일지(직접 작성)/24년 9월.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/월별 작업 일지(직접 작성)/24년 10월.md",
@@ -231,9 +235,6 @@
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 12월/241231.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트/이펙트 - 보호막 튜토리얼.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/UI/투명 마스크 만들기.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트/구부러진 경로 이펙트 만들기.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/마우스버튼다운, 클릭 동작 정리.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/보유 오퍼레이터 관리하는 로직.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/UI",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트",
@@ -242,7 +243,6 @@
     "4. Archive/무제 폴더",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 11월",
     "2. Area/Music",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/일지 디테일(AI 및 첨언)/24년 10월",
     "3. Resource/Canvas/ListView 상속계층도.canvas"
   ]
 }
