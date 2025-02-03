@@ -40,7 +40,8 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
+                "sortOrder": "alphabetical",
+                "autoReveal": false
               },
               "icon": "lucide-folder-closed",
               "title": "파일 탐색기"
@@ -70,7 +71,7 @@
               "type": "starred",
               "state": {},
               "icon": "lucide-file",
-              "title": "플러그인이 더 이상 활성화되지 않음"
+              "title": "플러그인이 더 이상 활성화돼있지 않음"
             }
           },
           {
@@ -126,7 +127,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "일지의 나가는 링크"
+              "title": "일지 의 나가는 링크"
             }
           },
           {
@@ -185,10 +186,10 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:퀵 스위처 열기": false,
+      "switcher:빠른 전환기 열기": false,
+      "daily-notes:오늘의 일일 노트 열기": false,
       "graph:그래프 뷰 열기": false,
       "canvas:새 캔버스 만들기": false,
-      "daily-notes:오늘의 데일리 노트 열기": false,
       "templates:템플릿 삽입": false,
       "command-palette:명령어 팔레트 열기": false,
       "table-editor-obsidian:Advanced Tables Toolbar": false,
@@ -197,6 +198,11 @@
   },
   "active": "1c7e445be5d9d5e3",
   "lastOpenFiles": [
+    "3. Resource/Image/Pasted image 20250203173957.png",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/25년 1월.md",
+    "1. Projects, Ongoing/일지.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/스테이지 진척도 구현하기.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/24년 7월.md",
     "3. Resource/Image/ForObsidian_Skill_Slash.png",
     "3. Resource/Image/ForObsidian_Skill_Shield.png",
     "3. Resource/Image/ForObsidian_Skill_Meteor.png",
@@ -207,36 +213,31 @@
     "3. Resource/Image/ForObsidian_Skill_DoubleShot.png",
     "3. Resource/Image/ForObsidian_Skill_DefenseUp.png",
     "3. Resource/Image/ForObsidian_CostRecovery.png",
-    "3. Resource/Image/ForObsidian_AttackUp.png",
-    "1. Projects, Ongoing/일지.md",
-    "1. Projects, Ongoing/게임 플레이 잡지식/림버스 전투 시스템 이해하기/3. 수비 스킬.md",
+    "4. Archive/게임 플레이 잡지식/림버스 전투 시스템 이해하기/3. 수비 스킬.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/AI 대화 요약/25년 1월/250124.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/AI 대화 요약/25년 1월/250123.md",
-    "1. Projects, Ongoing/게임 플레이 잡지식/림버스 전투 시스템 이해하기/2. 내성.md",
+    "4. Archive/게임 플레이 잡지식/림버스 전투 시스템 이해하기/2. 내성.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/무제 파일.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지",
-    "1. Projects, Ongoing/게임 플레이 잡지식/림버스 전투 시스템 이해하기/1. 합과 공격.md",
-    "1. Projects, Ongoing/게임 플레이 잡지식/림버스 전투 시스템 이해하기",
-    "1. Projects, Ongoing/게임 플레이 잡지식",
+    "4. Archive/게임 플레이 잡지식/림버스 전투 시스템 이해하기/1. 합과 공격.md",
+    "4. Archive/게임 플레이 잡지식/림버스 전투 시스템 이해하기",
+    "4. Archive/게임 플레이 잡지식",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/AI 대화 요약/25년 1월/250122.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/SOLID.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/AI 대화 요약/25년 1월/250121.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트/Dissolve - 사라지고 나타나는 이펙트.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/무제 파일.md",
-    "1. Projects, Ongoing/독서 - 게임 기획의 정석Designing Games/1. 경험의 엔진.md",
-    "1. Projects, Ongoing/독서 - 게임 기획의 정석Designing Games",
+    "4. Archive/독서 - 게임 기획의 정석Designing Games/1. 경험의 엔진.md",
+    "4. Archive/독서 - 게임 기획의 정석Designing Games",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/AI 대화 요약/25년 1월/250117.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/24년 8월.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/24년 9월.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/24년 10월.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/24년 11월.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/24년 12월.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/24년 7월.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/AI 대화 요약/25년 1월/250113.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/AI 대화 요약/25년 1월/250109.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트/셰이더 그래프 - 중심 기준으로 확대 , 축소 반복.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/ScriptableObject - Reset.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트/원거리 검격 이펙트 구현하기.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/AI 대화 요약/25년 1월",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/UI",
