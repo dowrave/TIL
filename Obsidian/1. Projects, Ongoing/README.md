@@ -1,3 +1,4 @@
+# 일지
 ## 참고
 - **옵시디언으로 봐야 멀쩡하게 보임!!!**
 - **옵시디언으로 작성된 만큼 깃허브의 마크다운에서는 지원하지 않는 기능들이 있을 수 있다.** `[[]]`, 이미지 첨부 방식 등이 대표적.
@@ -36,6 +37,46 @@
 
 # 2월
 
+## 250207
+
+### 짭명방
+
+> 예전 코드들을 보니까 스파게티의 냄새가 솔솔 난다
+#### 기타 이슈 수정
+- [x] 오퍼레이터 배치 방향이 이상하게 되는 이슈
+	- 실제 공격 범위, 하이라이트되는 공격범위가 이상하게 표시됨
+	- 한편 방향 인디케이터는 정상적으로 표시됨
+	- 배치 방향과 버그 방향
+		- 오른쪽 : 왼쪽
+		- 왼쪽 : 왼쪽
+		- 윗쪽 : 오른쪽
+		- 아랫쪽 : 오른쪽
+	- 회전이 2번 적용되어서 그런 것으로 보인다. `DeployableManager`의 미리보기 과정에서 오퍼레이터에 관한 값들이 적용되고 있기 때문에, `Deploy`할 때에는 그대로 적용하면 됨. 
+	- 제대로 구분하기 위해 `baseOffset, rotatedOffset, CurrentAttackableGridPos`으로 구분했다.
+
+- [x] `DeployableBox`의 초기화 이슈 : 초기 코스트가 배치 코스트보다 높은데도 `inActiveImage`가 활성화되는 현상
+	- 박스의 초기화가 스테이지 시작 전에 되므로 초기 코스트를 0으로 인식하는 문제로 보인다.
+	- `StageManager.OnPreparationComplete` 이벤트가 발생하는 시점에서는 스테이지의 코스트가 준비된 상태이므로, `InitializeVisuals`가 저 이벤트를 구독하면 될 듯.
+
+- [x] StageManager에 있는 스테이지 설정 : 최초 코스트, 최대 코스트, 코스트 증가 속도 등을 `StageData`에서 가져오도록 수정
+	 - 코스트 증가 속도 로직 수정 : 기존엔 `CostIncreaseInterval`이라는 이름으로, `Time.deltaTime / CostIncreaseInterval`의 값을 더하는 식으로 구현했으나, 직관적이지 않았다. 
+	 - 따라서 `CostIncreaseSpeed`를 `StageData`에서 가져오도록 구현하고, 그 로직도 `Time.deltaTime`에 곱하는 방식으로 바꿨음. 변수명도 `TimeToFillCost`로 변경.
+
+- [x] 스테이지 시작 상황 : `StageLoader`의 역할은 데이터 전달 정도로 줄이고, `StageManager`의 역할을 늘림
+	- 스테이지 매니저에서 시작 로직을 다 처리하게 하기 위함인데, 현재 2가지 문제 발생 중
+	- [x] 1. 로딩 화면이 없어지지 않음(메서드는 실행됨)
+		- `Destroy`에서 컴포넌트를 지정했기 때문. 오브젝트를 지정해야 한다.
+	- [x] 2. 맵이 로드되지 않음
+		- 이미 `StageLoadingScreen` 자체에서 로딩 화면의 동작이 다 구현되어 있음. 굳이 `StageLoader`에서 별도로 구현해줄 필요는 없다. 
+		- 따라서 `StageLoader`에 있는 로딩 화면 제어 로직은 다 제거해준다. `StageLoader`는 로딩 화면을 인스턴스화만 해주면 됨. 
+	- [x] 3. `DeployableManager`에 `Deployable`들이 정상적으로 초기화되지 않음
+		- 상태들은 다 잘 들어간다. `InitializeDeployableUI`에서 로비에서의 실행을 방지한다는 명목으로 넣은 코드 때문에 이상하게 동작한 듯. 
+		- 로비에서의 실행을 방지하기 위해 넣은 코드가 아래와 같았는데, 이제 스쿼드 초기화를 `Preparation`에서 진행하게 되면서 이 메서드가 실행되지 않게 된 것으로 보인다. 
+```cs
+        //if (StageManager.Instance.currentState != GameState.Battle) return;
+```
+		- 위 코드를 빼고 `OnDestroy`에서 이 메서드의 이벤트 구독을 해제하게끔 바꿨음.
+		- 좀 오래 걸렸다.
 ## 250206
 
 ### 짭명방
@@ -46,9 +87,11 @@
 #### 기타 이슈 수정
 - [x] `SlashSkill` : 보는 방향의 시계방향 90도로 돌아가서 스킬이 나감
 	- 스킬 프리팹을 보니까 스크립트 참조가 풀려 있다. 다시 설정하니 잘 작동함.
+
 - [x] 1정예화가 됐는데도 스킬 범위의 확장이 적용되지 않음
 	- 정확히는 **스테이지 씬**에서 확장된 스킬 범위가 적용되지 않음. 메인메뉴 씬에서는 잘 나타나고 있다. 
 	- `Operator`에서 공격 가능한 타일은 `CurrentAttackableTiles = OwnedOperator.CurrentAttackableTiles`을 참조해야 하나, `Basedata.attackableTiles`을 참조하는 부분이 몇몇 있었다. 이 부분을 `CurrentAttackableTiles`으로 수정.
+
 - [x] 왼쪽 패널 : 스탯 보는 부분에서 공격력 = 방어력인 현상
 	- 체크리스트 
 		- [x] 인스펙터 SerializeField 참조 오류 : 아님
@@ -56,10 +99,12 @@
 	- 발견) `OperatorGrowthSystem`에서 초기화 로직에서 `Defense`를 할당해야 하는 부분에 `AttackPower`가 할당되어 있었음
 	- 이거 수정하는 과정에서, 추가로 `InventoryPanel`이나 `DetailPanel` 등에서 소수점으로 나타나는 스탯들은 모두 내림으로 보이게 구현함
 		- 스탯 자체에 내림을 적용하면 레벨업 스탯이 소수점으로 올라가므로 문제가 발생할 것으로 보임. **실제 수치는 그대로 두되, 보일 때에만 내림 적용.**
+
 - [x] 레벨업 패널 : 배경을 `CircleWithSmallAlpha` 텍스쳐를 사용했을 때, `Fill` 이미지에 쓰이는 텍스쳐도 `CircleWithSmallAlpha`를 사용했을 경우, `Fill Amount` 값이 변함에 따라 내부 원 부분이 보이는 현상이 있음
 	- `CircleWithSmallAlpha`라는 텍스쳐 자체를 다시 뜯어서 내부 알파값을 제거한 텍스쳐를 만들어서 적용
 	- 같은 이미지로 내부에 알파값을 준 것과 아닌 것 2개로 나눠서 구현함
 	- 1개의 `Circle` 이미지만으로 스텐실 마스크 조건에 `Alpha = 0` 조건만 줘서 구현할 수 있나 테스트해봤는데, 안되는 것 같음.
+
 - [x] `EnemyWeak`의 경우 도착 지점에 도달해도 카운트가 안 올라감
 	- `Enemy`에 설정된 `destinationPosition`의 경우 `PathData`의 마지막 노드 + `Vector3.Up * 0.5f`로 설정되어 있었다. `0.5f`라는 값을 `BaseData.defaultYPosition`으로 수정
 	- 추가로 `MoveAlongPath`의 목적지 도달 조건이 `nextPosition == destinationPosition`이었는데,  아래의 조건을 한 번 보면..
