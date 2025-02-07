@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects, Ongoing/일지.md",
+                "file": "1. Projects, Ongoing/README.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "일지"
+              "title": "README"
             }
           }
         ]
@@ -122,12 +122,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1. Projects, Ongoing/일지.md",
+                "file": "1. Projects, Ongoing/README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "일지 의 나가는 링크"
+              "title": "README 의 나가는 링크"
             }
           },
           {
@@ -196,12 +196,12 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "1c7e445be5d9d5e3",
+  "active": "05d7e6e280c4e34e",
   "lastOpenFiles": [
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/UI/오퍼레이터 정보 UI 그라데이션.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/UI/체력 게이지 관련 설정들.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/UI/투명 마스크 만들기.md",
-    "1. Projects, Ongoing/일지.md",
+    "1. Projects, Ongoing/README.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/오퍼레이터들 스탯 정리.md",
     "3. Resource/Image/Pasted image 20250203173957.png",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/25년 1월.md",
