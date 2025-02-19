@@ -37,6 +37,53 @@
 
 # 2월
 
+## 250219
+
+### 짭명방
+
+#### 스테이지 씬 로비로 나가는 패널 추가
+- 구조
+```
+ConfirmationToLobbyPanel(Empty)
+- BlurArea
+- ContentBox
+	- TextArea
+	- ButtonArea
+		- Button_ReturnToLobby
+		- Button_Cancel
+```
+- 가운데 줄이 뜨고, 뒷배경은 블러 처리가 되어야 함
+	- UI 블러의 경우, [이 동영상](https://www.youtube.com/watch?v=CFcGRE1DJRQ)을 참고.
+	- [`Unified-Universal-Blur`](https://github.com/lukakldiashvili/Unified-Universal-Blur)으로 접근, 패키지 매니저에서 깃 링크로 설치하는 항목이 있음
+	- **근데 `유니티 6`부터 지원한다.** 
+		- 설명 내용을 보면 개발 버전의 업그레이드...를 굳이 할 필요는 없어보이기는 한다. 없어도 구현 자체가 불가능한 것도 아닐 것이다. 
+		- 그런데 필요해진 김에 백업하고 개발 버전의 업그레이드를 진행해봄.
+
+> 블러 자체는 잘 동작하지만, 같은 캔버스에 있는 다른 패널들이 블러 처리되지는 않는 듯. 블러는 아니지만, 이들은 BlurArea의 알파값을 높이는 방법으로 잘 보이지 않게 했다.
+
+> 유니티 버전 업그레이드 때문인지는 모르겠는데, `DG.Tweening`의 `CanvasGroup.DOFade(endValue, duration)`이 살짝 이상하게 동작한다. `duration`에 따라 `endValue` 값이 변하는 이슈가 있음. 그래서 애니메이션인데 애니메이션이 아닌... 이상한 현상이 있다. 어쨌든 지금 상태가 잘 동작하니까 이대로 둠.
+
+
+
+##### Unified-Universal-Blur 설치법
+- 유니티 6에서 동작함
+- 동영상의 경우 Assets에 URP 폴더가 따로 있는데, 내 경우는 아님(Assets/)에 있기는 하다
+- 만약 못 찾겠다면, `Project Settings`에서 `Render Pipeline Asset`의 URP Asset으로 접근, `Renderer List`에 있는 **`Universal Renderer Data`로 접근한 뒤, `Add Renderer Feature - Universal Blur Feature`을 추가한다.**
+
+#### 유니티 6으로 개발 버전 업그레이드
+-  위에서 블러 라이브러리를 가져오기 위해, 기존 프로젝트를 백업하고 유니티 6으로 업그레이드를 시도해봄 
+- **대부분의 기능이 잘 작동함.** 텍스쳐를 가져오지 못한다는 오류가 발생하는데, 실행에 치명적이지는 않음
+```
+Graphics.CopyTexture called with null source texture
+UnityEngine.GUIUtility:ProcessEvent (int,intptr,bool&)
+```
+- 유니티 허브 설치 드라이브의 용량이 꽉 차는 이슈가 있어서 설치 드라이브를 바꿈. 지우고 재설치한다는 뜻.
+
+#### 기타 이슈 수정
+- [ ] `OperatorInfoPanel` : 다른 오퍼레이터 클릭 시 패널 업데이트되지 않는 현상
+	- 배치 전의 요소를 클릭할 때는 업데이트가 잘 되고, 배치된 요소를 클릭했을 때 업데이트가 되지 않는 듯.
+
+
 ## 250218
 
 ### 짭명방
