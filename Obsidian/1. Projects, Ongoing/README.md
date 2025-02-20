@@ -37,6 +37,56 @@
 
 # 2월
 
+## 250221
+
+### 짭명방
+
+#### 해결 못한 거 적어놓음
+- [ ] `Enemy`가 사라지지 않았는데 승리 판정이 나는 상황 (특정 조건에서 `Enemy` 1개체가 죽었음에도 2킬이 올라가는 현상)
+
+- [ ] `OperatorInfoPanel` : 다른 오퍼레이터 클릭 시 패널 업데이트되지 않는 현상
+	- 이거는 정리하는 김에 오퍼레이터 클릭 시 나타나는 사각형 내외부 클릭 로직도 함께 만지면 좋을 것 같다. 오퍼레이터가 클릭된 상태에서 다른 오퍼레이터가 클릭될 때의 전환이라든가, 외부를 클릭하면 다시 원래의 카메라로 돌아온다든가 하는 등등.
+
+- [ ] 유니티 버전 업그레이드하면서 아틀라스 텍스쳐를 불러오지 못하는 오류
+```
+The character with Unicode value \u25B6 was not found in the [SUITE-Regular SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u0020 in text object [CurrentSpeedIcon].
+UnityEngine.Debug:LogWarning (object,UnityEngine.Object)
+TMPro.TextMeshProUGUI:SetArraySizes (TMPro.TMP_Text/TextProcessingElement[]) (at ./Library/PackageCache/com.unity.ugui@03407c6d8751/Runtime/TMP/TextMeshProUGUI.cs:2005)
+TMPro.TMP_Text:ParseInputText () (at ./Library/PackageCache/com.unity.ugui@03407c6d8751/Runtime/TMP/TMP_Text.cs:2017)
+TMPro.TextMeshProUGUI:OnPreRenderCanvas () (at ./Library/PackageCache/com.unity.ugui@03407c6d8751/Runtime/TMP/TextMeshProUGUI.cs:2471)
+TMPro.TextMeshProUGUI:Rebuild (UnityEngine.UI.CanvasUpdate) (at ./Library/PackageCache/com.unity.ugui@03407c6d8751/Runtime/TMP/TextMeshProUGUI.cs:227)
+UnityEngine.Canvas:SendWillRenderCanvases ()
+```
+
+## 250220
+> 버그가 계속 나오네 ㅋㅋㅋㅋㅋㅋㅋ 미치겠다
+### 짭명방
+
+#### 기타 이슈 수정
+
+- [x] `MeteorSkill`이 사용되던 중에 게임이 끝나고, 로비로 나갔다가 다시 돌아와서 스킬이 사용된 경우 이전 게임에서 사용된 스킬 범위가 다시 나타나는 현상
+	- `StageManager`에서 `OnGameEnded`라는 이벤트를 추가
+	- 이거의 경우 위의 이벤트 추가보다는 `AreaEffectSkill`에서 스킬이 끝나고 사라져야 하는 상황에서, 해쉬셋으로 구현된 오브젝트 풀은 제거하는데 정작 해쉬셋을 초기화하지 않아서 발생하는 문제였음
+	- `BaseSkill`의 `CleanupSkillObjectPool`을 `CleanupSkill`로 수정, 오브젝트 풀을 수정하는 로직은 `AreaEffectSkill`에 들어가 있다.
+	- 좀 특이한 건 이게 **씬이 전환되어도 정보가 유지가 되고 있다**는 거? `스테이지 -> 메인 메뉴 -> 스테이지`로 돌아와도 이전 스테이지 씬의 정보가 유지되는 다소 이상한 상황이 있다. 지금은 초기화 로직을 끼워넣었으니 됐겠지만..
+
+
+- [ ] `Enemy`가 사라지지 않았는데 승리 판정이 나는 상황도 있음
+	- `Enemy`의 체력이 사라진 게 이슈가 아닌 듯??
+	- **정확한 발동 조건을 파악하기 어려운데**, 일단 확실해보이는 상황은 Enemy가 Vanguard에 의해 저지된 상황에서 `Meteor` 스킬로 죽었을 때는 확실히 2킬씩 올라가는 듯
+![[Pasted image 20250220175243.png]]
+> 이런 느낌의 문제가 발생 중이다
+
+- [x] `StatsPanel` : 퇴각 후 재배치했을 때, 같은 오퍼레이터인데도 다른 항목으로 나타나는 현상
+	- `Operator`로 관리되던 `OperatorStats`을 `OwnedOperator`로 바꾸면 되지 않을까로 접근 시작
+	- 완료 : `Operator` 대신 `OperatorData`를 사용하면 됨 - 한번에 한 개가 배치되고, 사라졌다가 나타났다가 하는 요소도 아니며, `Operator` 내부에 `BaseData`로 사용 중이었기 때문에 수정도 편했음
+
+- [x] 오퍼레이터가 배치 중인 상황에서 타일 위로 스냅핑됐을 때, `Enemy`가 오퍼레이터를 공격하는 현상
+	- `250214`(한 달 단위로 일지를 옮기므로 날짜만 써놓음)에 **저지 관련 로직에 콜라이더와 트리거 판정을 넣으면서 발생하기 시작**한 것으로 보인다.
+	- 현재 저지 판정은 `Operator`에서 `Enemy` 콜라이더가 들어왔을 때를 기준으로 함
+	- **여기에 `IsDeployed`라는, 오퍼레이터가 현재 배치되었을 때 이 `OnTriggerEnter`가 작동해야 하도록 구성해야 하는데, 해당 조건이 없었어서 이를 추가했다.**
+	- `Operator`에 있는, 관련하여 중복된 필드와 메서드를 `DeployableUnitEntity`로 빼뒀음. `IsDeployed, IsPreviewMode` 등등.
+
 ## 250219
 
 ### 짭명방
