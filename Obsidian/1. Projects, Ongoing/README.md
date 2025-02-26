@@ -37,6 +37,95 @@
 
 # 2월
 
+## 250226
+
+### 짭명방
+
+#### EnemyFast 및 Enemy의 방향에 따른 모델의 회전 구현하기
+- [x] `EnemyFast`를 구현.
+	- 명방의 사냥개 시리즈를 참조했는데, 내 경우에는 별도의 스프라이트를 쓰고 있지 않기 때문에 기존 `Capsule`을 눕힌 형태로 구현했음
+	- 그런데 이 경우 방향 전환을 해도 모델이 회전하지 않아서 어색해보이기 때문에, `Enemy` 스크립트에서 `Model`의 방향을 오브젝트가 진행하는 방향으로 회전시키는 로직을 구현해봄
+	- ~~겁내 헷갈리네;~~
+	- 머릿속으로도 제대로 정리가 안 되고 있음. 블렌더로 누운 캡슐 모델을 만드는 방법도 시도해봤는데, `Cylinder`와 2개의 반구를 이어붙이려고 했으나 접합면이 매끄럽게 이어지지 않아서 중지했음. 스크립트 상에서 해결해야 할 듯. 
+	- `Enemy`의 구조를 아래처럼 수정함
+```
+Enemy
+- ModelContainer(Empty)
+-- Model
+```
+> 여기서 `Model`의 경우, 그 자체의 값은 변하지 않음.
+> - 스크립트 단위에서 수정하는 `Rotation`은 `ModelContainer`에서만 이뤄진다. `Model`은 더 이상 건드리지 않음.
+> - `ModelContainer.LookRotation(forward, up)`을 이용하는데, `Vector3.up`을 `up`에 쓰는 기준으로, **`ModelContainer` 기준 `+z` 축에 `Model`에서 이동 방향이 향하고 싶은 면이 오게끔 설정하면 됨**
+![[Pasted image 20250226203033.png]]
+> `ModelContainer` 기준 `+z` 축에 캡슐의 한쪽 끝 부분이 오게끔 설정
+- 다른 `Enemy`들도 이런 구조로 수정함. `Model`에 `Rotation`을 주지 않으므로 위 로직을 추가해도 기존에 동작한 것과 동일하게 작동한다.
+
+
+#### 이슈 수정
+- 스테이지 `1-0`을 추가하면서, 최초 스테이지를 `1-0`으로 변경
+
+##### 어제 `Map`에서 필드를 수정하면서, `MapEditorWindow`에서도 되던 기능이 되지 않거나 하는 현상도 발생해서 관련 로직들 수정
+- `MapEditorWindow`에서 현재 이미 있는 맵을 수정하는 게 어려운 상태라서 수정 진행
+- 에디터 관련 설정은 프로젝트의 초반에 지식이 아예 없는 상태에서 AI의 도움을 빌려서 진행했던 요소이기 때문에 좀 헤맬 듯 하다.
+
+- 수정 내용 : `MapEditorWindow.LoadMap`
+```cs
+    private void LoadMap()
+    {
+        // 맵 프리팹 경로 추적 및 로드 
+        string path = EditorUtility.OpenFilePanel("Select Map Prefab", MAP_PREFAB_PATH, "prefab");
+        if (string.IsNullOrEmpty(path)) return;
+        string relativePath = "Assets" + path.Substring(Application.dataPath.Length);
+        GameObject loadedMapPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(relativePath);
+        if (loadedMapPrefab == null)
+        {
+            Debug.LogError($"Failed to load map prefab from path: {relativePath}");
+            return;
+        }
+
+        // 현재 씬에 존재하는 맵 제거 
+        RemoveExistingMaps();
+
+        // 수정) 기존엔 Stage라는 오브젝트를 따로 뒀으나 현재는 사용하지 않아서 맵 인스턴스는 루트에 생기도록
+        // GameObject stageObject = GetStageObject();
+        // GameObject mapInstance = PrefabUtility.InstantiatePrefab(loadedMapPrefab, stageObject.transform) as GameObject;
+        GameObject mapInstance = PrefabUtility.InstantiatePrefab(loadedMapPrefab) as GameObject;
+
+        mapInstance.name = MAP_OBJECT_NAME;
+        currentMap = mapInstance.GetComponent<Map>();
+        if (currentMap == null)
+        {
+            Debug.LogError("Loaded prefab does not have a Map component.");
+            DestroyImmediate(mapInstance);
+            return;
+        }
+
+        // Map 컴포넌트의 tilePrefab 속성을 에디터 스크립트에서 설정, 맵 생성 시 올바른 타일 프리팹이 사용되도록 한다.
+        // 수정) Map 컴포넌트에서 타일을 만드는 로직을 보면, tileData에 tilePrefab이 할당되어 있기 때문에 여기서 별도로 설정해줄 필요는 없음
+        //SerializedObject serializedMap = new SerializedObject(currentMap);
+        //SerializedProperty tilePrefabProperty = serializedMap.FindProperty("tilePrefab");
+
+        //if (tilePrefabProperty.objectReferenceValue == null)
+        //{
+        //    tilePrefabProperty.objectReferenceValue = tilePrefab;
+        //    serializedMap.ApplyModifiedProperties();
+        //}
+
+        currentMap.Initialize(currentMap.Width, currentMap.Height, true);
+
+        currentMapWidth = currentMap.Width;
+        currentMapHeight = currentMap.Height;
+
+        SceneView.RepaintAll(); // 씬을 리페인트
+        Repaint(); // 윈도우를 리페인트
+    }
+```
+> 저 주석친 부분들을 제거했다. 
+> 1. 생성된 `Map`의 위치가 크게 중요하지 않음 : `Stage`라는 오브젝트를 두게 되지 않음 + 어차피 이건 프리팹으로 따로 저장해둘 요소이기 때문
+> 2. 주석으로도 적혀 있듯, 윈도우에서 `tilePrefab`이라는 프로퍼티를 `Map`에 별도로 할당해줄 필요는 없다. AI가 짜준 스크립트..였다고 생각하는데, 지금 보면 굳이 저런 식으로 설정하지 않고 `Map` 컴포넌트 내에서 해결할 수 있는 내용들이다. `tilePrefab`이라는 요소가 어차피 공통으로 쓰일 수 있는 요소이기도 하다.
+
+
+
 ## 250225
 ### 짭명방
 
@@ -44,7 +133,6 @@
 - `1-0`이라는 맵을 하나 만듦. 튜토리얼 느낌의 맵. (근데 튜토리얼을 넣을지 말지는 고민)
 - 경로 2개 생성 : 직진으로 달리는 경로 하나, 빙글빙글 돌아서 가는 경로 하나.
 	- 경로 테스트도 완료
-	- 
 #### 구조 수정
 - `Map` 스크립트 수정
 	- 특정 맵에서만 사용할 수 있는 `MapDeployable` 필드의 위치 수정
