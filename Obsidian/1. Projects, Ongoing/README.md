@@ -13,7 +13,6 @@
 
 ### 진행 중
 - 스테이지 1-1 ~ 1-3 밸런싱
-- 튜토리얼?
 ### 이슈 : 해결 필요
 
 
@@ -36,6 +35,96 @@
 	- 직접 하려면 배워서 할 수는 있겠지만 시간이 문제겠다.
 
 # 2월
+
+## 250228
+
+### 짭명방
+
+#### 경로 미리보기 구현
+- `EnemySpawner`에서 `PathData`를 포함한 경로 미리보기를 보여줄 거임
+	- 원본 게임에서 어떤 경로를 이용하는 적이 스폰되기 전에, 궤적을 가진 선이 나와서 미리 타일들을 훑으면서 목적지점까지 도달하는 요소가 있다. 그걸 구현할 거임.
+
+- [x] 빈 오브젝트에 TrailRenderer을 붙여서 구현
+	- `TrailRenderer`에 사용하는 머티리얼은 `MainTex`와 `Color`을 곱해서 사용하는 일반적인 `TransParent` 셰이더를 사용함
+	- `GradientDBD02.png` : `MainTex`의 경우, 기존에 구현해놓은 `GradientDBD01`이 가장 어울리기는 하지만 가장자리의 검정색이 너무 진해서 거슬리는 면도 있다. `Krita`로 그래디언트가 끝나는 부분을 적당한 회색 정도로 해서 다시 테스트 해봄
+
+- [x] 이를 `PathIndicator`라고 하고, 스크립트를 붙임
+	- `EnemySpawner`에서 `Enemy`가 사용하는 동일한 `PathData`를 이용해서 `PathIndicator`를 이동시킬 것임
+	- `PathIndictor`의 동작은 `Enemy`의 이동 동작과 동일
+
+- [ ] 스테이지 관련 정보를 얻는 로직 수정
+```cs
+// StageManager.cs
+    private int CalculateTotalEnemyCount()
+    {
+        int count = 0;
+        EnemySpawner[] spawners = FindObjectsOfType<EnemySpawner>(); // 수정 필요) Map 프리팹에서 스포너들 정보 가져오는 식으로
+        foreach (var spawner in spawners)
+        {
+            int actualCount = spawner.spawnList.Count(spawnInfo => spawnInfo.spawnType is SpawnType.Enemy);
+            count += spawner.spawnList.Count;
+        }
+        return count;
+    }
+```
+> 여기서 `spawners`를 관리할 때, `FindObjectsOfType`이 아니라 `Map` 등에서 자체적으로 `spawner`들을 관리하게 하고, 이들을 불러오는 방식으로 수정 시도
+- 아래처럼 진행
+```cs
+// Map.cs
+    public void Initialize(int width, int height, bool load = false)
+    {
+	    // ...
+		// 아래 부분 추가
+		
+        // 불러오는 상황, 혹은 enemySpawners를 구현하기 전에 만든 맵이라 enemySpawners 내에 아무런 정보가 없을 때
+        if (load && enemySpawners.Count == 0)
+        {
+            // 스포너가 아예 없다면 
+            EnemySpawner[] spawners = FindObjectsOfType<EnemySpawner>();
+            foreach (EnemySpawner spawner in spawners)
+            {
+                enemySpawners.Add(spawner);
+            }
+        }
+    }
+
+	// 이제 에디터에서 스포너 인스턴스를 만들 때, 자동으로 해당 스포너를 리스트에 추가함
+    private void CreateSpawner(int x, int y)
+	{
+		// ...
+			EnemySpawner spawner = spawnerObj.GetComponent<EnemySpawner>();
+            if (spawner != null)
+            {
+                enemySpawners.Add(spawner);
+            }
+	}
+
+	// 에디터에서 타일을 제거할 경우, 스포너 리스트에 있는 스포너도 제거하는 로직 추가
+    public void RemoveTile(int x, int y)
+    {
+        if (!IsValidGridPosition(x, y)) return;
+
+        Vector2Int gridPos = new Vector2Int(x, y);
+        if (tileObjects.TryGetValue(gridPos, out GameObject tileObj))
+        {
+            // 제거될 오브젝트의 자식에 EnemySpawner가 있다면 리스트에서 먼저 제거
+            EnemySpawner spawner = tileObj.GetComponentInChildren<EnemySpawner>();
+            if (spawner != null)
+            {
+                if (enemySpawners != null && enemySpawners.Contains(spawner))
+                {
+                    enemySpawners.Remove(spawner);
+                }
+            }
+            
+            DestroyImmediate(tileObj);
+            tileObjects.Remove(gridPos);
+        }
+        tileDataArray[x, y] = null;
+    }
+
+```
+> `Initialize`를 에디터에서도 쓰고, StageManager에서도 맵 초기화할 때 쓰고.. 해서 사용처가 조금 애매한 느낌은 있지만, 지금 단계에서는 저렇게 불러오는 상황에서, 스포너 리스트에 아무런 값이 없을 때 맵에 있는 스포너들을 찾아서 추가하는 것을 구현했다.
 
 ## 250226
 
