@@ -33,6 +33,24 @@
 
 ## 3월
 
+### 250305
+#### 어제 못 끝낸 일
+- [ ]  `DeployableActionUI`의 SP 상태에 따른 스킬 버튼, SP 수치 표시 등 컨트롤하기
+
+### 250304
+
+#### 자잘?한 수정 사항
+- [x] `DeployableBox`에 쿨타임을 기다리는 원형 게이지 추가
+![[Pasted image 20250304162840.png]]
+
+- [ ]  `DeployableActionUI`의 SP 상태에 따른 스킬 버튼, SP 수치 표시 등 컨트롤하기
+	- 하다가 마무리 못함 -> 내일 계속
+
+#### 기타 이슈 수정
+- [x] 1회 퇴각 후에 오퍼레이터를 다시 배치했을 때, `DeployableBox`가 사라지지 않는 현상
+	- 오퍼레이터가 배치 가능한지 여부는 `DeployableUnitState`에서 정보를 갖고 있도록 했다. 이는 `DeployableInfo`를 키로 접근이 가능한데, `IsDeployed`로만 박스의 표시 여부를 결정하게 수정했음
+	- `DeployableManager`에서 `DeployableBox`의 표시 여부`gameObject.SetActive()`를 결정시키는 대신, `DeployableBox.UpdateDisplay(DeployableUnitState unitState)`로 관련된 로직을 싹 다 옮겼다. 
+
 ### 250303
 
 #### 밸런싱 시작
