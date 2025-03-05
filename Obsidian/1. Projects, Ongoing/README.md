@@ -33,9 +33,163 @@
 
 ## 3월
 
+### 250306
+#### 어제 못 끝낸 일
+- [ ] 스테이지 클리어 실패했는데도 `StageResultPanel`에 보상이 나타나는 문제
+- [ ] 뱅가드 스킬 - 코스트 회복 파티클 : 우측 하단에 너무 가까울 경우, 생존 시간이 남아있기 때문인지 파괴됨에도 다시 생성되는 문제
+- [ ] ItemUIElement 관련 수정 : 화면 끝을 벗어날 것으로 예상되는 경우, 왼쪽에 디테일 패널 표시하기
+
 ### 250305
 #### 어제 못 끝낸 일
-- [ ]  `DeployableActionUI`의 SP 상태에 따른 스킬 버튼, SP 수치 표시 등 컨트롤하기
+- [x]  `DeployableActionUI`의 SP 상태에 따른 스킬 버튼, SP 수치 표시 등 컨트롤하기
+	- 색상 관리도 `ResourceManager`로 빼뒀다. 
+		- 예를 들면 SP 게이지에 사용됐던 스킬 사용 중일 때의 색과, 스킬을 사용하지 않는 상태의 색은 `SkillButton` 위에서도 똑같은 색을 사용해야 함 - 같은 상황에서의 게이지의 색을 표시하는 것이기 때문
+
+#### 오류 수정
+
+##### 겹치는 요소 중복 클릭 문제
+-  이전과 비슷한 문제 : `DeployableActionUI`의 버튼들과 `Operator`가 겹쳐졌을 때, 버튼 클릭 -> Operator 클릭 동작이 동시에 이뤄지는 문제
+	- 저번에 수정한 내용으로, `DeployableActionUI`의 다이아몬드(클릭해도 동작하지 않음)가 `Operator`의 클릭을 빼앗아가는 현상이 있어서 넣은 코드가 있었는데, 얘가 문제를 일으키고 있는 것으로 보임
+	- `Button`의 동작은 `EventSystem, GraphicRaycaster`로 동작되는데, 이게 `ClickDetctionSystem`에서 **레이캐스트를 쏘는 로직과는 별도로 동작함.** 따라서, 1번의 클릭만으로 2개의 병렬적인 레이캐스트가 수행되게 되는 것이다.
+	- **이상한 현상이 있다.**
+		- 일단 레이캐스트 자체는 `RaycastAll`을 쓰고 있기 때문에, 해당 포인터 위치에 있는 **모든** 요소를 가져오는 방식임
+		1. 게임 진행 중에 스킬 버튼의 위치를 클릭하면, 레이캐스트에서 감지 못함
+		2. **게임이 끝난 상황**에서 `DeployableActionUI`가 떠 있을 때 스킬 버튼의 위치를 클릭하면 **레이캐스트에서 감지**함(???)
+
+- 위 이슈 테스트
+1. 일단 스테이지 진행 중일 때의 `DeployableActionUI`의  `Canvas, GraphicRaycaster`을 보면
+	- 스테이지 진행 중
+		- `Layer : UI_WorldSpace`
+		- `Canvas`
+			- `World Space`
+			- `EventCamera : Main`
+			- `Sorting Layer : Default`
+			- `Order in Layer : 1`
+			- `Additional Shader Channels : TexCoord1, Normal, Tangent`
+			- `Vertex Color Always ...` : 체크 해제
+		- `Graphic Raycaster`
+			- `Ignore Reversed Graphics` : `true`
+			- `Blocking Objects` : `None`
+			- `Blocking Mask` :  `everything`
+	- 스테이지 진행 후 비교
+		- 별 차이 없음
+2. 버튼 위에 다른 `Screen Overlay` 패널이 씌워진 상태에서 버튼의 위치 클릭
+	- 버튼 위에 다른 패널이 없을 때 클릭 : 레이캐스트에 나타나지 않음
+	- 버튼 위에 다른 패널이 있을 때 클릭 : 레이캐스트에 나타남
+	- 저녁 먹고 왔다. 머리를 식히고 오니 약간 이런 현상이 의심스럽다
+		- 패널이 있을 때 클릭한다 = 해당 버튼의 동작이 이뤄지지 않는다
+		- 패널이 없는 상태에서 버튼 위치를 클릭했을 때, 버튼이 동작하든 하지 않든 `DeployableActionUI`가 사라진다. 
+		- 그러면 **`DeployableActionUI`가 사라지기 전에 버튼의 동작이 실행되고, `DeployableActionUI`가 사라진 다음에 레이캐스트 점검 로직이 실행되는 게 아닐까?**
+	- 실제로 `DeployableActionUI`의 버튼 동작과, `ClickDetectionSystem`의 동작을 로깅해보면 아래처럼 나타났다.
+```cs
+1. Button의 클릭 동작 수행
+2. Button이 클릭됐을 때, Hide() 메서드에 의해 DeployableActionUI가 파괴됨
+3. ClickDetctionSystem의 동작이 수행됨
+4. 결과적으로 Button이 사라진 상태에서 ClickDetectionSystem의 동작이 이뤄지게 되고, Button의 레이캐스트가 이뤄지지 않음
+```
+> 위의 추측이 맞는 것 같음.
+> 그렇다면 버튼에 이뤄지는 레이캐스트가 먼저 이뤄지고, 그 다음에 `ClickDetctionSystem`의 클릭 처리 동작이 작동하는 것으로 보인다. 이걸 어떻게 관리하는지가 중요하겠음.
+
+- 이런 스크립트를 `ClickDetectionSystem`에 만들었는데, 가장 위의 로그도 나타나지 않음. 왜인지는 몰라도 제대로 동작하지 않는 듯.
+```cs
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Debug.Log("OnPointerClick 동작");
+        // 클릭된 위치의 가장 위에 있는 UI 요소를 반환함
+        GameObject clickedObject = EventSystem.current.currentSelectedGameObject;
+
+        Debug.Log($"{clickedObject.name}");
+
+        if (clickedObject != null)
+        {
+            Button button = clickedObject.GetComponent<Button>();
+            if (button != null)
+            {
+                DeployableActionUI actionUi = clickedObject.GetComponentInParent<DeployableActionUI>();
+                if (actionUi != null)
+                {
+                    uiClickHandled = true;
+                    return;
+                }
+            }
+        }
+    }
+```
+
+- 그래서 좀 지저분한 해결 방식이기는 한데, `DeployableActionUI`의 버튼 클릭 동작 실행 -> `ClickDetctionSystem`의 상태 변경 -> 이를 감지해서 `HandleClick`이 동작하지 않게 하겠음
+```cs
+// ClickDetectionSystem.cs
+    // 이미 실행된 UI가 있는 경우, 이 스크립트가 동작하지 않아도 되게 함
+    public bool buttonClickedThisFrame = false;
+    private bool shouldSkipHandleClick = false;
+
+	// ...
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            HandleMouseDown();
+            shouldSkipHandleClick = false; // 매 프레임 초기화
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            // UI 클릭이 없었을 때에만 HandleClick 동작
+            if (!shouldSkipHandleClick)
+            {
+                HandleClick();
+            }
+
+            // 다음 프레임을 위한 초기화
+            buttonClickedThisFrame = false;
+            shouldSkipHandleClick = false;
+        }
+    }
+
+// DeployableActionUI.cs
+    private void OnSkillButtonClicked()
+    {
+        if (deployable is Operator op)
+        {
+            if (op.CurrentSkill.autoActivate == false)
+            {
+                op.UseSkill();
+                UpdateSkillButton();
+            }
+            ClickDetectionSystem.Instance.OnButtonClicked();
+            Hide();
+        }
+    }
+
+    private void OnRetreatButtonClicked()
+    {
+        deployable.Retreat();
+        ClickDetectionSystem.Instance.OnButtonClicked();
+        Hide();
+    }
+```
+> 스킬 버튼을 클릭했음에도 카메라가 원래 위치로 돌아가지 않음 : 이건 `Hide` 메서드만 수정하면 될 듯
+
+일단 `deployableActionUI`의 어떤 버튼을 클릭했을 때, 그 버튼 밑에 가려진 다른 요소들이 함께 클릭되는 현상은 해결했음. 다른 버튼들에도 구현...하는 게 좋겠지만 크게 필요는 없을 듯. 버튼이 사라지는 경우가 그렇게 많지 않아서..
+
+
+
+
+
+#### 오늘 해결 안된 문제
+- [ ] 스테이지 클리어 실패했는데도 `StageResultPanel`에 보상이 나타나는 문제
+- [ ] 뱅가드 스킬 - 코스트 회복 파티클 : 우측 하단에 너무 가까울 경우, 생존 시간이 남아있기 때문인지 파괴됨에도 다시 생성되는 문제
+- [ ] ItemUIElement 관련 수정
+1. `ItemDetailArea`(설명문 부분) - 너비는 일정하게, 높이는 `Detail` 스크립트에 비례하게 수정하기
+	- 아 근데 이거 `ScrollRect`라서 그냥 높이를 수정하는 방법이 훨씬 나을 듯.
+2. `ItemDetailPanel`(클릭시 나타나는 아이템의 자세한 내용 패널)
+	- 아이템이 나타나는 위치에 따라, 이 디테일 패널이 잘릴 우려가 있음
+	- 이 패널의 가장 오른쪽이 스크린의 가장 오른쪽을 초과하면 왼쪽에 나타나도록 구현하기
+
+> 지식이 늘었다
+> - `rectTransform.position`과 `rectTransform.anchoredPosition`
+> - 전자는 월드 기준, 후자는 로컬 기준임
+> - 보통 로컬로 쓸 상황이 많은 듯?
 
 ### 250304
 
