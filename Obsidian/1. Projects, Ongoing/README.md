@@ -33,20 +33,89 @@
 
 ## 3월
 
-### 250306
-#### 어제 못 끝낸 일
-- [ ] 스테이지 클리어 실패했는데도 `StageResultPanel`에 보상이 나타나는 문제
-- [ ] 뱅가드 스킬 - 코스트 회복 파티클 : 우측 하단에 너무 가까울 경우, 생존 시간이 남아있기 때문인지 파괴됨에도 다시 생성되는 문제
-- [ ] ItemUIElement 관련 수정 : 화면 끝을 벗어날 것으로 예상되는 경우, 왼쪽에 디테일 패널 표시하기
+### 250307
 
+#### 어제 몬한 것
+- [ ] 뱅가드 스킬 - 코스트 회복 파티클 : 우측 하단에 너무 가까울 경우, 생존 시간이 남아있기 때문인지 파괴됨에도 다시 생성되는 문제
+
+### 250306
+#### 수정 사항
+- [x] 스테이지 클리어 실패했는데도 `StageResultPanel`에 보상이 나타나는 문제
+	- 클리어했을 때 잘 나타남
+	- 클리어하고 다시 시도해서 실패했을 때 안 나타남
+	- 그냥 실패했을 때 안 나타남
+- [x] ItemUIElement 관련 수정 1 - 아이템의 우측에 표시되는 `ItemDetailPanel`의 오른쪽 끝이 화면에서 벗어날 경우, 화면의 왼쪽에 나타나게 하기
+	- 이런 메서드를 자세하게 몰라서 AI한테 물어볼 때는, 메서드가 어떻게 동작하는지에 대해서만 알고 직접 만지는 게 훨씬 좋아보인다.
+		- 예를 들면 (현재는 Gemini 2.0 Pro를 사용 중) 이거 수정할 때 캔버스의 월드 좌표, 스크린 좌표 등등의 개념을 말하면서 코드를 던져주고 이를 기반으로 수정했지만, 실제로 적용해보면 `ItemUIElement`을 기준으로 좌-우 전환을 하는 게 아니라 패널이 어디로 튀어나가 있음
+		- 근데 단순히 `GetWorldCorners` 메서드를 캔버스와 패널에 적용하고, 오른쪽에 있는 `2`번이나 `3`번의 `x`좌표를 얻어서 비교하는 것만으로도 충분했음
+```cs
+    // 디테일 패널이 화면에서 잘리는 경우 패널을 왼쪽으로 띄우는 메서드
+    private void AdjustDetailPanel()
+    {
+        // 월드 좌표를 쓰는 이유 : 캔버스 내의 절대적인 위치 개념임. 스크린 좌표는 해상도에 따라 값이 달라질 수 있다.
+
+        // detailPanel의 월드 좌표의 우측 가장자리 계산
+        Vector3[] detailPanelCorners = new Vector3[4];
+        detailPanelRectTransform.GetWorldCorners(detailPanelCorners);
+        float detailPanelRightEdgeWorldX = detailPanelCorners[2].x; // 우측 상단 코너의 x좌표
+
+        // 캔버스의 월드 좌표에서의 우측 가장자리 계산
+        Vector3[] canvasCorners = new Vector3[4];
+        canvasRectTransform.GetWorldCorners(canvasCorners);
+        float canvasRightEdgeWorldX = canvasCorners[2].x; // 캔버스 우측 상단의 x좌표
+
+        // 디테일 패널의 오른쪽 변이 화면에서 벗어나는 경우, 왼쪽으로 디테일 패널을 옮김
+        if (detailPanelRightEdgeWorldX > canvasRightEdgeWorldX)
+        {
+            Debug.Log("detailPanelRightEdge가 canvasWidth보다 크다");
+            SetDetailPanelLeft();
+        }
+        else // 좌측으로 넘어가지 않더라도 detailPanel의 위치를 잡아준다
+        {
+            SetDetailPanelRight();
+        }
+
+        // 실시간으로 위치를 변화시킬 게 아니라서 이 정도로만 구현함
+    }
+```
+
+- [x] ItemUIElement 관련 수정 2 - `BackArea` : 기존에는 `3000, 2000`의 너비, 높이를 갖는 이미지가 패널이 나타날 때 패널 뒤를 가리는 역할을 했는데, 이게 나타나는 위치에 따라 화면을 온전히 가리지 못함
+	- UI 상에서 구현하고자 한다면 Canvas의 자식 오브젝트로 관리하는 게 최선이기는 한데, 얘는 렌더링 순서를 고려해야 함
+	- 위 문제를 해결하면서 `ItemUIElement`가 이제 `Canvas`를 참조하도록 변경했으니, 여기서도 `BackArea`가 나타날 때 캔버스의 너비와 높이를 모두 활용하는 방식으로 수정함
+```cs
+        Rect canvasRect = canvasRectTransform.rect;
+        RectTransform backAreaRectTransform = detailBackArea.GetComponent<RectTransform>();
+		Debug.Log($"{canvasRect.position}");
+        backAreaRectTransform.position = -canvasRect.position;
+        backAreaRectTransform.sizeDelta = new Vector2(canvasRect.width, canvasRect.height);
+```
+> 특이한 현상으로, `canvasRect.position`이 `960, 540`이 아니라 `-960, -540`으로 잡히고 있다. 왜 그런지 모르겠음. 일단 임시방편으로 저렇게 달아놓음.
+
+- [x] ItemUIElement 관련 수정 3 - `BackArea`가 나타날 때, `ItemUIElement`의 일부 요소도 패널에 뒤덮이는 현상이 있음
+	- `ItemUIElement`에 `Image`가 들어가 있는 경우, 자식 오브젝트인 `BackArea`가 더 위에 렌더링되기 때문으로 보인다. Image 부분을 분리해서 자식 오브젝트로 옮겨놓음.
+	- `BackArea`의 경우는 아예 `ItemUIElement`의 바로 자식으로 오게끔 수정한다.
+```
+ItemUIElement
+- BackArea
+- ItemDetailPanel
+	- 구성 요소..
+```
+> 기존엔 `BackArea`가 `ItemDetailPanel`의 자식에 있었는데, 이 경우 `BackArea`가 디테일 부분도 어둡게 덮는 현상이 있었음. 
+
+- [x] Enemy 충돌 크기 조정
+```
+ㅁ ㅁ O
+X ㅁ
+```
+- 지금 O에 있는 오퍼레이터가 공격범위 1칸인데도 X에 있는 적을 공격할 수 있음 : 콜라이더가 너무 크기 때문인 듯?
+- 캡슐 모델의 스케일이 `0.25, 0.25, 0.25`임. 이거에 맞추면 되는데, 대신 `y`값의 경우는 타일과의 콜라이더 계산도 들어가고 있기 때문에, 콜라이더의 사이즈를 `0.25, 1, 0.25` 정도로 맞추면 될 것 같다.
+- 오퍼레이터의 콜라이더도 생각을 해봐야 하겠는데, `0.8, 1, 0.8`이다. 콜라이더로 저지나 공격 로직을 바꿨던 이유가 **두 타일에 걸친 상태**를 구현하기 위함이었는데, 이렇게 해도 크게 상관은 없지 않을까 싶음.
+- 테스트해보니 이 정도면 괜찮은 것 같다. 
 ### 250305
-#### 어제 못 끝낸 일
+#### 수정 사항
 - [x]  `DeployableActionUI`의 SP 상태에 따른 스킬 버튼, SP 수치 표시 등 컨트롤하기
 	- 색상 관리도 `ResourceManager`로 빼뒀다. 
 		- 예를 들면 SP 게이지에 사용됐던 스킬 사용 중일 때의 색과, 스킬을 사용하지 않는 상태의 색은 `SkillButton` 위에서도 똑같은 색을 사용해야 함 - 같은 상황에서의 게이지의 색을 표시하는 것이기 때문
-
-#### 오류 수정
-
 ##### 겹치는 요소 중복 클릭 문제
 -  이전과 비슷한 문제 : `DeployableActionUI`의 버튼들과 `Operator`가 겹쳐졌을 때, 버튼 클릭 -> Operator 클릭 동작이 동시에 이뤄지는 문제
 	- 저번에 수정한 내용으로, `DeployableActionUI`의 다이아몬드(클릭해도 동작하지 않음)가 `Operator`의 클릭을 빼앗아가는 현상이 있어서 넣은 코드가 있었는데, 얘가 문제를 일으키고 있는 것으로 보임
