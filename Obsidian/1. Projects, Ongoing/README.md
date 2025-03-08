@@ -33,6 +33,82 @@
 
 ## 3월
 
+## 250308-250309 새벽
+> 코파일럿 프로 사용 시작. 강력하다.
+### 짭명방
+
+#### 약 7~800개 nullable 경고문 해결하기
+- 유니티의 버전을 업그레이드하면서, 원래는 나타나지 않았던 경고문인 `nullable`과 관련된 경고문들이 700~800개 정도 나타나기 시작했다.
+- 어제부터 계속 헤매고 있는데, 일단은 이런 스크립트를 하나 만들어둠.
+```cs
+
+public static class InstanceValidator
+{
+    // [return: NotNull]
+    public static T ValidateInstance<T>(T? instance)
+    {
+        if (instance == null)
+        {
+            throw new InvalidOperationException($"{nameof(instance)}가 null임");
+        }
+
+	// return instance;
+    }
+}
+```
+> 최종
+> 1. 어떤 변수가 `null`인지를 체크하는 메서드가 여러 스크립트에서 반복적으로 쓰이므로 그러한 부분들을 이 메서드로 처리
+> 2. 이 메서드로 처리된 변수는 이후의 스크립트에서 `!`을 추가, `null` 경고를 무시
+> 3. 싱글턴 오브젝트의 `Instance`는 이걸로 처리하지 않고, `Awake`에서 전역적인 유일성이 보존되므로 단순히 `Instance!`으로 사용
+> 4. `null`이어도 되는 경우들이 있음 : 그런 경우에는 이 메서드를 사용하지 않고 `null` 체크만으로 충분
+##### 수정 내역
+- `ValidateInstance`는 `nullable`인 인풋을 받아서, 아웃풋으로 `null`이 아님을 이 변수를 사용하는 외부 메서드에 알리는 역할을 한다
+-  비슷한 처리가 많아서 아예 `utils/InstanceValidator`로 빼뒀다.
+- `return: NotNull` : 단, 어떤 메서드에서 `null` 체크를 직접 할 때는 `CS` 경고문이 없어지지만, 이렇게 구성하는 경우 `nullable` 경고가 다시 뜬다. 그래서 이 함수에서 반환시키도록 하고 `null`이 아님을 외부에 알리도록 함.
+- 싱글턴을 사용하는 경우가 애매했는데, `Awake`에서 초기화하는 것을 보장할 수만 있다면(일반적으로는 그렇다고 봐야 하므로) **`Instance`를 사용하는 부분에 `!`을 붙여서 `nullable` 경고문을 무시시킨다. 그 경우는 이 메서드를 사용하지 않음.**
+- 주석 추가) `return`을 추가할 경우 이 메서드를 어떻게 활용할지가 애매해지는 부분들이 생긴다. 그냥 `null` 체크를 여기서 하고, `null` 체크가 된 부분은 `!`을 붙이는 식으로 넘어가겠음.
+
+> 어제 하나하나 수정할 때는 '언제 다 수정하냐'였다. `nullable`로 지정하니까 수십 개가 더 생기는 방식. **하지만 대부분의 경고문은 `ScriptableObject`에 있는 필드들에 `nullable`을 달아주니까 사라졌다.**
+> 사실 `nullable` 자체는 사용해야 하는 게 맞기는 하다. 지금까지는 모호하게 코드를 작성해 온 면이 있는 것 같음.
+> 는 아래 오류를 처리하니까 다시 750개. ㅋㅋㅋㅋㅋㅋ
+
+#### 계속 진행 - nullable이면 안되는 필드 관리
+- **`nullable`이면 안되는 필드에 대해**
+	- 예를 들면 어떤 엔티티의 이름이라든가? 추후에 인스펙터에서 할당할 요소지만 당장 넣지 못할 요소 같은 게 생길 수 있음
+	- **처음에는 '`nullable`로 선언하라는 걸 고려해봐라'라는 경고문의 메시지를 보고 그렇게 수정했는데, 생각해보면 해당 요소들이 `null`인 걸 가정하는 것 자체가 이상함.** `null`인 순간이 있기야 하겠지만, 추후에 할당을 할 예정이기 때문임
+```cs
+    public GameObject deployablePrefab;
+    public GameObject deployablePrefab = default!;
+```
+- 그럴 때 사용할 수 있는게 `default`이다. **추후에 인스펙터 등에서 정상적으로 할당될 것임을 컴파일러에게 알리는 역할을 한다.**  여기에 `!`을 붙여서, `default`로 할당하더라도 똑같이 `null`이 들어가지만, 경고문을 무시하게 만듦.
+- 값의 경우에는 `0, string.Empty, false` 등등을 기본값으로 사용함
+
+> - 이게 지금 정리를 해둬도 적용되지 않는 게 더 좋을 상황도 종종 있어서 함부로 정리하기가 그렇다.
+> - 날 바뀜. 오전 12시 49분. 대부분이 패널에서 `default!`로 할당하거나, `Instance!`로 넘길 수 있거나 이슈이긴 했다. 그래도 아직 100개 넘게 남아 있음.
+> - 새벽 2시 36분. 다 없앴다. 물론 이게 잘 동작하느냐는 또 별개이기는 하지만.. 그래도 다 없앴다. 그런데 뭐 때문인지는 몰라도 **프로젝트 자체가 전반적으로 무거워진 느낌**임. 컴파일이 오래 걸린다는 느낌? null 체크 때문일까? 어쨌든 일단 덮어둔다.
+
+
+
+### 업데이트 전부터 떴으나 무시해온 오류 처리
+```cs
+The same field name is serialized multiple times in the class or its parent class. This is not supported: Base(Operator) <BaseData>k__BackingField
+
+The same field name is serialized multiple times in the class or its parent class. This is not supported: Base(Operator) currentStats
+
+The same field name is serialized multiple times in the class or its parent class. This is not supported: Base(MedicOperator) <BaseData>k__BackingField
+
+The same field name is serialized multiple times in the class or its parent class. This is not supported: Base(MedicOperator) currentStats
+
+The same field name is serialized multiple times in the class or its parent class. This is not supported: Base(Barricade) <CanDeployGround>k__BackingField
+
+The same field name is serialized multiple times in the class or its parent class. This is not supported: Base(Barricade) <CanDeployHill>k__BackingField
+```
+
+- 유닛들의 상속 구조를 만들면서, 근간이 되는 `ScriptableObject`를 모두 **`BaseData`라는 프로퍼티 이름으로 사용**했기 때문인 것 같다.
+- `new`를 붙이더라도 부모의 `BaseData`와 자식의 `BaseData`가 같은 이름의 백업 필드를 중복해서 직렬화하려고 하기 때문에 발생하는 현상임. 다른 것들도 마찬가지일 듯.
+- **근데 이거 수정하니까 다시 `nullable` 경고문이 700개 추가됨. ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ** 다시 돌아간다.
+
+
 ## 250307
 
 ### 짭명방
@@ -49,8 +125,6 @@
 - `nullable` 필드들과 관련, 코드 패턴을 정리해두는 게 좋겠다.
 1. `SerializeField` 자체는 `Nullable` 필드가 맞다고 본다. : 인스펙터에서 까먹고 할당하지 않을 수 있으니까.
 2. `SerializeField`를 사용하는 상황은 보통 `private`인데, 이게 `null`이 아님을 보장할 수 있는 상황이라면 이를 이용하는 프로퍼티는 `Nullable` 필드로 선언하지 않아도 될 것 같다.
-
-
 
 #### 시스템 추가 구현
 - 오퍼레이터가 퇴각한 적이 있다면, 배치코스트는 최초 배치코스트의 50%씩 올라가는 시스템 구현하기
