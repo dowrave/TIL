@@ -50,6 +50,74 @@
 
 ## 3월
 
+## 250316 - 짭명방
+
+### 튜토리얼 만들기 - 스테이지
+
+- 스테이지 진입
+	- 코스트 상승 안내
+	- 뱅가드 배치 코스트에 도달 시 배치 조작 안내
+		- 뱅가드 먼저 배치하는 이유) 코스트 수급
+		- 하단 패널 클릭
+		- 왼쪽 안내 패널에 대한 안내
+		- 드래그해서 특정 타일에 놓게 하기
+		- 배치된 오퍼레이터를 클릭한 뒤 퇴각 / 스킬 버튼 안내
+			- 스킬 SP 버튼도 안내
+
+- 씬 전환에 따른 튜토리얼 시작 타이밍 설정
+	- 이거 교통 정리만 해도 복잡하다.
+	- 기존 구현은 곧바로 다음 튜토리얼을 실행시키는 방식이었는데, 대신 **각 `TutorialData`가 종료될 때 `PlayerDataManager`에 튜토리얼 진행 상태를 저장**하고, **씬 전환 & 튜토리얼이 시작되기를 원하는 타이밍에 특정 튜토리얼을 실행시키는 방식으로 변경**함.
+
+- 튜토리얼 중 재실행 등의 상황이 있을 때를 대비, `TutorialProgress`를 `PlayerData`에 저장하고, 씬이 로드될 때마다 점검한다.
+
+- 2번째 `PlayerDataManager` 실행할 때 스택 오버플로우가 나고 있다.
+	- ?? 상호 참조도 아닌데 왜 나는 건지 모르겠음.
+	- 아 ㅋㅋㅋㅋㅋㅋ `GameManagement`에 `TutorialManager` 프로퍼티가 `TutorialManager => TutorialManager!`로 되어 있었다. `tutorialManager!`로 수정.
+
+- 일단 `StageScene`에 진입한 다음 2번째 `TutorialData`가 실행되는 것까지 완료.
+
+#### 분기 생각
+>1. `Vanguard` 배치만 안내하고 이후는 대기?
+>2. 편성된 오퍼레이터를 모두 배치하게 한다?
+
+- 이런 것들보다 더 중요한 게 **튜토리얼 스테이지 패배 시의 분기 처리**라고 보는데, 단순하게 접근하면
+	- 마지막 로비로 돌아왔을 때의 `TutorialData`는 `Stage1-0`이 클리어됐는지를 점검(3성이 아니어도 무관), 클리어됐을 때에만 이후 튜토리얼이 진행되게 한다
+
+### 이상한 버그
+ - [x] 여러 번 클릭했을 때 글자가 깨지면서 다음 스텝도 진행되는 듯 현상이 있음. 그래서 글자가 막 깨지는 것처럼 보인다. 
+	 - 예상 후보) `Dialogues`의 수가 2개 이상인 경우 / `Require User Action` 체크 여부 / `Expected Button Name` 여부
+	 - **`Expected Button Name`이 `string.Empty`일 때에만 광클했을 때 여러 대화 코루틴이 동시에 실행되는 현상이 있었음.**
+```cs
+    // 클릭 시 동작
+    public void OnClick()
+    {
+        // 글자가 나타나는 중 : 현재 페이지의 글자를 모두 보여준다
+        if (isTyping)
+        {
+            if (typingCoroutine != null)
+            {
+                StopCoroutine(typingCoroutine);
+                typingCoroutine = null;
+            }
+
+            textComponent.text = fullText;
+            isTyping = false;
+            OnCurrentPageFinish();
+            return; // 타이핑 중일 때 클릭해도 다음 대화로 넘어가지 않게끔 함
+        }
+
+        // 다음 페이지로 넘어갈 수 있음 : 다음 페이지로 넘어간다
+        if (CanMoveToNextPage)
+        {
+            currentPageIndex++;
+            typingCoroutine = StartCoroutine(TypeText());
+            return;
+        }
+    }
+```
+> 1. 동작 중인 `typingCoroutine`을 종료하는 걸 우선하고 나머지 조작을 수행할 것
+> 2. 다음 페이지로 넘어갈 때 `typingCoroutine`을 설정하지 않았던 이슈도 있었다.
+
 ## 250314
 
 ### 짭명방
