@@ -50,6 +50,70 @@
 
 ## 3월
 
+## 250317 - 짭명방
+
+### 튜토리얼 만들기
+- 오늘은 본격적으로 스테이지 씬에서의 튜토리얼을 만들 예정
+
+- 튜토리얼 시작(DialogueBox) 시 시간이 멈춰야 함  -> 아래의 타임 매니저 구현으로 이동
+
+- 구현 완료. 근데 TimeScale을 0으로 하면 텍스트가 출력되지 않는 듯. 
+	- 기존의 `Ienumerator` 들을 전부 `WaitForSecondsRealTime`으로 바꾸되, 시간을 멈추는 건 스테이지 씬에서만 동작시킨다.
+
+- 어떻게 `DeployableBox`의 동작을 튜토리얼과 연결시킬 것인가가 고민됨. 
+	- 일단 `Step` 단위로 `TutorialManager`에서 체크를 하고 있기는 하다. (저장은 `TutorialData` 파일 단위긴 한데)
+
+- 그냥 **단순하게 안내만 하고, 스테이지를 클리어하면 다음 튜토리얼로 넘어가는 방식으로 진행하겠음**
+	- 다른 요소들을 어떻게 처리해야 할지 감이 안 잡혀서, 텍스트로 안내하는 방식으로 진행함.
+
+#### TutorialPanel.TypeText :  리치 텍스트 처리
+- `<color=#ff7485>라이프 포인트</color>`
+	- 지금의 구현에서 위 글자 처리는 일일이 다 적음 -> 색이 적용됨 같은 방식으로 구현된다. 이걸 색이 적용된 상태로 라 이 프 포 인 트 같이 나타나게 하고 싶음.
+
+- 아래처럼 구현. 단순히 **리치 텍스트의 문법이 나타나면 텍스트가 한꺼번에 들어가는 방식**이다. 꺾쇠는 쓸 일이 없을 것 같아서 이렇게 구현함.
+```cs
+// TypeText의 일부로, 아래처럼 수정했다.
+// 1. TypeText를 인덱스 기반으로 동작하게 바꿈
+// 2. 리치 텍스트 태그에 쓰이는 <을 만나면, >까지는 한꺼번에 입력되는 방식
+int index = 0;
+while (index < fullText.Length)
+{
+	// 만약 현재 문자가 '<'이면 태그 시작 -> '>'까지 전체를 한 번에 추가
+	if (fullText[index] == '<')
+	{
+		int tagEndIndex = fullText.IndexOf('>', index);
+		if (tagEndIndex != -1)
+		{
+			string tag = fullText.Substring(index, tagEndIndex - index + 1);
+			currentText += tag;
+			textComponent.text = currentText;
+			index = tagEndIndex + 1;
+
+			yield return new WaitForSecondsRealtime(typingSpeed);
+			continue;
+		}
+	}
+	
+	// 그냥 글자 출력
+	currentText += fullText[index];
+	index++;
+	textComponent.text = currentText;
+	yield return new WaitForSecondsRealtime(typingSpeed);
+	
+}
+```
+
+### TimeManager 구현
+- 메인메뉴에서는 시간에 관한 매니저가 없었고(필요해 보이지도 않고), 스테이지에서는 StageManager에서 관리했음.
+- 그렇더라도 공통적으로 `TutorialManager`에서 시간을 관리하는 메서드를 호출할 필요는 있어서, `GameManagement`의 하위 오브젝트로 `TimeManager`를 새로 추가하고 시간 관리 로직을 옮김
+- `isSpeedUp`의 상태 관리 관련, 일시정지 / 재생 관련 메서드 수정 완료
+
+
+
+
+
+
+
 ## 250316 - 짭명방
 
 ### 튜토리얼 만들기 - 스테이지
