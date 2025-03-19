@@ -50,6 +50,74 @@
 
 ## 3월
 
+## 250319 - 짭명방
+
+### 튜토리얼 만들기
+- 오늘의 구현 내용
+	- 2번 튜토리얼 클리어 시 -> 메인 메뉴로 돌아가면 3번 튜토리얼 시작
+	- 2번 튜토리얼 실패 시 -> 메인 메뉴로 돌아가면 아무 것도 동작하지 않음, 다시 들어가서 클리어하고 메인 메뉴로 돌아가면 3번 튜토리얼 시작
+	- 메서드 지저분해진 거 수정
+
+
+- `TutorialManager`에서 `isTutorialActive` 필드 제거 : `Progress`을 체크하는 부분이 있기 때문에, 별도로 튜토리얼이 활성화되었는지 여부는 체크하지 않아도 될 것 같다.
+
+- 대신, 이런 상황이 발생할 수 있겠다
+	- 2번째 튜토리얼 : 스테이지 씬에서 전투를 승리(1성 이상)했을 경우, 로비로 돌아왔을 때 3번째 튜토리얼을 시작하게 하려고 함. 만약 실패했다면, 같은 스테이지를 다시 플레이하게 하되 튜토리얼은 나타나지 않게 하려고 한다
+	- 그러면 2번 튜토리얼을 실행한 적이 있는지 여부를 체크하는 필드를 하나 더 만들어야 할 것 같음. 
+
+- `PlayerData` 수정
+	- 기존에 진행한 스테이지를 `int`로 관리했는데, `enum` 필드를 추가하고, `Dictionary`를 이용해서 진행하는 튜토리얼 및 진행 상황을 저장함
+```cs
+    public enum TutorialStatus
+    {
+        NotStarted,
+        InProgress,
+        Failed,
+        Completed
+    }
+```
+
+#### JsonUtility, JsonConvert 관련
+
+> 여기서 주의할 점 : **유니티 자체로는 `Dictionary`의 직렬화가 불가능함.** 
+> `Newtonsoft.Json`을 임포트한 다음 아래처럼 쉽게 사용할 수 있다. 기본 설치가 되어 있는 듯?
+```cs
+//string jsonData = JsonUtility.ToJson(safePlayerData);
+
+// Dictionary 직렬화를 위한 Newtonsoft.Json 사용
+string jsonData = JsonConvert.SerializeObject(safePlayerData);
+```
+
+- 관련된 `PlayerData`의 메서드도 전부 수정.
+
+.. 했는데, `JsonConvert`에서는 이전에 발생한 적이 없던 오류가 발생하기 시작. 다시 `JsonUtility`로 돌리고, 그냥 인덱스를 튜토리얼 데이터에 대응시키고 값을 `enum`으로 받는 리스트로 구현함
+```cs
+public List<TutorialStatus> tutorialDataStatus = new List<TutorialStatus>();
+
+	// 튜토리얼 상태 초기화. 현재 TutorialData의 갯수는 3개. 
+	for (int i = 0; i < 3; i++)
+	{
+		playerData.tutorialDataStatus.Add(TutorialStatus.NotStarted);
+	}
+```
+
+#### 더러워진 코드 수정
+```cs
+    // 튜토리얼 상태를 설정하는 메서드
+    public void SetTutorialStatus(int tutorialIndex, TutorialStatus status)
+    {
+        playerData.tutorialDataStatus[tutorialIndex] = status;
+        SavePlayerData();
+    }
+
+    // 튜토리얼 상태를 확인하는 메서드
+    public bool IsTutorialStatus(int tutorialIndex, TutorialStatus status)
+    {
+        return playerData.tutorialDataStatus[tutorialIndex] == status;
+    }
+```
+> - 원래는 `status`마다 다 따로 메서드를 구현했었음.
+> - 얘가 `GameManagement.Instance.PlayerDataManager`에 있는 `enum` 타입이라서 실제로 쓸 때 더러워지는 문제는 있는 듯..ㅋㅋ;
 ## 250317 - 짭명방
 
 ### 튜토리얼 만들기
@@ -107,12 +175,6 @@ while (index < fullText.Length)
 - 메인메뉴에서는 시간에 관한 매니저가 없었고(필요해 보이지도 않고), 스테이지에서는 StageManager에서 관리했음.
 - 그렇더라도 공통적으로 `TutorialManager`에서 시간을 관리하는 메서드를 호출할 필요는 있어서, `GameManagement`의 하위 오브젝트로 `TimeManager`를 새로 추가하고 시간 관리 로직을 옮김
 - `isSpeedUp`의 상태 관리 관련, 일시정지 / 재생 관련 메서드 수정 완료
-
-
-
-
-
-
 
 ## 250316 - 짭명방
 
