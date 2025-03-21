@@ -37,6 +37,109 @@
 
 ## 3월
 
+## 250321 - 짭명방
+
+### 스테이지 제작, 보상 설정
+
+#### 보상 설정 생각하기
+- 우선 보상 설정부터 생각해보자
+
+- 아래 생각들이 있음
+```
+기본) 스테이지 클리어 시에 보상을 지급함
+
+생각 1) 1, 2, 3성 클리어 보상 시에 차등을 둬야 하는가?
+- 있어야 한다고 보는 게 맞음
+- 여기에 해당하는 얘기는 최초 클리어에 해당하는 
+
+
+생각 2) 반복 클리어 시에 보상을 지급해야 하는가?
+- 스테이지 진행이 막혔을 때 일종의 파밍 요소 개념으로 넣으려고 했음
+
+```
+- 그러면 **최초 클리어 시 보상 / 반복 보상을 따로 설정하고, 1, 2, 3성 클리어 각각 25, 50, 100%의 보상을 주는 방식으로 설계**하는 게 괜찮을 것 같음
+- 대리 지휘나 소탕을 구현하지 않을 것이므로 유저의 입장에서 반복 클리어가 귀찮고 번거로운 작업이 되겠다는 생각은 든다. 그렇다고 스태미너를 구현하지 않는데 저 두 개를 구현하는 것도 이상할 거 같고.
+
+#### 보상 설정 작업하기
+- 어떤 보상을 줄 것인가는 `StageData`에서 작업하면 되고, 스테이지를 어떻게 깼느냐에 따른 보상의 차등은 `StageManager`에서 하면 되겠다.
+- 보상이 되는 경험치권의 갯수는 4의 배수로 맞춰놓는 게 좋겠음.
+```cs
+// StageData.cs
+    public List<ItemWithCount> FirstClearRewardItems = new List<ItemWithCount>();
+    public List<ItemWithCount> RepeatClearRewardItems = new List<ItemWithCount>();
+```
+
+- 원래 생각은 최초 클리어 보상 / 반복 클리어 보상을 나눠서 지급하는 방식이었는데, 이렇게 하면 최초 1성 클리어 -> 반복해서 3성 클리어를 했으면 반복 보상을 주는 게 맞나? 안 주는 게 맞나? 가 애매해진다.
+- 그래서 `RepeatClearRewardItems`는 `BasicClearRewardItems`으로 바꿈. 즉, 반복 플레이 상황이든 최초 플레이 상황이든 상관없이 클리어 별 수에 따라서 아이템을 지급하는 방식이다. 이러면 상황이 복잡해지지 않음.
+- `PlayerDataManager` 아래의 메서드를 추가함. 일일이 적기는 애매하니까 이것만 달아놓음
+```cs
+    public void GrantStageRewards(StageData stageData, int stars)
+    {
+        var stageResultInfo = GetStageResultInfo(stageData.stageId);
+        List<ItemWithCount> firstClearRewards = stageData.FirstClearRewardItems;
+        List<ItemWithCount> basicClearRewards = stageData.BasicClearRewardItems;
+        float firstClearItemRate = CalculateFirstClearItemRate(stageResultInfo, stars);
+        float basicClearItemRate = CalculateBasicClearItemRate(stars);
+
+        if (firstClearRewards.Count == 0 || basicClearRewards.Count == 0)
+        {
+            Debug.LogWarning("지급받을 아이템 목록이 비어있습니다.");
+            return;
+        }
+
+        GrantItemsWithStarRate(firstClearRewards, firstClearItemRate);
+        GrantItemsWithStarRate(basicClearRewards, basicClearItemRate);
+
+        SavePlayerData();
+    }
+```
+`PlayerDataManager`가 너무 비대해지는 문제는 있는 것 같다.  얘도 벌써 700줄이 넘어갔음. 유저의 플레이 데이터에 저장하는 로직은 다 여기에 들어가 있는데, 분리를 해야하나?
+- 해야 될 것 같음. 플레이어 데이터에 저장하는 부분만 남기고, 보상을 계산하는 부분까지는 `StageManager`에 남겨야 할 것 같다. `RewardManager` 같은 걸 나중에 구현해도 되겠지만, 일단은 스테이지에서 계산하고 그 값을 UIManager와 PlayerDataManager에 넘기는 방식이 더 맞을 듯.
+- StageManager에 아래 필드를 추가하고 위의 내용들도 다 정리해뒀다.
+```cs
+    private List<ItemWithCount> actualFirstClearRewards;
+    public IReadOnlyList<ItemWithCount> ActualFirstClearRewards => actualFirstClearRewards;
+    private List<ItemWithCount> actualBasicClearRewards;
+    public IReadOnlyList<ItemWithCount> ActualBasicClearRewards => actualBasicClearRewards;
+```
+
+- 이를 PlayerDataManager에서는 이렇게 저장하고
+```cs
+    public void GrantStageRewards()
+    {
+        // IReadOnlyList 등은 제대로 직렬화되지 않을 수 있어서, List로 바꿔서 저장하는 게 안전하다.
+        List<ItemWithCount> firstClearRewards = new List<ItemWithCount>(StageManager.Instance!.ActualFirstClearRewards);
+        List<ItemWithCount> basicClearRewards = new List<ItemWithCount>(StageManager.Instance!.ActualBasicClearRewards);
+
+        GrantItems(firstClearRewards);
+        GrantItems(basicClearRewards);
+
+        SavePlayerData();
+    }
+```
+
+- `StageResultPanel`에서도 이렇게 보여준다
+```cs
+    // 스테이지 클리어로 받는 아이템들을 보여줌
+    private void ShowRewardItemsUI()
+    {
+        // 스테이지를 클리어하지 못했으면 동작 안 함
+        if (stars == 0) return;
+
+        RemoveRewardItemsUI();
+
+        ShowItemElements(StageManager.Instance!.ActualFirstClearRewards);
+        ShowItemElements(StageManager.Instance!.ActualBasicClearRewards);
+    }
+```
+
+- `StageData`에서 보상 설정하고 잘 작동하는지까지 점검하고 마무리함.
+	- 매우 잘 작동한다. 
+	- 좀 아쉬운 - `ItemUIElement`의 좌측 하단에 최초 보상일 경우는 최초 보상 표시가 있으면 좋겠다는 생각이 들어서, 그 부분만 추가하고 오늘 마무리함.
+
+
+
+
 ## 250320 - 짭명방
 
 ### 튜토리얼 만들기
