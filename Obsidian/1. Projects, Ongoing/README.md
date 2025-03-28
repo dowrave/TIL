@@ -19,11 +19,8 @@
 
 ### 작업 중 
 1. 스테이지 `1-1` 밸런싱 (이후 `1-2`, `1-3`)
-	- 필요 시 `EnemySpawner`에 들어가는 적들의 초기화는 별도의 데이터로 저장할 필요가 있다. 
-	- 현재는 프리팹 내부의 `EnemySpawner`에 들어가서 직접 수정해야 하다보니, 테스트 상황에서 함부로 건드리기 번거로운 면이 있다. 
-2. `StageResultPanel`의 `RewardItems` 영역의 스크롤 구현하기
-	- 왼쪽 끝은 기본 상태로 좋고, 스크롤의 마지막 영역은 `Content`의 마지막 내용물이 `Viewport`의 오른쪽 끝에 딱 걸리게 해야 함
-	- 인스펙터상에서 `Scroll Rect` 설정을 건드리는 방법은 다 먹히지 않았음. 스크립트 단위에서 설정해야 할 것 같다.
+2.  `OperatorDetailPanel`에서 스킬 선택이 되지 않는 현상 수정 필요
+
 ### 구현 예정
 
 ### 하고 싶은데 못할 듯
@@ -36,6 +33,62 @@
 
 
 ## 3월
+
+## 250328 - 짭명방
+
+### 스테이지 밸런싱
+
+### 정예화 패널 구현
+- 정예화 패널을 구현을,,, 했던가,,? 
+- 정예화 자체는 기능하지만, 정예화 결과인 사정거리 증가 표현, 스킬 설명은 구현되어 있지 않아서 이 부분을 추가함
+	- 초반엔 유동적인 레이아웃을 구성하려고 했는데, 스킬의 설명 분량이 많지는 않아서 고정된 길이로 사용함. UI가 들어가는 영역이 한정적이기도 하다.
+- 이것저것 만져보는 중이라 시간이 좀 걸림.
+
+
+### 이슈 수정
+- [x] `OperatorInventoryView`에 스테이지 클리어 후에 다시 들어갈 때 `NullReferenceException` 오류 발생
+	- 과정)
+		1. `OwnedOperator`의 공격 범위가 제대로 초기화되지 않는가? (X)
+		2. `attackRangeHelper`의 초기화가 제대로 되지 않는가? (O)
+			- `Start`에 있었고, 스테이지 씬에 갔다가 돌아왔을 때 Start에서 디버깅을 해봣는데 아예 동작하지 않은 듯?
+			- `Claude 3.7` 한테 물어보니까 - **최초에 비활성화된 요소가 활성화될 때의 동작 순서는 `Awake -> OnEnable -> Start` 순서**임. 
+				- `Start`는 1번째 `Update` 호출 직전에 호출된다. 
+				- `Awake`는
+					1) 오브젝트가 처음에 있었고 비활성화일 때 : Awake가 호출되지 않음
+					2) 인스턴스화되지만 바로 비활성화될 때 : Awake가 호출되고 비활성화됨
+			- 이는 씬이 전환되었다가 다시 돌아왔을 때에도 동일하다. 씬 전환 시, 이전 씬의 모든 게임 오브젝트는 파괴되기 때문이다. 다시 돌아왔을 때에는 새로운 게임 오브젝트를 만들어서 진행하므로, 위와 상황이 달라지지 않는다.
+			- `DontDestroyOnLoad` 혹은 `LoadSceneMode.Additive`로 씬을 로드한 경우는 상황이 달라짐
+	- 수정 방향)
+		- 위에서 말한 내용을 `Awake`, 혹은 `OnEnable`로 옮기면 된다.
+		- `Awake`로 넣음.
+
+
+
+
+- [x] `NotificationPanel`이 나타나야 할 상황일 때, 계속 클릭 시 패널이 계속 나타나는 현상을 수정하겠음
+	- 원래는 `Dictionary`를 만들어서 중복되는 메시지가 활성화된 경우에는 나타나게 하고 그렇지 않은 경우는 없애는 방식으로 구현하려고 했지만.. 그냥 쉽게 가는 게 좋겠다. 
+	- 수정) `NotificationPanel`이 나타날 때 쿨타임을 2초(총 2.6초 정도임)로 설정
+
+```cs
+    public DateTime LastNotificationTime { get; private set; }
+
+
+    public void ShowNotification(string message)
+    {
+        // 저번 알림 패널이 2초 내에 떴다면 아무 것도 활성화하지 않음
+        if (DateTime.Now - LastNotificationTime < TimeSpan.FromSeconds(2)) return;
+
+        if (notificationPanelPrefab != null && mainCanvas != null)
+        {
+            GameObject notificationObj = Instantiate(notificationPanelPrefab, mainCanvas.transform);
+            NotificationPanel notificationPanel = notificationObj.GetComponent<NotificationPanel>();
+            notificationPanel?.Initialize(message);
+
+            LastNotificationTime = DateTime.Now;
+        }
+    }
+```
+> 유니티에서 시간을 시간 타입으로 다룬 건 놀랍게도 처음이다.
 
 ## 250327 - 짭명방
 
