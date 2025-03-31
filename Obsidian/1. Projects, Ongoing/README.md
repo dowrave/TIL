@@ -19,8 +19,7 @@
 
 ### 작업 중 
 1. 스테이지 `1-1` 밸런싱 (이후 `1-2`, `1-3`)
-2.  `OperatorDetailPanel`에서 스킬 선택이 되지 않는 현상 수정 필요
-
+- **스테이지 완성, 보상 설정, 보스 추가** 등으로 게임을 완성하는 게 젤 중요함!! 다른 건 다 부차적인 요소!
 ### 구현 예정
 
 ### 하고 싶은데 못할 듯
@@ -30,9 +29,97 @@
 	- 직접 하려면 배워서 할 수는 있겠지만 시간이 문제겠다. 
 - 도전과제 구현
 	- 예를 들면 1-1에서 바리케이드만 이용해서 스테이지를 클리어하기 같은 게 있겠다 (= 오퍼레이터를 배치하지 않고 스테이지 클리어하기)
+- 인게임 / 다른 패널에서 스킬 범위 보여주기 
+	- 일관성 때문에 다른 곳에서도 구현을 해보고는 싶은데, 드는 품을 생각하면 미뤄도 될 것 같음. 
+
+
+## 4월
 
 
 ## 3월
+
+## 250331 - 짭명방
+
+### 정예화 패널
+- 스킬 범위가 있는 경우, 정예화 시 해금되는 스킬 아이콘 아래에 스킬 범위 표시 추가
+- 구조 변경) 스킬의 범위를 나타내는 필드의 위치를 공통적으로 설정(현재는 `AreaEffectSkill` 및 `SlashSkill`에 있다.) + 스킬 범위를 나타내는 기준이 오퍼레이터인지 적인지도 구분하는 필드도 추가
+
+- 결과와 수정)
+![[Pasted image 20250331153458.png]]
+뱅가드를 보자마자 한번에 말끔하게 들어가서 만족스러웠지만 
+
+![[Pasted image 20250331153534.png]]
+1. `SlashSkill`처럼 한쪽으로만 치우친 경우 - 중심 위치에 대한 개선이 필요해 보임
+	- 스킬마다 `UIOffset`을 따로 설정하는 방식으로 정했다
+	- 가로 그리드 수를 계산해서 오프셋을 잡는 방법도 있겠는데, 이게 꼭 UI마다 일치하리라는 보장이 없음.
+	- 초기화하는 지점이 `Helper`가 잡는 지점이 있고 스킬이 들어가면서 설정되는 지점이 있어서 스크립트로 자동으로 제어하는 방법은 조금 애매한 것 같다.
+
+- 수정) `ActiveSkill`에 `RectOffset` 필드를 추가하고 `UIHelper`에서 이를 반영하는 방식.
+![[Pasted image 20250331192435.png]]
+> `SlashSkill` 같은 경우는 `-40`으로 줬음
+
+
+2. `ArcaneFieldSkill`처럼 스킬이 발현되는 위치가 오퍼레이터의 위치가 아닌 경우, 노란색이 아닌 다른 색을 부여하고 싶다. 
+- 수정) `CreateCenterTile`을 `UIHelper`에서 별도로 구현하고 있어서, 이 부분에 색을 할당하는 것만 추가.
+![[Pasted image 20250331182611.png]]
+
+### OperatorDetailPanel - 스킬 선택되지 않는 현상
+```cs
+    private void UpdateSkillsUI()
+    {
+        if (currentOperator != null)
+        { 
+            var unlockedSkills = currentOperator.UnlockedSkills;
+
+            skill1Button.GetComponent<Image>().sprite = unlockedSkills[0].skillIcon;
+            if (unlockedSkills.Count > 1)
+            {
+	            // interactable = true로 바꿔주는 코드만 추가
+                skill2Button.interactable = true;
+                skill2Button.GetComponent<Image>().sprite = unlockedSkills[1].skillIcon;
+            }
+            else
+            {
+                skill2Button.interactable = false;
+            }
+
+            UpdateSkillSelection();
+            UpdateSkillDescription();
+
+        }
+    }
+```
+> - 다른 설정은 다 잘 되어 있는 듯 하고, 정예화가 이뤄지면서 2번째 스킬 버튼이 활성화가 되어야 하는데 그렇지 못했던 문제가 있던 걸로 보임
+
+- 수정) 2번째 스킬이 선택된 상태에서 다른 오퍼레이터 디테일 패널로 들어갔을 때 2번째 스킬이 선택된 상태가 유지되고 있는 현상
+```cs
+    // 스킬이 선택됐음을 보여주는 인디케이터 표시 로직
+    private void UpdateSkillSelection()
+    {
+        if (currentOperator == null) return;
+
+        skill1SelectedIndicator.gameObject.SetActive(
+            currentOperator.DefaultSelectedSkill == currentOperator.UnlockedSkills[0]);
+        if (currentOperator.UnlockedSkills.Count > 1)
+        {
+            skill2SelectedIndicator.gameObject.SetActive(
+            currentOperator.DefaultSelectedSkill == currentOperator.UnlockedSkills[1]);
+        }
+        else // 2번째 스킬이 해금되지 않은 상황은 무조건 선택되지 않음
+        {
+            skill2SelectedIndicator.gameObject.SetActive(false);
+        }
+    }
+```
+> 여기서 `else` 문만 새로 추가된 요소 
+> - 이게 없으면 어떤 오퍼레이터에서 스킬이 선택됨 -> 2번째 스킬이 없는 오퍼레이터로 넘어갔을 때, 2번째 스킬이 열리지 않았음에도 2번째 스킬 인디케이터가 나타날 수 있다. 
+> - 가급적 `OnDisable`을 쓰지 않으려고 함. 가능한 통제 범위 내에서 다루고 싶다. 예상치 못한 동작이 생길 수도 있어서..
+
+### 지식이 늘었다
+- 스크립트 단위에서 `Color` 제어는 `0f ~ 1f` 사이의 소수로 하는 듯? 왜 `255`로 알고 있었지?
+
+
+
 
 ## 250328 - 짭명방
 
