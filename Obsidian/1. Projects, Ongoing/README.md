@@ -35,6 +35,90 @@
 
 ## 4월
 
+## 250403 - 짭명방
+
+### 이것저것 수정
+- [x] `OperatorInventoryPanel, OperatorDetailPanel` : 숫자 폰트 출력이 일관적이지 않음
+	- `LiberationSans SDF`가 기본 설정으로 되어있었는데, 일부 숫자는 해당 폰트의 숫자가 출력되지 않음. 프로젝트 설정이랑 충돌하는 듯 하다.
+	- 수정) 해당 부분들을 프로젝트에서 사용하는 기본 폰트인 `SUITE - Regular SDF`으로 변경
+		- 이전에 버전 업데이트를 하면서 `SUITE - Regular SDF Test`를 만들어서 썼던 적이 있는 걸로 기억하는데, `Test`가 아니라 그냥 버전으로 사용하는 게 맞는 듯.
+
+- `OperatorInventoryPanel`
+	- [x] 패널 진입 시 `ClearSideView` 한 번 실행 추가
+		- `ClearSideView` 내부에 인디케이터 보이지 않게 하기 추가
+
+
+- [x] `StageResultPanel`
+	- `StageId` 아래에 왜 스테이지 설명 부분이 들어가 있지?? `StageName`으로 수정
+
+- `OperatorDetailPanel`
+	- [x] 0정예화에서 2번째 스킬 이미지가 `nullImage`가 나타나지 않는 현상 수정 
+		- `Awake`에서 `noSkillIcon` 변수에 스프라이트가 할당되고(프리팹에 기본으로 설정되어 있음)
+		- `OnEnable`에서 `ResetSkillIcon`이 실행되고 `UnlockedSkill`이 1개니까 `noSkillIcon`이 나타나야 하는데 아무 스프라이트도 할당되지 않은 상태가 됨.
+		- 오늘 수정하는 사항들 중에서 가장 이해가 안되고 있음
+![[Pasted image 20250403191431.png]]
+
+- 갑자기 된다? 왜 될까?
+![[Pasted image 20250403201350.png]]
+
+
+- `OperatorPromotionPanel`
+	- [x] 아이템을 갖고 있지 않은 경우, `ItemUIElement`을 살짝 흐릿하게 처리하는 건 어떤가?
+		- 흐릿한 처리보다는, 아이템 갯수가 모자라다면 단순히 해당 `ItemUIElement`의 중앙에 `ImageNotEnough`을 띄우는방식으로 구현함
+		- `ShowNotEnough` 이미지가 뜨지 않는 현상이 있었는데, `OnEnable`에 해당 이미지를 `SetActive(false)`로 했기 때문이다. 따라서 `OperatorPromotionPanel`에서 `초기화 -> 활성화`가 아닌, `활성화 -> 초기화`로 메서드 실행 순서를 바꿈.
+
+![[Pasted image 20250403185751.png]]
+
+- [x] `OperatorLevelUpPanel`
+	- 50레벨에 도달했을 때 현재 경험치는 0으로 고정해야 함, 지금은 남는 값이 있음
+	- 사실 패널의 문제라기 보다는 시스템 부분을 만져야 함
+	- `ExpCalculationSystem`의 `CalculateOptimalItemUsage`의 남은 경험치 계산 부분
+```cs
+        // 현재 정예화의 최대 레벨에 도달했다면 현재 경험치는 0으로 설정
+        if (finalLevel == OperatorGrowthSystem.GetMaxLevel(phase))
+        {
+            optimalPlan.remainingExp = 0;
+        }
+        else
+        {
+            optimalPlan.remainingExp = remainingExp;
+        }
+```
+
+> Before
+![[Pasted image 20250403190438.png]]
+
+> After
+![[Pasted image 20250403190540.png]]
+
+#### 오퍼레이터 디테일 패널에서 인벤토리 패널로 빠져나올 때, 디테일 패널의 오퍼레이터 클릭 상태 유지하기
+- [x] 완료
+
+- `OperatorDetailPanel`에 들어갔다가 나올 때, 현재 선택된 오퍼레이터를 유지하는 게 좋을까? 
+	- 즉, 인벤토리 패널 -> 디테일 패널 -> 인벤토리 패널로 돌아올 때 현재 커서를 유지할까 여부를 결정하는 것임
+	- 스쿼드 편집 상황에서의 인벤토리 패널 -> 디테일 패널로 들어가는 이유에 대해 생각해보면 되지 않을까?
+		- 오퍼레이터의 성장이 주 목적이 될 것
+		- 그러면 성장을 시키고 다시 인벤토리 패널로 나왔을 때, **커서가 초기화되는 것보다는 유지되는 게 더 자연스러운 동작**이지 않을까?  성장시킨 오퍼레이터를 스쿼드에 즉시 편성할 수 있게 하는 거니까
+		- 반대로 유지하지 않을 이유는 딱히 생각나지는 않는 듯. 스쿼드 편집 상황이 아니라면, "오퍼레이터를 선택하는 걸 유지하는 상황" 자체가 필요 없다. 오퍼레이터 슬롯을 클릭하면 바로 디테일 패널로 넘어가기 때문에.
+	- 따라서 선택된 오퍼레이터를 유지하는 것으로 결정. 
+	- 그러면 이 로직을 어디서 구현하는 게 좋을까?
+		- `MainMenuManager` - 가장 먼저 생각나는 후보. 메인메뉴 씬에서 유지해야 하는 정보이기 때문에.
+		- `UserSquadManager` - 얘는 스쿼드 관련이고..
+		- `PlayerDataManager` - 얘도 저장된 정보를 가져오는 개념에 가까움.
+	- `MainMenuManager`로 결정.
+		- `CurrentEditingOperator`이라는 프로퍼티를 만들고 세터 메서드도 만듦
+		- `OperatorInventoryPanel`에서 디테일 버튼을 눌렀을 때 `CurrentEditingOperator`를 저장
+		- `OperatorInventoryPanel.PopulateOperators` : 다시 `OperatorInventoryPanel`로 나왔을 때 `CurrentEditingOperator`가 있는지를 검사해서 있다면 리스트의 맨 앞으로 보냄
+			- 리스트의 맨 앞으로 보낼 때 `CurrentEditingOperator`는 `null`이 된다.
+			- 기존의 `existingOperator`, 즉 `squadEditPanel`에서 들어왔을 때 가장 앞으로 오는 오퍼레이터 슬롯은 `else if`문으로 설정해서 2순위로 그렇게 동작하게끔 변경함.
+
+	- [x] 이슈) `editingOperator`가 2번 나옴
+		- 수정) `PopulateOperators`에서 조회된 오퍼레이터 중, 리스트에 있는 기존 오퍼레이터를 삭제하고 다시 맨 앞에 넣음 
+
+	- [x] 이슈2) `existingOperator`로 들어간 다음, `existingOperator`와 다른 `editingOperator`를 편집하고 나왔을 때 `existingOperator`가 노출되지 않는 현상
+		- `PopulateOperator`에서 `if - else if`문으로 구현했기 때문으로 보임
+		- 수정) 순서 : **`existingOperator`가 있다면 우선 0번에 넣고, 그 다음에 `editingOperator`가 있으면 얘를 0번에 넣음**
+			-> `existingOperator`는 자연스럽게 1번으로 밀려나는 구성
 ## 250402 - 짭명방
 
 ### 뭔가 허전한 요소들 채우는 중 
