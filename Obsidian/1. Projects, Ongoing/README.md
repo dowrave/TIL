@@ -19,7 +19,13 @@
 
 ### 작업 중 
 1. 스테이지 `1-1` 밸런싱 (이후 `1-2`, `1-3`)
-	- **스테이지 완성, 보상 설정, 보스 추가** 등으로 게임을 완성하는 게 젤 중요함!! 다른 건 다 부차적인 요소! --> 잘 실천이 안되고 있음
+	- **스테이지 완성, 보상 설정, 보스 추가** 등으로 게임을 완성하는 게 젤 중요함!! 다른 건 다 부차적인 요소! 
+	- ...인데 잘 실천이 안 되고 있다. 계속 고쳐야 하는 게 보임..
+2. 애니메이션 중에 클릭 막아야 하는 상황
+	- 화면 전환(메인메뉴 -> 스테이지 진입) 상황
+	- 결과 패널에서 별점 하나씩 뜨는 애니메이션
+
+
 ### 구현 예정
 
 ### 하고 싶은데 못할 듯
@@ -34,6 +40,201 @@
 
 
 ## 4월
+
+## 250405 
+### Barricade 퇴각 버튼이 동작하지 않는 현상
+- [x] 해결
+
+- `Operator`에서 나타날 때는 잘 작동하는데, `Barricade`에서 나타날 때는 잘 동작하지 않는다. 버튼 인식 자체가 안되는 것 같음.
+- 리스너 등록까지는 잘 되는데? 버튼을 클릭하면 아무 동작이 없다는 개념에 가깝다. 
+- `deployable.Retreat`이 구현되지 않았다고 보기도 어려움. `DeployableUnitEntity`의 자식으로 `Operator`나 `Barricade`가 있으니까.
+
+- **이거 뭐가 문제지????**
+	1. `Vanguard`로만 테스트해봤다. 다른 오퍼레이터는? -> 모두 잘 적용됨(퇴각 버튼)
+	2. 아무리 생각해도 답이 안 나온다. **관련 요소들을 껐다 켰다 해보면서 어디서 원인이 발생하는지 찾아야 할 것 같음.** 지금 스크립트에서 **유니티에서 UI 클릭을 인식하는 동작**의 차이가 발생하는 부분이 아무리 봐도 없어..
+		1) 버튼에 리스너를 등록하는 부분 주석 처리 : 이 메서드의 유무에 관계없이, 오퍼레이터에게 나타난 `DeployableActionUI`는 클릭했을 때 버튼이 클릭되면서 색상의 변화가 나타나는 반면, `Barricade`에서 나타난 `DeployableActionUI`는 아무런 변화가 없음
+			- 이건 `button.interactable`의 문제도 아님) `interactable = false`이면 최초에 버튼 색깔이 더 흐릿하게 보이기 때문
+		2) 스테이지 씬을 띄운 상태에서, `DeployableActionUI` 프리팹에 있는 걸 씬에 옮긴 다음 퇴각 버튼을 클릭해봄 -> **클릭 잘 됨.(위에서 말한 클릭 시의 색깔의 변화가 나타남)**
+			- 즉, **`Barricade`에서만 알 수 없는 이유로 유니티에서 동작하는 버튼의 클릭 인식 동작이 작동하지 않는 현상이 발생**하고 있는 것. 
+		3) `DeployableActionUI`라는 요소는 `DeployableManager`에서 프리팹으로 할당되어 있으며, 호출될 때마다 인스턴스화 되고 없어질 때마다 파괴된다. 
+	3. 보통 이 정도 헤매면 뭐가 문제인지 감이라도 잡히는데 진짜 감이 하나도 안잡힌다. 이런 상황에서는 AI도 도움이 안 됨.
+		1) 분기가 문제인가 싶어서 `Initialize`의 분기 부분을 모두 주석처리해도 똑같이 `Operator`에서는 동작, `DeployableUnitEntity`에서는 동작 안 함.
+		2) `Operator.OnClick`과의 차이가 문제인가 하면, `DeployableUnitEntity.OnClick`으로 동작하는 게 `Barricade`이고, `Operator.OnClick`은 위의 OnClick을 상속받고 공격 범위만 하이라이트되는 게 전부임. 
+		3) 심지어 `Initialize`의 모든 동작을 비활성화했을 때도 5번이랑 동작이 똑같음
+		4) 심지어x2 `DeployableActionUI`의 모든 스크립트를 비활성화하고 `Initialize`만 남겼을 때에도 5번이랑 동작이 똑같음
+	- **따라서 일단 `DeployableActionUI` 자체의 문제는 아님**
+
+- 이들을 인스턴스화하는 `DeployableManager`로 간다.
+```cs
+    public void ShowActionUI(DeployableUnitEntity deployable)
+    {
+        InstanceValidator.ValidateInstance(actionUIPrefab);
+
+        HideUIs();
+
+        // 일관된 위치 구현하기
+        Vector3 ActionUIPosition = new Vector3(deployable.transform.position.x, 1f, deployable.transform.position.z);
+        currentActionUI = Instantiate(actionUIPrefab, ActionUIPosition, Quaternion.identity);
+        currentActionUI.Initialize(deployable);
+        currentUIState = UIState.OperatorAction;
+    }
+```
+> 솔직히.. 별 차이가 없어... 위치 떄문에 막히는 것도 아니고..
+- `Barricade`을 다른 스테이지에 넣어도 동일하게 동작함
+
+- **발견한 듯....** **`InStageInfoPanel`의 `CancelPanel` 동작이 문제였다.**
+```cs
+    protected virtual void ShowActionUI()
+    {
+        DeployableManager.Instance!.ShowActionUI(this); // 무죄
+        UIManager.Instance!.ShowDeployedInfo(this); // <-- 이 내부가 유죄
+    }
+```
+> - `ActionUI`가 나타날 때, 해당되는 오퍼레이터의 정보를 함께 보여주는 `InStageInfoPanel`이 있다.
+> - 이 패널의 구성은 `CancelPanel, GradientPanel, OperaotrInfoContent`인데, 이 중 `CancelPanel`, 즉 현재의 `ActionUI`가 나타난 상태를 취소하는 동작을 하는 패널의 영역은 (기본 투명이지만) 시각화해보면
+![[Pasted image 20250405211229.png]] 
+ 화면 전체를 덮는다.
+ 이 패널을 만든 이유는 **하단의 오퍼레이터 박스를 클릭한 상태에서의 배치 동작을 취소하기 위함**이었는데 이게 현재 배치된 `Deployable`을 클릭할 때에도 `CancelPanel`이 비활성화되지 않은 게 일련의 사태의 원인으로 보임. 
+ 
+```cs
+    public void UpdateInfo(DeployableManager.DeployableInfo deployableInfo)
+    {
+    // ...
+    
+        // CancelPanel 부분만 따로 떼어놨음
+        if (!currentDeployableUnitState.IsDeployed)
+        {
+            cancelPanel.gameObject.SetActive(true);
+            cancelPanel.onClick.AddListener(OnCancelPanelClicked);
+        }
+        
+    // ...
+    }
+```
+> 결국 여기가 문제인건데, `UpdateInfo`를 호출하는 부분에서 "현재 배치된 요소를 클릭했는가"를 나타내는 변수를 파라미터에 하나 넣었다.
+
+- 수정
+```cs
+    public void UpdateInfo(DeployableManager.DeployableInfo deployableInfo, bool IsClickDeployed)
+    // ...
+
+        // 박스에서 꺼내는 요소인 경우, 맵의 남은 부분을 클릭하면 현재 동작을 취소할 수 있음
+        if (!IsClickDeployed)
+        {
+            cancelPanel.gameObject.SetActive(true);
+            cancelPanel.onClick.AddListener(OnCancelPanelClicked);
+        }
+	// ...
+```
+
+그리고 이들을 사용하는 상황은 아래처럼 이용한다.
+```cs
+    // 배치되지 않은 유닛의 정보 보기 동작
+    public void ShowUndeployedInfo(DeployableManager.DeployableInfo deployableInfo)
+    {
+	    // ...
+        inStageInfoPanelScript.UpdateInfo(deployableInfo, false);
+		// ...
+    }
+
+
+    // 배치된 유닛의 정보 보기 동작
+    public void ShowDeployedInfo(DeployableUnitEntity deployableUnitEntity)
+    {
+	    // ...
+        inStageInfoPanelScript.UpdateInfo(deployableUnitEntity.DeployableInfo!, true);
+        // ...
+    }
+```
+
+마지막으로, 4개의 상황(오퍼레이터 박스에서 꺼내기, 배치된 오퍼레이터 클릭하기, 바리케이드 박스에서 꺼내기, 바리케이드 클릭하기)를 모두 테스트해봤고, 최초의 문제였던 바리케이드의 Retreat 동작을 포함해 4개의 상황 모두 원하는 목적에 따라 잘 돌아가는 걸 확인했음. 
+
+> 왜 그런지 문제 발견하는 데에만 4시간 정도를 썼는데 해결은 10분만에 했다. 
+
+- [x] `StageResult - StatItem` 레이아웃
+	- `StageResultPanel`의 `StatItem`의 너비, 크기는 `Grid Layout Group`에서 컨트롤이 된다. `StatItem`에서 컨트롤하지 않음.
+	- 수정) `Grid Layout Group`에서 서식 조정
+
+### 사이트 폭파 대비
+- 구현했던 것들을 이미지로 캡처해서 저장해둠
+	- 게시판, 자기소개, 진행했던 프로젝트, 메인 페이지 등등
+## 250404 - 짭명방
+### 이것저것 수정
+
+#### 테스트 용도) 스테이지 클리어와 보상 묶기
+- [x] 완료
+- 보상과 스테이지별 난이도 테스트를 위한 메서드 개선
+	- 테스트용) `PlayerDataManager`에서 **특정 스테이지를 클리어한 것으로 처리했을 때, 해당 스테이지의 보상도 함께 들어오게 구현**함
+	- 보상 자체는 `StageData`에 있는데 `Stars`에 따른 보상의 정도를 설정하는 로직은 `StageManager`에 있음. 이걸 `PlayerDataManager`로 옮겨야 하나?
+	- **`RewardManager`를 별도로 구현함**
+```cs
+    public void SetAndGiveStageRewards(StageData stageData, int stars)
+    {
+        // 어차피 바꿀거라서 변수명은 약어 처리함
+        var (fcr, bcr) = SetStageRewards(stageData, stars);
+
+        // 리스트로 바꿔서 전달해야 직렬화 시에 더 안전하다고 함
+        List<ItemWithCount> firstClearRewards = new List<ItemWithCount>(fcr);
+        List<ItemWithCount> basicClearRewards = new List<ItemWithCount>(bcr);
+
+        GameManagement.Instance!.PlayerDataManager.GrantStageRewards(firstClearRewards, basicClearRewards);
+    }
+```
+> 다른 메서드들도 옮겨왔는데, 핵심 메서드는 이거임 
+> - `PlayerDataManager`에서 기록을 `StageId`로 하고 있는데, 이걸 `StageData`로 넣게 바꿀 수 있나? 이게 되려면 최소한 `StageData`들의 리스트를 갖고 있어야 하지 않나?
+> - 그래서 `StageDatabase`도 `GameManagement`의 자식으로 둔다. 
+- 수정 과정에서 원래는 `Stage`마다 초기화되는 `StageManager`에서 전역적인 필드로 가졌고, 한 번 설정된 필드를 그대로 가져오기만 하면 되는 구조였다. 이게 살짝 바뀌어야 하나?
+	- 패널에서 사용해야 하는 상황이 있기 때문에, `RewardManager`의 결과값 -> `StageManager`에서 `IReadOnlyList<ItemWithCount>` 전역 필드를 갖고 패널에서는 `StageManager`에 있는 값을 가져오는 방식으로 구성함
+
+#### StageItemInfoPopup
+- 스크롤 동작 안함. 텍스트 들어간 다음 레이아웃 갱신 필요.
+```cs
+DetailBox(Scroll Rect, viewport로 설정)
+- ItemDescription(Content, content size fitter, TMP)
+```
+1. `scrollRect`을 스크립트에 추가, `text`가 들어간 다음 스크롤을 `normalizedVerticalPosition = 1.0f(맨 위)`으로 설정
+2. `content size fitter`은 자식 오브젝트 뿐만 아니라, 이를 가진 오브젝트 자신의 컴포넌트까지도 포함해서 계산함
+
+- `StageItemInfoPopup(이 오브젝트)`가 `Inactive`라는 에러가 뜬다.
+```cs
+    private void Awake()
+    {
+        // GetComponent 계열은 Awake에서 수행한다.
+        canvas = GetComponentInParent<Canvas>();
+        canvasRectTransform = canvas.GetComponent<RectTransform>();
+        popupRectTransform = popupArea.GetComponent<RectTransform>();
+
+        originalItemNamePosition = popupItemNameBackground.anchoredPosition;
+
+        gameObject.SetActive(false);
+    }
+
+    public void Show(ItemUIElement itemUIElement)
+    {
+        gameObject.SetActive(true);
+
+        this.itemUIElement = itemUIElement;
+        ItemData itemData = itemUIElement.ItemData;
+        popupItemNameText.text = itemData.itemName;
+        popupItemDetailText.text = itemData.description;
+
+        StartCoroutine(RebuildLayoutAndScrollToTop()); // <-- 여기서 에러 발생 중
+    }
+```
+> ????
+> - 오브젝트가 활성화되지 않았을 때 코루틴이 실행될 수 있다고 함(위에 `gameObject.SetActive`가 있음에도)
+> - 코루틴으로 빼지 않고, `ActivatePopupElements`에서 팝업을 활성화하기 전에 위치를 `1.0`으로 잡아주는 식으로 수정했음
+> - `StageItemInfoPopup` 자체가 좀 꼬여 있음. `BackArea`와 `PopupArea` 2개가 있는데, `PopupArea`는 내부 설정을 마치고 나타나도록 설정이 되어 있기 때문에 관련 요소들이 설정된 후에 활성화된다. 
+
+- 마무리로, `StageItemInfoPopup` 레이아웃(패딩, 너비 등등)을 정리
+
+### 지식이 늘었다
+
+1. 직렬화(저장) 클래스 구성 시 유의할 점(`JsonUtility`을 사용할 때의 유의할 점)
+- **`Unity` 엔진에 의한 오브젝트들`ScriptableObject, UnityEngine.Object 상속`을 직접 할당하려고 한다면, 유니티의 직렬화 시스템은 이들의 참조를 저장하지 못하므로 문제가 발생할 수 있다.** 
+- 그래서 웬만하면 순수 데이터들`int, string, List 등등`을 저장하는 쪽으로 권장함. 실제로도 기존에는 `stageId`라는 `string` 값으로 스테이지 클리어 여부를 저장했다.
+
+2. `Content Size Fitter` - 자식 오브젝트 외에도, 자기 자신 오브젝트의 컴포넌트들에 의한 레이아웃 변화까지 다 반영해서 너비/높이 값이 설정됨.
 
 ## 250403 - 짭명방
 
