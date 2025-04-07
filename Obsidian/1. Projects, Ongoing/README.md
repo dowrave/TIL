@@ -15,16 +15,16 @@
 	- 1-3에 보스 추가
 	- 보상 설정
 
+- 보고 참조할 내용
+	- [[오퍼레이터들 스탯 정리]]
+	- [[적 스탯 정리]]
+
 - 테스트 및 수정
 
 ### 작업 중 
 1. 스테이지 `1-1` 밸런싱 (이후 `1-2`, `1-3`)
 	- **스테이지 완성, 보상 설정, 보스 추가** 등으로 게임을 완성하는 게 젤 중요함!! 다른 건 다 부차적인 요소! 
 	- ...인데 잘 실천이 안 되고 있다. 계속 고쳐야 하는 게 보임..
-2. 애니메이션 중에 클릭 막아야 하는 상황
-	- 화면 전환(메인메뉴 -> 스테이지 진입) 상황
-	- 결과 패널에서 별점 하나씩 뜨는 애니메이션
-
 
 ### 구현 예정
 
@@ -41,6 +41,191 @@
 
 ## 4월
 
+## 250407
+
+### 밸런싱과 스테이지 구성
+- `Operator - Medic`의 경우, 공속이 너무 느려서 코스트 값을 못하는 느낌이 든다. 
+	- 공속을 2초로 수정해봄
+- 전체적인 스테이지 구성
+	- 시작 코스트가 너무 낮음 : `10 -> 20`으로 상향
+	- 코스트 회복 속도도 1.5로 높여봄 
+	- 코스트 수급을 담당하는 뱅가드가 잘리면 게임 흐름이 확 답답해진다. 뱅가드 스킬의 효율을 높이는 건 안 그래도 뱅가드 의존성이 심해서 아닌 것 같고, 기본적인 스테이지 설정 자체를 조금 더 완화할 필요가 있겠음
+	- 대신 급한 불을 끄는 용도, 즉 원래 게임에서의 `스페셜리스트 - 처형자` 직군 같이 재배치 시간을 짧게 하는 구성은 뱅가드에게 준다 - 재배치 시간 30초
+		- 근데 사실 테스트에서 1초로 놨어도 뱅가드가 빠져있는 시간 자체가 코스트가 느릿하게 차서 뱅가드를 재배치할 경우가 잘 없기는 했음
+
+#### 스테이지 1-1
+- 위 웨이브, 아래 웨이브로 구분이 되어 있는데 위 웨이브가 끝나고 나서 아래 웨이브의 시작 사이에 10초의 여유를 뒀음(단순한 스폰 타이밍 조정)
+- 시작 코스트 높이고, 10초 여유 주니까 깰 수 있기는 함.
+- `EnemyRanged` 관련 : 육성이 되지 않은 `Sniper`를 3대만에 보낼 수 있는데, 이게 맞을까?
+	- `Ranged`를 `1-2` 이후로 빼는 것도 방법일 듯?
+> 일단 이 부분은 보류하고 통계 매니저, 패널 관련 현상들 수정함
+
+
+
+### 사소한 것들 생각
+- 경험치 아이템을 자동으로 사용하는 로직이 현재 서비스 중인 게임들하고 비교하면 조금 다른 듯 - 보통 **가장 좋은 가치를 지닌 경험치 아이템이 먼저 소비**되는 구조를 띄고 있는데, 내 프로젝트는 **경험치 낭비를 줄이기 위한** 방식으로 짜여져 있어서 가장 낮은 가치의 경험치 아이템이 먼저 소비되는 경향이 있음
+	- 다음 레벨에 도달할 정도가 아니라면, 어떤 레벨에서 사용되는 경험치 아이템들은 레벨업이 동반되지 않으므로 스탯의 상승을 가져오지 않기 때문에 아이템을 사용하더라도 실질적인 이득이 없음. 낭비라는 표현은 조금 이상하긴 한데 이미 쓴 말이니까 냅둔다.
+
+### 이슈 수정
+
+- [x] `SquadEditPanel` -> 스테이지 진입 시 클릭 동작으로 인해 맵 등이 정상적으로 불러와지지 않는 현상.
+	- 정확한 현상은 스테이지 로드 시에, 패널이 서서히 사라지는 중에 **스테이지 진입 버튼 위에서** 클릭 동작이 이뤄질 때, 스테이지 로드 메서드가 다시 동작하는 현상임
+	- 시도한 방법들
+		- 스테이지 로드 중 클릭 동작 막기 
+			1) UI 시스템에 대한 동작이기 떄문에 `ClickDetectionSystem`에 들어가는 것보다 먼저 동작해야 함
+			- 이걸 구현하는 방법은 여러 가지가 있음
+				- [x] `EventSystem.current.enabled = false`로 해서 **모든 입력**을 막는 것
+				- [ ] 화면의 가장 위에 투명한 `image.raycastTarget`을 설정하는 것
+				- [ ] `button.interactable = false`로 놓는 것 등등
+				- [ ] 해당 버튼이 클릭됐을 때, 버튼의 리스너를 제거하는 것
+					- 이 방법이 번뜩이면서 생각났는데, 스테이지 입장 버튼을 클릭한 시점에서 예상치 못한 모든 동작을 막으려면 맨 위 방법이 가장 좋아 보여서 그걸로 선택함.
+	- 수정) `LoadStage`의 시작에서 모든 입력을 차단하고, `InitializeStage` 직전에 모든 입력 차단을 해제함
+
+- [ ] `StageResultPanel` -> 가끔 별점 애니메이션이 동작하지 않고 이미지가 작게 유지되는 현상이 있음
+	- 정확히 어떤 시점에 문제가 발생하는지 확인할 수가 없다. 클릭을 미리해서도 아니고 스크롤을 해서도 아니고 ItemUIElement의 팝업이 나타나서도 아님.
+
+#### 통계 패널 정렬 이슈
+
+- [x] `StageResultPanel` - `HealingDone` 탭에서 `DamageDealt`로 탭을 전환할 때, 내림차순으로 올바르게 정렬되지 않는 현상이 있음. 왜 저기서만?
+	- 정렬 로직 자체가 문제인지, 이걸 보여주는 로직 자체가 문제인지 모르겠는데..
+```cs
+// 기존 구현 
+	for (int i = 0; i < statItems.Count; i++)
+	{
+		var (opData, value) = sortedStats[i];
+	
+		// 현재 위치의 StatItem이 올바른 오퍼레이터를 표시하고 있는지 확인
+		if (statItems[i].OpData != opData)
+		{
+			// 올바른 위치의 StatItem 찾기
+			var correctItem = statItems.Find(item => item.OpData == opData);
+			if (correctItem != null)
+			{
+				// Transform 순서 변경
+				correctItem.transform.SetSiblingIndex(i);
+	
+				// statItems 리스트 순서도 변경
+				int oldIndex = statItems.IndexOf(correctItem);
+				statItems[oldIndex] = statItems[i];
+				statItems[i] = correctItem;
+			}
+		}
+	
+		// 통계 표시 업데이트
+		statItems[i].UpdateDisplay(currentStatType, showingPercentage);
+	}
+```
+> - 여기서 스왑 로직 구현할 때의 이슈임 - `a <-> b` 스왑 로직을 구현할 때, 원래 `temp`라는 변수를 따로 두는 식으로 하는데 지금처럼 구현하면 중간값이 제대로 보존되지 않음
+
+> - 따라서, 아래처럼 `temp`를 따로 둬서 중간값을 보존하면 됨
+```cs
+				int oldIndex = statItems.IndexOf(correctItem);
+				StatisticItem temp = statItems[i];
+				statItems[i] = correctItem;
+				statItems[oldIndex] = temp;
+```
+
+- 더 좋은 방법을 AI가 줬는데, `Find` 메서드 때문에 `O(n^2)`이라고 한다. 
+```cs
+
+        Dictionary<string, StatisticItem> itemDict = new Dictionary<string, StatisticItem>();
+        foreach (var item in statItems)
+        {
+            itemDict[item.OpData.entityName] = item;
+        }
+
+        List<StatisticItem> newOrder = new List<StatisticItem>();
+        foreach (var (opData, _) in sortedStats)
+        {
+            newOrder.Add(itemDict[opData.entityName]);
+        }
+
+        for (int i=0; i<newOrder.Count; i++)
+        {
+            newOrder[i].transform.SetSiblingIndex(i);
+            newOrder[i].UpdateDisplay(currentStatType, showingPercentage);
+        }
+```
+
+> 잘 적용됨.
+
+ - 추가 수정
+ - `StatItem` 값이 0일 때에는 해당 `StatItem`을 비활성화
+ - 하단 퍼센티지 바는 `fillImage`를 이용했던 것을 `slider.normalizedValue`를 이용하는 쪽으로 수정.
+
+#### 통계 매니저 + 패널 - 받은 피해량 수정
+
+- [x] `StageResultPanel` - **결과 패널에 나타날 피해량 값은 실제로 들어간/들어온 대미지**여야 맞는 듯. 현재는 계산 전의 값이 나타나고 있다. 
+	- 즉, **방어력 / 마법저항력이 고려된 받은 피해량**을 통계에 넣는다. 쉴드 같은 개념도 그냥 저 값에서 까기 시작하는 거니까, `오퍼레이터가 받은 피해량 = 실질 피해량`으로 계산하는 게 맞다고 봄
+```cs
+// Operator.cs
+    public override void TakeDamage(UnitEntity attacker, AttackSource attackSource, float damage)
+    {
+        base.TakeDamage(attacker, attackSource, damage);
+        StatisticsManager.Instance!.UpdateDamageTaken(OperatorData, damage);
+    }
+
+// UnitEntity.cs
+    public virtual void TakeDamage(UnitEntity attacker, AttackSource attackSource, float damage)
+    {
+        if (attacker is ICombatEntity iCombatEntity && CurrentHealth > 0)
+        {
+            // 방어 / 마법 저항력이 고려된 실제 들어오는 대미지
+            float actualDamage = CalculateActualDamage(iCombatEntity.AttackType, damage);
+
+            // 쉴드를 깎고 남은 대미지
+            float remainingDamage = shieldSystem.AbsorbDamage(actualDamage);
+
+            // 체력 계산
+            CurrentHealth = Mathf.Max(0, CurrentHealth - remainingDamage);
+
+            Debug.Log($"남은 체력 : {CurrentHealth}, 들어온 대미지 : {remainingDamage}");
+            OnHealthChanged?.Invoke(CurrentHealth, MaxHealth, shieldSystem.CurrentShield);
+
+            PlayGetHitEffect(attacker, attackSource);
+        }
+
+
+        if (CurrentHealth <= 0)
+        {
+            Die(); // 오버라이드 메서드
+        }
+    }
+
+```
+> - 현재 이런 구조인데, `Operator.TakeDamage`에 통계를 갱신하는 로직이 있음. 들어온 대미지를 그대로 통계에 넣는 구조
+> - 저걸 `UnitEntity.cs`에 넣기 위한 방법으로, **후크 메서드**라는 게 있다. 부모 클래스에서 가상 메서드를 정의하고, 자식 클래스에서 오버라이드해서 사용하는 방식. 예전에 스킬 구조 짤 때 사용했던 방법이기도 하니 잘 기억해두자.
+
+- 따라서 아래처럼 수정함
+```cs
+// Operator.cs
+// 부모 클래스에서 정의된 TakeDamage에서 사용됨
+protected override void OnDamageTaken(float actualDamage)
+{
+	StatisticsManager.Instance!.UpdateDamageTaken(OperatorData, actualDamage);
+}
+
+// UnitEntity.cs
+    public virtual void TakeDamage(UnitEntity attacker, AttackSource attackSource, float damage)
+    {
+	    // 아래에서 써야 해서, 정의 및 할당을 밖에서 함
+        float actualDamage = 0f;
+
+        if (attacker is ICombatEntity iCombatEntity && CurrentHealth > 0)
+        {
+            // 방어 / 마법 저항력이 고려된 실제 들어오는 대미지
+            actualDamage = CalculateActualDamage(iCombatEntity.AttackType, damage);
+		
+        }
+
+        OnDamageTaken(actualDamage);
+        
+        // ...
+	}
+
+	// 후크 메서드 정의
+    protected virtual void OnDamageTaken(float actualDamage) { }
+```
 ## 250405 
 ### Barricade 퇴각 버튼이 동작하지 않는 현상
 - [x] 해결
@@ -147,7 +332,7 @@
     }
 ```
 
-마지막으로, 4개의 상황(오퍼레이터 박스에서 꺼내기, 배치된 오퍼레이터 클릭하기, 바리케이드 박스에서 꺼내기, 바리케이드 클릭하기)를 모두 테스트해봤고, 최초의 문제였던 바리케이드의 Retreat 동작을 포함해 4개의 상황 모두 원하는 목적에 따라 잘 돌아가는 걸 확인했음. 
+마지막으로, **4개의 상황**(오퍼레이터 박스에서 꺼내기, 배치된 오퍼레이터 클릭하기, 바리케이드 박스에서 꺼내기, 바리케이드 클릭하기)를 모두 테스트해봤고, 최초의 문제였던 바리케이드의 Retreat 동작을 포함해 **모두 원하는 목적에 따라 잘 돌아가는 걸 확인**했음. 
 
 > 왜 그런지 문제 발견하는 데에만 4시간 정도를 썼는데 해결은 10분만에 했다. 
 
