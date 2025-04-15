@@ -104,7 +104,7 @@
             "state": {
               "type": "tag",
               "state": {
-                "sortOrder": "frequency",
+                "sortOrder": "alphabetical",
                 "useHierarchy": true,
                 "showSearch": false,
                 "searchQuery": ""
@@ -204,7 +204,7 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "204ac09fde106242",
+  "active": "c156c5ddf45fbf92",
   "lastOpenFiles": [
     "1. Projects, Ongoing/포폴 겸 블로그 만들기/월별 작업 기록/25년 4월.md",
     "1. Projects, Ongoing/README.md",

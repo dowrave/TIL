@@ -51,6 +51,82 @@
 	2. EC2 인스턴스에 띄운 것 중 블로그에 함께 띄웠던 텐서플로우 & 다른 컨테이너로 띄웠던 데이터 수집 컨테이너 정리
 	3. RDS로 띄웠던 MySQL을 EC2의 별개 컨테이너로 옮김.
 
+## 250415 - 짭명방
+
+### 밸런싱, 스테이지 만들기
+- `1-2` 작업 시작.
+	- 경로랑 대략적인 스폰 과정은 완료
+	- 더 강한 적을 만들어야 하나? 라는 생각은 든다. 
+
+### 튜토리얼 내용 추가
+- [x] 레벨업 안내 후에 다음 내용 추가
+	- 레벨업 안내의 마지막 부분에 스테이지 반복 클리어 시에도 경험치 아이템이 지급됨을 알림
+	- 정예화 안내
+		- 패널로 들어가는 안내는 아니고, `OperatorDetailPanel`에서의 설명이 되겠다.
+		
+>- 0정예화 50레벨이 되면, 정예화를 할 수 있다
+> - 정예화 시, 오퍼레이터의 새로운 스킬이 해금되며 일부 오퍼레이터는 공격 범위가 추가된다.
+> - 정예화에 필요한 아이템은 **1-0, 1-1, 1-2 스테이지를 3성으로 최초 클리어**했을 때에만 지급된다
+
+- 이 과정에서 보상도 수정
+	- 정예화 아이템은 최초 클리어 시 1-0부터 1개, 2개, 3개 지급
+	- 정예화 아이템 지급 로직은 3성일 때만 지급이므로 수정 필요 없음.
+### 기타 이슈 수정
+
+- [x] `StageResultPanel`
+	- 3성 클리어가 아닌 상황에서 `ItemPromotion`은 0개 -> 0개인데도 UI에 보이는 문제 수정
+	- `StageResultPanel.ShowItemElements`에서 보상 아이템이 0개인 경우는 나타나지 않도록 수정
+```cs
+    private void ShowItemElements(IReadOnlyList<ItemWithCount> rewards, bool showFirst = false)
+    {
+        if (rewards.Count > 0) // 보상 아이템이 있을 때
+        {
+            foreach (var itemPair in rewards)
+            {
+				if (itemPair.count == 0) continue; // 보상 아이템이 0개인 경우는 나타날 필요 없음
+				// UI 표시 로직 생략
+            }
+        }
+    }
+```
+
+- [x] `OperatorLevelUpPanel`
+	- 레벨업 후의 스탯에 소수점이 나타나는 현상이 있음 -> 처리 완료
+
+
+#### PathDataEditor 수정
+- [x] `PathData`에서 활성화 버튼을 누르고 씬 뷰의 타일을 클릭해도 아무 동작도 하지 않는 현상
+
+- 맵을 **프리팹**에 띄우고 타일들을 클릭할 때는, 타일의 콜라이더가 활성화되지 않는다.
+```cs
+// 콜라이더 감지 로직
+Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
+RaycastHit hit;
+if (Physics.Raycast(ray, out hit))
+{
+	pickedObject = hit.collider.gameObject;
+}
+Tile? clickedTile = FindTileComponent(pickedObject);
+...
+```
+
+- 프리팹 편집 상태에서 사용할 수 있는 로직은 `HandleUtility`가 있다.
+```cs
+       GameObject pickedObject = HandleUtility.PickGameObject(e.mousePosition, false);
+
+```
+
+- 프리팹 편집 여부를 감지하는 메서드도 있다
+```cs
+bool isPrefabMode = PrefabStageUtility.GetCurrentPrefabStage() != null;
+```
+
+- 마지막으로, 편집 상태에서 타일을 클릭했을 때 유니티의 기본 동작인 해당 오브젝트 활성화도 막는다.
+```cs
+HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));
+```
+
+
 ## 250414 - 짭명방
 
 ### 밸런싱
