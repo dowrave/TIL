@@ -45,6 +45,35 @@
 	2. EC2 인스턴스에 띄운 것 중 블로그에 함께 띄웠던 텐서플로우 & 다른 컨테이너로 띄웠던 데이터 수집 컨테이너 정리
 	3. RDS로 띄웠던 MySQL을 EC2의 별개 컨테이너로 옮김.
 
+## 250418 - 짭명방
+
+### 기타 이슈 수정
+- `OperatorUI` 요소들 수정
+	- `Enemy`와 겹치는 경우가 있어서 인스펙터에서 y값을 낮추려고 했는데, 부모 오브젝트의 `rotation`이 있기 때문에 원하는 느낌의 구현이 되지 않음.
+		- 일단 `transform.localRotation`으로 설정하던 값을 `transform.rotation`(월드 좌표 기준)으로 수정.
+		- `OperatorUI` 자체의 `y` 포지션을 `-0.3` 정도 낮추면 원하는 구현이 나오는데, 스킬 사용 가능 아이콘도 같이 움직이는 이슈가 있다.
+			- `DeployableBarUI`랑 `directionIndicator`가 함께 들어가는 부모 오브젝트를 하나 추가함
+		- 이미 구현된 기능이지만, **수정하기가 좀 번거로운 면이 있기 때문에 기능을 분리하겠음**
+			- 오퍼레이터의 **회전을 따라가는 게 필요한 기능(`directionIndicator`)은 오퍼레이터의 자식 오브젝트**로 둠
+			- 오퍼레이터의 **회전을 따라갈 필요가 없는 기능`OperatorUI`은 별도 오브젝트**로 구현함
+	- 이참에 추가로 `Operator`에 설정된 `operatorUIPrefab`을 `UIManager`로 뺀다.
+		- 지금 같은 경우는 `Operator`마다 별도로 `SerializeField`에 프리팹을 할당하는 방식이다. 기존 방식은 Operator로 구현된 프리팹마다 일일이 할당해야 하는 이슈가 있었음.
+	- 추가로 `OperatorUI`에서 카메라를 보게 하는 시점은 `Initialize`로 변경. 
+		- 기존엔 `Awake`에 있었음
+		- 그래도 게이지가 각도에 따라 좀 삐딱해보이는 문제는 있다.
+	- `OperatorUI`의 자식 오브젝트로 들어가는 `DeployableBarUI` 관련
+		- 일단 `Unpack`했음. `DeployableBarUI` 프리팹을 없애면 `Barricade` 등에서 사용하고 있기 때문에 그건 안된다.
+		- 2개의 `HealthBar`(체력, SP)의 레이아웃은 이제 `Vertical Layout Group` 컴포넌트로 관리함
+			- 기존에 `Height, Scale.y` 2가지 요소로 관리했는데 이제 `Height`로만 관리함
+
+- `EnemyBarUI`에 알파 `0.7`, `OperatorBarUI`의 요소들에 알파 `0.9`로 지정
+	- 특히 `Enemy`가 겹치는 경우 어떤 상황인지 잘 보이지 않는 경우가 많아서 이렇게 구현
+	- 원본 명방은 충돌이 있어서 살짝 밀려나는 효과가 구현되어 있는데, 이걸 어떻게 구현할지 몰라서 일단 UI에 투명도를 추가하는 방향으로 진행함.
+
+- 일단 이 정도 하고 세이브.
+
+
+
 ## 250417
 
 ### 블로그(AWS 사이트)
