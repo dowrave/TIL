@@ -45,6 +45,34 @@
 	2. EC2 인스턴스에 띄운 것 중 블로그에 함께 띄웠던 텐서플로우 & 다른 컨테이너로 띄웠던 데이터 수집 컨테이너 정리
 	3. RDS로 띄웠던 MySQL을 EC2의 별개 컨테이너로 옮김.
 
+## 250425 - 짭명방
+
+### 기타 수정 내용
+- `DeployableBox`
+	- [x] 좌측 하단에 정예화 아이콘 표시
+
+- `SquadEditPanel`
+	- [x] 기본 지정 스킬을 수정했는데 스쿼드에 편성된 스킬이 변경되는 상황이 있음
+		- 이 문제 자체는 단순히 `OwnedOperator`의 `SetStageSelectedSkill` 부분에 `defaultSelectedSkill`을 할당하는 로직으로 잘못 들어가 있어서 발생했던 문제였음.
+	-  그런데 `SquadEditPanel`에서 특정 슬롯을 클릭해서 `OperatorInventoryPanel`로 들어갔을 때, `OperatorInventoryPanel`에서 해당 오퍼레이터의 스킬 정보는 현재 스쿼드에 편성된 상태의 스킬이 나타나야 맞다.
+		- 편성되지 않은 오퍼레이터는 `defaultSelectedSkill`이 나타나야 하고, 편성된 오퍼레이터를 클릭했을 때는 `stageSelectedSkill`이 나타나야 맞다는 것.
+
+- 따라서 `OperatorSlot.InitializeSkill`을 아래처럼 수정함
+```cs
+// 스쿼드 편집에서 인벤토리로 들어갔을 때는 현재 스쿼드에서 사용 중인 스킬로 초기화한다
+int nowEditingIndex = GameManagement.Instance!.UserSquadManager.EditingSlotIndex;
+OwnedOperator? existingOperator = GameManagement.Instance!.PlayerDataManager.GetOperatorInSlot(nowEditingIndex);
+if (existingOperator == OwnedOperator)
+{
+	SelectedSkill = OwnedOperator.StageSelectedSkill;
+}
+else
+{
+	SelectedSkill = OwnedOperator.DefaultSelectedSkill;
+}
+skillImage.sprite = SelectedSkill.skillIcon;
+```
+
 ## 250423 - 짭명방
 
 ### 밸런싱
