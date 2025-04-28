@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "e12591e49070f62f",
+        "id": "41992542b1b42826",
         "type": "tabs",
         "children": [
           {
-            "id": "204ac09fde106242",
+            "id": "62f7e3d77d95e7ed",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -204,8 +204,9 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "204ac09fde106242",
+  "active": "05d7e6e280c4e34e",
   "lastOpenFiles": [
+    "1. Projects, Ongoing/포폴 겸 블로그 만들기/이번 달 작업 기록.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/25년 4월.md",
     "1. Projects, Ongoing/README.md",
     "3. Resource/Image/_RetreatButton.png",
@@ -220,7 +221,6 @@
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/이펙트의 최초 실행 이슈.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/보유 오퍼레이터 관리하는 로직.md",
     "1. Projects, Ongoing/포폴 겸 블로그 만들기/월별 작업 기록/25년 4월.md",
-    "1. Projects, Ongoing/포폴 겸 블로그 만들기/이번 달 작업 기록.md",
     "1. Projects, Ongoing/포폴 겸 블로그 만들기/짜투리 코드들/AWS - 테스트 코드.md",
     "1. Projects, Ongoing/포폴 겸 블로그 만들기/쌓이는 지식/React, Django, 웹/Django - DB 초기화.md",
     "1. Projects, Ongoing/포폴 겸 블로그 만들기/쌓이는 지식/MySQL/MySQL - DB 이전하기.md",
