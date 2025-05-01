@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects, Ongoing/README.md",
+                "file": "1. Projects, Ongoing/컴퓨터 기초/16. OS의 내부 동작 원리.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "README"
+              "title": "16. OS의 내부 동작 원리"
             }
           }
         ]
@@ -104,9 +104,9 @@
             "state": {
               "type": "tag",
               "state": {
-                "sortOrder": "alphabetical",
+                "sortOrder": "frequency",
                 "useHierarchy": true,
-                "showSearch": false,
+                "showSearch": true,
                 "searchQuery": ""
               },
               "icon": "lucide-tags",
@@ -143,12 +143,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1. Projects, Ongoing/README.md",
+                "file": "1. Projects, Ongoing/컴퓨터 기초/16. OS의 내부 동작 원리.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "README 의 나가는 링크"
+              "title": "16. OS의 내부 동작 원리 의 나가는 링크"
             }
           },
           {
@@ -156,9 +156,14 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {},
+              "state": {
+                "file": "1. Projects, Ongoing/컴퓨터 기초/16. OS의 내부 동작 원리.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
               "icon": "lucide-list",
-              "title": "개요"
+              "title": "16. OS의 내부 동작 원리 의 개요"
             }
           },
           {
@@ -186,11 +191,11 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
-    "width": 204.5
+    "width": 344.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -206,10 +211,11 @@
   },
   "active": "61b6d555762c6eea",
   "lastOpenFiles": [
-    "1. Projects, Ongoing/컴퓨터 기초/15. 핵심 OS 요소.md",
     "1. Projects, Ongoing/컴퓨터 기초/14. OS의 정체.md",
-    "1. Projects, Ongoing/README.md",
     "1. Projects, Ongoing/컴퓨터 기초/13. 함수가 호출되기까지.md",
+    "1. Projects, Ongoing/컴퓨터 기초/16. OS의 내부 동작 원리.md",
+    "1. Projects, Ongoing/컴퓨터 기초/15. 핵심 OS 요소.md",
+    "1. Projects, Ongoing/README.md",
     "1. Projects, Ongoing/컴퓨터 기초/12. 메모리 나누기 - 코드, 데이터, 스택, 힙.md",
     "1. Projects, Ongoing/컴퓨터 기초/11. 변수의 정체.md",
     "1. Projects, Ongoing/컴퓨터 기초/10. 컴파일러의 등장.md",
@@ -242,7 +248,6 @@
     "1. Projects, Ongoing/포폴 겸 블로그 만들기/월별 작업 기록/24년 5월.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/적 스탯 정리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/오퍼레이터들 스탯 정리.md",
-    "1. Projects, Ongoing/포폴 겸 블로그 만들기/월별 작업 기록/23년 12월.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지",
     "4. Archive/게임 플레이 잡지식/림버스 전투 시스템 이해하기",
     "4. Archive/게임 플레이 잡지식",
