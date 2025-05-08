@@ -39,10 +39,17 @@
 
 ## 5월
 
-## 250508
-### OperatorInventoryPanel : 스쿼드 일괄 편집 기능 추가
+## 250509
 
-#### 계획(전날 마무리 못한 내용들)
+### 짭명방 : 스쿼드에 오퍼레이터 한꺼번에 배치
+- 나머지 할 일
+	1.  `Bulk`에서 `SetEmpty` 클릭 시 `tempSquad, clickedSlot` 비우고 UI도 초기화
+	2. `Bulk`에서 클릭된 `OperatorSlot`의 우측 상단에 번호 표시(현재 인덱스 + 1)
+
+
+
+## 250508
+### 어제 못한 것들에 대한 계획
 ##### 스킬 관련 설정
 - 지정된 여러 오퍼레이터 외에도 스킬 설정도 함께 들어가 있어야 함.
 	- 기존에는 `SelectedSkill` 1개만 관리되고 있었는데, 이걸 `Operator + Skill`의 조합으로 넣어야 하나? 아니면 사이드 패널에 활성화된 상태에서 스킬 클릭했을 때 해당 OwnedOperator의 `StageSelectedSkill`만 바로 바뀌면 되나?
@@ -56,13 +63,127 @@
 	1. 스킬 버튼이 클릭됐을 때 해당 오퍼레이터의 `StageSelectedSkill`이 변경됨
 	2. `UserSquadManager`에서는 해당 오퍼레이터 정보만 들어감. 스쿼드에서 사용하는 스킬은 `StageSelectedSkill`을 따라간다. 이는 `DefaultSelectedSkill`과 구분됨.
 
-> - 실제 명방에서는 여러 개의 스쿼드를 쓸 수 있기 때문에, 아마 오퍼레이터들과 스킬을 함께 관리하는 방식으로 구현이 되어 있을 거임. 
+> - 실제 명방에서는 여러 개의 스쿼드를 쓸 수 있기 때문에, 스쿼드 자체에서 오퍼레이터들과 스킬을 함께 관리하는 방식으로 구현이 되어 있을 거임. 
 >   - 그렇게 추측이 된다고 했을 때, 내 구현을 바꿀까 말까에 대한 생각은 든다. 지금처럼 구현해도 큰 상관은 없겠지만.
 
 - 벌크에서도 다르게 구현할 이유가 있을까? 위와 마찬가지로 스쿼드에 넣으면 될 것 같음
 	- 대신 `UserSquadManager`에서 `List<OwnedOperator>`를 통째로 받아서 저장하는 로직 하나는 추가해야 한다. 기존엔 저렇게 넣는 식으로 구현한 게 없었..나? 저장 로직은 `PlayerDataManager`에 있기 때문에, 이것까지도 함께 봐야 할 것 같다. 
 
+### 계획 실행
 
+#### 스쿼드 구조 변경
+- 기존 스쿼드는 `operatorName`만을 관리하고, 스킬은 각 `operatorName`을 이용해 `OwnedOperator`에서 `squadSelectedSkill`을 가져오는 방식이었음
+- (물론 내 프로젝트에서는 1개의 스쿼드만 두겠지만) 이렇게 구현하는 경우 다른 스쿼드에 두더라도 모든 스킬이 통일되는 문제가 발생함
+	- 직관성이 떨어진다고 생각해서 시작함. "스쿼드에서 사용하는 오퍼레이터의 스킬"이라는 개념을 어디에 둘 지에 대한 것이다. 
+- 그래서 **스쿼드 관리 자체를 `operatorName, skillIndex`의 형태로 저장**하는 방식으로 수정함.
+
+```cs
+    // 플레이어가 소유한 데이터 정보
+    [Serializable] 
+    private class PlayerData
+    {
+        //public List<string> currentSquadOperatorNames = new List<string>(); // 스쿼드, 직렬화를 위해 이름만 저장
+        public List<SquadOperatorInfo> currentSquad = new List<SquadOperatorInfo>();
+    }
+
+    [Serializable]
+    public class SquadOperatorInfo
+    {
+        public string operatorName;
+        public int skillIndex;
+        
+        // 생성자
+        public SquadOperatorInfo()
+        {
+            this.operatorName = string.Empty;
+            this.skillIndex = 0;
+        }
+
+        public SquadOperatorInfo(string name, int index)
+        {
+            operatorName = name;
+            skillIndex = index; 
+        }
+    }
+```
+
+으로 시작, 관련 메서드들을 전부 수정하는 작업을 진행
+
+##### OwnedOperator 부분 수정
+`OwnedOperator`에서 현재 선택된 스킬을 어떤 식으로 관리할지가 고민이다.  다시 써봄.
+
+1. 스쿼드에서 사용 중인 스킬 인덱스를 갖게 하겠다면, `OwnedOperator` 자체에서는 `UnlockedSkills`가 있으니까 아무 정보도 갖지 않아도 된다?
+2. `defaultSkillIndex`는 `OwnedOperator`에서 갖는 게 맞음. 
+3. 기존에 스킬 정보는 `DeployableInfo.OwnedOperator.SelectedSkill` 같은 식으로 전달이 됐을 거임. 그 값이 이젠 `Squad`로 나갔기 때문에 `Squad`에서 선택 중인 스킬 인덱스 값을 가져와야 함.
+4. 기존 스쿼드 정보는 `UserSquadManager.GetCurrentSquad()`로 가져왔었다. 
+5. `GetCurrentSquad()`는 `List<string: operatorNames>`을 `List<OwnedOperator>`로 바꾸는 로직이었음. 즉, 이번에는 `OwnedOperator, int`를 함께 갖도록 반환시켜야 한다.
+	- `GetCurrentSquad, GetCurrentSquadWithNull` 수정 : [[스쿼드 정보 얻어오기 로직 변경]]
+
+- 얼추 정리되고 있다. 스쿼드 여러 개 구현할 것도 아닌데 괜히 했다는 생각이 들지만, 시작했으니까 어쩔 수 없다. (사실 스쿼드가 여러 개여도 OwnedOperator에서 여러 스쿼드에 대한 필드를 따로 구성하면 훨씬 간단하게 구현할 수 있기도 했고.) 기존 방식이 더 나았던 것 같기도..?
+- 근데 이 방식이 맞다고 생각했으니까 가야지 뭐..
+
+- 계속 수정 중
+	- `TryUpdateSquad` : 중복된 이름의 오퍼레이터를 스쿼드에 넣는 경우는 동작하지 않도록 했으나, 같은 오퍼레이터를 스킬만 바꾸고 싶은 경우에는 동작해야 함
+```cs
+// 마지막 조건만 새로 추가
+if (squadForSave.Any(opInfo => opInfo != null && opInfo.operatorName == operatorName && opInfo.skillIndex == skillIndex)) return false;
+```
+
+- 일단 여기까지 구현하면 `OperatorInventoryPanel`에서 오퍼레이터를 "하나씩" 수정하는 케이스는 잘 동작함
+	- 위에서 기존 방식이 더 나았던 것 같다고 했는데, 밑작업이 복잡해지면 위에서 작업할 때는 상대적으로 수월해지는 면이 있는 것 같음.
+
+---
+- 이제 최근에 구현했던 **한꺼번에 스쿼드에 넣기**를 해봄
+	- `PlayerDataManager`에 `UpdateFullSquad`을 구현
+	- `OperatorInventoryPanel`에서 단일 슬롯 / 벌크에 따른 인덱스 관리 분리
+	- 인덱스 정리가 난리가 났다.
+		- `slot.SetSelected()` 부분이랑 이걸로 인해 `HandleSlotClickedForBulk` 이벤트가 발생하는 이슈가 있음. 이전에도 재귀처리 때문에 다뤘던 부분인데, 여기서도 문제가 된다.
+		- 요점은 초기화 상황에서는 `HandleSlotClicked`의 동작을 방지하면 되지 않을까?
+		- 그러면 `OperatorInventoryPanel`에 `isInitializing` 전역 필드를 하나 추가함
+			- 굳. `OnEnable`의 맨 처음과 끝에 필드 두고 `HandleSlotClickedForBulk`에서만 플래그로 사용함.
+
+- 일단 거의 다 오기는 했음
+	- 나머지 할 일
+		1.  `Bulk`에서 `SetEmpty` 클릭 시 `tempSquad, clickedSlot` 비우고 UI도 초기화
+		2. `Bulk`에서 클릭된 `OperatorSlot`의 우측 상단에 번호 표시(현재 인덱스 + 1)
+
+
+### 지식이 늘었다 
+
+#### LinQ - Select, Where, Any, Contains
+
+1. `Select`
+	- 컬렉션의 각 요소를 새로운 형태로 변환한다.
+```cs
+List<int> numbers = new List<int> {1, 2, 3, 4, 5};
+IEnumerable<int> squares = numbers.Select(n => n*n) // {1, 4, 9, 16, 25}
+```
+
+2. `Where`
+	- 컬렉션에서 특정 조건을 만족하는 요소들만 필터링한다.
+```cs
+List<int> numbers = new List<int> {1, 2, 3, 4, 5};
+IEnumerable<int> evenNumbers = numbers.Where(n => n % 2 == 0); //{2, 4}
+```
+
+3. `Any`
+	- 컬렉션에서 특정 조건을 만족하는 요소가 하나라도 있는지 확인
+	- 매개변수가 없을 때에는 빈 컬렉션이 아니라면 `true`
+	- 조건자`Predicate`와 함께 사용할 때는 조건자가 `true`인 게 하나라도 있으면 `true`
+```cs
+List<int> numbers = new List<int> {1, 2, 3, 4, 5};
+bool hasEvenNumber = numbers.Any(n => n %2 == 0); // 조건자가 있는 경우 - true
+bool isEmpty = new List<int>.Any(); // 리스트가 비어 있는지 확인(.Any()는 요소가 있으면 true)
+```
+
+> 내 경우 `List<string>`을 `List<squadOperatorInfo>`로 바꾸면서 `Contains`을 `Any`로 바꿔야 하는 상황이 발생했는데, 각 요소를 돌면서 특정 값을 비교했던 기존 상황과 달리 특정 필드의 값을 비교하는 방식으로 변경되었기 때문이다.
+```cs
+// 기존 방식. List<string>이라서 Contains을 사용
+safePlayerData.currentSquadOperatorNames.Contains(operatorName)
+
+// 수정된 방식. List<squadOperatorInfo>라서 Any를 사용. squadOperatorInfo 내에 opereatorName이라는 필드가 있다.
+safePlayerData.currentSquad.Any(opInfo => opInfo != null && opInfo.operatorName == operatorName)
+```
 ## 250507
 저런! 어제 축구를 하다 다쳐서 당분간 축구를 못할 것 같다!
 ### 스쿼드 일괄 편집 기능 추가(계속)
