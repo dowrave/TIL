@@ -39,13 +39,70 @@
 
 ## 5월
 
+### 못 끝낸 일
+
+1. `SquadEditPanel`에서의 스쿼드 초기화 버튼 기능 추가
+
 ## 250509
 
 ### 짭명방 : 스쿼드에 오퍼레이터 한꺼번에 배치
-- 나머지 할 일
-	1.  `Bulk`에서 `SetEmpty` 클릭 시 `tempSquad, clickedSlot` 비우고 UI도 초기화
-	2. `Bulk`에서 클릭된 `OperatorSlot`의 우측 상단에 번호 표시(현재 인덱스 + 1)
 
+####  1.  `Bulk`에서 `SetEmpty` 클릭 시 `tempSquad, clickedSlot` 비우고 UI도 초기화
+> 일단 `tempSquad`와 `clickedSlot`의 `HandleSlotClicked` 내부에서 이뤄지므로, 굳이 해당 부분을 호출해서 적용할 필요는 없다. 단순히 `SetSelected(bool)`만으로 기능시킬 수 있음
+
+- `SetEmpty` 구현 완료. 반복문으로 슬롯 돌면서 `SetSelected(false)`만 구현했음.
+- `nowEditingIndex` 관리
+	- **클릭된 시점에 `nowEditingIndex`가 설정되어야 함** 
+		- 어제는 슬롯을 클릭하면 다음 인덱스를 미리 갖게 구현했었음. 이러면 스킬 설정할 때 `null`인 공간에 사용할 스킬 인덱스만 들어가게 된다.
+
+#### 2. `Bulk`에서 클릭된 `OperatorSlot`의 우측 상단에 번호 표시(현재 인덱스 + 1)
+- 구현 완료
+![[Pasted image 20250509172331.png]]
+- 이거 하려고 며칠을 쓴 거임 아 ㅋㅋㅋ
+- 아예 **스쿼드 구조를 고쳤고, 관련된 메서드들을 고쳤고, `OwnedOperator`와 `Squad` 간의 조율 때문에 시간을 오래 잡아먹었다. 근데 바꾸는 것 자체는 잘 한 것 같음.**
+
+### Bulk 인벤토리 접근 버튼 구현
+> 원본 명방을 보면..
+> 1. 기본적으로 아이콘이 있는 버튼으로 나타남
+> 2. 이 아이콘이 있는 버튼을 클릭하면, 버튼의 오른쪽 끝 부분에서 시작해서 우측으로 텍스트 박스가 늘어남. 결과적으로 기존 버튼보다 넓은 너비를 갖게 됨.
+> 3. 2번의 상태에서 클릭하면 해당 패널로 이동함
+
+- 지금은 패널 이동 기능만 구현되어 있는데, 이걸 바꿔보자.
+	- `ExpandableButton`이라는 스크립트를 하나 만듦
+	- 1번째 클릭은 확장, 2번째 클릭은 버튼 동작으로 이어짐
+		- 여기서 버튼 동작은 (처음으로) `UnityEvent`를 써봤다. `public` 메서드가 있는 오브젝트를 연결해서 인스펙터에서 직접 붙이는 방식임.
+		- 기존에는 `Event<Action>`을 이용했음 (C#)
+
+- 일단 2개의 `ExpandableButton`을 담는 컨테이너를 하나 만들었음. 이벤트도 1번째 클릭과 2번째 클릭 때 다른 이벤트가 발생하도록 했다.
+- `MainMenuManager`에서의 1번째 클릭 시 발생하는 이벤트는 반대쪽 버튼을 축소하는 메서드를 구독시켰고, 2번째 클릭은 해당 버튼의 본격적인 기능이 됨
+
+- 지금은 각 버튼이 늘어나거나 줄어들 때 너비값이 정상적으로 반영되지 않는 문제가 있음. 
+```
+ExpandableButton
+- BasicIcon
+- ExpandableBox
+```
+> `Horizontal Layout Group`을 `Content Size Fitter`와 함께 써야 자식 오브젝트들의 너비 요소들이 부모 오브젝트에 제대로 반영됨
+
+- 버튼이 늘어나거나 줄어들 때 다른 버튼의 위치가 꼼지락대는 이슈도 있었다. 부모 오브젝트의 `Horizontal Layout Group`을 제거했음.
+
+- 버튼이 초기에 등장했을 때에는 애니메이션 동작을 막음
+	- 버튼에 `isInitializing`이라는 플래그를 넣고, `SetIsExpanded`로 동작시킴
+```cs
+    public void SetIsExpanded(bool state, bool isInitializing = false)
+    {
+        IsExpanded = state;
+        this.isInitializing = isInitializing;
+    }
+
+// 아래처럼 사용
+squadBulkEditButton.SetIsExpanded(true, isInitializing: false);
+```
+
+- 초기화시킨 다음 클릭은 멀쩡하게 애니메이션으로 동작해야 하는데 그렇지 못한 현상이 있다. 
+	- 디버깅해보면 정확히 같은 루트로 호출이 2번 되는 현상이 있음. 2번째 호출의 경우, 버튼의 동작이 정상적으로 진행되지 못하고 멈춘다.
+	- 완전히 같은 경로로 2번 호출되는 게 힌트였음. `StageSelectPanel`에 `OnConfirmButtonClicked` 이벤트가 2번 등록되어서 그랬다. 설마 이벤트 등록 2번 했나? 했는데 진짜였다 ㅋㅋㅋㅋㅋ
+	- 그 다음에도 바로 동작 안하는 문제가 있어서 수정 완료.
 
 
 ## 250508
