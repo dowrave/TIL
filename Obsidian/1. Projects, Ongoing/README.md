@@ -39,9 +39,29 @@
 
 ## 5월
 
-### 못 끝낸 일
+## 250510 - 짭명방
+- `SquadEditPanel`에서의 스쿼드 초기화 버튼 기능 추가
+	- 원본 게임을 따라간다.
+	1. 버튼을 클릭하면 확인 / 취소 패널이 나타남
+		- 이 메서드는 인스펙터에서 직접 등록함
+		- `ConfirmationPanel`이라고 튜토리얼 만들 때도 사용했던 게 있다. 이걸 그대로 쓸 수 있을 것 같음.
+	2. 확인 클릭 시 스쿼드 초기화
+		- `ConfirmationPanel`에서 스크립트 상에서 명시적으로 초기화를 쓴다. 
+		- `PlayerDataManager.ClearSquad`가 있다. 이거 쓰면 될 듯.
+		- 그 다음에 `SquadEditPanel` 등에서 이 이벤트를 받아서 현재 스쿼드 상태를 다시 업데이트하는 로직 짜야 함
+			- `SquadEditPanel`의 `OnEnable`에서는 `OnSquadUpdated` 이벤트를 `UpdateUI`가 구독하도록 해서 업데이트마다 반응하도록 구현함
 
-1. `SquadEditPanel`에서의 스쿼드 초기화 버튼 기능 추가
+- 2번째 클릭했을 때 버튼이 확장된 상태를 초기화될 필요는 없는 것 같음 - 그래서 `ExpandableButton`의 2번째 클릭에서 `IsExpanded = false`는 제거함
+
+- 버튼에 마우스 커서가 올라갔을 때, `Button`에서 동작하는 버튼의 색이 변하는 로직이 동작하지 않는다
+	- `Image`가 없기 때문에 `Button`의 `Target Graphic`도 동작하지 않는 것
+	- **현재 자식 오브젝트에 이미지가 2개 있기 때문에, 이들에 일괄적으로 적용하는 방법이 있나 싶었지만 유니티 상에서 그런 건 없는 듯.**
+	- 대신 스크립트로 작성하는 방법은 있다고 한다. 괜히 거슬려서 작업함.
+
+- 대충 이런 구조다.
+>1. 색 변화를 적용할 이미지와 초기 색을 저장 `Dictionary`
+> 2. `OnPointer{}Handler` 시리즈 중 `Enter, Exit, Down, Up`에 따라 색 조정자`Modifier`를 적용함
+> 3. 기존 이미지들에 `Modifier`를 곱한 색을 적용함. 알파값의 경우 `Modifier`의 알파값을 따라가도록 함.
 
 ## 250509
 
