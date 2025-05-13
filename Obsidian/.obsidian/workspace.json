@@ -106,7 +106,7 @@
               "state": {
                 "sortOrder": "frequency",
                 "useHierarchy": true,
-                "showSearch": true,
+                "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-tags",
@@ -195,8 +195,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 268.5,
-    "collapsed": true
+    "width": 268.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -210,11 +209,14 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "61b6d555762c6eea",
+  "active": "c156c5ddf45fbf92",
   "lastOpenFiles": [
+    "3. Resource/Image/SquadResetIcon_128.png",
+    "3. Resource/Image/SquadBulkEditIcon_128.png",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/이미지 파일 관리법.md",
+    "1. Projects, Ongoing/README.md",
     "3. Resource/Image/Pasted image 20250509172331.png",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/스쿼드 정보 얻어오기 로직 변경.md",
-    "1. Projects, Ongoing/README.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/오퍼레이터들 스탯 정리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/25년 4월.md",
     "1. Projects, Ongoing/컴퓨터 기초/16. OS의 내부 동작 원리.md",
@@ -235,8 +237,6 @@
     "3. Resource/Image/컴퓨터 기초-5.jpg",
     "3. Resource/Image/컴퓨터 기초-4.jpg",
     "3. Resource/Image/컴퓨터 기초-3.jpg",
-    "3. Resource/Image/컴퓨터 기초-2.jpg",
-    "3. Resource/Image/컴퓨터 기초-1.jpg",
     "1. Projects, Ongoing/컴퓨터 기초",
     "1. Projects, Ongoing/포폴 겸 블로그 만들기/이번 달 작업 기록.md",
     "1. Projects, Ongoing/포폴 겸 블로그 만들기/쌓이는 지식/EC2 스왑 메모리 설정.md",
@@ -248,7 +248,6 @@
     "1. Projects, Ongoing/포폴 겸 블로그 만들기/쌓이는 지식/React, Django, 웹/Django - DB 초기화.md",
     "1. Projects, Ongoing/포폴 겸 블로그 만들기/쌓이는 지식/MySQL/MySQL - DB 이전하기.md",
     "2. Area/django/2. 북마크 앱 만들기.md",
-    "2025-03-11.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지",
     "4. Archive/게임 플레이 잡지식/림버스 전투 시스템 이해하기",
     "4. Archive/게임 플레이 잡지식",
