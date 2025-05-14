@@ -21,7 +21,7 @@
 
 ### 작업 중 
 - 스테이지 1-3 추가 및 1-2, 1-3 난이도 조정
-
+	- **...을 해야 하는데 지금 보이는 이슈가 너무 많음!!!**
 
 ### 구현 예정
 
@@ -43,6 +43,69 @@
 - 패널의 슬롯들은 이제 파괴되지 않고 활성화 / 비활성화를 반복함
 - 어제 단일 오퍼레이터 편집 상황은 작업 끝냈고 벌크 편집만 진행하면 될 듯?
 - 그 외에 `OperatorInventoryPanel` 관련, 이슈가 발생하는지도 체크.
+
+### OperatorInventoryPanel
+- 벌크 편집
+	- 대충 완료. 생각보다 시간이 좀 걸렸다.
+	- 벌크를 초기화할 때, `HandleSlotClicked`의 동작을 막기 위해 `isBulkInitializing`이라는 플래그를 추가.
+
+- 세션을 기준으로 세션이 종료될 때 "현재 편집 중인"에 관한 상태들을 초기화하는 로직을 추가.
+	- `EditingOperator, ExistingOperator, currentEditingIndex, clickedSlots, tempSquads` 등등등
+	- `OnDisable`에서 UI부터 초기화하고 상태들을 초기화한다.
+
+- `OperatorInventoryPanel -> DetailPanel`에 다녀올 때 `SideView`의 `SkillSlot`이 초기화되는 현상 있어서 수정
+
+#### 수정 필요한 이슈들
+
+- [x] 패널 꺼질 때  아래 코드 제대로 동작 안함
+```cs
+foreach (OperatorSlot slot in clickedSlots)
+{
+	Debug.Log(slot.opData.entityName);
+	slot.ClearIndexText();
+}
+```
+> null 처리 이슈였음. 수정 완료.
+
+
+- [x] 단일 슬롯 편집 시 `SetEmpty` 버튼 제대로 동작하지 않는 현상
+```cs
+// 오퍼레이터를 넣는 경우, 지금 보유했는지 + 스쿼드에 중복된 오퍼레이터가 없는지 점검함
+if (operatorName != string.Empty)
+{
+	// 오퍼레이터 소유 확인
+	if (!string.IsNullOrEmpty(operatorName) && !safePlayerData.ownedOperators.Any(op => op.operatorName == operatorName)) return false;
+
+	// 같은 이름의 오퍼레이터 중복 방지 : 단, 스킬 인덱스가 다른 경우는 허용함
+	if (squadForSave.Any(opInfo => opInfo != null && opInfo.operatorName == operatorName && opInfo.skillIndex == skillIndex)) return false;
+}
+```
+> 수정 완료. 바깥 조건문 추가. 저 조건이 없으면 슬롯을 비우려고 할 경우 `return false`에 걸려버림.
+
+- [x] 디테일 패널에서 정예화하고 돌아와서 스킬 변경할 때 발생하는 오류
+```cs
+NullReferenceException: Object reference not set to an instance of an object
+OperatorInventoryPanel.OnSkillButtonClicked (System.Int32 skillIndex) (at Assets/Scripts/UI/Panels/OperatorInventoryPanel.cs:734)
+```
+> 수정 완료.
+
+- [x] 2스킬이 없는데 스킬 선택 인디케이터가 2스킬로 지정되는 현상
+	- 벌크 상태, 1정예화 오퍼레이터의 2스킬로 지정된 상태에서 0정예화 오퍼레이터를 클릭했을 때 빈슬롯인데도 인디케이터가 남아 있는 현상
+	- 수정 완료.
+```cs
+// if (selectedSkill == null) 부분을 제거
+selectedSkillIndex = op.UnlockedSkills.IndexOf(slot.SelectedSkill);
+selectedSkill = op.UnlockedSkills[selectedSkillIndex];
+UpdateSkillSelectionIndicator();
+UpdateSkillDescription();
+```
+
+- [x] 오퍼레이터 인벤토리 패널이 크게 아래 3가지 상태인데, 계속 엉키는 이슈가 있음. 
+	1. 인벤토리 그냥 진입
+	2. 스쿼드의 단일 슬롯 편집
+	3. 스쿼드 일괄 슬롯 편집
+	- 특히 2번, 3번은 하나가 켜지면 다른 하나가 꺼지도록 수정함.
+	- (아마도) 수정 완료.
 
 ## 250513
 ### 이슈 수정
