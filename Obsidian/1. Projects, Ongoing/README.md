@@ -34,667 +34,130 @@
 
 ## 5월
 
-## 250515 - 블로그
+## 250516 
 
-### SavingPlan이 적용된 AWS 요금
-![[Pasted image 20250515173439.png]]
-> 5월 14일에 `SavingPlans`을 달고 나서 미리 요금이 잡혀있는 모습이다.
-> 5월 14일에 시작했으니, **EC2 요금(하늘색)과 `SavingPlans`(와인색)이 같이 잡혀 있으니 정상적으로 적용되고 있다고 볼 수 있겠음.**
-> `t2.micro`를 사용 중이며, 검색에 잡히는 블로그도 아니고 현상을 유지할 생각.
+### 블로그 수정사항
+- 모바일로 보다가 신경쓰이는 부분들이 있어서 수정함.
 
-플랜을 신청할 때 **시간 당 얼마까지 적용할 것인지를 묻는 부분**이 있다.
-
-- 플랜을 적용한 후 할인 요금 기준인가?
-- `On-Demand`로 사용하는 요금이 기준인건가? 
-
-애매해서 AI들한테 물어보고 다녔는데 **플랜을 적용한 후 할인 요금 기준**으로 작성하면 된다. 
-내 경우 `t2.micro`는 `on-demand`라면 `0.0144$/시간`이고, `1년, 선지불 없음`으로 하면 `0.0086$/시간`이어서 `0.0086$`을 입력했음. 요금표는 플랜 신청하는 곳에 링크로 있다.
-
-플랜은 인스턴스 패밀리랑 리전을 고정하는 것으로 선택했다.
-
-### 블로그 글쓰기 관련 이슈들 수정
-- AWS의 `saving Plans`을 1년 달아버렸기 때문에, 최소한 1년은 더 써야 한다.
-	- 그런 김에 **블로그에 글을 작성할 때 거슬렸던 부분들을 수정**함.
-
-- [x] 붙여넣기 할 때 현재 커서에 붙여넣기되지 않고 문서의 가장 마지막 부분에 붙여넣기되는 현상
-```ts
-// QuillEditor.tsx
-const selection = editor.getSelection(true); // true로 설정하면 커서 위치를 가져온다.
-```
-> 원래 `getSelection()`으로 사용되었음
-> - 인자가 전달되지 않으면 `Quill`이 내부적으로 마지막으로 알고 있던 캐시된 정보를 반환함. 
-> 	- `paste` 같은 이벤트에서는 에디터의 포커스 상태가 순간적으로 변할 수 있기 때문에, 실제 커서 위치와 다른 커서 위치를 가져올 위험이 있다.
-> 	- 그게 왜 문서 끝부분인지는 몰루겠워요
-> - **`true`가 전달되면 브라우저가 실제로 인식하고 있는 위치나 선택 영역을 강제로 조회**해서 가져옴. 에디터가 포커스되지 않았다면 포커스를 시도하기도 한다.
-
-- [x] 영역을 잡고 붙여넣기 할 때, 새로운 글이 삽입되지 않는 현상
-```ts
-e.preventDefault();
-
-// 선택된 텍스트가 있으면 먼저 삭제
-if (length > 0) {
-	editor.deleteText(index, length);
+- [x] 웹 브라우저의 설정이 `다크 모드`라면, 글자가 흰색으로 변하는 현상
+- 이 프로젝트는 `tailwindCSS`을 썼음. `index.css`을 보면
+```css
+:root {
+	color-scheme: light dark;
+	color: rgba(255, 255, 255, 0.87);
+	background-color: #242424;
 }
 
-// 텍스트를 삽입하고 커서 위치를 조정함
-editor.insertText(index, text, 'user');
-editor.setSelection(index + text.length, 0);
-```
-> `deleteText`로 글이 지워진 다음에, `insertText`가 동작하지 않는 현상
-> 1. `setTimeout`을 아래 영역에 줘서 삭제와 삽입 사이에 딜레이를 주기
-> 	- 잘 동작하긴 하는데, 딜레이가 체감되는 게 보인다. 0.01초를 줘도 딜레이가 보인다?
-> 2. 중간에 커서 위치를 조정하는 `SetSelection`을 넣는 방법도 시도해봤는데, 별 효과는 없었음.
-
-1번으로 진행함.
-
-- [x] 이미지 넣는 상황에서 커서의 위치 설정
-	- 기존에는 마우스 커서의 위치에서 가장 가까운 위치로 텍스트 커서가 잡히는 방식이었음
-	- 그런데 실제로 이미지를 삽입하는 상황을 생각해보면
-```
-글 <이미지> 글
-```
-처럼 쓰는 경우는 없고
-
-```
-글
-<이미지>
-글
-```
-처럼 글과 이미지 영역을 구분해서 쓴단 말임?
-
-그러면 실질적으로 마우스 커서 위치에서 잡아내야 하는 건 "글의 몇 번째 줄이냐"가 더 중요한 정보로 보이고, 수평적인 정보는 그 다음에 생각하면 될 것 같다.
-```ts
-while (leafIndex >= 0) {
-	// 현재 인덱스의 바운딩 박스 계산
-	const bounds = editor.getBounds(leafIndex);
-	// 세로 거리 계산 (텍스트 중심과 커서 위치)
-	const verticalDistance = Math.abs((bounds.top + bounds.height / 2) - relativeY);
-
-	// 세로 거리가 더 가까운 경우 갱신
-	if (verticalDistance < minVerticalDistance) {
-		minVerticalDistance = verticalDistance;
-		minHorizontalDistance = Math.abs(bounds.left - relativeX);
-		closestIndex = leafIndex;
-	} else if (verticalDistance === minVerticalDistance) {
-		// 같은 줄일 때 가로 거리 비교
-		const horizontalDistance = Math.abs(bounds.left - relativeX);
-		if (horizontalDistance < minHorizontalDistance) {
-			minHorizontalDistance = horizontalDistance;
-			closestIndex = leafIndex;
-		}
-	}
-
-	// 인덱스 감소 (이전 leaf로 이동)
-	leafIndex--;
+@media (prefers-color-scheme: light) {
+	/* ... */
 }
 ```
-> 의도한 바에 맞게 잘 동작한다. 이걸 사용함.
-> 같은 질문을 넣었는데, ChatGPT-4o가 Gemini 2.5 Pro보다 훨씬 빠르게 응답했고 더 간결한 코드를 줬다. 클로드 3.7 Sonnet도 실험해봣는데 제미나이보다는 간단한 코드를 줬지만 의도한 대로 동작하진 않았음. ChatGPT-4o만 의도한 대로 동작함.
-> 이건 의외다.
+처럼 다크모드에 대한 설정이 있었다. `:root`에 들어간 값들은 기본적으로 다크 모드가 디폴트이고, `@media` 부분에 들어간 값들은 밝은 모드가 디폴트였음.
 
+그래서 저 부분들을 해제하고, `@meida` 부분에 있는 설정들인 `:root, a:hover, button`을 각자의 블록에 할당하는 것으로 수정 완료.
 
-- [ ] (보류)엔터가 있는 글을 붙여넣기할 때 엔터가 1번 더 들어가는 현상
-	- 이 컴포넌트에 붙여넣기 하는 상황이 문제인 줄 알았는데, 복사할 때가 문제였다. 외부 텍스트에 붙여넣기 해도 엔터가 2번씩 들어가는 현상이 나타나고 있음. 정작 `Quill` 내부에서는 복사하지 않은 원본 텍스트는 잘 유지됨.
-	- 이 이슈 처리가 생각보다 빡세다. 
-	- **괜찮은 상황을 O, 거슬리는 상황을 X**라고 해보자.
-		- (O) `VSCode` 등의 코드를 에디터로 복붙할 때
-		- (△) 에디터의 글을 복붙할 때
-			- (O) 티스토리는 글에 적힌 대로 잘 들어감
-			- **(X) 같은 에디터로 복붙할 때**
-			- **(X) 마크다운, 메모장 등에 복붙할 때**
-	- 이거는 그냥 보류하겠음. 
-		- `Quill`의 `delta` 옵션이 어떻게 동작하는지까지 파고들어야 함
-		- 구체적으로 어디가 원인인지 파고 드는 것도 시간을 많이 잡아먹을 것 같다. 
-		- 그렇다고 치명적으로 거슬리는 이슈도 아니다.
-		- 실질적으로 복붙을 활용한다고 하면
-			- 외부의 글을 에디터에 넣거나
-			- 블로그의 글을 티스토리로 빼는 경우
-			- ..정도인데 이 두 경우는 엔터가 추가로 입력되는 경우는 아니다.
-				- 특히 블로그의 글을 티스토리로 빼는 경우는 `에디터`에서 작성하다가 글을 외부로 빼면 문제가 되는데, 작성된 글은 Delta가 아니라 HTML로 저장되기 때문에 이걸 복사하면 큰 문제가 없음.
+혹시 나중에 다크 모드를 다시 쓸 수도 있기 때문에, 기존 설정들을 아래처럼 옮겨뒀다. 대신 `:root.color-scheme`을 현재 사용하지는 않으니까 주석 처리했음.
 
-- [x] `ctrl + z`로 되돌리기할 때 사라진 텍스트가 제대로 되돌려지지 않는 현상
-	- 정확히는 `붙여넣기` 동작을 할 때, 영역이 선택되어 있으면 영역을 지우고 붙여넣기가 들어간다.
-	- 여기서 **`ctrl + z`를 누르면 붙여넣기된 글은 지워지지만, 이전에 지워졌던 `선택된 영역`이 되돌리기로 돌아오지 않는 현상이 있음.**
-```ts
-// 'user' 파라미터 추가
-        if (length > 0) {
-            editor.deleteText(index, length, 'user');
-        }
-```
-> 이게 잡혀 있으면 `ctrl + z`을 눌렀을 때 삽입된 글이 지워지면서 기존 글이 다시 나타나게 된다.
+```css
+/* color-scheme: light dark; */
 
-- 영역을 잡고 붙여넣기를 할 때 기존 영역이 지워지는 로직은 유튜브 링크 조건문에 관계 없이 밖으로 뺐다.
-	- 이 경우 `ctrl + z`를 할 때 임베드된 유튜브 영상이 지워지지 않는다는 문제가 있기는 하다. 하지만 **`ctrl + z`로 삽입된 유튜브 영상을 지울 상황 자체가 흔히 발생하는 경우는 아니기 때문에 그냥 이대로 가도 괜찮을 듯?**
-
-- [x] 1번째 글자만큼은 한글이 조합되지 않는 현상 
-	- 예를 들면 `예`를 친다고 하면 `ㅇㅖ`로 꼭 처음에만 이렇게 동작하는 현상이 있음. 다른 작업을 하다가 다시 첫 글자로 가는 경우는 멀쩡하게 잘 동작한다.
-```ts
-//handleTextChange의 아래 부분을 제거
-// editor.root.setAttribute('spellcheck', "false"); // 빨간 밑줄 밴
-
-// 초기화하는 useEffect 부분으로 빼서 spellcheck 부분은 1회만 설정하도록 함
-quill.root.setAttribute('spellcheck', "false");
-```
-
-
-## 250514 - 짭명방
-### 어제 못 끝낸 내용
-#### OperatorInventoryPanel 벌크 편집 상황 수정
-- 패널의 슬롯들은 이제 파괴되지 않고 활성화 / 비활성화를 반복함
-- 어제 단일 오퍼레이터 편집 상황은 작업 끝냈고 벌크 편집만 진행하면 될 듯?
-- 그 외에 `OperatorInventoryPanel` 관련, 이슈가 발생하는지도 체크.
-
-### OperatorInventoryPanel
-- 벌크 편집
-	- 대충 완료. 생각보다 시간이 좀 걸렸다.
-	- 벌크를 초기화할 때, `HandleSlotClicked`의 동작을 막기 위해 `isBulkInitializing`이라는 플래그를 추가.
-
-- 세션을 기준으로 세션이 종료될 때 "현재 편집 중인"에 관한 상태들을 초기화하는 로직을 추가.
-	- `EditingOperator, ExistingOperator, currentEditingIndex, clickedSlots, tempSquads` 등등등
-	- `OnDisable`에서 UI부터 초기화하고 상태들을 초기화한다.
-
-- `OperatorInventoryPanel -> DetailPanel`에 다녀올 때 `SideView`의 `SkillSlot`이 초기화되는 현상 있어서 수정
-
-#### 수정 필요한 이슈들
-
-- [x] 패널 꺼질 때  아래 코드 제대로 동작 안함
-```cs
-foreach (OperatorSlot slot in clickedSlots)
-{
-	Debug.Log(slot.opData.entityName);
-	slot.ClearIndexText();
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
+  }
+  a:hover {
+    color: #535bf2;
+  }
+  button {
+    background-color: #1a1a1a;
+  }
 }
 ```
-> null 처리 이슈였음. 수정 완료.
-
-
-- [x] 단일 슬롯 편집 시 `SetEmpty` 버튼 제대로 동작하지 않는 현상
-```cs
-// 오퍼레이터를 넣는 경우, 지금 보유했는지 + 스쿼드에 중복된 오퍼레이터가 없는지 점검함
-if (operatorName != string.Empty)
-{
-	// 오퍼레이터 소유 확인
-	if (!string.IsNullOrEmpty(operatorName) && !safePlayerData.ownedOperators.Any(op => op.operatorName == operatorName)) return false;
-
-	// 같은 이름의 오퍼레이터 중복 방지 : 단, 스킬 인덱스가 다른 경우는 허용함
-	if (squadForSave.Any(opInfo => opInfo != null && opInfo.operatorName == operatorName && opInfo.skillIndex == skillIndex)) return false;
-}
-```
-> 수정 완료. 바깥 조건문 추가. 저 조건이 없으면 슬롯을 비우려고 할 경우 `return false`에 걸려버림.
-
-- [x] 디테일 패널에서 정예화하고 돌아와서 스킬 변경할 때 발생하는 오류
-```cs
-NullReferenceException: Object reference not set to an instance of an object
-OperatorInventoryPanel.OnSkillButtonClicked (System.Int32 skillIndex) (at Assets/Scripts/UI/Panels/OperatorInventoryPanel.cs:734)
-```
-> 수정 완료.
-
-- [x] 2스킬이 없는데 스킬 선택 인디케이터가 2스킬로 지정되는 현상
-	- 벌크 상태, 1정예화 오퍼레이터의 2스킬로 지정된 상태에서 0정예화 오퍼레이터를 클릭했을 때 빈슬롯인데도 인디케이터가 남아 있는 현상
-	- 수정 완료.
-```cs
-// if (selectedSkill == null) 부분을 제거
-selectedSkillIndex = op.UnlockedSkills.IndexOf(slot.SelectedSkill);
-selectedSkill = op.UnlockedSkills[selectedSkillIndex];
-UpdateSkillSelectionIndicator();
-UpdateSkillDescription();
-```
-
-- [x] 오퍼레이터 인벤토리 패널이 크게 아래 3가지 상태인데, 계속 엉키는 이슈가 있음. 
-	1. 인벤토리 그냥 진입
-	2. 스쿼드의 단일 슬롯 편집
-	3. 스쿼드 일괄 슬롯 편집
-	- 특히 2번, 3번은 하나가 켜지면 다른 하나가 꺼지도록 수정함.
-	- (아마도) 수정 완료.
-
-### AWS 관련
-- `Saving Plans` 1년 끊었다. EC2는 1년을 써야 하되, 40% 할인된 금액으로 이용할 수 있음.
-- 대충 한달에 4~5$ 정도 아껴지는 듯?
-## 250513
-### 이슈 수정
- - [x] 1정예화 아이콘 일부 구간에서 나타나지 않는 현상 수정
-
-- 0정예화 아이콘을 추가해야 할까?
-
-#### 기본 스킬 지정 후의 동작
-> 상황 : `SquadEditPanel`에서 오퍼레이터 선택 -> 선택된 오퍼레이터의 세부 패널로 가서 정예화를 하고 기본 지정 스킬을 바꾸고 다시 `OperatorInventoryPanel`로 나왔다
-- 이 때 `OperatorInventoryPanel`에서 최초로 지정되는 스킬은, 당연히 세부 패널에서 설정한 스킬이라고 생각되는 게 일반적일 거임?
-	- 근데 `SquadEditPanel`에서의 스킬이 지정된 채로 돌아온다. 이거 수정함.
-
-- 현재 `UpdateSkillButtons`의 구조를 보면 슬롯의 패널에서 인식되고 있는 `selectedSkill`이 없으면 오퍼레이터 슬롯에서 `SelectedSkill`을 가져오는 방식이다.
-- 지금 발생하는 상황에서 문제가 되는 건 `DefaultSelectedSkill`이 바뀌었는데도 그거에 맞춰서 선택된 스킬이 초기화되지 않는 현상이란 말임?
-
-- 그랬을 때 문제가 되는 지점이 여기다.
-```cs
-SelectedSkill = (nowEditingIndex != -1 && existingOperator == OwnedOperator)
-				? OwnedOperator.UnlockedSkills[skillIndex] // 오퍼레이터를 선택해 들어왔다면 스쿼드에서의 스킬을 설정
-				: OwnedOperator.DefaultSelectedSkill; // 아니라면 기본 지정 스킬로 설정
-```
-> 1. 스쿼드 패널에서 선택해서 들어온 오퍼레이터인 경우에는 스쿼드의 스킬을 따른다
-> 2. 하지만 해당 오퍼레이터의 세부 사항으로 들어가서 기본 지정 스킬을 수정했다면 기본 지정 스킬로 나타나야 한다
-> 3. 2번에서 쓰였던, `세부사항에 들어갔다가 나온 오퍼레이터`는 `MainMenuManager`에서 `currentEditingOperator`로 관리되고 있음. 
-
-그래서 저 조건문 부분만 단순히 아래처럼 바꿔서 수정할 수 있기는 하다.
-```cs
-// 스쿼드에서의 스킬 선택 조건
-bool skillInSquadCondition = nowEditingIndex != -1 && 
-	existingOperator == OwnedOperator && // SquadEditPanel에서 선택해서 들어온 오퍼레이터가
-	currentEditingOpereator != OwnedOperator; // 디테일 패널에서 수정된 오퍼레이터가 아닐 때
-```
-
-- 여기까지는 위에서 말한 문제 수정 완료임.
 ---
-#### DetailPanel에 들어갔다가 나올 때 정보 유지하기
-- 근데 원본 게임을 보면, **애초에 `OperatorInventoryPanel -> DetailPanel`로 이동할 때 원래 패널이 꺼지지 않았을 가능성이 높은 것 같음.** 들어갔다 나와도 정보가 유지되고 있다.
-	- 이런 구조까지 갈아엎기에는 지금 와서는 번거로운 작업만 될 가능성이 있으니 거기까지 가지는 않을 것이지만, 대신 현재 오퍼레이터 슬롯과 선택된 스킬의 상태들을 관리할 필요는 있어 보인다.
-	- 근데 애초에 파괴하는 개념이 아니니까 비활성화 후 다시 활성화해도 정보가 유지되는 거 아님? 뭔가 착각하고 있는 게 있는 것 같다.
-		- 비활성화된 오브젝트여도 그 안의 필드는 사용할 수 있다고 한다? 헐
-	- 처음엔 `OperatorSlotManager`라는 별도의 매니저에서 상태를 유지시키는 방식을 생각했는데, 정보가 유지된다면 굳이 얘를 쓸 필요는 없어보인다.
-
-- 생각 늘어놓기
-	- 슬롯들을 초기화해야 하는 상황들(혹은 재정렬해야 하는 상황)
-		1. 가장 처음에 패널 진입할 때는 슬롯들을 만들어야 하므로 초기화 필요
-		2. 편집 상황일 때
-			- 공통 : 현재 스쿼드에 있는 오퍼레이터들은 나타나지 않아야 함
-			- 그러면 기존 구현은 다시 슬롯들을 만들어내는 일들이었는데, 그거 대신에 어떤 슬롯이 보이고 어떤 슬롯이 보이지 않고 정도만 수정하면 됨
-		3. 어떤 오퍼레이터의 성장 상태가 변화했을 때
-			- 슬롯을 새로 만들거나 없애지 않는 식으로 수정하니까, 단순히 `OperatorSlot`들이 `OnEnable`될 때마다 현재 성장 상태를 반영하도록 UI를 업데이트하면 됨.
-
-- 그러면 최종적인 수정은 아래처럼 되겠다.
-	- 목표는 인벤토리 패널을 열 때마다 모든 슬롯을 초기화하지 않고, 최초에 한 번 초기화한 다음 그 상태를 유지하는 방식임.
-	1. 슬롯 자체는 보유한 모든 오퍼레이터로 초기화해도 됨
-	2. 상황에 따라 보여주는 오퍼레이터가 다름 
-		- 그냥 진입이면 모든 오퍼레이터를 보여주고
-		- 스쿼드 편집 상황에서는 스쿼드 내에 있는 오퍼레이터는 제외
-			- 1명만 편집한다면 현재 스쿼드에서 선택해서 들어온 오퍼레이터를 맨 앞에
-			- 다수 편집이면 순서는 크게 상관 없음.
-				- 선택된 슬롯들을 앞으로 빼는 방법은 있을 듯
-	3. 성장의 반영은 
-		- 모든 슬롯에 대해 인벤토리 패널이 활성화 될 때 반영
-		- 특정 슬롯을 통해 디테일 패널로 갔다면, 돌아올 때 해당 슬롯을 업데이트하면 됨
-
-- 위 내용을 바탕으로 코드를 쓰면 되겠다. 자전거 타고 와서.
-
-- 작업 진행
-	- 이게 이렇게 오래 걸릴 일인가? 싶은데 오래 걸린다.. 아직 단일 슬롯도 제대로 구성 못함
-- 패널에 진입했을 때 이전 선택 상태가 제대로 해제되지 않는 이슈가 있음. 정확히는 `선택 상태`의 해제가 아니라 인디케이터가 활성화된 상태가 유지됨.
-		- 이거는 `Confirm` 버튼 눌렀을 때 인디케이터가 활성화된 상태에서, 다시 해당 버튼이 나타날 상황이 됐을 때 그것이 초기화되지 않았기 때문으로 보임
-		- 따라서 `Confirm` 버튼을 누른 다음 처리를 완료하고 `SetSelected`를 `false`로 바꿔주면 될 듯?
-		- 이거도 안되네?
-	- 그래서 그냥 **슬롯들 초기화할 때 인디케이터도 함께 초기화**하는 방식으로 변경. 
-- 다음 이슈는 다시 스쿼드 편집 패널로 돌아갔을 때에도 임시적으로 세팅해놓은 스킬들이 유지되는 현상
-	- 즉 스쿼드 편집 패널에서 이런저런 과정을 마치고 다시 나가는 경우, 오퍼레이터 인벤토리 패널에서 임시로 지정해놓은 스킬들은 모두 `DefaultSelectedSkill`로 지정되어야 함
-	- 이를 위해 `MainMenuManager`에서 `OperatorSelectionSession`이라는 걸 만들어둠.
-```cs
-// OnEnable에 작성
-// "편집 중"일 때는 동작하지 않고, 단순히 인벤토리를 보거나 편집을 시작하는 시점에 동작함.
-if (!IsOnSelectionSession)
-{
-	foreach (OperatorSlot slot in operatorSlots)
-	{
-		if (slot.OwnedOperator != null && slot.OwnedOperator.UnlockedSkills.Count > 0)
-		{
-			slot.UpdateSelectedSkill(slot.OwnedOperator.DefaultSelectedSkill);
-		}
-	}
-}
-
-isEditingSlot = GameManagement.Instance!.UserSquadManager.IsEditingSlot;
-isEditingBulk = GameManagement.Instance!.UserSquadManager.IsEditingBulk;
-
-bool isEditing = isEditingSlot || isEditingBulk;
-SetSquadEditMode(isEditing);
-MainMenuManager.Instance.SetOperatorSelectionSession(isEditing); // IsOnSession 활성화
+- [x] 모바일에서 볼 때 좌우 패딩이 좀 많이 넓은 느낌임
+	- 수정 완료
+---
+3. 스크롤 내릴 때 이미지 부분에 손가락이 닿으면 스크롤이 동작하지 않는 현상 같은 게 있었음
+	- 테스트할 때는 딱히 체감이 안 됨. 컴퓨터와 모바일 환경의 차이일지도 모르겠는데, 개발자 환경을 켜고 모바일로 테스트해도 이미지를 클릭했을 때 스크롤이 동작하지 않는 현상은 없었음.
+	- 그래서 일단 보류.
+---
+- [x] 모바일로 접근할 때는 자동 번역할 거냐고 뜨는 경우가 있다.
+	- 크롬 기준
+	- `출발어 : 영어`로 되어 있는데 이거 왜 그런지 모르겠음.
+- `index.html`에 보면
+```html
+<html lang="en"> 
+...
+</html>
 ```
-> `OperatorSelectionSession`은 편집으로 들어올 때 켜지고, `BackButton`이나 `HomeButton`으로 `InventoryPanel`에서 나갈 때 꺼진다. 
-
-- 일단 하나 편집하는 상황까지는 정리 완료
-
-
-## 250512 - 짭명방
-
-- 스쿼드 일괄 편집, 초기화 버튼 아이콘 그리기
-
-- 이미지들 관리법에 대해 : [[이미지 파일 관리법]]
-	- **생성은 고해상도로, 사용은 이미지 크기를 줄이는 방식**으로 진행함
-	- 대부분의 아이콘이 `128 x 128`을 초과하지 않음. 가장 큰 아이콘이 160 x 160이다(FHD 기준)
-	- 만약 4K를 고려한다면 가로 세로로 2배 더 큰 해상도를 선택하는 것도 방법임. **일단은 FHD를 기준으로만 작업한다.** 출시할 작품이 아니니 이런 식으로 작업하지만, 알아는 두자.
-	- **실제로 사용할 용도에 맞춰서** 애셋을 만드는 방법이 더 좋다. 당연하다. 
-		- 기존 스프라이트들이 `512 x 512`니까 `Stars`에 들어가는 이미지 정도를 빼면 나머지는 `128 x 128`로 바꾸면 용량을 줄일 수 있을 것 같다. 작업해봄. 
-		- 실제로 각 파일이 저장되는 공간이 적게는 1/4에서 많게는 1/10 이상도 줄어드는 현상이 있다. 그러면서도 실제 게임에서의 아이콘이 선명한 정도는 크게 차이나지 않음.
-![[SquadBulkEditIcon_128.png]]
-- `128 x 128`
-![[SquadResetIcon_128.png]]
-- 이래봤자 **아끼는 용량이 1mb나 될까 싶지만**.. 그래도 용량을 낮춰도 이미지가 열화되어 보이진 않아서 알아뒀어야 할 포인트이긴 했던 것 같다.
-
-
-## 250510 - 짭명방
-- `SquadEditPanel`에서의 스쿼드 초기화 버튼 기능 추가
-	- 원본 게임을 따라간다.
-	1. 버튼을 클릭하면 확인 / 취소 패널이 나타남
-		- 이 메서드는 인스펙터에서 직접 등록함
-		- `ConfirmationPanel`이라고 튜토리얼 만들 때도 사용했던 게 있다. 이걸 그대로 쓸 수 있을 것 같음.
-	2. 확인 클릭 시 스쿼드 초기화
-		- `ConfirmationPanel`에서 스크립트 상에서 명시적으로 초기화를 쓴다. 
-		- `PlayerDataManager.ClearSquad`가 있다. 이거 쓰면 될 듯.
-		- 그 다음에 `SquadEditPanel` 등에서 이 이벤트를 받아서 현재 스쿼드 상태를 다시 업데이트하는 로직 짜야 함
-			- `SquadEditPanel`의 `OnEnable`에서는 `OnSquadUpdated` 이벤트를 `UpdateUI`가 구독하도록 해서 업데이트마다 반응하도록 구현함
-
-- 2번째 클릭했을 때 버튼이 확장된 상태를 초기화될 필요는 없는 것 같음 - 그래서 `ExpandableButton`의 2번째 클릭에서 `IsExpanded = false`는 제거함
-
-- 버튼에 마우스 커서가 올라갔을 때, `Button`에서 동작하는 버튼의 색이 변하는 로직이 동작하지 않는다
-	- `Image`가 없기 때문에 `Button`의 `Target Graphic`도 동작하지 않는 것
-	- **현재 자식 오브젝트에 이미지가 2개 있기 때문에, 이들에 일괄적으로 적용하는 방법이 있나 싶었지만 유니티 상에서 그런 건 없는 듯.**
-	- 대신 스크립트로 작성하는 방법은 있다고 한다. 괜히 거슬려서 작업함.
-
-- 대충 이런 구조다.
->1. 색 변화를 적용할 이미지와 초기 색을 저장 `Dictionary`
-> 2. `OnPointer{}Handler` 시리즈 중 `Enter, Exit, Down, Up`에 따라 색 조정자`Modifier`를 적용함
-> 3. 기존 이미지들에 `Modifier`를 곱한 색을 적용함. 알파값의 경우 `Modifier`의 알파값을 따라가도록 함.
-
-## 250509
-
-### 짭명방 : 스쿼드에 오퍼레이터 한꺼번에 배치
-
-####  1.  `Bulk`에서 `SetEmpty` 클릭 시 `tempSquad, clickedSlot` 비우고 UI도 초기화
-> 일단 `tempSquad`와 `clickedSlot`의 `HandleSlotClicked` 내부에서 이뤄지므로, 굳이 해당 부분을 호출해서 적용할 필요는 없다. 단순히 `SetSelected(bool)`만으로 기능시킬 수 있음
-
-- `SetEmpty` 구현 완료. 반복문으로 슬롯 돌면서 `SetSelected(false)`만 구현했음.
-- `nowEditingIndex` 관리
-	- **클릭된 시점에 `nowEditingIndex`가 설정되어야 함** 
-		- 어제는 슬롯을 클릭하면 다음 인덱스를 미리 갖게 구현했었음. 이러면 스킬 설정할 때 `null`인 공간에 사용할 스킬 인덱스만 들어가게 된다.
-
-#### 2. `Bulk`에서 클릭된 `OperatorSlot`의 우측 상단에 번호 표시(현재 인덱스 + 1)
-- 구현 완료
-![[Pasted image 20250509172331.png]]
-- 이거 하려고 며칠을 쓴 거임 아 ㅋㅋㅋ
-- 아예 **스쿼드 구조를 고쳤고, 관련된 메서드들을 고쳤고, `OwnedOperator`와 `Squad` 간의 조율 때문에 시간을 오래 잡아먹었다. 근데 바꾸는 것 자체는 잘 한 것 같음.**
-
-### Bulk 인벤토리 접근 버튼 구현
-> 원본 명방을 보면..
-> 1. 기본적으로 아이콘이 있는 버튼으로 나타남
-> 2. 이 아이콘이 있는 버튼을 클릭하면, 버튼의 오른쪽 끝 부분에서 시작해서 우측으로 텍스트 박스가 늘어남. 결과적으로 기존 버튼보다 넓은 너비를 갖게 됨.
-> 3. 2번의 상태에서 클릭하면 해당 패널로 이동함
-
-- 지금은 패널 이동 기능만 구현되어 있는데, 이걸 바꿔보자.
-	- `ExpandableButton`이라는 스크립트를 하나 만듦
-	- 1번째 클릭은 확장, 2번째 클릭은 버튼 동작으로 이어짐
-		- 여기서 버튼 동작은 (처음으로) `UnityEvent`를 써봤다. `public` 메서드가 있는 오브젝트를 연결해서 인스펙터에서 직접 붙이는 방식임.
-		- 기존에는 `Event<Action>`을 이용했음 (C#)
-
-- 일단 2개의 `ExpandableButton`을 담는 컨테이너를 하나 만들었음. 이벤트도 1번째 클릭과 2번째 클릭 때 다른 이벤트가 발생하도록 했다.
-- `MainMenuManager`에서의 1번째 클릭 시 발생하는 이벤트는 반대쪽 버튼을 축소하는 메서드를 구독시켰고, 2번째 클릭은 해당 버튼의 본격적인 기능이 됨
-
-- 지금은 각 버튼이 늘어나거나 줄어들 때 너비값이 정상적으로 반영되지 않는 문제가 있음. 
+> 여기에 `en`으로 나타난 부분이 문제임. `ko`로 수정.
+---
+- [x] 모바일 아카이브 페이지의 제목 글자 잘리는 현상
+	- 해당 영역이 가장 큰 화면일 때를 기준으로 `width`가 잡히는 현상이다. 
+```tsx
+	<td className="px-6 py-4 whitespace-nowrap">
+	  <Link to={`/${category}/${post.section}/post/${post.slug}`} className="text-sm lg:text-base font-medium text-gray-900 hover:text-blue-600">
+		{post.title}
+	  </Link>
+	</td>
 ```
-ExpandableButton
-- BasicIcon
-- ExpandableBox
+> 이 부분인데, `whitespace-nowrap` 은 모든 텍스트를 한 줄로 표시하려 하기 때문에 발생함
+> 해당 부분을 제거하고, 작은 화면에서는 패딩 값을 줄이는 식으로 적용함
+
+- 추가) 페이지마다 테이블의 서식이 들쭉날쭉함
+	- 테이블의 헤더는 작성일, 게시판, 소분류, 제목이고 그 밑으로 각 항목들이 나열됨
+	- 페이지마다 각 항목들이 차지하는 너비가 들쭉날쭉한 상태라서 이들을 다듬음
+```tsx
+	<tr>
+	  <th className={`archive-table-header ${width >= 1280 ? 'w-1/8' : 'w-1/4'}`}>작성일</th>
+	  {width >= 1280 && (
+		<>
+		  <th className={`archive-table-header w-1/8`}>게시판</th>
+		  <th className={`archive-table-header w-1/8`}>소분류</th>
+		</>
+	  )}
+	  <th className={`archive-table-header ${width >= 1280 ? 'w-5/8' : 'w-3/4'}`}>제목</th>
+	</tr>
 ```
-> `Horizontal Layout Group`을 `Content Size Fitter`와 함께 써야 자식 오브젝트들의 너비 요소들이 부모 오브젝트에 제대로 반영됨
-
-- 버튼이 늘어나거나 줄어들 때 다른 버튼의 위치가 꼼지락대는 이슈도 있었다. 부모 오브젝트의 `Horizontal Layout Group`을 제거했음.
-
-- 버튼이 초기에 등장했을 때에는 애니메이션 동작을 막음
-	- 버튼에 `isInitializing`이라는 플래그를 넣고, `SetIsExpanded`로 동작시킴
-```cs
-    public void SetIsExpanded(bool state, bool isInitializing = false)
-    {
-        IsExpanded = state;
-        this.isInitializing = isInitializing;
-    }
-
-// 아래처럼 사용
-squadBulkEditButton.SetIsExpanded(true, isInitializing: false);
+> 화면이 넓을 때는 영역을 작게 차지하는 부분들은 1/8로, 제목만 5/8로 차지하며
+> 화면이 좁을 때는 작성일만 1/4, 제목만 3/4을 차지한다.
+- 여기서 `w-1/8` 같은 것들은 `tailwind.config.ts`에서 새로 정의해서 사용
+```ts
+module.exports = {
+    content: [
+        '.index.html',
+        './src/**/*.{js,ts,jsx,tsx}'
+    ],
+    theme: {
+        extend: {
+            width:{
+                // 1/8 단위
+                '1/8' : '12.5%',
+                '2/8' : '25%',
+                '3/8' : '37.5%',
+                '4/8' : '50%',
+                '5/8' : '62.5%',
+                '6/8' : '75%',
+                '7/8' : '87.5%',
+            },
 ```
-
-- 초기화시킨 다음 클릭은 멀쩡하게 애니메이션으로 동작해야 하는데 그렇지 못한 현상이 있다. 
-	- 디버깅해보면 정확히 같은 루트로 호출이 2번 되는 현상이 있음. 2번째 호출의 경우, 버튼의 동작이 정상적으로 진행되지 못하고 멈춘다.
-	- 완전히 같은 경로로 2번 호출되는 게 힌트였음. `StageSelectPanel`에 `OnConfirmButtonClicked` 이벤트가 2번 등록되어서 그랬다. 설마 이벤트 등록 2번 했나? 했는데 진짜였다 ㅋㅋㅋㅋㅋ
-	- 그 다음에도 바로 동작 안하는 문제가 있어서 수정 완료.
-
-
-## 250508
-### 어제 못한 것들에 대한 계획
-##### 스킬 관련 설정
-- 지정된 여러 오퍼레이터 외에도 스킬 설정도 함께 들어가 있어야 함.
-	- 기존에는 `SelectedSkill` 1개만 관리되고 있었는데, 이걸 `Operator + Skill`의 조합으로 넣어야 하나? 아니면 사이드 패널에 활성화된 상태에서 스킬 클릭했을 때 해당 OwnedOperator의 `StageSelectedSkill`만 바로 바뀌면 되나?
-	- 일단 후자의 방법을 시도해봄 
-
-##### 수정 필요
-- 일괄 편집에 들어갔을 때, 슬롯이 선택된 걸 취소하고 다시 한 번 클릭했을 때 왜인지 모를 이유로 클릭이 한 번 씹히는 현상이 있음. 그 다음부턴 괜찮지만 거슬린다. 상태 관련 이슈 같음.
-
-##### OnConfirmButtonClicked - 벌크 구현
-- 기존 스쿼드가 저장되는 방식을 보면, 오퍼레이터 하나하나에 대해서
-	1. 스킬 버튼이 클릭됐을 때 해당 오퍼레이터의 `StageSelectedSkill`이 변경됨
-	2. `UserSquadManager`에서는 해당 오퍼레이터 정보만 들어감. 스쿼드에서 사용하는 스킬은 `StageSelectedSkill`을 따라간다. 이는 `DefaultSelectedSkill`과 구분됨.
-
-> - 실제 명방에서는 여러 개의 스쿼드를 쓸 수 있기 때문에, 스쿼드 자체에서 오퍼레이터들과 스킬을 함께 관리하는 방식으로 구현이 되어 있을 거임. 
->   - 그렇게 추측이 된다고 했을 때, 내 구현을 바꿀까 말까에 대한 생각은 든다. 지금처럼 구현해도 큰 상관은 없겠지만.
-
-- 벌크에서도 다르게 구현할 이유가 있을까? 위와 마찬가지로 스쿼드에 넣으면 될 것 같음
-	- 대신 `UserSquadManager`에서 `List<OwnedOperator>`를 통째로 받아서 저장하는 로직 하나는 추가해야 한다. 기존엔 저렇게 넣는 식으로 구현한 게 없었..나? 저장 로직은 `PlayerDataManager`에 있기 때문에, 이것까지도 함께 봐야 할 것 같다. 
-
-### 계획 실행
-
-#### 스쿼드 구조 변경
-- 기존 스쿼드는 `operatorName`만을 관리하고, 스킬은 각 `operatorName`을 이용해 `OwnedOperator`에서 `squadSelectedSkill`을 가져오는 방식이었음
-- (물론 내 프로젝트에서는 1개의 스쿼드만 두겠지만) 이렇게 구현하는 경우 다른 스쿼드에 두더라도 모든 스킬이 통일되는 문제가 발생함
-	- 직관성이 떨어진다고 생각해서 시작함. "스쿼드에서 사용하는 오퍼레이터의 스킬"이라는 개념을 어디에 둘 지에 대한 것이다. 
-- 그래서 **스쿼드 관리 자체를 `operatorName, skillIndex`의 형태로 저장**하는 방식으로 수정함.
-
-```cs
-    // 플레이어가 소유한 데이터 정보
-    [Serializable] 
-    private class PlayerData
-    {
-        //public List<string> currentSquadOperatorNames = new List<string>(); // 스쿼드, 직렬화를 위해 이름만 저장
-        public List<SquadOperatorInfo> currentSquad = new List<SquadOperatorInfo>();
-    }
-
-    [Serializable]
-    public class SquadOperatorInfo
-    {
-        public string operatorName;
-        public int skillIndex;
-        
-        // 생성자
-        public SquadOperatorInfo()
-        {
-            this.operatorName = string.Empty;
-            this.skillIndex = 0;
-        }
-
-        public SquadOperatorInfo(string name, int index)
-        {
-            operatorName = name;
-            skillIndex = index; 
-        }
-    }
-```
-
-으로 시작, 관련 메서드들을 전부 수정하는 작업을 진행
-
-##### OwnedOperator 부분 수정
-`OwnedOperator`에서 현재 선택된 스킬을 어떤 식으로 관리할지가 고민이다.  다시 써봄.
-
-1. 스쿼드에서 사용 중인 스킬 인덱스를 갖게 하겠다면, `OwnedOperator` 자체에서는 `UnlockedSkills`가 있으니까 아무 정보도 갖지 않아도 된다?
-2. `defaultSkillIndex`는 `OwnedOperator`에서 갖는 게 맞음. 
-3. 기존에 스킬 정보는 `DeployableInfo.OwnedOperator.SelectedSkill` 같은 식으로 전달이 됐을 거임. 그 값이 이젠 `Squad`로 나갔기 때문에 `Squad`에서 선택 중인 스킬 인덱스 값을 가져와야 함.
-4. 기존 스쿼드 정보는 `UserSquadManager.GetCurrentSquad()`로 가져왔었다. 
-5. `GetCurrentSquad()`는 `List<string: operatorNames>`을 `List<OwnedOperator>`로 바꾸는 로직이었음. 즉, 이번에는 `OwnedOperator, int`를 함께 갖도록 반환시켜야 한다.
-	- `GetCurrentSquad, GetCurrentSquadWithNull` 수정 : [[스쿼드 정보 얻어오기 로직 변경]]
-
-- 얼추 정리되고 있다. 스쿼드 여러 개 구현할 것도 아닌데 괜히 했다는 생각이 들지만, 시작했으니까 어쩔 수 없다. (사실 스쿼드가 여러 개여도 OwnedOperator에서 여러 스쿼드에 대한 필드를 따로 구성하면 훨씬 간단하게 구현할 수 있기도 했고.) 기존 방식이 더 나았던 것 같기도..?
-- 근데 이 방식이 맞다고 생각했으니까 가야지 뭐..
-
-- 계속 수정 중
-	- `TryUpdateSquad` : 중복된 이름의 오퍼레이터를 스쿼드에 넣는 경우는 동작하지 않도록 했으나, 같은 오퍼레이터를 스킬만 바꾸고 싶은 경우에는 동작해야 함
-```cs
-// 마지막 조건만 새로 추가
-if (squadForSave.Any(opInfo => opInfo != null && opInfo.operatorName == operatorName && opInfo.skillIndex == skillIndex)) return false;
-```
-
-- 일단 여기까지 구현하면 `OperatorInventoryPanel`에서 오퍼레이터를 "하나씩" 수정하는 케이스는 잘 동작함
-	- 위에서 기존 방식이 더 나았던 것 같다고 했는데, 밑작업이 복잡해지면 위에서 작업할 때는 상대적으로 수월해지는 면이 있는 것 같음.
+---
+- [x] 헤더에 넘버링 자동으로 붙이는 로직은 딱히 필요없을 듯?
+	- 작성된 글이 그대로 보인다는 원칙에도 맞지 않는 것 같고, 넘버링이 필요하다면 수동으로 붙이면 되니까?
+	- 이 함수랑 사용되는 부분을 주석처리 했는데, 정작 헤더 링크가 동작하지 않는 이슈 발생.
+	- 저 번호를 붙인 다음 헤더 링크를 띄우도록 코드가 작성되어 있었음. 해당 부분`setNumberComplete` 관련 `useState`문들을 지워서 그냥 바로 보이도록 수정.
+	- 헤더가 접히지 않는 문제도 수정
 
 ---
-- 이제 최근에 구현했던 **한꺼번에 스쿼드에 넣기**를 해봄
-	- `PlayerDataManager`에 `UpdateFullSquad`을 구현
-	- `OperatorInventoryPanel`에서 단일 슬롯 / 벌크에 따른 인덱스 관리 분리
-	- 인덱스 정리가 난리가 났다.
-		- `slot.SetSelected()` 부분이랑 이걸로 인해 `HandleSlotClickedForBulk` 이벤트가 발생하는 이슈가 있음. 이전에도 재귀처리 때문에 다뤘던 부분인데, 여기서도 문제가 된다.
-		- 요점은 초기화 상황에서는 `HandleSlotClicked`의 동작을 방지하면 되지 않을까?
-		- 그러면 `OperatorInventoryPanel`에 `isInitializing` 전역 필드를 하나 추가함
-			- 굳. `OnEnable`의 맨 처음과 끝에 필드 두고 `HandleSlotClickedForBulk`에서만 플래그로 사용함.
-
-- 일단 거의 다 오기는 했음
-	- 나머지 할 일
-		1.  `Bulk`에서 `SetEmpty` 클릭 시 `tempSquad, clickedSlot` 비우고 UI도 초기화
-		2. `Bulk`에서 클릭된 `OperatorSlot`의 우측 상단에 번호 표시(현재 인덱스 + 1)
-
-
-### 지식이 늘었다 
-
-#### LinQ - Select, Where, Any, Contains
-
-1. `Select`
-	- 컬렉션의 각 요소를 새로운 형태로 변환한다.
-```cs
-List<int> numbers = new List<int> {1, 2, 3, 4, 5};
-IEnumerable<int> squares = numbers.Select(n => n*n) // {1, 4, 9, 16, 25}
-```
-
-2. `Where`
-	- 컬렉션에서 특정 조건을 만족하는 요소들만 필터링한다.
-```cs
-List<int> numbers = new List<int> {1, 2, 3, 4, 5};
-IEnumerable<int> evenNumbers = numbers.Where(n => n % 2 == 0); //{2, 4}
-```
-
-3. `Any`
-	- 컬렉션에서 특정 조건을 만족하는 요소가 하나라도 있는지 확인
-	- 매개변수가 없을 때에는 빈 컬렉션이 아니라면 `true`
-	- 조건자`Predicate`와 함께 사용할 때는 조건자가 `true`인 게 하나라도 있으면 `true`
-```cs
-List<int> numbers = new List<int> {1, 2, 3, 4, 5};
-bool hasEvenNumber = numbers.Any(n => n %2 == 0); // 조건자가 있는 경우 - true
-bool isEmpty = new List<int>.Any(); // 리스트가 비어 있는지 확인(.Any()는 요소가 있으면 true)
-```
-
-> 내 경우 `List<string>`을 `List<squadOperatorInfo>`로 바꾸면서 `Contains`을 `Any`로 바꿔야 하는 상황이 발생했는데, 각 요소를 돌면서 특정 값을 비교했던 기존 상황과 달리 특정 필드의 값을 비교하는 방식으로 변경되었기 때문이다.
-```cs
-// 기존 방식. List<string>이라서 Contains을 사용
-safePlayerData.currentSquadOperatorNames.Contains(operatorName)
-
-// 수정된 방식. List<squadOperatorInfo>라서 Any를 사용. squadOperatorInfo 내에 opereatorName이라는 필드가 있다.
-safePlayerData.currentSquad.Any(opInfo => opInfo != null && opInfo.operatorName == operatorName)
-```
-## 250507
-저런! 어제 축구를 하다 다쳐서 당분간 축구를 못할 것 같다!
-### 스쿼드 일괄 편집 기능 추가(계속)
-
-#### 대충 개요 정리
-- 일단 원하는 기능부터 정리해보자. 그냥 진행하려니 복잡해서 계속 정리가 안된다.
-```
-- SquadEditPanel에서 별도의 일괄 편집 버튼으로 진입
-
-- OperatorInventoryPanel에 진입하면
-	1. 기존 스쿼드에 있는 오퍼레이터들이 선택된 상태
-		- 스쿼드는 중간에 null을 포함할 수 있는 리스트임
-			- 차이) 원작 게임은 어떤 요소가 빠지면 나머지 요소가 앞으로 하나씩 밀림
-		- 선택되었을 때, "선택된 상태" 및 "해당 오퍼레이터가 스쿼드에서 차지하고 있는 인덱스 + 1"이 함께 나타나야 함
-	2. 오퍼레이터 슬롯을 선택했을 때
-		- 이미 선택된 오퍼레이터 슬롯, 즉 스쿼드 내에 있는 오퍼레이터 슬롯이라면 제거
-			- 해당 인덱스만 비우고, 현재 편집 중인 인덱스를 비워진 인덱스로 설정
-		- 스쿼드 내에 없다면 새로 추가
-			- 다음 인덱스를 검사해서 이미 채워진 슬롯이라면 인덱스 +1을 반복.
-		- SideView는 현재 클릭된 오퍼레이터의 정보가 나타나야 함. 이건 Slot만 전달하면 됨.
-		- 
-```
-
-#### 스킬 관련 설정
-- 지정된 여러 오퍼레이터 외에도 스킬 설정도 함께 들어가 있어야 함.
-	- 기존에는 `SelectedSkill` 1개만 관리되고 있었는데, 이걸 `Operator + Skill`의 조합으로 넣어야 하나? 아니면 사이드 패널에 활성화된 상태에서 스킬 클릭했을 때 해당 OwnedOperator의 `StageSelectedSkill`만 바로 바뀌면 되나?
-	- 일단 후자의 방법을 시도해봄 
-
-#### 슬롯 관련 프로퍼티로 변경
-- `SelectedSlot`이라는 상태의 업데이트 로직과 사이드 뷰의 업데이트 로직이 분리되어 있어서 프로퍼티로 구현해서 하나로 합침
-```cs
-    public OperatorSlot? SelectedSlot
-    {
-        get { return selectedSlot; }
-        set
-        {
-            if (selectedSlot != value)
-            {
-                selectedSlot = value;
-                UpdateSideView();
-            }
-        }
-    }
-```
-
-#### 기존 문제 해결
-- 기존의 클릭된 슬롯 재클릭시 스택 오버플로우 이슈가 있었는데, 아래 로직이었기 때문에 그랬다. 예전엔 미봉책으로만 뒀는데, 이번에도 비슷한 문제가 발생해서 아예 뜯어봄.
-```
-1. 패널의 HandleSlotClicked는 슬롯의 OnSlotClicked 이벤트를 구독
-2. 슬롯의 SetSelected은 슬롯이 선택된 UI 설정 및 OnSlotClicked 이벤트를 발생
-3. 패널의 HandleSlotClicked 내에 슬롯.SetSelected()을 넣으면 함수 무한 호출 & 스택 오버플로우 발생
-
--- 내 경우는 스택 오버플로우가 한 번 뜨고 나면 유니티 엔진 자체가 이상해지는 이슈도 생겨서 프로젝트를 아예 껐다가 켜야 했음. 인스트럭션이 화면에 막 나타남;
-```
-> 따라서 `HandleSlotClicked` 내부에 슬롯 클릭 처리를 진행 중인지 아닌지를 나타내는 `boolean` 플래그 하나를 추가해서 수정함. 재귀 호출이 발생하더라도 `boolean` 플래그가 있기 때문에 중복 실행을 방지함.
-
-
-## 250506
-
-### 스쿼드 일괄 편집 기능 추가(미완)
-- 솔직히 내 프로젝트는 한 번 스쿼드 편집하면 더 이상 편집할 이유가 없어서 굳이 구현할 필요는 없지만, 그래도 이런 걸 해봐야 한다고 생각해서 진행한다.
-- `SquadEditPanel`에서만 활성화되는 `TopArea`에 `squadBulkEditButton`을 추가
-	- 기존엔 `isEditing`으로만 분기를 정했는데, 여기에 하나 더 추가해야 함
-	- "현재 편집 중인가"에 대한 상태는 `UserSquadManager`에서 관리하고 있었기 때문에, 여기에 분기 하나를 더 추가함
-	- 기존 `OperatorInventoryPanel`에 벌크 편집 기능을 추가하려니까 조건 수정을 어디서부터 들어가야 할지 모르겠어서 헤매는 중. 범위가 좀 넓다?
-	- 기존 함수들 정리하고, 초기화까지는 했는데 아직 버튼 클릭 시의 동작이랑 확인 버튼 동작 등을 구현하지는 못했음. 스쿼드에서 인덱스 관리하는 것도 생각해봐야 할 듯.
-
-## 250502
-
-### 깃허브 자기소개 레포지토리 편집
-- 정리를 좀 했음.
-### 짭명방
-
-#### 밸런싱 계획
-
-
-#### 이슈 수정
-- 다시 돌아왔다. 못 해결했던 문제부터 다시 작업
-- [x]  `SlashSkill`
-    - 지금은 대미지 판정이 이펙트 기준인데, 이걸 타일 기준으로 변경해야 할 것 같음. 타일에 적이 있는데도 이펙트의 경로에서 벗어나면 맞지 않는 문제가 있다.
-	- 기존의 메인 이펙트 위치에 콜라이더를 생성하는 방식에서, 파티클 시스템에 있는 `Collide`를 이용해서 `OnParticleCollision`으로 판정하는 걸 시도해봤는데 `Enemy`에 있는 `Is Trigger` 때문에 트리거 관련 처리로 바꿔서 진행해봤다. 그걸 `OnParticleTrigger`로 바꿔봤는데 근데 잘 동작하지 않았음.
-	- 그래서 **그냥 기존의 콜라이더 생성 로직에서 반경만 넓히는 방식으로 수정**했다.`0.25f -> 0.5f`
-		- 일단은 성능 상 큰 이슈는 없으니까 이렇게 진행하겠음.
-
-- [x]  로비에서 `ItemUIElement` 클릭 시 나타나는 패널에서 아이템 갯수 어떻게 표현할 것인가
-    - 현재 보유 중인 아이템 숫자 말고 있나?
-	- 나타나는 패널에서 아이템 갯수 표시 부분만 `갯수 -> 보유`로 수정
-- [x] `OperatorInventoryPanel`
-	- 슬롯이 정상적으로 초기화되지 않는 문제 수정
-		- 스킬 슬롯 지정하는 부분에서 바로 슬롯으로 들어가는 부분에 대한 분기 처리가 안 되었다.
-- [x] 2성 클리어 후 3성 클리어를 했는데 `PromotionItem`이 지급되지 않는 현상
-	- 정예화 지급 아이템 조건 수정
-
-
-
-#### 엑셀 스탯 계산기 작업
-- [스탯 계산기](https://docs.google.com/spreadsheets/d/1ToqWbSyobNPP6mjlOIRBKZMIE65FfH6BYlm0ffL4wCE/edit?usp=sharing)
-- 밸런싱을 위해 + 게임을 켜지 않고 직관적으로 보기 위해 구글 스프레드 시트로 오퍼레이터의 스탯 계산기를 하나 만듦
-
-
-
-## 250501
-### 컴퓨터 공부
-- [[16. OS의 내부 동작 원리]]
-
+- [x] `postDetail`의 화면 창 크기에 따른 레이아웃 변화
+	- `subsectionBox, headerLink` 부분 모두 `xl` 이상에서만 나타나도록 수정. 
+	- 아예 메인 컨텐츠가 나타나는 영역은 다시 손보고 있음.
+	- 얼추 다 수정한 것 같아서 마무리.
+---
+- [x] 프로젝트 소개 부분도 수정
+	- `xl` 이상인데 화면이 너무 크지 않은 상태에서는 일부 정보를 보이지 않도록 수정
+	- 레이아웃도 만지긴 했는데 만족스럽진 않다. 근데 더 건드리고 싶진 않음..
 # 이전 일지
 
 - 깃허브 링크는 향후 프로젝트 폴더 링크 이동에 따라 손상될 수 있음
@@ -712,6 +175,7 @@ safePlayerData.currentSquad.Any(opInfo => opInfo != null && opInfo.operatorName 
 	- [[25년 2월]]
 	- [[25년 3월]]
 	- [[1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/25년 4월|25년 4월]]
+	- [[1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/25년 5월|25년 5월]]
 
 ## 블로그
 - [React + Django 프로젝트 일지 월별 작업 기록 깃허브 링크](https://github.com/dowrave/TIL/tree/main/Obsidian/1.%20Projects%2C%20Ongoing/%ED%8F%AC%ED%8F%B4%20%EA%B2%B8%20%EB%B8%94%EB%A1%9C%EA%B7%B8%20%EB%A7%8C%EB%93%A4%EA%B8%B0/%EC%9B%94%EB%B3%84%20%EC%9E%91%EC%97%85%20%EA%B8%B0%EB%A1%9D)
@@ -723,3 +187,4 @@ safePlayerData.currentSquad.Any(opInfo => opInfo != null && opInfo.operatorName 
 	- [[24년 4월]]
 	- [[24년 5월]]
 	- [[1. Projects, Ongoing/포폴 겸 블로그 만들기/월별 작업 기록/25년 4월|25년 4월]]
+	- [[1. Projects, Ongoing/포폴 겸 블로그 만들기/월별 작업 기록/25년 5월|25년 5월]]
