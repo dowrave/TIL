@@ -4,25 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "9e8a96c7a02845cc",
+        "id": "9ae1a6e93932580c",
         "type": "tabs",
         "children": [
           {
-            "id": "cfd1da4d51ea1f65",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/적 스탯 정리.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "적 스탯 정리"
-            }
-          },
-          {
-            "id": "6b0174b5c92093f4",
+            "id": "296fe36e86181116",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -35,8 +21,7 @@
               "title": "README"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -103,7 +88,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 251.5
+    "width": 388.5
   },
   "right": {
     "id": "e94ea327b6cf935a",
@@ -224,10 +209,13 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "6b0174b5c92093f4",
+  "active": "296fe36e86181116",
   "lastOpenFiles": [
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/적 스탯 정리.md",
     "1. Projects, Ongoing/README.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/UI/버튼 색깔.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/25년 5월.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/UI/글자의 크기에 따른 배경 맞추기.md",
     "2. Area/글쓰기/2. 글쓰기 정석.md",
     "2. Area/글쓰기/1. 문장 기술.md",
     "2. Area/글쓰기/예시들 - 갱신 안할 거임.md",
@@ -235,7 +223,6 @@
     "2. Area/글쓰기",
     "4. Archive/독서/정신건강론.md",
     "4. Archive/독서/색의 힘.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/25년 5월.md",
     "1. Projects, Ongoing/포폴 겸 블로그 만들기/월별 작업 기록/25년 5월.md",
     "3. Resource/Image/Pasted image 20250515173439.png",
     "3. Resource/Image/SquadResetIcon_128.png",
@@ -262,8 +249,6 @@
     "3. Resource/Image/컴퓨터 기초-6.jpg",
     "3. Resource/Image/컴퓨터 기초-5.jpg",
     "1. Projects, Ongoing/컴퓨터 기초",
-    "1. Projects, Ongoing/포폴 겸 블로그 만들기/이번 달 작업 기록.md",
-    "1. Projects, Ongoing/포폴 겸 블로그 만들기/쌓이는 지식/EC2 스왑 메모리 설정.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지",
     "4. Archive/게임 플레이 잡지식/림버스 전투 시스템 이해하기",
     "4. Archive/게임 플레이 잡지식",
