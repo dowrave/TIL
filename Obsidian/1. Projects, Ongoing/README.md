@@ -3,7 +3,14 @@
 - **옵시디언으로 작성된 만큼 깃허브의 마크다운에서는 지원하지 않는 기능들이 있을 수 있다.** `[[]]`, 이미지 첨부 방식 등이 대표적.
 - `[[]]` 링크는 `유니티/보관함`이나 `작업 일지/직접 작성/일지`에 대부분 있다.
 
-## 작업 예정 - 짭명방
+## 작업 내용 : 짭명방
+
+### 사용 툴
+- `Unity`
+- UI 이미지 제작 : `Procreate`
+- `VFX` 제작 사용 툴(강의 보면서 따라함)
+	- `Krita`
+	- `Blender`
 
 ### 남은 작업 내용 
 - 남은 작업들
@@ -32,6 +39,103 @@
 	- 일관성 때문에 다른 곳에서도 구현을 해보고는 싶은데, 일단 보류.
 
 ## 5월
+
+## 250528 - 짭명방
+
+### 기타 수정 사항
+- [x] `OperatorInventoryPanel`
+	- 단일 슬롯 편집 시 현재 선택된 오퍼레이터가 나타나지 않는 현상 수정
+	- 실행 순서 이슈. `Awake`에 있던 걸 `OnEnable`로 옮겼다.
+
+- [x] 육성 상태 리셋 후에 슬롯 초기화 필요
+```cs
+// 전체 초기화 로직
+foreach (var op in ownedOperators)
+{
+	op.currentPhase = OperatorGrowthSystem.ElitePhase.Elite0;
+	op.currentLevel = 1;
+	op.currentExp = 0;
+	op.ClearUsedItems();
+	op.Initialize();
+}
+```
+> - 이게 전체 초기화 로직인데, `op.Initialize()` 자체에 `OwnedOperator`의 스킬을 0번째 스킬로 지정하는 것이 포함되어 있다.
+> - ~~지금 문제가 되는 부분은 전체 육성 상태 리셋 후에 `SquadEditPanel`로 돌아갔을 때 슬롯들을 업데이트하는 부분이 제대로 동작하기 때문으로 보임~~ 이 아닌 것 같다. 업데이트 로직이 동작하니까 오류가 발생하는 거임.
+
+- 실제 원인은 스쿼드의 스킬 인덱스를 고치지 않았기 때문이다. 1번 인덱스를 사용하지 못하는 상황인데 지정은 1번으로 되어 있어서 오류가 발생하는 것.
+```cs
+// currentSquad를 긁어온 다음
+List<SquadOperatorInfo?> currentSquad = GameManagement.Instance!.PlayerDataManager.GetCurrentSquadWithNull();
+foreach (var op in ownedOperators)
+{
+	op.currentPhase = OperatorGrowthSystem.ElitePhase.Elite0;
+	op.currentLevel = 1;
+	op.currentExp = 0;
+	op.ClearUsedItems();
+	op.Initialize();
+
+	// 4. 현재 스쿼드에 해당 오퍼레이터가 있다면 스킬은 0번으로 설정
+	int squadIndex = currentSquad.FindIndex(member => member.op.operatorName == op.operatorName);
+	if (squadIndex != -1) // FindIndex는 해당하는 값이 없으면 -1을 반환
+	{
+		GameManagement.Instance!.UserSquadManager.TryReplaceOperator(squadIndex, op, 0);
+	}
+}
+```
+
+- [x] 추가로, `OperatorInventoryPanel`에서도 초기화 버튼을 누르면 UI를 한 번 업데이트하도록 수정
+	- 성장 정보 업데이트는 이미 들어가 있고, `InitializeSkill()`을 넣어서 스킬 정보와 UI를 업데이트하도록 수정함
+```cs
+// 슬롯 UI 갱신
+foreach (OperatorSlot slot in operatorSlots)
+{
+	slot.UpdateActiveSlotVisuals(); // 스킬 외의 성장 정보들 업데이트
+	slot.InitializeSkill(); // 스킬 정보 업데이트
+}
+```
+
+
+- [x] 추추가로, `OperatorInventoryPanel`의 `BulkEditing`에서 디폴트로 설정하는 현재 편집중인 인덱스 `nowEditingIndex` 값은 스쿼드의 `null`이 아닌 가장 마지막 인덱스를 사용하도록 수정
+	- 이를 위해 `SetNowEditingIndexForBulk`와 `InitializeNowEditingIndexForBulk`로 구분함.
+		- 전자는 전체 스쿼드에서 `null`인 가장 낮은 인덱스를 찾음
+		- 후자는 전체 스쿼드에서 `null`이 아닌 가장 높은 인덱스를 찾음
+	- 왜 구현했냐면 `Bulk`로 들어가서 마지막 오퍼레이터의 디테일 정보를 수정하는 경우 현재 편집 중인 인덱스가 `-1`로 나타나는 현상이 있었음
+```cs
+// 스쿼드의 null이 아닌 가장 마지막 인덱스를 nowEditingIndex로 지정함
+private void InitializeNowEditingIndexForBulk()
+{
+	int maxSquadSize = GameManagement.Instance!.UserSquadManager.MaxSquadSize;
+	for (int i = 0; i < maxSquadSize; i++)
+	{
+		if (tempSquad[i] != null)
+		{
+			nowEditingIndex = i;
+		}
+	}
+}
+```
+
+- [x] `OperatorSlot`에 사용되는 현재 선택된 상태 이미지 수정
+	- 기존엔 `n * n` 이미지를 이용했는데, `OperatorSlot`은 세로로 긴 사각형임
+	- 이 경우 **이미지의 한쪽이 더 늘어나보이기 때문에**, 용도에 맞게 (이미지 편집 프로그램의) 캔버스를 만들고 크기는 딱 고정하는 방식으로 수정함.
+![[OperatorSlot_SelectedIndicator.png]]
+> 이 이미지를 사용
+### 계속 헷갈려서 정리
+- [[Unity - 실행 순서 메서드]]
+	- 씬 전환 상황도 정리
+	- 특히 최초 실행 상태에서 해당 오브젝트가 활성화되었는지 아닌지에 따른 `Awake`의 동작 차이
+	- 결론) `Awake`는 비활성화되어 있어도 실행됨
+		- 그래서 **실행순서가 중요한 기능은 `Awake`에 넣으면 안됨.**
+
+- [[Unity - Nullable 인자 조건 처리]]
+```cs
+bool? a;
+
+if (!a) // 사용 불가능
+if (a == false) // 사용 가능
+```
+> **`null`일 수 있기 때문에 논리 부정 연산자 `!`의 의미가 모호**해져서 **어떤 조건인지 명시적으로** 달아야 한다.
+> **`Sonnet 4`도 놓친 부분**이다. 코드도 프로퍼티가 `nullable`이라는 것과 사용하는 상황을 던져줬는데도 `!a`가 사용 가능한 것처럼 답변이 왔음. 오류까지 전달하니까 제대로 된 답을 줬다.
 
 ## 250527 - 짭명방
 ### 밸런싱
