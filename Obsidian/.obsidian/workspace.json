@@ -35,8 +35,7 @@
               "title": "오퍼레이터들 스탯 정리"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -224,12 +223,13 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "03fd8a9f363d07e3",
+  "active": "5cd93e96155f2b56",
   "lastOpenFiles": [
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/25년 5월.md",
     "1. Projects, Ongoing/README.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/오퍼레이터들 스탯 정리.md",
     "3. Resource/Image/Skill_SixBullets (2).png",
     "3. Resource/Image/Artillery128.png",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/오퍼레이터들 스탯 정리.md",
     "3. Resource/Image/Pasted image 20250530161114.png",
     "3. Resource/Image/Pasted image 20250530160051.png",
     "3. Resource/Image/Pasted image 20250530155839.png",
@@ -247,7 +247,6 @@
     "1. Projects, Ongoing/블렌더/한교수님 강의",
     "1. Projects, Ongoing/블렌더",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/적 스탯 정리.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/25년 5월.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - Nullable 인자 조건 처리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - Null 체크에 관해.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - 실행 순서 메서드.md",
