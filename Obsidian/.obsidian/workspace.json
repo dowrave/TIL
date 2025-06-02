@@ -4,39 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "2133ced591b6a07e",
+        "id": "e45669feea2e302b",
         "type": "tabs",
         "children": [
           {
-            "id": "74710b93d4b194ff",
+            "id": "60743625b4399549",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects, Ongoing/블렌더/블렌더 단축키.md",
+                "file": "1. Projects, Ongoing/README.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "블렌더 단축키"
-            }
-          },
-          {
-            "id": "2ebf3fa63e7b7148",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1. Projects, Ongoing/블렌더/한교수님 강의/블렌더 5. UV 매핑.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "블렌더 5. UV 매핑"
+              "title": "README"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -224,22 +209,21 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "2ebf3fa63e7b7148",
+  "active": "60743625b4399549",
   "lastOpenFiles": [
+    "1. Projects, Ongoing/블렌더/한교수님 강의/블렌더 5. UV 매핑.md",
+    "1. Projects, Ongoing/README.md",
+    "1. Projects, Ongoing/블렌더/블렌더 단축키.md",
     "3. Resource/Image/Pasted image 20250601192715.png",
     "3. Resource/Image/Pasted image 20250601192317.png",
     "3. Resource/Image/Pasted image 20250601191819.png",
     "3. Resource/Image/Pasted image 20250601191242.png",
     "3. Resource/Image/Pasted image 20250601190733.png",
-    "1. Projects, Ongoing/블렌더/블렌더 단축키.md",
     "3. Resource/Image/Pasted image 20250601190433.png",
     "3. Resource/Image/Pasted image 20250601190436.png",
-    "1. Projects, Ongoing/블렌더/한교수님 강의/블렌더 5. UV 매핑.md",
     "3. Resource/Image/Pasted image 20250601190438 1.png",
     "3. Resource/Image/Pasted image 20250601190438.png",
     "3. Resource/Image/Pasted image 20250601190437.png",
-    "3. Resource/Image/Pasted image 20250601185948.png",
-    "1. Projects, Ongoing/README.md",
     "1. Projects, Ongoing/블렌더/한교수님 강의/한교수님 블렌더 강의 유튜브 재생 목록.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/오퍼레이터들 스탯 정리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/25년 5월.md",
