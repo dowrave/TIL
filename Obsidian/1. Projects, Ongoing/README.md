@@ -33,6 +33,49 @@
 # 현재 작업 일지
 
 
+## 250606
+
+### 작업 중
+
+### 작업 완료
+
+- [x] 바리케이드 아이콘 추가
+![[Barricade_256.png]]
+- [x] 모든 `UnitEntity` 상속받는 객체에 대해 `DeathAnimation` 추가
+	- 검정색으로 변함 -> 투명해짐
+```cs
+// UnitEntity.cs
+    protected virtual void Die()
+    {
+        StartCoroutine(DeathAnimation());
+    }
+
+    protected IEnumerator DeathAnimation()
+    {
+        Renderer renderer = GetComponentInChildren<Renderer>();
+
+        // 동일한 머티리얼을 사용하는 모든 객체에 적용되는 걸 막고자 머티리얼 인스턴스를 만들고 진행한다.
+        if (renderer != null)
+        {
+            Material materialInstance = new Material(renderer.material);
+            renderer.material = materialInstance;
+
+            // DOTween 사용하여 검정으로 변한 뒤 투명해지는 애니메이션 적용
+            materialInstance.DOColor(Color.black, 0f);
+            materialInstance.DOFade(0f, 0.5f).OnComplete(() =>
+            {
+                Destroy(materialInstance); // 메모리 누수 방지
+                OnDestroyed?.Invoke(this);
+                RemoveAllCrowdControls();
+                Destroy(gameObject);
+            });
+        }
+    }
+```
+- 투명해지는 효과가 구현되지 않고 있음 : 머티리얼 자체가 투명도를 지원하지 않을 가능성이 있다.
+	- 머티리얼의 `Surface Type`을 `Transparent`로 바꿔봤는데, **평소에는 `Opaque`였다가 죽을 때만 `Transparent`로 바꾸는 게 나아 보인다.** 관련 코드는 Claude한테 받아서 적용.
+	- **검게 변하는 것도 이상하다.** 그냥 투명도만 서서히 낮추는 식으로 하겠음.
+
 
 ## 250605
 
