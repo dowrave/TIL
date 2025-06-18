@@ -4,25 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "c2637bb7d8b791fe",
+        "id": "5dad0001913cc637",
         "type": "tabs",
         "children": [
           {
-            "id": "efb993ef53fa59c0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1. Projects, Ongoing/블로그 만들기/기능 추가 내용/리뷰 기능 만들기.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "리뷰 기능 만들기"
-            }
-          },
-          {
-            "id": "6b6ed1ab00e4f762",
+            "id": "cba09e520c35d7d9",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -34,23 +20,8 @@
               "icon": "lucide-file",
               "title": "README"
             }
-          },
-          {
-            "id": "e0963749875b40bd",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1. Projects, Ongoing/블로그 만들기/쌓이는 지식/React, Django, 웹/★복합 - 리프레시 토큰 안전하게 보관하기.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "★복합 - 리프레시 토큰 안전하게 보관하기"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -117,7 +88,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 388.5
+    "width": 358.5
   },
   "right": {
     "id": "e94ea327b6cf935a",
@@ -238,14 +209,18 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "6b6ed1ab00e4f762",
+  "active": "cba09e520c35d7d9",
   "lastOpenFiles": [
-    "1. Projects, Ongoing/블로그 만들기/기능 추가 내용/인증 방식 관련.md",
-    "1. Projects, Ongoing/블로그 만들기/쌓이는 지식/React, Django, 웹/★복합 - 리프레시 토큰 안전하게 보관하기.md",
+    "1. Projects, Ongoing/블로그 만들기/기능 추가 내용/리뷰 기능 만들기.md",
     "1. Projects, Ongoing/README.md",
+    "3. Resource/Image/Pasted image 20250618183446.png",
+    "3. Resource/Image/Pasted image 20250618183356.png",
+    "3. Resource/Image/Pasted image 20250618183325.png",
+    "3. Resource/Image/Pasted image 20250618183222.png",
+    "1. Projects, Ongoing/블로그 만들기/쌓이는 지식/React, Django, 웹/★복합 - 리프레시 토큰 안전하게 보관하기.md",
+    "1. Projects, Ongoing/블로그 만들기/기능 추가 내용/인증 방식 관련.md",
     "1. Projects, Ongoing/블로그 만들기/쌓이는 지식/React, Django, 웹/복합 - 헤더 노출시키기.md",
     "1. Projects, Ongoing/블로그 만들기/이번 달 작업 기록.md",
-    "1. Projects, Ongoing/블로그 만들기/기능 추가 내용/리뷰 기능 만들기.md",
     "1. Projects, Ongoing/블로그 만들기/기능 추가 내용",
     "1. Projects, Ongoing/블로그 만들기/쌓이는 지식/MySQL/MySQL - DB 이전하기.md",
     "1. Projects, Ongoing/블로그 만들기/월별 작업 기록/25년 4월.md",
@@ -263,10 +238,6 @@
     "3. Resource/Image/Pasted image 20250601191819.png",
     "3. Resource/Image/Pasted image 20250601191242.png",
     "3. Resource/Image/Pasted image 20250601190733.png",
-    "3. Resource/Image/Pasted image 20250601190433.png",
-    "3. Resource/Image/Pasted image 20250601190436.png",
-    "3. Resource/Image/Pasted image 20250601190438 1.png",
-    "3. Resource/Image/Pasted image 20250601190438.png",
     "1. Projects, Ongoing/블렌더/한교수님 강의/한교수님 블렌더 강의 유튜브 재생 목록.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/오퍼레이터들 스탯 정리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/25년 5월.md",
@@ -279,7 +250,6 @@
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - Nullable 인자 조건 처리.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - Null 체크에 관해.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - 실행 순서 메서드.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - Awake, OnValidate, Initialize 차이.md",
     "2. Area/글쓰기",
     "1. Projects, Ongoing/컴퓨터 기초",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지",

@@ -32,10 +32,135 @@
 ### 현재 작업 중
 - **리뷰 게시판 구축하기**
 > 1. `Not Found` 에러가 발생함 : 카테고리 등록의 이슈일 수도 있고 작품 등록의 이슈일 수도 있음.
-> 2. `webp` 파일도 이미지로 바로 등록할 수 있으면 좋을 듯? 대부분의 파일을 왓챠피디아에서 가져오는데 `다른 이름으로 저장`하면 `webp` 파일로 가져온다. 이걸 곧바로 넣을 수 있어도 좋을 듯?
-
+> 2. `webp` 파일도 이미지로 바로 등록할 수 있으면 좋을 듯? 대부분의 파일을 왓챠피디아에서 가져오는데 `다른 이름으로 저장`하면 `webp` 파일로 가져온다. 이걸 곧바로 이미지로 넣을 수 있으면 좋을 듯? 이건 원래 가능한데 내가 모르는 걸 수도 있다.
+> 3. 게시판에서는 각 항목과 전체 리뷰 평가의 갯수를 볼 수 있게 한다.
 
 # 현재 작업 일지
+
+## 250618 - 블로그
+### 1. 리뷰 제목 검색 기능
+- Django에서 `Reviews/views.py/ReviewsViewSet(viewsets.ModelViewSet)`에 아래 요소 추가
+```python
+    # 검색 기능 추가
+    """
+    GET /api/reviews/items/?serach=검색어 로 요청이 들어오면 
+    title 필드에 '검색어'가 포함된 리뷰만 필터링되어 반환한다.
+    """
+    filter_backends = [SearchFilter]
+    search_Fields = ['title'] # 'title' 필드를 기준으로 검색
+```
+
+- 프론트에선 `fetchReviews`에 검색어를 의미하는 `searchTerm` 파라미터를 추가
+```tsx
+export const fetchReviews = async ({ pageParam = 1, categoryId, searchTerm }: {
+    pageParam?: number, 
+    categoryId: number | null, 
+    searchTerm?: string // 이거
+}): Promise<PaginatedReviewsResponse> => {
+	
+	// category와 검색어는 없어도 잘 동작함
+    const categoryQuery = categoryId ? `&category=${categoryId}` : '';
+    const searchQuery = searchTerm ? `&search=${searchTerm}` : ''; // 이거
+
+    const { data } = await axios.get(`${backendUrl}api/reviews/items/?page=${pageParam}${categoryQuery}${searchQuery}`); 
+    return data;
+}
+```
+### 2. Navbar의 기존 게시판은 Posts로 묶기 / UI 수정
+- 작업 완료.
+
+### 3. 추가로 생각났거나 수정할 요소들
+1. 작품을 다 감상하지 않았지만 글은 적어둘 수 있다. 일명 '**보는 중'인 상태.** 
+	- 모델 수정 : 카테고리, 작품 이름만 필수 / 
+	- `스포일러 기능` : 실질적으로 모든 리뷰에 스포일러를 기록해두는 상태이긴 한데, 추가는 해두자.
+	- 그러면 실질적으로 필수 칸은 **카테고리와 작품 이름**밖에 없을 듯?
+
+2. 제목을 활용한 검색 기능이 제대로 동작하지 않고 있음.
+	- 위의 `search_Fields`는 `search_fields`여야 한다.
+
+3. 글을 생성했을 때 '모두'에 나타나는 갯수가 업데이트되지 않음
+	- `queryClient.invalidateQueries({ queryKey: ['totalReviewCount'] });`. `totalReviewCount`라는 요소를 새로 추가했으니 글을 생성 / 삭제하는 부분에 넣어준다. 수정은 크게 상관없는데 일관성을 위해 추가.
+
+---
+- 빌드 후 수정할 것들
+	- `Card`의 경우 작은 화면에서 별점 / 스포일러 / 보는 중 표시와 날짜는 다른 줄에 나타나야 할 듯. 
+		- 스포일러, 보는 중 아이콘은 아래처럼 `아이콘 + 텍스트`로 나타낼지 아니면 아예 외부로 빼서 설명을 적어놓든지?
+	- `Modal`에 나타나는 스포일러 / 보는 중 아이콘은 `아이콘 + 텍스트`의 형태로 구성하기
+	- `ReviewForm` 부분 : 이미지를 첨부하지 않아도 올릴 수 있어야 하는데 현재는 이미지가 필수인 상황
+- 다 고쳤음
+
+
+### 기타
+- `전체(갯수)`에서 `갯수` 부분이 '현재 선택된 카테고리'의 숫자를 긁어오고 있었음. 어느 카테고리를 선택하든 항상 전체 리뷰 갯수를 긁어오도록 수정함.
+```tsx
+export const fetchTotalReviewCount = async (): Promise<PaginatedReviewsResponse> => {
+    // count만 필요하므로 page_size=1로 설정하여 응답 데이터 크기를 최소화
+    const { data } = await axios.get(`${backendUrl}api/reviews/items/?page_size=1`);
+    return data;
+}
+
+// ReviewBoardPage.tsx
+  // 전체 리뷰 개수를 가져오는 쿼리
+  const { data: totalCountData } = useQuery({
+    queryKey: ['totalReviewCount'],
+    queryFn: fetchTotalReviewCount,
+    staleTime: 5 * 60 * 1000, // 5분 동안은 캐시된 데이터를 사용
+  })
+```
+
+- 모바일로도 서식 망가지지 않게 수정
+
+### 작업 결과
+
+- 전체 게시판
+![[Pasted image 20250618183222.png]]
+
+- 리뷰 작성 모달
+![[Pasted image 20250618183325.png]]
+![[Pasted image 20250618183356.png]]
+
+- 리뷰 글 모달
+![[Pasted image 20250618183446.png]]
+
+- 발견한 이슈
+	- `ReactQuill`에서와 달리, 포스트에서는 엔터가 한 번 더 들어가는 이슈가 있음. 해당 글을 다시 수정하기 등을 통해 `WriteReviewModal`에 들어갔을 때는 멀쩡하게 나타난다.
+	- `WritePost`나 `PostDetail`을 참고해서 수정해보겠음.
+	- 의외로 `prose` 태그를 사용하면서 생기는 문제였다. `prose`만 제거했음. 
+
+- [[리뷰 기능 만들기]] - 함께한 제미나이가 정리해준 내용.
+## 250617 - 블로그
+- 갑자기 왼쪽 모니터가 안들어온다. 작업 중인 모니터는 8년 째 써도 멀쩡한데.. 하..
+- ㅋㅋㅋㅋㅋㅋ한쪽 모니터 없이 작업하니까 매우 답답하다~
+
+- 일단 `Not Found`부터 시작
+```sh
+Not Found: /api/review/categories
+Not Found: /api/review/
+```
+```python
+ re_path(r'^api/reviews/', include('reviews.urls')),
+```
+> 엌ㅋㅋㅋㅋ `reviews`인데 `review`로 넣었음
+> 앱 이름도 `reviews`이기 때문에 `reviews`로 통합. 백엔드에서 이미지를 다시 굽는 것보다 프론트에서 처리해버리는 게 낫다.
+
+### 모바일 그리드 작업
+- 모바일 환경에선 한 줄에 2개씩 나오는데 이건 좀 많이 답답하다. 
+- 테스트를 해본 결과 + 다른 사이트도 참고했을 때 3 -> 4 -> 6 정도면 적절할 것 같음.
+
+### webp 파일 관련
+- 프론트에선 그냥 잘 들어감
+- 백엔드에서도 원래 `libwebp`라는 걸 별도로 설치해야 하는데, 글에 webp 파일을 첨부해도 잘 동작한 걸 봐서는 우연히 설치된 게 있어보인다. `dockerfile.aws`의 실행 환경 부분에 `libwebp-dev` 을 명시적으로 `RUN`에 넣어줌.
+
+
+### 기타 작업
+- 리뷰 작성하는 부분에 수정 / 삭제 기능
+- 카테고리를 자동으로 등록하지 않고, 관리하는 페이지에서 별도로 등록하고 삭제하도록 함
+- 리뷰 글 등록이 안되는 문제 
+- 리뷰 이미지 등록이 안되는 문제 : 클라우드프론트로 연결, `settings.py`에서 s3 커스텀 도메인만 바꾸면 됨. 
+### 일단 보이는 상황에서는 작업 끝난 듯?
+
+
+
 
 ## 250616
 
