@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "역참조",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -212,8 +212,9 @@
   },
   "active": "b7b96624b1eac422",
   "lastOpenFiles": [
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/git - 과거로 돌아가서 새로운 브랜치로 옮기기.md",
+    "1. Projects, Ongoing/블로그 만들기/쌓이는 지식/React, Django, 웹/Django - 역참조.md",
     "1. Projects, Ongoing/README.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/git - 과거로 돌아가서 새로운 브랜치로 옮기기.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트/무제.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/UI/투명 마스크 만들기.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/UI/화면 너비 비율 1대3 맞추기.md",
@@ -249,7 +250,6 @@
     "4. Archive/블렌더/한교수님 강의/블렌더 3. 모니터 모양 만들기.md",
     "4. Archive/블렌더/한교수님 강의/블렌더 4. 모니터 재질 만들기.md",
     "4. Archive/블렌더/한교수님 강의/블렌더 2. 모델링 기본기 익히기.md",
-    "4. Archive/블렌더/한교수님 강의/블렌더 1. 기본 조작 방법.md",
     "4. Archive/블렌더/한교수님 강의",
     "4. Archive/블렌더",
     "2. Area/글쓰기",
