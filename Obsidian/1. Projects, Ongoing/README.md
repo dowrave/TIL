@@ -1,10 +1,10 @@
-## 참고
+# 참고
 - **옵시디언으로 봐야 제대로 보인다.**
 	- **옵시디언으로 작성된 만큼 깃허브의 마크다운에서는 지원하지 않는 기능들이 있을 수 있다.** `[[]]`, 이미지 첨부 방식 등이 대표적.
 - `[[]]` 링크는 `유니티/보관함`이나 `작업 일지/직접 작성/일지`에 대부분 있다.
 
-## 작업 내용 : 짭명방
-### 남은 작업 내용 
+# 작업 내용 : 짭명방
+## 남은 작업 내용 
 - 1-3 밸런싱, 보스 추가
 - `Artillery` 2스킬 정리
 - 테스트 및 수정
@@ -12,13 +12,13 @@
 - 보고 참조할 내용
 	- [[오퍼레이터들 스탯 정리]]
 	- [[적 스탯 정리]]
-### 사용 툴
+## 사용 툴
 - `Unity`
 - UI 이미지 제작 : `Procreate`
 - `VFX` 제작 사용 툴(강의 보면서 따라함)
 	- `Krita`
 	- `Blender`
-### 하고 싶은데 못할 듯
+## 하고 싶은데 못할 듯
 - 캐릭터 스프라이트 
 	- 현재 Capsule로 Operator나 Enemy 등을 구현한 상태
 	- 이걸 투명한 Quad로 바꾸고 그 위에 2D 스프라이트들을 구현하는 방식이 명방에서 쓰고 있는 방식으로 보임
@@ -27,18 +27,272 @@
 - 인게임 / 다른 패널에서 스킬 범위 보여주기 
 	- 일관성 때문에 다른 곳에서도 구현을 해보고는 싶은데, 일단 보류.
 
-## 블로그
+# 작업 내용 : 블로그
 
 
 
-# 현재 작업 일지
+---
+# 작업 일지
+# 250625 - 짭명방
+- 어제 보였던 문제는 많았는데 해결된 게 없어서 오늘은 전체적으로 다듬는다.
+- 머리가 복잡해지면 될 것도 안되는 것이라..
+## 작업 중
+
+### 파괴된 객체가 enemiesInRange에 남아 있는 문제
+- `CurrentTarget`의 경우는 계속 이벤트 등록 / 해제를 통해 `Enemy`를 추적했는데, 이 경우는 단순히 공격 범위 내에 `Enemy`가 들어온 상태에서 나가지 않고 제거되어서 `null`로 변한 상황이 된다.
+- 일단은 공격 범위 내에 들어온 적의 리스트, `enemiesInRange`에서 `null`인 것들을 제거하고 공격 대상을 선정하는 방식으로 구현할 수 있다.
+```cs
+CurrentTarget = enemiesInRange
+	.Where(e => e != null && e.gameObject != null) // 파괴 검사 & null 검사 함께 수행
+	.OrderBy(E => E.GetRemainingPathDistance()) // 살아있는 객체 중 남은 거리가 짧은 순서로 정렬
+	.FirstOrDefault(); // 가장 짧은 거리의 객체를 가져옴
+```
+> `Where` 문만 추가된 부분임.
+
+#### 하지만 결국 어제와 같은 생각에 부딪힌다. 
+1. `CurrentTarget`을 선정할 때 **해당 타겟이 죽었을 때 발생하는 이벤트**를 공격자의 메서드가 구독함.
+2. 그런데 **공격 범위 내의 대상이 죽었을 때에도 공격 범위에서 제거해야 함**
+
+즉 **`사망`이라는 1가지의 사건을 받아서 2가지의 다른 동작으로 처리**해야 하는 상황이다.
+
+오퍼레이터 입장에서는
+1. 해당 적을 공격 대상으로 지정했을 때 이를 해제하는 로직
+2. 해당 적이 공격 범위 내에 있을 때 이를 해제하는 로직
+
+1번은 아까 구현했는데, 해당 객체의 사망 이벤트를 구독하는 방식이었다. 
+
+이런 상황이라면 일일이 공격 범위 내에 들어왔을 때 사망 이벤트 구독 / 공격 대상이 됐을 때 사망 이벤트 구독 같은 식으로 구현하게 될 것 같다.
+이것보다는 `Enemy`의 사망 이벤트가 발생 -> `Operator`가 이걸 받아서 이 `Enemy`가 공격 범위에 있는가 / 현재 공격 대상인가에 따라 자체적으로 처리하게 하는 게 낫지 않을까?
+
+---
+#### 시도는 해봄
+- 일단 간단하게 `null`인 부분을 제외하는 부분까지 커밋하고 푸시해서 올려놓음.
 
 
-## 250625
+### 자기 공격 범위가 아닌데 공격하는 문제
+- 이건 지금 정확히 문제인지 아닌지 파악하기 어렵다. 일단 보류함.
+## 작업 완료
+
+### 오퍼레이터 파괴 후에도 스킬 코루틴이 돌아가는 문제
+
+#### 원인 분석
+현재는 `ActiveSkill.Activate`의 `duration > 0`인 스킬들에 대해  `op.StartCorutine(HandleSkillDuration(op))`이 실행되는 구조이다. 이 때, 코루틴의 실행 주체와 생명 주기는 `Operator` 오브젝트에 귀속된다.  
+
+만약 `Operator`가 죽으면 `Destroy`가 실행되는데, 이 때는 파괴 대기 상태가 된다. 이 때 코루틴은 멈추지 않는데, 파괴가 예약된 프레임이나 바로 다음 프레임에 `while` 루프를 돌려고 시도한다.
+
+그러나 코루틴이 재개되어 `op.{메서드}`를 호출하려는 순간, `op`가 이미 파괴된 유령 상태이므로 내부 참조 UI에 접근하지 못해 오류가 발생한다.
+
+#### 일차적인 접근
+`HandleSkillDuration`의 반복문 내에 `if (op == null)` 체크 : 미세한 타이밍 차이가 있을 수 있다. 이걸 막지 못함.
+
+#### 수정
+- 요점은 **코루틴을 시작한 주체가 멈출 책임도 함께 지는 것**이다. 
+
+오퍼레이터 자체에서 스킬 지속 시간 동안 돌아가는 코루틴을 관리하게 하면 된다. `OnDestroy`가 동작하면 해당 코루틴을 멈추게 한다. 
+
+1. `ActiveSkill`을 아래처럼 수정한다.
+- 원래는 `duration`에 따라 코루틴인 `op.StartCoroutine(HandleSkillDuration(op))`은 여기서 실행됐음.
+```cs
+public override void Activate(Operator op)
+{
+	caster = op;
+
+	// 스킬 사용 가능 여부 체크
+	if (!op.IsDeployed || !op.CanUseSkill()) return;
+
+	// 기본 이펙트와 추가 이펙트 재생
+	PlaySkillVFX(op);
+	PlayAdditionalVFX(op);
+
+	// 즉발형 스킬은 여기서 처리
+	if (duration <= 0)
+	{
+		PlayInstantSkill(op);
+	}
+
+	// 지속시간이 있는 스킬은 Operator에서 코루틴이 실행된다. Operator.UseSkill 참고.
+}
+
+// HandleSkillDuration은 public으로 바꾼다.
+```
+
+2. `Operator`을 아래처럼 수정한다.
+```cs
+// ★관리할 코루틴
+private Coroutine _activeSkillCoroutine;
+
+// 스킬 사용 메서드
+public void UseSkill()
+{
+	if (CanUseSkill() && CurrentSkill != null)
+	{
+		CurrentSkill.Activate(this);
+
+		// ★이 부분 추가
+		// 지속시간이 있는 액티브 스킬은 코루틴을 여기서 실행하고 관리함
+		if (CurrentSkill is ActiveSkill activeSkill && activeSkill.duration > 0)
+		{
+			// 기존 코루틴 종료
+			if (_activeSkillCoroutine != null)
+			{
+				StopCoroutine(_activeSkillCoroutine);
+			}
+
+			_activeSkillCoroutine = StartCoroutine(activeSkill.Co_HandleSkillDuration(this));
+
+			UpdateOperatorUI();
+		}
+	}
+}
+
+protected void OnDestroy()
+{
+	// ★오브젝트 파괴 시 실행 중이던 스킬 코루틴을 중지시킨다
+	if (_activeSkillCoroutine != null)
+	{
+		StopCoroutine(_activeSkillCoroutine);
+		_activeSkillCoroutine = null;
+	}
+
+	RemoveObjectPool();
+}
+```
+
+#### 그래도 동일 문제 발생
+- `OnDestroy()`에 스킬 코루틴을 중지시키는 로직은 최후의 보루 같은 느낌으로 두고, 그것보다 앞인 `Die`에도 동일한 로직을 구현해둔다.
+- 추가 : `OperatorUI`는 이벤트 기반으로 없어지지 않고 `Operator.Die`에서 직접 실행시키는 원래 방식으로 되돌림.
 
 
+#### 이 과정에서 든 객체 지향 설계의 의문점과 기준 잡기
+- [[객체 지향 설계 기준점 잡기]]에 동일 내용 복붙해서 정리. 
+- 의문점
+> 이벤트로 구현하는 방법, 즉 오퍼레이터가 사망했을 때 이벤트를 발생시키고, 스킬에서는 따로 코루틴을 돌리고 있다가 오퍼레이터 사망 소식을 듣고 자신의 코루틴을 중단시키는 구현이 더 객체지향 설계라는 느낌이 아닌가?라는 의문이 들었다. 위 방식은 어쨌든 오퍼레이터에서 스킬이 어떻게 돌아가는지를 알아야 작성할 수 있는 코드니까.
 
-## 250624 - 짭명방
+- 객체지향 설계의 핵심 목표
+- **캡슐화** : 객체는 자신의 상태, 행동을 내부에 숨기고 외부에는 필요한 기능만 공개한다.
+	- 외부에 "이 버튼을 눌러라"고 알리고 세부적인 구현은 내부에서 담당하는 것
+- **책임과 역할** : 각 객체는 자신만의 명확한 책임과 역할을 가진다
+- **결합도 낮추기** : 객체 간의 의존성을 최소화해서 한 객체의 변경이 다른 객체에 미치는 영향을 줄인다.
+- **응집도 높이기** : 한 객체는 서로 밀접하게 관련된 기능들로만 구성된다.
+
+1. **이벤트 기반 설계 방식**
+- 위에서 내가 생각한 의문점처럼 구현하는 방식.
+- 장점
+	- 최상의 캡슐화, 낮은 결합도 : `Operator`에서는 스킬이 어떻게 돌아가는지 알 필요가 없다. 
+	- 유연성과 확장성
+- 단점 
+	- **생명주기 관리의 복잡성** : `ActiveSkill`의 구독 해지 시점은 정확히 어떤 타이밍일까? 스킬이 끝났을때? `Operator`가 죽었을 때? 여기선 후자로 보이지만, 이런 관리가 제대로 되지 않으면 보이 않는 버그의 원인이 된다.
+	- **암묵적 의존성 : 의존 관계가 명시적으로 보이지 않는다.** 코드를 처음 보거나 수정할 때 `Operator`가 죽으면 `ActiveSkill`에서 어떤 일이 일어나는지 추적하기 어렵다.
+
+2. **책임 주도 설계 방식**
+- `Operator`가 메서드를 호출해 스킬을 사용한다.
+- `Skill(지금의 경우 지속시간이 있는 ActiveSkill)`은 설계도`IEnumerator`를 `Operator`에게 준다.
+- `Operator`는 설계도를 받아 자신의 책임 하에 코루틴을 시작하고 변수에 저장한다.
+- `Operator`가 파괴될 때 자신의 책임 하에 실행 중인 코루틴을 중지시킨다.
+
+- 장점
+	- **명확한 책임과 소유권** : 코루틴을 실행하는 주체가 시작과 종료의 책임을 함께 진다. 프로세스의 시작과 끝이 한 클래스 내에 있기 떄문에 코드를 이해하고 관리하기 쉽다.
+	- **안전한 생명주기 관리** : `OnDestroy`로 구현했기에 `MonoBehaviour`로 관리되는 유니티의 생명주기 모델과 어울리는 방식이다.
+- 단점
+	- **상대적으로 높은 결합도** : 1번 방식에 비해서는 캡슐화가 확실히 깨진다. `Operator`가 `BaseSkill`에 종류가 있음을 알고`is ActiveSkill` 그것이 코루틴을 반환할 수 있다는 것을 알고 있어야 한다. 
+
+- 결론 : **프로세스의 실제 소유자가 누구인가?** 를 기준으로 판단하는 게 좋다.
+
+1. `StartCoroutine`은 `MonoBehaviour`의 메서드이며, 코루틴은 그걸 실행시킨 `MonoBehaviour`의 생명주기에 종속된다. 즉, **`MonoBehaviour`가 실행 주체이며 실질적인 소유자이다.**
+2. `ActiveSkill`은 스킬의 데이터, 로직을 담은 설계도나 레시피 북에 가깝다.
+
+유니티의 구조 내에서는 프로세스의 실제 소유자인 `Operator`가 시작과 종료를 책임지는 2번 방식이 더 맞다고 할 수 있다. 캡슐화가 약간 깨지지만, 생명주기를 명확하게 관리할 수 있기 때문이다.
+
+- **이벤트 기반** : 서로 다른 시스템(UI, 게임 로직 등)처럼 소유권과 생명 주기가 완전히 분리된 객체들을 연결할 때 매우 강력한 패턴이다.
+- **책임 주도** : 한 객체가 다른 객체를 부품처럼 사용해서 자신의 생명주기 내에서 어떤 작업을 수행할 때 더적합하고 안전한 패턴이다.
+
+### 근접 Enemy가 저지당하지 않았는데도 때리고 지나가는 문제
+- `Operator`에서는 저지 로직이 정상적으로 동작하고 있음.
+- 일시적으로 저지되어서 `Enemy`가 공격하는 게 아닌가 생각했는데 그건 아닌 것 같다.
+- 일단 원인은 `Enemy`에 있어보인다. 구체적인 원인은 모르겠음.
+---
+#### 원인
+- 아래의 리팩토링과는 별개로, 이것의 문제는 찾았다 : **`EnemyAttackRangeController`의 이슈임**
+```cs
+// 콜라이더 = 공격 범위 반경 설정
+if (enemyData.AttackRangeType == AttackRangeType.Ranged)
+{
+	attackRangeCollider.radius = enemyData.stats.AttackRange;
+}
+else
+{
+	attackRangeCollider.radius = 0;
+}
+```
+> 콜라이더의 반지름 값에 대해 `Ranged`이면 반지름값을 반영하고 아니라면 `0`을 넣게끔 했음.
+
+- `Enemy.SetCurrentTarget` : 공격할 대상을 선정하는 로직
+```cs
+public void SetCurrentTarget()
+{
+	if (CurrentTarget == null)
+	{
+		// 저지를 당할 때는 자신을 저지하는 객체를 타겟으로 지정
+		if (blockingOperator != null)
+		{
+			CurrentTarget = blockingOperator;
+			CurrentTarget.OnDestroyed += OnCurrentTargetDied;
+			Debug.LogWarning($"{EntityName}의 CurrentTarget : 저지 중인 ${CurrentTarget}으로 설정");
+			NotifyTarget();
+			return;
+		}
+
+		if (targetsInRange.Count > 0)
+		{
+			CurrentTarget = targetsInRange
+				.OfType<Operator>()
+				.OrderByDescending(o => o.DeploymentOrder) 
+				.FirstOrDefault();
+			// ★ 이 부분
+			Debug.LogWarning($"{EntityName}의 CurrentTarget : 공격 범위 내의 ${CurrentTarget}으로 설정");
+			// ---
+			NotifyTarget();
+			return;
+		}
+	}
+}
+```
+`targetsInRange`는 `EnemyAttackRangeController`의 콜라이더에 들어온 `UnitEntity`들을 추가하는 리스트이다. 그런데 반지름을 0으로 잡은 Enemy에 대해 저 로그가 출력이 된다. 
+
+#### 해결
+- 따라서 `radius = 0`으로 잡는 게 아니라, 해당 콜라이더를 비활성화해야 한다.
+
+저 부분을 굳이 `radius = 0`으로 뒀던 이유는 오류가 발생할까봐.. 였는데 콜라이더를 비활성화하면 `EnemyAttackRangeCollider`의 `OnTrigger` 관련 로직들도 동작하지 않으니까 아예 꺼버리는 게 답인 듯.
+
+#### Enemy의 CurrentTarget 선정 로직 리팩토링
+1. `CurrentTarget`이 변할 때마다 `OnCurrentTargetDied`라는 메서드를 타겟의 이벤트에 구독시킨다. `OnCurrentTargetDied`는 `CurrentTarget = null`로 만든다.
+
+
+### 저지 로직 수정
+- "콜라이더가 충돌했음에도 저지수를 초과한 상황이라 충돌 로직이 동작하지 않고 있다가 이미 저지 중인 적이 제거돼서 해당 적을 저지하는 상황"을 수정하려고 한다.
+- 기존엔 `OnTriggerStay`로 구현됐던 부분임
+- 일단 `BlockableEnemies`라는 리스트를 `Operator`에 별도로 추가했음 -> 실제로 저지된 적들과 달리 콜라이더에 들어오면 추가하고 나가면 제거한다.
+
+- 크게 아래처럼 수정
+1. 기본적으로 `Enemy`는 `BlockingOperator`를 지정하도록 되어 있음 -> `Die` 시에 `Operator`에게 자신의 사망을 알릴 수 있다.
+2. `Operator`는 `Enemy`의 사망을 받아 `BlockableEnemies`와 `BlockedEnemies`에서 해당 `Enemy`를 제거하고, `BlockableEnemies`에서 저지되지 않은 적을 찾아 `BlockedEnemies`에 추가한다.
+
+### Operator가 파괴됐음에도 OperatorUI가 남아있는 문제
+- 스킬 실행 가능 아이콘이 여전히 남아있다. 
+- 기존의 이벤트 기반 로직에서 직접 전달하는 식으로 바꿨는데 거기에 문제가 있었나?
+```cs
+protected void DestroyOperatorUI()
+{
+	// 컴포넌트를 파괴하는 게 아니라 오브젝트를 파괴해야 함
+	Destroy(operatorUI.gameObject);
+}
+```
+> 라고 한다.
+
+### attackingEntities 관련
+- `이 객체를 공격하는 적들`에 관한 리스트인데, 꼭 필요할까?\
+- **필요하다.** 이걸로 구현하지 않겠다면 이벤트 기반으로 구현해도 되지만, 어느 쪽이든 `자신을 공격하는 공격자들`에 대한 리스트를 갖고 있는 건 필요하다. 왜냐하면 **피격 객체가 죽거나, 은신 등으로 인해 공격 범위에서 제외될 수 있다면 이를 공격자에게 알려야 하기 때문이다.** 
+# 250624 - 짭명방
 - 모니터 바꾸고 게임 프로젝트 다시 꺼내는 건 처음인데, 색감이 좀 많이 뿌얘졌다.. ㅋㅋ;
 	- 메인 모니터에는 돈을 아끼지 말아야지,,,
 
@@ -47,10 +301,10 @@
 	- 하지만 게임의 핵심 로직은 상호작용하는 두 객체의 `public` 메서드를 서로 호출하는 방식이 나중에 유지보수하기 더 편할 수도 있다. 
 	- 오늘 애먹었던 저지 로직 같은 경우, "`Operator`가 `Enemy`를 저지할 때 `Enemy`는 자신을 저지하는 `Operator`를 등록한다"는 로직 자체는 이벤트 없이 둘 간의 상호작용으로 구현해도 무방함.
 	- 이벤트는 일반적으로 `1:多` 구조에서 사용하면 좋다. 
-### 고칠 때마다 자꾸 어딘가 에러가 나서 일단 원상복구
+## 고칠 때마다 자꾸 어딘가 에러가 나서 일단 원상복구
 - 흠...
 
-### 작업 완료
+## 작업 완료
 
 #### 실제 적용 X) 원래 커밋으로 되돌림
 
@@ -104,7 +358,7 @@ CurrentTarget = enemiesInRange.OrderBy(E => E.GetRemainingPathDistance()).FirstO
 - `Melee`라서 본인이 저지당하지 않았을 때는 때리면 안되는데 때리는 현상이 있다.
 - 같은 원인으로 보이는데 저지 당할 상태가 아닌데 저지되는 현상이 있다.
 
-## 250623 - 블로그
+# 250623 - 블로그
 
 ### 작업 중
 
@@ -314,13 +568,13 @@ class ReviewPagination(PageNumberPagination):
 
 
 
-## 250620 
+# 250620 
 
-### 짭명방
-#### 작업 중
+## 짭명방
+### 작업 중
 
-#### 작업 완료
-##### 스냅핑이 안되는 문제 또 발생
+### 작업 완료
+#### 스냅핑이 안되는 문제 또 발생
 
 - 이전에 알아낸 방법으로 시행착오
 	1. 이전에 찾아낸 방법처럼 `Reimport All`을 눌러봤다.
@@ -391,7 +645,7 @@ class ReviewPagination(PageNumberPagination):
 
 
 
-## 250618 - 블로그
+# 250618 - 블로그
 ### 1. 리뷰 제목 검색 기능
 - Django에서 `Reviews/views.py/ReviewsViewSet(viewsets.ModelViewSet)`에 아래 요소 추가
 ```python
@@ -484,7 +738,7 @@ export const fetchTotalReviewCount = async (): Promise<PaginatedReviewsResponse>
 - [[리뷰 기능 만들기]] - 함께한 제미나이가 정리해준 내용.
 - 기능이 어떻게 구현되는가를 크게 공부하지 않았고, 그냥 `문제 발생 / 기능 추가 필요 -> AI에게 던져줌` 만으로 3일 컷 냈다. 
 	- 블로그 만들 때 스타일이나 문제 발생 등에서 공부했던 게 도움이 됐지만.. 스타일 같은 것도 깔끔하게 잡아주는 요즘의 AI는 무섭다.
-## 250617 - 블로그
+# 250617 - 블로그
 - 갑자기 왼쪽 모니터가 안들어온다. 작업 중인 모니터는 8년 째 써도 멀쩡한데.. 하..
 - ㅋㅋㅋㅋㅋㅋ한쪽 모니터 없이 작업하니까 매우 답답하다~
 
@@ -518,7 +772,7 @@ Not Found: /api/review/
 
 
 
-## 250616
+# 250616
 
 ### 블로그 - 작품 감상문을 위한 기능 추가하기
 
@@ -575,8 +829,8 @@ Not Found: /api/review/
 > 하지만 아직 실질적으로 등록이 되는 상태는 아니다.
 > 1. `Not Found` 에러가 발생함 : 카테고리 등록의 이슈일 수도 있고 작품 등록의 이슈일 수도 있음.
 > 2. `webp` 파일도 바로 등록할 수 있으면 좋을 듯? 대부분의 파일을 왓챠피디아에서 가져오는데 `다른 이름으로 저장`하면 `webp` 파일로 가져온다.
-## 06.12 ~ 14 여행 다녀옴
-## 250611 - 짭명방
+# 06.12 ~ 14 여행 다녀옴
+# 250611 - 짭명방
 
 ### 작업 중
 
@@ -613,7 +867,7 @@ git checkout  c67d56cab79609f68b278e0393bba0abe573b39a
 	- 유니티는 효율성을 위해 라이브러리 폴더의 내용이 유효하다고 생각하고 이를 신뢰하고 재사용하려고 한다.
 ### 작업 완료
 
-## 250610
+# 250610
 
 ### 작업 중
 
@@ -641,7 +895,7 @@ if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask, QueryTriggerInterac
 
 
 
-## 250609
+# 250609
 
 ### 작업 중
 
@@ -672,7 +926,7 @@ if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask, QueryTriggerInterac
 
 - `Enemy` 중 `Ranged`의 공격 범위 : `3 -> 2`로 하향
 
-## 250606
+# 250606
 
 ### 작업 중
 
@@ -716,7 +970,7 @@ if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask, QueryTriggerInterac
 	- **검게 변하는 것도 이상하다.** 그냥 투명도만 서서히 낮추는 식으로 하겠음.
 
 
-## 250605
+# 250605
 
 ### 작업 중
 
@@ -765,7 +1019,7 @@ else
 
 - [x] `NormalBuffVFX`의 `Lifetime`이 짧아서 버프가 켜진 중간에 스킬이 잠깐 끊기는 현상이 있음
 	- **`Lifetime`을 늘려서 수정 완료**
-## 250604
+# 250604
 
 ### 작업 중
 
@@ -825,7 +1079,7 @@ else
 	- 모든 오퍼레이터의 정예화, 레벨을 지정해서 초기화하도록 기능 수정
 
 
-## 250603
+# 250603
 
 ### 작업 중
 ### 작업 완료
@@ -850,7 +1104,7 @@ else
 #### 기타 이슈 수정
 - [x] `StageSelectPanel` : `PromotionItem` 갯수가 1개로 고정되어 표기되는 문제 수정
 
-## 250602 
+# 250602 
 
 ### 작업 중
 
@@ -883,7 +1137,7 @@ else
 	- 패딩 값은 `0.02` 정도로 잡으면 얼추 보이는 걸 알고 있다.
 
 - `DeployableActionUI`  : 스킬 버튼에 중지 표시 구현
-## 250601
+# 250601
 
 ### 블렌더 공부
 - [[블렌더 5. UV 매핑]]
