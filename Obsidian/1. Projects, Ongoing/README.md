@@ -33,6 +33,308 @@
 
 ---
 # 작업 일지
+
+# 250626 - 짭명방
+
+## 오늘 배워가는 점
+1. 트리거 기반 콜라이더를 구현할 때, **오브젝트가 파괴되면서 콜라이더가 겹치지 않게 되는 경우 `OnTriggerExit`이 동작하지 않는다.** 이 경우 콜라이더가 겹친 상대에게 해제되었음을 알리는 별도의 수단이 필요하다. `이벤트`라든가.
+
+2. 뭔가를 **해제하거나 중단하는 코드는 `논리적인 사망 지점`과 `생명 주기 상 파괴 시점`에서 이중으로 구현하는 것이 좋다.** 내 경우 `Die`와 `OnDestroy`임.
+	- **이미 해제된 이벤트를 다시 해제 시도해도 아무런 오류가 발생하지 않는다.**
+	- 일반적으로 구독 / 해제 메서드는 `OnEnable`과 `OnDisable`에 짝을 맞춰 구현한다고 한다. 
+
+3. [[자료구조 - 해시]] : 어떻게 O(1)이 궁금한지 궁금해서 정리했다.
+	1. 데이터를 해시 함수를 이용해 해시 코드로 변경한다.
+		- 해시 코드는 숫자 개념이다. 나머지 연산을 해야하므로.
+		- 문자열처럼 보이는 게 있다면 16진수일 가능성이 높다. 
+	2. 해시 코드를 해시 테이블의 길이로 나눈 나머지 값이 해당 데이터가 해시 테이블에 저장될 인덱스값이다.
+	3. `해시 충돌, 리해싱` 등도 저 문서에 다뤘음.
+
+4. **`OnDestroy`에서 정리할 것들**
+	- 다른 객체와 이어진 것들이 있다면 여기서 해제해주는 게 좋다
+	- 해당 오브젝트가 갖고 있는 변수들은 파괴되면서 같이 없어지니까 상관없음.
+## 작업 중
+
+### 공격 범위에서 벗어난 타겟 계속 때리는 현상
+- 계속 발생하는 현상이 아니다. 가끔 발생하는데 뭐가 원인인지 모르겠음.
+## 작업 완료
+### Enemy 파괴 스태틱 이벤트로 구현하기
+- 그제 하다가 이상해져서 갈아엎었고, 어제 마지막에 하려다가 못했던 내용이다.
+
+> **`OnEnemyDied`가 아니라 `Destroyed`인 이유는 목적지에 도달했을 때는 `Die` 메서드 대신 `ReachDestination`이 동작하기 때문이다.** 
+
+1. `Enemy.OnDestroyed`에서 파괴 이벤트 발생시킴
+```cs
+	// 스태틱 이벤트 테스트
+	public static event Action<Enemy> OnEnemyDestroyed; // 죽는 상황 + 목적지에 도달해서 사라지는 상황 모두 포함
+
+    protected void OnDestroy()
+    {
+        OnEnemyDestroyed?.Invoke(this);
+        RemoveObjectPool();
+    }
+```
+
+2. `Operator`에서 해당 처리
+```cs
+    public override void Deploy(Vector3 position)
+    {
+		// 적 사망 이벤트 구독
+        Enemy.OnEnemyDestroyed += HandleEnemyDestroy;
+    }
+
+    // 테스트) 적 파괴 이벤트를 받아 오퍼레이터에서의 처리를 작업함
+    private void HandleEnemyDestroy(Enemy enemy)
+    {
+        // 1. 현재 타겟이라면 타겟 해제
+        if (CurrentTarget == enemy)
+        {
+            CurrentTarget = null;
+        }
+
+        // 2. 공격 범위 내에 해당 대상이 있다면 범위 내에서 제외
+        if (enemiesInRange.Contains(enemy))
+        {
+            enemiesInRange.Remove(enemy);
+        }
+
+        // 3. 저지 가능 대상, 저지 중인 대상일 때 제외
+        // OnTriggerExit은 겹친 상태에서의 파괴를 감지하지 못하므로 별도의 처리가 필요함
+        if (blockableEnemies.Contains(enemy))
+        {
+            blockableEnemies.Remove(enemy);
+            if (blockedEnemies.Contains(enemy))
+            {
+                UnBlockEnemy(enemy);
+                TryBlockNextEnemy();
+            }
+        }
+    }
+
+// 이벤트 구독 해제는 Die 메서드와 OnDestroyed 메서드에 이중으로 구현했다.
+// 씬 전환 같은 상황에서는 Die 메서드가 동작하지 않을 거라서.
+```
+
+- 테스트도 잘 동작함
+
+3. `Enemy`의 파괴 이벤트는 `Tile`에서도 활용할 수 있을 거라는 생각이다. 기존엔 `Enemy.Die`에서 접촉 중인 타일들에 대해 이 `Enemy`를 제거하도록 `Enemy`에서 코드가 짜여져 있었음.
+- 테스트 완) 여기서도 큰 문제는 없어 보임.
+
+
+
+### 적 Health <= 0인데 이동하는 현상
+- `Enemy.Update`에 체력이 0이면 아무 동작하지 않도록 수정.
+### Artillery - 2번째 스킬 탄환 수 줄어들지 않음
+- 이전에 `ActiveSkill`의 구조를 고친 적이 있다. 지속 시간에 관한 코루틴은 `Operator`에서 직접 관리하는 방식이었음. 이게 영향을 준 듯.
+- 스킬의 `OnAfterAttack`에 구현되어 있고, `AmmoBasedActiveSkill`에도 잘 구현이 돼 있는데?
+	- `OnAfterAttack`이 호출되지 않는 것 같다.
+- 발견한 듯?
+```cs
+// Operator.cs
+
+public void UseSkill()
+{
+	if (CanUseSkill() && CurrentSkill != null)
+	{
+		CurrentSkill.Activate(this);
+
+		// 여기서 duration > 0인 부분
+		if (CurrentSkill is ActiveSkill activeSkill && activeSkill.duration > 0)
+		{
+			// ...
+		}
+	}
+}
+```
+> Artillery의 2스킬은 탄환이 있는 한 무한 지속이라 duration을 따로 설정하지 않았음.
+
+- 그런데 여기서 **`Operator`가 스킬의 종류를 일일이 알고 분기를 정하는 건 확장에 번거로운 면이 있다.** 오퍼레이터는 단순히 스킬을 실행시키고, 스킬이 어떻게 실행되는가는 스킬에서 갖고 있어야 한다.
+	- 대신 이전에 다뤘던 것처럼 **오퍼레이터가 해당 코루틴을 관리해야 하는 것도 명백**하다.
+	- 결국 기존 구현으로 돌아감. `Operator`에서 실행 중인 코루틴만 관리하면 된다.
+### 퇴각 후 재배치했을 때 공격 범위 내에 있는데 공격하지 않는 현상
+- `Operator.UnregisterTiles`의 위치가 이상했다. 수정하고 테스트. 
+- 일단 저 부분 수정하니까 더 이상 문제가 보이진 않는 듯. 
+
+
+### NotificationPanel 수정
+- 기존 기능) 메인메뉴에서 어떤 동작이 이뤄졌을 때 우측 상단에서 왼쪽으로 미끄러져 들어와서 해당 동작이 잘 완료되었음을 알리고, 다시 오른쪽으로 사라졌다.
+
+- 수정 방향) 
+	- 3개의 카드가 나타날 수 있게 하며, 최대 갯수보다 많아지면 먼저 나타난 카드부터 사라진다.
+	- 컴포넌트 이름도 바꾼다. 이런 식의 `UI`는 `Toast`라고 불린다고 한다.
+	- 이를 전용으로 관리하는 매니저도 추가한다. `NotificationToastManager`
+- 아래처럼 구현했을 때 원하는 바가 나왔다.
+```cs
+// NotificationToastManager.cs
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Playables;
+
+public class NotificationToastManager : MonoBehaviour
+{
+    public static NotificationToastManager Instance { get; private set; }
+
+    [Header("Settings")]
+    [SerializeField] private GameObject notificationToastPrefab = default!;
+    [SerializeField] private Transform notificationContainer = default!;
+    [SerializeField] private int maxVisibleNotifications = 3;  // 최대 표시 알림 수 
+    [SerializeField] private float verticalSpacing = 10f;  // 알림 간 수직 간격
+    [SerializeField] private float moveDuration = 0.3f;  // 알림 위치 이동 애니메이션 시간
+
+    private List<NotificationToast> activeToasts = new List<NotificationToast>();
+    private float toastHeight = -1f;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void ShowNotification(string message)
+    {
+        if (notificationToastPrefab == null)
+        {
+            Debug.LogError("NotificationToast 프리팹이 할당되지 않음");
+            return;
+        }
+
+        if (activeToasts.Count >= maxVisibleNotifications)
+        {
+            // 가장 오래된 토스트는 리스트의 맨 앞 요소t
+            NotificationToast oldestToast = activeToasts[0];
+            activeToasts.RemoveAt(0);
+
+            // Dismiss를 호출하면 onToastClosed 콜백이 실행, 리스트에서 자동으로 제거된다. 
+            oldestToast.Dismiss();
+
+            UpdateToastPositions();
+        }
+
+        if (toastHeight < 0)
+        {
+            toastHeight = notificationToastPrefab.GetComponent<RectTransform>().rect.height;
+        }
+
+        // 새로운 토스트가 등장할 Y좌표를 미리 계산한다. activeToasts.Count가 새 토스트의 인덱스이므로 이를 사용한다.
+        float newToastTargetY = -activeToasts.Count * (toastHeight + verticalSpacing);
+
+        GameObject toastObject = Instantiate(notificationToastPrefab, notificationContainer);
+        NotificationToast newToast = toastObject.GetComponent<NotificationToast>();
+
+        // 새로운 토스트 추가
+        activeToasts.Add(newToast);
+
+        // 새 토스트 초기화(등장 애니메이션 시작)
+        newToast.Initialize(message, newToastTargetY, () => OnToastClosed(newToast));
+    }
+
+    // 토스트가 나타나거나 사라질 때 모든 토스트의 Y위치를 계산하고 이동시킨다.
+    private void UpdateToastPositions()
+    {
+        // 아래에서부터의 위치 계산
+        for (int i = 0; i < activeToasts.Count; i++)
+        {
+            float targetY = -i * (toastHeight + verticalSpacing);
+            activeToasts[i].MoveToY(targetY, moveDuration);
+        }
+    }
+
+    private void OnToastClosed(NotificationToast toast)
+    {
+        if (activeToasts.Contains(toast))
+        {
+            activeToasts.Remove(toast);
+            UpdateToastPositions();
+        }
+    }
+
+}
+
+// NotificationToast.cs
+using System;
+using DG.Tweening;
+using TMPro;
+using UnityEngine;
+
+/// <summary>
+/// 우측 상단에서 등장했다가 사라지는 알림 표시
+/// 알림은 슬라이드 인 애니메이션으로 나타난다
+/// </summary>
+public class NotificationToast : MonoBehaviour
+{
+    [SerializeField] private RectTransform panelRect = default!;
+    [SerializeField] private TextMeshProUGUI messageText = default!;
+
+    private Sequence? currentSequence;
+    private Action? onClosedCallback;
+    private bool isDismissing = false; // 중복 호출 방지 플래그
+
+    // OnClosed : 애니메이션이 끝나고 파괴될 때 호출될 콜백
+    public void Initialize(string message, float startY, Action OnClosed)
+    {
+        messageText.text = message;
+        onClosedCallback = OnClosed;
+
+        PlayShowAnimation(startY);
+    }
+
+    private void PlayShowAnimation(float startY)
+    {
+        currentSequence?.Kill();
+
+        panelRect.anchoredPosition = new Vector2(400f, startY);
+
+        currentSequence = DOTween.Sequence().SetUpdate(true)
+            .Append(panelRect.DOAnchorPosX(-10f, 0.3f).SetEase(Ease.OutBack))
+            .AppendInterval(2f)
+            .Append(panelRect.DOAnchorPosX(400f, 0.3f).SetEase(Ease.InBack))
+            .OnComplete(() =>
+            {
+                onClosedCallback?.Invoke();
+                Destroy(gameObject);
+            });
+    }
+
+    // 토스틀를 강제로 사라지게 한다.
+    public void Dismiss()
+    {
+        if (isDismissing) return;
+        isDismissing = true;
+
+        currentSequence?.Kill();
+
+        // 사라지는 애니메이션 실행
+        DOTween.Sequence().SetUpdate(true)
+            .Append(panelRect.DOAnchorPosX(400f, 0.1f).SetEase(Ease.InBack))
+            .OnComplete(() =>
+            {
+                onClosedCallback?.Invoke();
+                Destroy(gameObject);
+            });
+    }
+
+    public void MoveToY(float targetY, float duration)
+    {
+        panelRect.DOAnchorPosY(targetY, duration).SetEase(Ease.OutQuad);
+    }
+
+    private void OnDestroy()
+    {
+        currentSequence?.Kill();
+    }
+
+}
+```
+> 정확히는 최대 갯수를 초과할 때는 누락되는 이슈가 있긴 한데, 그냥 토스트 최대 갯수를 4개로 했음. 
+
+
+
 # 250625 - 짭명방
 - 어제 보였던 문제는 많았는데 해결된 게 없어서 오늘은 전체적으로 다듬는다.
 - 머리가 복잡해지면 될 것도 안되는 것이라..

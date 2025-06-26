@@ -20,6 +20,20 @@
               "icon": "lucide-file",
               "title": "README"
             }
+          },
+          {
+            "id": "500893f35a630270",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/자료구조 - 해시.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "자료구조 - 해시"
+            }
           }
         ]
       }
@@ -212,8 +226,10 @@
   },
   "active": "b7b96624b1eac422",
   "lastOpenFiles": [
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/객체 지향 설계 기준점 잡기.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/자료구조 - 해시.md",
     "1. Projects, Ongoing/README.md",
+    "3. Resource/Image/해시테이블.png",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/객체 지향 설계 기준점 잡기.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/git - 과거로 돌아가서 새로운 브랜치로 옮기기.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - 클래스 단위의 이벤트.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/Unity - 이벤트.md",
@@ -246,10 +262,7 @@
     "3. Resource/Image/Pasted image 20250601192317.png",
     "3. Resource/Image/Pasted image 20250601191819.png",
     "3. Resource/Image/Pasted image 20250601191242.png",
-    "3. Resource/Image/Pasted image 20250601190733.png",
     "4. Archive/블렌더/한교수님 강의/한교수님 블렌더 강의 유튜브 재생 목록.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/오퍼레이터들 스탯 정리.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/25년 5월.md",
     "4. Archive/블렌더/한교수님 강의",
     "4. Archive/블렌더",
     "2. Area/글쓰기",
