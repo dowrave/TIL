@@ -4,8 +4,10 @@
 - `[[]]` 링크는 `유니티/보관함`이나 `작업 일지/직접 작성/일지`에 대부분 있다.
 ---
 # 작업 내용 : 짭명방
-## 남은 작업 내용 
-- **지상 오퍼레이터 1개 추가**
+
+## 남은 작업
+
+- **지상 오퍼레이터 1개 추가*
 	- 명방에서 가드 중에 2번 공격하는 직군이 있다. 그걸로 구현하고 싶음.
 	- 특징) 2저지, 2번 공격함, 스킬들은 모두 공격 시에만 회복함.
 	- 1스킬을 기존 강타와 동일(?)하게 구현한다면, 2스킬은 어떻게 구현할지도 고민.
@@ -40,14 +42,247 @@
 ---
 # 작업 일지
 
-# 250703 - 짭명방
-## 구현 예정 
-- 세부 직군은 구현하지 않을 거니까 이 자체가 하나의 직군이 됨. `Artillery`와 비슷.
-- 지상에서 평타 1번에 2번의 공격이 나가는 클래스 만들기. 
-	- `DualBlade`가 가장 무난한가? 2번 때린다는 의미에서? 
-	- 기존 게임의 소드마스터는 단어만 들었을 때는 그런 이미지는 아니니까. 
+# 250704 - 짭명방
+## 2번 공격하는 근접 직군 구현
 
-- `DualBlade` 아이콘 만들기
+- 이름은 `DualBlade`?
+- 특징
+	- 기본 공격은 1번 공격 시 2회 타격함
+	- 모든 스킬은 공격 시 SP가 회복됨
+		- 즉 공격 쿨타임이 돌 때마다 2회 공격하고, SP는 때릴 때마다 1씩 총 2가 올라감.
+	- 컨셉은 살짝 바꾸겠음. 스킬을 켜지 않았을 때 물리딜을, 켜거나 사용할 때는 마법딜을 넣는 식으로.
+	- 1스킬은 강타로 구현하되 마법 타입으로 공격이 바뀌어서 나감
+	- 2스킬은 버프로 구현할까?
+
+- 견본이 좀 있나 찾아봤는데 소드마스터 자체가 5성 이하로 별로 없다. 바이비크, 타찬카, 커터 정도.
+	- 스탯은 바이비크의 것을 가져옴
+
+- 스크립트 자체는 이런 구현에서 시작.
+```cs
+public class DualBladeOperator : Operator
+{
+    // 공격 사이의 간격
+    private float delayBetweenAttacks = 0.15f;
+
+    public override void Attack(UnitEntity target, float damage)
+    {
+        // 2회 공격 로직을 코루틴으로 구현
+        StartCoroutine(DoubleAttackCoroutine(target, damage));
+    }
+
+    private IEnumerator DoubleAttackCoroutine(UnitEntity target, float damage)
+    {
+        bool showDamagePopup = false;
+        float polishedDamage = Mathf.Floor(damage);
+
+        base.PerformAttack(target, polishedDamage, showDamagePopup);
+
+        yield return new WaitForSeconds(delayBetweenAttacks);
+
+        if (target != null && target.CurrentHealth > 0)
+        {
+            base.PerformAttack(target, polishedDamage, showDamagePopup);
+        }
+    }
+}
+```
+
+> 이거 일단 중지!
+
+## Operator 리팩토링
+
+### Skill - Operator 관계 재정립
+
+- `BaseSkill`의 경우
+```cs
+	public bool autoRecover = false; // 활성화시 자동 회복, 비활성화 시 공격 시 회복
+	public bool autoActivate = false; // 자동발동 여부
+	public bool modifiesAttackAction = false; // 공격 액션 변경 여부
+```
+이런 필드들이 있다. 그러면 이 필드의 값에 따라 SP 회복 로직이 달라진다든가, 입력을 대기하거나 스킬이 자동으로 나간다거나 하는 부분은 전부 Operator 자체에서 일어나야 하는 일이다.
+
+지금의 `SmashSkill` 같은 경우
+```cs
+protected override void SetDefaults()
+{
+	autoActivate = true;
+}
+
+// 공격에 묻어나가는 로직
+public override void OnBeforeAttack(Operator op, ref float damage, ref bool showDamage)
+{
+	if (op.CurrentSP >= op.MaxSP) 
+	{
+		damage *= damageMultiplier;
+		showDamage = true;
+		op.CurrentSP = 0;
+	}
+	else
+	{
+		op.CurrentSP += 1;
+	}
+}
+```
+이런 식으로 스킬 자체에서 오퍼레이터의 SP를 회복하는 로직이 있는데, 이렇게 구현하지 말고 
+
+- `Operator`에서는 **스킬 -> 오퍼레이터로 전달시켜서 회복시키는 게 아니라 오퍼레이터 자체에서 필드를 확인하고 그에 따른 동작을 수행하는 게 더 맞는 구현**이 된다.
+
+1. `SmashSkill`의 `else` 부분을 제외한다. 회복 동작은 `BaseSkill.autoRecover = false`일 때 `Operator`에서 동작한다.
+
+2. 공격 시 SP 회복 로직은 `Operator.PerformAttack`의 공격 후에서 구현한다.
+```cs
+    protected virtual void PerformAttack(UnitEntity target, float damage, bool showDamagePopup)
+    {
+		float spBeforeAttack = CurrentSP;
+	    // 공격 전
+        if (CurrentSkill != null)
+        {
+            CurrentSkill.OnBeforeAttack(this, ref damage, ref showDamagePopup);
+        }
+		
+		// 실제 공격 동작
+		// ...
+		
+		// 공격 후
+        if (CurrentSkill != null)
+        {
+            CurrentSkill.OnAfterAttack(this);
+            
+            // SP 공격 시 회복 로직
+            if (!CurrentSkill.autoRecover && !IsSkillOn && spBeforeAttack != MaxSP)
+            {
+                CurrentSP += 1; // 세터에 Clamp가 있으므로 여기서 하지 않아도 됨.
+            }
+        }
+    }
+```
+> 추가로, sp가 최대일 때 나간 공격은 `OnBeforeAttack`에서 스킬이 발동되면서 sp가 0이 되므로 해당 공격에서는 SP가 회복되지 않도록 수정했다.
+
+### 잠깐 휴식 전 정리
+- 지금 신경쓰이는 거
+```cs
+protected void HandleSPRecovery()
+{
+	// ...
+
+	if (CurrentSP != oldSP && operatorUI != null)
+	{
+		operatorUI.UpdateUI();
+		OnSPChanged?.Invoke(CurrentSP, MaxSP);
+		
+		// ..
+	}
+}
+```
+> - 여기서 **OnSPChanged?.Invoke()로 operatorUi.UpdateUI까지 통합해버리는 게 좋아보인다.**
+> - 그런데 `OnSpChanged.Invoke` 이벤트를 구독하는 부분은 `DeployableActionUI` 이랑 `DeployableBarUI`이다. `OperatorUI`는 `DeployableBarUI.SetSPBarColor` 를 수정하고 스킬 아이콘 활성화 여부를 결정하는데..
+> - 이벤트로 다 묶어버릴 수 있을 것 같음.
+> - 문제라면 `DeployableBarUI`가 따로 있다는 것인데.. 이따 생각해보자.
+
+- 휴식 끝!
+###  1. Operator - OperatorUI 정리
+1. `OperatorUI` 자체는 `Operator` 자체에서 생성과 파괴를 담당
+2. HP 변경, SP 변경 등은 이벤트로 관리
+	- 왜냐면 `1:多` 관계임. 저 사건들을 사용할 컴포넌트들을 일일이 관리하는 건 번거로움.
+	- 하지만 `UI 자체는 오퍼레이터와 1:1 관계`임
+
+- 이런 구조로 바꿨다. 기존엔 이것저것 엉켜있었음.
+```
+[ Operator ]  <-- (데이터 소스)
+     |
+     | (이벤트 발생: OnHealthChanged, OnSPChanged, OnSkillStateChanged)
+     V
+[ OperatorUI ] (컨트롤러: 이벤트 구독 및 로직 분배)
+     |
+     | (메서드 호출: UpdateHealthBar, SetSPBarColor 등)
+     V
+[ DeployableBarUI ] (뷰: 단순한 API 제공 및 하위 컴포넌트 관리)
+     |
+     +--- [ HealthBar ] (실제 뷰)
+     |
+     +--- [ SPBar ] (실제 뷰)
+```
+
+### 2. Skill - Operator - OperatorUI 정리
+- 크게 2가지 궁금한 게 있다.
+	1. **오퍼레이터의 스킬을 켜고 끄는 걸 어디서 처리해야 할까?**
+		- **스킬의 시작과 끝을 처리하는 지점은 스킬 자체**다. 그래서 **어떤 시점에 어떤 동작을 해야 하는지 아는 스킬에서 오퍼레이터의 상태를 함께 관리**한다.
+		- 스킬은 `Operator`의 상태를 변경해달라고 요청하면 `Operator`는 요청을 받아 상태를 변경하고 변경된 사실을 외부에 방송한다.
+	2. 스킬이 켜졌을 때 SPBar의 동작은 어디에서 관리해야 할까?
+		- SPBar가 어떻게 변하는가는 SPBar 자체에서 처리하면 된다. 스킬에서 일일이 관리할 필요 없다.
+
+## 기타 버그
+- [x] `Artillery` 공격이 동작했는데도 대미지가 안 들어가는 것처럼 보이는 이슈
+	- `Projectile`에서 폭발하는 경우의 콜라이더 처리가 바뀌어야 한다. 원래는 `UnitEntity`를 직접 감지했으나, 이전에 `Body`를 각 객체의 자식 오브젝트로 별도로 구현하고 거기에 `BodyColliderController` 스크립트를 붙였던 적이 있다. 그 컴포넌트를 감지하도록 수정함.
+
+- [x] `MedicOperator`의 공격이 연속적으로 쫘라락 나가는 현상
+	- 공격 쿨타임 적용하는 로직을 Attack 내부로 바꾸면서 발생한 문제인 듯.
+	- 오버라이드하기에는 살짝 구조가 달라서 `SetAttackDuration, SetAttackCooldown`을 똑같이 `MedicOperator`에 넣었다.
+
+- [x] `Operator`의 저지도 이상하게 동작한다.
+	- 상황) Operator가 저지 중인 적을 성공적으로 제거했을 때, 콜라이더가 겹치지 않는 상황인데 해당 적이 저지당하는 현상이 있음. 이전과 달리 근거리, 원거리를 가리지 않음.
+	- `blockableEnemies`가 제대로 처리되지 않은 것으로 보인다. 즉, **콜라이더가 겹쳤을 때 저지 후보에는 들어갔는데, 콜라이더에서 이탈했는데도 저지 후보에서 제거되지 않은 것으로 보임**.
+	- `Operator`의 `public override void OnBodyTriggerExit(Collider other)`가 `private`으로 돼 있긴 했었다. 체크해보고 다시 실행시켜봄.
+
+- [x] `Operator`가 배치될 때 겹쳐진 적을 저지하지 않는 현상도 있다.
+	- 현재 `BodyCollider`로 뺀 상태이고 배치될 때 이를 활성화한다고 하자. 이 때, `OnTriggerEnter`는 이미 겹쳐진 콜라이더에는 동작하지 않는다. 
+	- 따라서 활성화 시점에서 겹쳐져 있으므로 동작하지 않고, 그 다음 프레임에도 `OnTriggerEnter`는 이미 겹쳐있으니까 동작하지 않는다. `OnTriggerStay`는 동작함.
+	- 성능까지 고려해본다면, 활성화 시점에 겹쳐진 콜라이더를 체크해서 `OnTriggerEnter`로 넘겨주면 되지 않을까?
+
+- `BodyColliderController`를 아래처럼 구현했다.
+```cs
+// 이 컨트롤러의 콜라이더 활성화 상태 결정
+public void SetColliderState(bool enabled)
+{
+	if (bodyCollider != null)
+	{
+		bodyCollider.enabled = enabled;
+
+		// 콜라이더가 켜지는 순간에는 수동 겹침 검사 실행
+		if (enabled)
+		{
+			CheckForInitialOverlaps();
+		}
+	}
+}
+
+// 콜라이더가 활성화된 시점에 겹쳐져 있는 코라이더를 찾아 `OnTriggerEnter`처럼 owner에게 전달한다.
+private void CheckForInitialOverlaps()
+{
+	if (owner == null) return;
+
+	// 콜라이더의 타입을 확인해 Overlap 함수를 사용한다.
+	if (bodyCollider is BoxCollider box)
+	{
+		// BoxCollider와 충돌하는 콜라이더들을 찾음
+		Collider[] overlappingColliders = Physics.OverlapBox(
+			transform.position + box.center,
+			Vector3.Scale(box.size, transform.lossyScale) / 2, // 스케일링을 고려한 실제 크기
+			transform.rotation,
+			-1, // 모든 레이어
+			QueryTriggerInteraction.Collide // 트리거 콜라이더와도 충돌하도록 설정
+		);
+
+		foreach (var otherCollider in overlappingColliders)
+		{
+			// 자기 자신은 무시
+			if (otherCollider == bodyCollider) return;
+
+			// 감지된 콜라이더를 owner에게 전달
+			owner.OnBodyTriggerEnter(otherCollider);
+		}
+	}
+}
+```
+
+- [x] 원거리 `Enemy`가 원거리 공격하지 않는 문제
+	- 이건 갑자기 왜 그러는 걸까?
+	- 얘도 비슷한 문제겠다. 즉, `OnTriggerEnter`에서 감지하는 게 `DeployableUnitEntity`를 직접 감지하는 게 아니라, 본체 트리거 감지 -> 그 부모에 `DeployableUnitEntity`가 있는가? 가 되는 것.
+	- **오늘 발생한 대부분의 문제가 이 본체 콜라이더를 자식으로 이동시키면서 발생한 문제들**이다. 
+
+- [x] `EnemyBarUI`의 체력 변화를 이벤트 기반 구독으로 변경
+	- `Operator`에 비해 훨씬 쉽다. 체력밖에 없고 고려할 것도 많이 없음
+
 # 250703 - 블로그
 
 ## 오늘의 배운 점
