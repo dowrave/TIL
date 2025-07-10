@@ -43,10 +43,188 @@
 # 작업 일지
 
 ## 이슈? 정리
-1. **`DualBlade`는 아이콘의 해상도를 256으로 올려도 살짝 깨져서 보인다.** 가우시안 블러를 미리 해놔서 그런가? 왜 그러지..
-2. 현재) **이중 공격을 할 때, 적이 1타를 맞고 죽으면 2번째 공격은 나가지 않는 구조다.**
-	- **적이 죽더라도 2번째 공격은 나가게 해야 하나? 아니면 지금 상태를 유지하는 게 좋나?**
-	- 게임을 생각해보면 소리 같은 것도 다 2번 들리니까 그거에 맞춰서 공격을 나가도록 구현한 건지, 아니면 1대만 때리고 소리만 2대 나오는 건지 모르겠다. 현상유지해도 큰 상관은 없어보이지만 실제로 어떤 식으로 구현되는지 정리해볼 필요는 있겠다.
+
+# 짭명방 예정
+- 어제 발견한 문제들, 생각해 볼 거리들
+	1. **`DualBlade`는 아이콘의 해상도를 256으로 올려도 살짝 깨져서 보인다.** 가우시안 블러를 미리 해놔서 그런가? 왜 그러지..
+	2. 현재) **이중 공격을 할 때, 적이 1타를 맞고 죽으면 2번째 공격은 나가지 않는 구조다.**
+		- **적이 죽더라도 2번째 공격은 나가게 해야 하나? 아니면 지금 상태를 유지하는 게 좋나?**
+		- 게임을 생각해보면 소리 같은 것도 다 2번 들리니까 그거에 맞춰서 공격을 나가도록 구현한 건지, 아니면 1대만 때리고 소리만 2대 나오는 건지 모르겠다. 현상유지해도 큰 상관은 없어보이지만 실제로 어떤 식으로 구현되는지 정리해볼 필요는 있겠다.
+- 오늘 진행할 것들
+	- DualBlade의 2가지 스킬을 구현
+		- 1번째 스킬은 똑같이 강타인데, 강타가 나갈 때는 마법 대미지가 나가는 방식
+		- 2번째 스킬은 아이디어 자체를 생각해봐야 함. 
+			- 일단은 별도의 이펙트를 구현하지 않고 만들 방법을 고민 중
+			- 그래서 버프 형식이 될 것 같다. 
+				- 공격력과 공격 속도가 증가하고 스킬이 켜진 동안 공격 타입이 마법이 되는 방식이면 될 듯. 
+
+## 작업 중
+
+## 작업 완료
+
+
+
+# 250710 - 블로그
+
+## 오늘의 교훈
+- 기능 구현은 간단해보여도 스타일이라든가 의외의 문제라든가 등등이 발생할 수 있으니 생각보다 시간을 많이 잡아먹는 일이다. 
+- 더 수정할 일이 없기를 바랍니다,,,, 이거 1시간이면 끝낼 줄 알았음... 곧 있으면 자정임,,,
+
+## 스포일러인 경우 블러 표시 & 스크롤 전파 디버깅
+- 스포일러가 활성화된 경우, 최초에는 본문을 보이지 않게 구현하겠음.
+	- 모달을 펼쳤을 때 블러 처리하는 외부 태그 + 클릭 시 내용이 보이게 하도록 구성할 계획.
+>[!note]
+>1. 클릭 가능한 별도의 패널을 따로 만듦
+>2. 본문은 스포일러 상태에 따라 블러가 활성화되거나 비활성화됨. 
+
+추가) 지금 방식은 글의 길이에 영향을 받는다.   
+예를 들어서 한 줄짜리 스포일러 글이라면 스포일러 경고 영역의 내용이 잘리고, 너무 길다면 스포일러 경고 문구는 스크롤을 내려야 볼 수 있다.  
+
+---
+
+따라서 스포일러 경고 영역 자체는 고정된 높이로 구현하고, 이를 클릭하면 본문이 들어가는 방식으로 구현해보겠음.
+
+>[!note]
+>제미나이에게 물어봤을 때 바로 나온 대답은
+>1. 실제 컨텐츠 영역의 높이를 측정한다
+>2. 경고가 활성화될 때는 해당 높이를 가진다
+>3. 본문을 직접 보여줄 때는 측정한 높이를 사용한다 
+>   
+>이었다. 근데 이렇게 구현할 거면 그냥 **경고문을 보여줘서 해당 높이를 가진다** -> **본문을 보여줄 때 컨텐츠 영역에 실제 내용을 넣는다**가 훨씬 간단하게 구현하는 방법 같음. 
+
+뭔가 만족스럽지 않다. 또 생각이 많아진다. 방법이 크게 2가지가 떠오른다.
+>[!note]
+>1. 컨텐츠 영역 자체에만 스크롤을 구현하는 것. 
+>2. (현재)모달 전체에 스크롤을 유지하되 위처럼 상태에 맞춰 영역을 바꾸는 것.
+
+1번이 나아보이기는 하는데, 본문 이외의 영역을 제목 부분이 항상 차지한다는 게 걸리는 느낌이다.
+그런데 1번처럼 구현하면 **푸터 영역을 제외**할 수 있다. 지금의 구현 자체가 푸터에 이중구현이 되어 있기는 함. 
+- 수정/삭제 버튼은 나만 볼 수 있게끔 윗쪽에 나타나 있고, 
+- 닫기 버튼도 이미 우측 상단에 있으니까. 
+
+그럼 짧은 글에 대해서는 어떻게 대처할 것이냐? css에서 최소 높이를 설정해주면 되지 않을까?
+
+그런데 예전에 생각했던 것 중에 그게 있었다. 본문이 끝나는 지점이 화면의 아랫쪽에 있으면 뭔가 이상한 느낌이었음. 
+
+>[!warning]
+> 현재 문제 상황 : 모달이 활성화된 상태에서 모달 외부에 마우스 커서가 있을 때
+> 1. 모달 자체가 스크롤이 가능한 상황 - 외부에 커서를 놓으면 스크롤 가능
+> 2. 모달 자체가 스크롤이 불가능한 상황(내용이 적은 이유로) - 외부에 커서를 놓으면 스크롤 불가능
+> 3. 모달 내부에 커서가 있는 상태에서는 외부로 이벤트 버블링이 발생하는 건 아님
+> **여기서 문제가 되는 상황은 1번.** 
+
+ReviewModal의 스크립트를 보면
+```tsx
+  usePreventScroll(!!reviewId);
+  useModalHistory(!!reviewId, isEditing ? handleAttemptClose : onClose);
+```
+이 되어 있다. useEffect 문으로 감싼 요소는 아님.
+
+그러면 `usePreventScroll`(body의 스크롤을 막음)이 동작한 다음에 review의 content 들이 들어오면서 content가 있는 영역에 스크롤이 필요해지면 다시 렌더링되면서 `usePreventScroll`의 효과가 풀리는 게 아닐까... 라는 가설을 세워본다.
+즉, **내용이 들어온 다음에 usePreventScroll이 동작하면 되지 않을까?** 라는 생각으로 실험해봄.
+
+>[!done]
+> 오래 걸렸다. 온갖 쇼를 다 해봤는데, `review-outer-modal`에서 상위 요소로 이벤트가 전파되는 상황이 있으면 막고, `review-inner-modal`에서도 자신부터 자신의 상위요소들을 차례대로 올라가면서 스크롤이 가능한 요소인지 체크, 불가능한 경우에는 스크롤을 다 막는 방식으로 구현했다.
+> - 내가 감을 잡고 짚어나가야 했다. AI님께서 계속 안되는 코드를 던져줘서..
+> - 그건 그렇고 제미나이 프로가 갑자기 왜 이렇게 아부를 떠는지 모르겠다. 부담스럽다.
+
+```tsx
+import { useLayoutEffect } from 'react';
+
+// 모달 배경의 클래스 이름
+const OUTER_MODAL_CLASS = 'review-outer-modal';
+const INNER_MODAL_CLASS = 'review-inner-modal';
+
+export const usePreventScroll = (isLocked: boolean) => {
+  useLayoutEffect(() => {
+    if (!isLocked) {
+      return;
+    }
+    // --- 1. 기존의 스타일 제어 (시각적 처리 및 기본 방어) ---
+    const originalOverflow = document.body.style.overflow;
+    const originalOverscrollBehavior = document.body.style.overscrollBehaviorY;
+
+    document.body.style.overflow = 'hidden';
+    document.body.style.overscrollBehaviorY = 'contain'; // 스크롤 체이닝 방지
+
+    // --- 2. 문제가 되는 상황을 위한 정밀 타격 (이벤트 제어) ---
+    const handleWheel = (e: WheelEvent) => {
+      const target = e.target as HTMLElement;
+
+      const innerModal = target.closest(`.${INNER_MODAL_CLASS}`);
+
+      // 1. 이벤트가 모달 내부에서 발생하지 않은 경우
+      if (!innerModal) {
+        // 경로에 outer-modal이 있다면 배경 스크롤을 시도하는 것이므로 차단함.
+        if (target.closest(`.${OUTER_MODAL_CLASS}`)) {
+            e.preventDefault();
+        }
+        return;
+      }
+
+      // 2. 이벤트가 모달 내부에서 발생한 경우
+      let current: HTMLElement | null = target;
+      let isScrollLegitimate = false;
+      
+      // 2. target부터 innerModal까지 올라가면서 스크롤 가능한 부모가 있는지 확인
+      while (current && current !== innerModal.parentElement) {
+
+        const style = window.getComputedStyle(current);
+
+        const isOverflowing = current.scrollHeight > current.clientHeight;
+        const isScrollAllowed = style.overflowY === 'auto' || style.overflowY === 'scroll';
+
+        // 요소의 영역이 보이는 영역보다 크다 + 스크롤을 허용한다
+        if (isOverflowing && isScrollAllowed) {
+            isScrollLegitimate = true;
+            break; // 합법적인 스크롤이므로 검사 중단
+        }
+
+        if (current === innerModal) break; // innerModal이 종점 
+
+        current = current.parentElement;
+      }
+
+      // 합법적인 스크롤 경로를 찾지 못했다면 외부로 이벤트가 나가려는 시도이므로 차단
+      if (!isScrollLegitimate) {
+        e.preventDefault();
+      }
+    };
+
+    // passive: false 옵션으로 preventDefault가 동작할 수 있음을 브라우저에 알림
+    window.addEventListener('wheel', handleWheel, { passive: false });
+
+    // --- 3. 클린업 함수: 모든 것을 원래대로 복원 ---
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.body.style.overscrollBehaviorY = originalOverscrollBehavior;
+
+      window.removeEventListener('wheel', handleWheel);
+    };
+  }, [isLocked]);
+};
+```
+
+## 스크롤바로 인한 서식 변경 방지하기
+```tsx
+<div className={`flex-grow relative min-h-[150px]
+${review.is_spoiler && !isSpoilerRevealed ? 'overflow-y-hidden' : 'overflow-y-auto'}
+`}>
+```
+의 상태 변화로 인해서 오른쪽에 스크롤바가 생기는 경우, 글의 서식에 살짝 변화가 발생한다. 이 변화를 방지하고자 함.
+
+### 해결법1) scrollbar-gutter
+- 브라우저에게 "이 영역에 스크롤바가 생길 수 있으니 미리 공간을 확보해라"라고 알려준다. 실제 스크롤바가 나타나도 콘텐츠 너비는 변하지 않는다.
+
+### 해결법2) 스크롤바 스타일링
+- 크롬에서 모바일 서식의 스크롤바가 마음에 든다고 던져줬더니 커스텀 스크롤바 CSS를 던져줬다.
+- 근데 제대로 적용되지 않는 느낌이다. 파이어폭스용으로 던진 서식만 적용되는데 왜지?
+- 아무튼 좀 지친 상태라 너무 깊게 들어가지는 않음
+
+>[!done]
+>- 결과적으로 1, 2번을 함께 적용함
+>- 추가로 발생한 문제로, `scrollbar-gutter`를 추가하면서 스포일러 경고 영역도 오른쪽에 스크롤바를 위한 영역을 남겨두는 현상이 발생
+>	- 살짝 야매를 부렸다. 스포일러 영역에 `-inset-x-3` 정도를 부여해서 스크롤바에 해당되는 영역까지 덮게 만들었다. 이렇게 구현할 경우 x축으로 스크롤바가 생기기 때문에 이것에 영향을 받는 요소들에 `overflow-x-hidden`으로 가로 스크롤을 막았다.
 
 
 # 250708 - 짭명방
