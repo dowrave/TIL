@@ -44,12 +44,255 @@
 ## 이슈? 정리
 
 # 짭명방 예정
+- 스킬 시스템 수정 
+	- `StatModifierSkill, SmashSkill`은 완료
+	- 나머지 스킬들도 `Buff`들을 구현한다는 틀에 맞춰서 수정할 예정
+
+- `DualBlade` 스킬 아이콘 만들기
+
+- 분명히 뭔 버그를 발견했는데 지금 정리하라고 하면 기억이 나지 않는.. 것도 있다.
+
+
+
+# 250716 - 짭명방
+
+## 작업 중
+
+- `DualBlade` 스킬들 구현
+	- 남은 건 아이콘인데 우선 이거 작업하기 전에 AI의 조언부터 생각해보고 넘어가자.
+
+### 스킬 시스템 확장은 계속 진행 중
+
+
+## 작업 완료
+
+>[!done]
+>1. **`AttackSource` 수정 및 스킬로 인한 `AttackType`을 반영하기**
+>2. **오브젝트 풀 관리 로직 수정** : `OperatorData, EnemyData` 단위로 관리, 종류에 따른 인스턴스가 최초로 생성될 때 오브젝트 풀 생성, 필요할 때에 풀 확장, 게임 종료 시 오브젝트 풀 파괴
+>3. `DualBlade` 스킬 구현 
+>	- 1스킬 완료, 아이콘 작업 남음
+>	- 2스킬 구현 중, 아이콘 작업 남음
+>4. **스킬 시스템 수정 : 실질적인 효과는 버프로, 어떤 버프를 실행시킬 지는 스킬로, 버프를 담는 통은 캐릭터**로
+>5. 기타 이슈 수정
+>	- `RequestExit` = 수동으로 나가기 버튼을 눌렀을 때의 동작은 `GameOver`로 통합
+>	- 로비로 돌아가는 버튼이 1번째 클릭은 동작하지 않는 이슈
+
+### 1. 스킬 등으로 인한 AttackType 변경
+
+>[!note]
+>1. `OnBeforeAttack`에 변경하고 싶은 변수를 `ref`로 지정
+>2. 기본적으로 `Operator`가 갖는 `attackType`을 지정하되 `OnBeforeAttack`에서 수정되어야 할 요소를 수정하면 됨
+
+- 스킬이 발동하는 상황에서 `AttackType`을 변경하려면
+
+```cs
+public virtual void OnBeforeAttack(Operator op, ref AttackType type, ref float damage, ref bool showDamagePopup){ }
+```
+> 이런 식으로 구현하면 된다. `ref`을 추가하면서 직접 해당 파라미터를 바꿀 수 있게 함.
+
+- 그러면 아래처럼 공격을 시도하기 전, 오퍼레이터가 기본적으로 갖고 있는 타입을 갖고 온 다음 공격 직전에 검사해서 반영시킬 수 있음.
+```cs
+AttackType finalAttackType = AttackType;
+
+if (CurrentSkill != null)
+{
+	CurrentSkill.OnBeforeAttack(this, ref damage, ref finalAttackType, ref showDamagePopup);
+}
+```
+> 자세한 구현은 스킬마다 달라지니까 거기서 사용하면 됨
+> 예를 들면 SP가 가득 찼을 때 1회성으로 발동되는 스킬이라면 거기서 조건을 넣으면 되고, 버프가 활성화됐을 때 계속 나가는 스킬이이도 마찬가지다.
+> - 물론 후자는 오퍼레이터의 공격 타입 자체를 바꿔버리는 방식으로도 구현할 수 있겠다.
+
+### 2. 오브젝트 풀 수정 : 생성은 사용할 때에, 파괴는 스테이지 종료 시에
+- 코드 중에 이런 지적사항이 있었다 : **개별 `Enemy`, 즉 인스턴스 ID마다 오브젝트 풀을 관리하는 것보다, 같은 종류의 `Enemy`라면 같은 오브젝트 풀을 사용하게 하고 더 생성하지 않는다**
+
+이 방식의 논리는 이렇다 
+- 현재의 구현은 적이 파괴될 때마다 풀이 파괴되므로 비효율적
+- 같은 종류의 적들은 같은 프리팹을 사용하므로 여러 적이 공유하는 하나의 오브젝트 풀을 만들고 거기서 꺼내서 사용하면 되는 방식
+- **풀의 파괴 시점은 개별 적이 파괴되는 시점이 아니라 스테이지가 종료될 때**
+- 풀의 확장 시점은 현재 활성화된 오브젝트가 너무 많아서 추가로 필요할 때에만 한정된다. 적이 생성될 때마다도 아니고 단순히 "오브젝트가 필요한데 부족할때" 뿐임.
+
+- 그러면 `Operator`에 대해서도, 재배치라는 동작이 분명하게 있으니까 똑같은 논리로 적용할 수 있겠다.
+	- 즉 생성은 오퍼레이터가 배치되는 시점. 재배치여도 1씩 증가하므로 성능에 큰 부하가 되지 않는다.
+	- 파괴는 스테이지가 끝날 때.
+
+- 이펙트도 똑같이 `ObjectPoolManager.CreatePool`에서 관리된다. 중복을 걱정할 필요는 없음.
+
+
+### 3. DualBlade 스킬 구현
+
+- 1번째 스킬
+	- `SmashSkill` 자체에 이제 `AttackType`이 구현 가능하기 때문에 , 같은 스크립트로 다른 스킬을 만들었다. 
+		- 기존 스나이퍼는 200% 물리 대미지였다면
+		- 이번엔 150% 마법대미지로 구현함. 
+- 2번째 스킬
+	- `StatModifierSkill`을 사용할 예정이므로 이것의 경우에는 
+		- 스킬이 활성화될 때 마법 공격으로 전환
+		- 스킬이 비활성화될 때 원래의 물리 공격으로 돌아온다.
+	- 추가로 공격 시 일정 확률로 스턴이 들어가는 것도 구현할 것
+
+### 4. Skill 시스템 관련 : "버프" 시스템으로의 확장
+
+> [!note]
+> 현재 방식은 스킬 스크립트가 직접 로직을 수행하는 직관적인 구조입니다. 만약 더 복잡한 효과(예: 독, 출혈, 여러 개의 버프/디버프)를 다루게 된다면, "버프/디버프 시스템"을 도입하는 것을 고려해볼 수 있습니다.
+> - 스킬이 활성화되면, Operator에게 **"공격 시 기절 효과를 부여하는 버프"**를 추가합니다.
+> - Operator의 OnAfterAttack에서는 자신이 가진 모든 버프를 순회하며 "공격 후 효과"를 발동시킵니다.**
+>   이 방식은 스킬과 오퍼레이터의 결합도를 낮추고, 다양한 효과를 조합하기 쉽게 만들어주지만, 초기 설계가 더 복잡해집니다. 현재 요구사항에서는 제시해 드린 OnAfterAttack 훅을 직접 오버라이드하는 방식이 가장 간단하고 효율적입니다.
+
+- 이걸 구체적으로 물어봤다. **결론은 스킬과 버프를 분리해서 구현할 수 있다**는 것.
+- 크게 3개의 구조가 된다. 캐릭터, 스킬, 버프
+- 캐릭터는 버프들을 담는 통이 된다. 
+- 스킬은 지속시간 등을 관리하고 어떤 버프를 쓸지에 대한 인스턴스 등을 관리한다. 
+- 버프는 실질적인 효과.
+
+- 간략한 예시 
+
+1. 버프 시스템
+```cs
+// 버프 시스템의 기초
+public abstract class Buff
+{
+    public string buffName;
+    public float duration; // 지속 시간. 무한이면 float.PositiveInfinity
+    public UnitEntity owner; // 버프 소유 오퍼레이터
+    public UnitEntity caster; // 버프 시전자
+
+    public virtual void OnApply(UnitEntity owner, UnitEntity caster)
+    {
+        this.owner = owner;
+        this.caster = caster;
+    }
+
+    public virtual void OnRemove() { } // 버프 제거 시에 호출
+    public virtual void OnUpdate() { } // 매 프레임마다 업데이트가 필요하면 호출
+    public virtual void OnBeforeAttack(UnitEntity target, ref float damage, ref AttackType attackType, ref bool showDamagePopup) { } // 공격 전 호출
+    public virtual void OnAfterAttack(UnitEntity target) { } // 공격 후 호출
+}
+
+// 공격에 스턴이 묻어나가는 버프
+public class StunOnHitBuff : Buff
+{
+    private float stunChance;
+    private float stunDuration;
+
+    public StunOnHitBuff(float chance, float duration)
+    {
+        buffName = "Stun On Hit";
+        stunChance = chance;
+        stunDuration = duration;
+    }
+
+    public override void OnAfterAttack(UnitEntity target)
+    {
+        if (Random.value <= stunChance)
+        {
+            if (target != null && target.CurrentHealth > 0)
+            {
+                StunEffect stunEffect = new StunEffect();
+
+                if (target is Operator opTarget)
+                {
+                    stunEffect.Initialize(opTarget, owner, stunDuration);
+                    opTarget.AddCrowdControl(stunEffect);
+                }
+                else if (target is Enemy enemyTarget)
+                {
+                    stunEffect.Initialize(enemyTarget, owner, stunDuration);
+                    enemyTarget.AddCrowdControl(stunEffect);
+                }
+            }
+        }
+    }
+}
+```
+
+2. 스킬 시스템
+```cs
+namespace Skills.OperatorSkills
+{
+    [CreateAssetMenu(fileName = "New Stat Modifier Skill", menuName = "Skills/Stat Modifier With OnHit Skill")]
+    public class StatModifierWithOnHitSkill : StatModifierSkill
+    {
+        [Header("On-Hit Effect Settings")]
+        [Range(0f, 1f)]
+        public float stunChance = 0f;
+        public float stunDuration = 1.0f;
+
+        // 스킬이 부여하는 버프를 저장하는 필드
+        private StunOnHitBuff stunBuffInstance;
+
+        protected override void PlaySkillEffect(Operator op)
+        {
+            // 스탯 강화 효과
+            base.PlaySkillEffect(op);
+
+            // 스턴 효과 추가
+            if (stunChance > 0)
+            {
+                stunBuffInstance = new StunOnHitBuff(stunChance, stunDuration);
+                op.AddBuff(stunBuffInstance); // 버프를 추가하면 Buff.OnAfterAttack에 의해 기절 효과가 묻어나감
+            }
+        }
+
+        protected override void OnSkillEnd(Operator op)
+        {
+            op.RemoveBuff(stunBuffInstance);
+            base.OnSkillEnd(op);
+        }
+    }
+}
+```
+> - 버프의 세부 효과는 Buff에 구현되어 있기 때문에, Skill에서는 지속 시간을 관리해서 스킬이 켜질 때 버프들을 캐릭터에 등록하고 스킬이 꺼질 때 버프들을 캐릭터에서 제거시킨다.
+> - 이외에도 스킬 지속시간 동안 활성화되는 이펙트라든가, 오퍼레이터의 상태 등등을 관리한다.
+> 	- 예를 들어 스킬이 켜져 있다가 꺼졌다면 스킬은 오퍼레이터의 스킬이 켜져 있던 상태를 끄고, 오퍼레이터는 그런 상태의 변화에 따라 또 이벤트를 발생시키거나 직접 SPBar의 색을 변경하는 등의 실행을 시킨다.
+
+- 한편 기존 `SmashSkill` 같은 경우는 어떻게 구현할까? 자동으로 강화된 공격이 나가는 방식이었다.
+
+1. `Operator`에서는 `Update()`에서 스킬의 `OnUpdate()`를 실행시킨다. 
+2. 스킬에서는 오퍼레이터의 SP를 보고 있다가, SP 조건이 스킬을 실행할 수 있는 조건이 되면 스킬에 달려 있는 버프를 `Operator`의 버프 리스트에 추가한다.
+3. `Buff`에서는 공격 전에 스킬의 효과를 추가하고 공격 후에는 SP를 0으로 만들면서 자신을 해제하는 명령어를 오퍼레이터에 전달한다.
+
+
+### 5. 기타 이슈 수정
+- `RequestExit`의 로직은 `GameOver`로 수정
+	- 이 과정에서 `GameOver` 패널이 나타날 때 `ConfirmationReturnToLobbyPanel`은 사라져야 함. 그것도 구현.
+
+- 스테이지 패널에서 로비로 돌아가는 버튼 클릭 시 첫번째 클릭은 동작하지 않는 이슈
+	- 세부 구현을 보면
+```cs
+    private void Awake()
+    {
+        canvasGroup = GetComponent<CanvasGroup>();
+        gameObject.SetActive(false);
+    }
+
+    public void Initialize()
+    {
+        // 전투 중일 때 멈춤으로 전환
+        if (StageManager.Instance!.currentState == GameState.Battle)
+        {
+            StageManager.Instance!.SetGameState(GameState.Paused);
+        }
+
+        // 멈춤 오버레이가 활성화된 경우 비활성화
+        StageUIManager.Instance!.HidePauseOverlay();
+        gameObject.SetActive(true);
+```
+처럼 구현되어 있었다. 
+
+잘 몰랐을 때에 작성된 스크립트이긴 한데, **이 방식의 문제가 뭐냐면 `Awake`는 최초로 활성화되는 시점에 실행된다는 것이다.** 즉, 개발 과정에서 이 오브젝트가 비활성화된 상태라면 `Awake`가 아예 동작하지 않게 된다. 이 상태에서 아래의 `gameObject.SetActive(true)`로 들어가면 `Awake`가 바로 동작해서 1번째 클릭이 동작하지 않는다.
+
+한편 2번째 클릭은 동작한다. `Awake`가 더 이상 동작하지 않기 때문이다.
+
+따라서 어떤 패널이 활성화되고 활성화되지 않는지에 대한 구현은 개별 패널에서 구현하는 대신, 이들을 통합하는 매니저에서 구현하는 게 좋다. 
+
+결론 ) **`Awake`에서 `gameObject.SetActive`를 다루는 건 좋지 않음.**
 
 
 
 # 250715 - 짭명방
 
-## 작업 중 
+## 다음 날로 넘김
 
 >[!todo]
 >- DualBlade의 2가지 스킬을 구현
@@ -61,19 +304,11 @@
 
 - 1번째 스킬 구현
 	- 기존의 `SmashSkill`과 동일하되, 공격 타입만 바뀌는 방식이어야 함
-	- 이 과정에시 **기존의 공격 타입이 `ICombatEntity.AttackType`에 의존했는데, 대신 `AttackSource` 자체에 `AttackType`이 담기도록 변경함.**
+	- 이 과정에서 **기존의 공격 타입이 `ICombatEntity.AttackType`에 의존했는데, 대신 `AttackSource` 자체에 `AttackType`이 담기도록 변경함.**
 		- 그래야 기본적으로 `Physical` 공격을 하는 캐릭터라도 어떤 효과로 인해서 `Magical` 공격을 하도록 구현할 수 있기 때문에
 	- 이거 시스템을 건드린 거라서 생각보다 오래 걸릴 수도 있다.
 		- 어차피 언젠가 고칠 일이긴 했기 때문에 시간을 들여서 작업 ㄱㄱ
 		- 일단 시간이 없어서 여기까지 하는데 세부적으로 남은 것들 정리해봄
-
->[!todo]
->하다가 못 끝냄) **`Projectile`의 `AttackSource` 작업** 
->- 투사체를 생성하는 시점에 `AttackSource`를 담는 것도 생각해봤는데 그러면 판정이 발생하는 시점의 위치 정보를 못 담게 됨. 아니면 생성할 때 담되 
->	- 나중에 **대미지가 들어가는 판정 시점에 위치값만 따로 담는 것도 방법**일 듯. 
->- 나머지 더 할 일이 있는지 찾아보자. 
->- 아마 다음에 켜면 오류가 많은 상태일 거임~ 기억해 둘 건 `AttackSource`로 `attacker` 정보나 `damage` 정보들이 다 들어가 있다는 거!
-
 
 
 ## 작업 완료
