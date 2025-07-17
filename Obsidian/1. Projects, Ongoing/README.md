@@ -25,6 +25,7 @@
 - `VFX` 제작 사용 툴(강의 보면서 따라함)
 	- `Krita`
 	- `Blender`
+
 ## 하고 싶은데 못할 듯
 - 캐릭터 스프라이트 
 	- 현재 Capsule로 Operator나 Enemy 등을 구현한 상태
@@ -41,18 +42,197 @@
 ---
 # 작업 일지
 
-## 이슈? 정리
+## 짭명방 예정
 
-# 짭명방 예정
-- 스킬 시스템 수정 
-	- `StatModifierSkill, SmashSkill`은 완료
-	- 나머지 스킬들도 `Buff`들을 구현한다는 틀에 맞춰서 수정할 예정
+### 작업 중
 
-- `DualBlade` 스킬 아이콘 만들기
+>[!todo]
+>- 스킬 시스템 수정 
+> 	- `StatModifierSkill, SmashSkill`은 완료
+> 	- 나머지 스킬들도 지금의 틀에 맞춰 수정할 예정.
+>- `DualBlade` 스킬 아이콘 만들기
 
-- 분명히 뭔 버그를 발견했는데 지금 정리하라고 하면 기억이 나지 않는.. 것도 있다.
+### 예정
+- `1-3` 스테이지 구현 완료
+	- 보스 구현
+
+# 250717 - 짭명방
+
+## 작업 완료
+>[!done]
+>- 스킬 시스템 리팩토링
+>	- `CrowdControl`을 `Buff`에 통합
+>	- 행동 제약 플래그 반영
+>- 버그 수정
+>	- `SmashSkill` 관련
+>		- 공격 후 SP가 초기화되지 않는 문제
+>		- `enumeration` 관련 오류
+>	- `StunOnHitEffect` 적용 시 스턴이 들어가지 않는 현상
+>	- `StunEffect` 나타나지 않는 현상
+
+### 스킬 / 버프 시스템 수정
+- 지금처럼 `Buff` 시스템을 추가했을 때, 어디까지를 **`Buff`로 구현하고 어디까지를 `Skill`로 구현해야 하는가? 에 대한 고민이다.**
+
+#### 리팩토링 : CrowdControl -> Buff 시스템으로 통합
+- `Buff`에 `IsDebuff`라는 프로퍼티를 추가, `Stun`이나 `Slow` 등의 기존 `CrowdControl`로 구현된 클래스들을 모두 `Buff` 시스템으로 통합한다.
+- 이제 `UnitEntity`는 `Buff`로만 자신에게 적용된 버프, 디버프들을 모두 관리하는 방식.
+
+#### 행동 제약 플래그 시스템 : 비트 기반
+[[행동 제약 시스템 - 비트 연산]]에 별도로 정리.
+
+위처럼 행동 제약 시스템을 별도로 구현했다면, `UnitEntity`에서 행동 제약을 추가하고 제거하는 메서드를 만들고, `Buff`에서 이것들을 이용하면 된다.
+
+```cs
+[System.Flags] 
+public enum ActionRestriction
+{
+    None = 0,
+    Stunned = 1 << 0, // 00000001 (1)
+
+    // 아래는 참고로 쓰라는 예제들
+    // Frozen = 1 << 1,   // 빙결 상태 (2)
+    // Disarmed = 1 << 2, // 무장 해제 (공격만 불가) (4)
+    // Rooted = 1 << 3,   // 속박 (이동만 불가) (8)
+    // Casting = 1 << 4,  // 스킬 시전 중 (16)
+
+    CannotAttack = Stunned,
+    CannotMove = Stunned, 
+}
+```
+> 실제로 구현한 건 `Stun`밖에 없지만, 내 프로젝트가 아니더라도 다른 곳에서 다룰 걸 대비해서 여기서도 써둔다.
+
+- 위처럼 구현했다면 `UnitEntity`에 아래처럼 구현한다.
+```cs
+    public ActionRestriction Restrictions { get; private set; } = ActionRestriction.None;
+    
+    public void AddRestriction(ActionRestriction restirction)
+    {
+        Restrictions |= restirction; // 비트 OR 연산으로 플래그 추가
+    }
+
+    public void RemoveRestriction(ActionRestriction restirction)
+    {
+        Restrictions &= ~restirction; // AND, NOT 연산으로 플래그 제거
+    }
+    public bool HasRestriction(ActionRestriction restirction)
+    {
+        return (Restrictions & restirction) != 0; // 겹치는 비트가 있으면 true, 없으면 false.
+    }
+```
+> 비트 기반의 연산이다~ 하고 생각하면 대충 이해는 될 것이다.
+
+- 그러면 이제 `Buff`에서는 저 메서드들을 이용해 제약 플래그를 추가하거나 제거만 해주면 된다. 아래는 `StunBuff`.
+```cs
+    public override void OnApply(UnitEntity owner, UnitEntity caster)
+    {
+        base.OnApply(owner, caster);
+        owner.AddRestriction(ActionRestriction.Stunned);
+    }
+
+    public override void OnRemove()
+    {
+        owner.RemoveRestriction(ActionRestriction.Stunned);
+        base.OnRemove();
+    }
+```
+> 단순히 `기절`이라는 제약을 추가하고 지워주기만 하면 끝이다. 
+
+> 이제 `HasRestriction`을 조건처럼 쓰면 됨
 
 
+
+### 버그 수정
+#### SmashSkill 관련
+1. 스킬 발동 후 SP가 초기화되지 않음
+	- `OnAfterAttack(UnitEntity target)`이라고 설정해놓고 `Operator`에는 공격 대상으로 설정했다. **메서드 자체를 `OnAfterAttack(UnitEntity owner, UnitEntity target)`으로 수정.** 
+	- 공격 후에 상대에게 적용할 효과가 있고, 버프를 갖고 있는 이 캐릭터에게 적용할 효과가 별도이기 때문이다.
+- 2. `InvalidOperationException: Collection was modified; enumeration operation may not execute.` 오류
+```cs
+foreach (var buff in activeBuffs)
+{
+	buff.OnAfterAttack(this, target);
+}
+```
+> - **반복문 안에서 컬렉션을 건드리기 때문에 발생하는 오류**다. 
+> - 이전에도 배웠듯 이런 상황에서는 복사본을 만든 다음 진행하는 방법이 간단하게 먹힌다. 성능적인 부하도 크게 우려할 수준은 아니라고 한다. **`activeBuffs -> activeBuffs.ToList()`로 수정.**
+
+
+#### `StunOnHitBuff`가 적용됐을 때 적에게 스턴을 먹이지 않는 현상
+
+- 명방 업뎃했으니까 돌리고 작업 ㄱ
+- 생각보다 빨리 보고 왔다. 염국 배경의 스토리 중에 제일 좋았다.
+
+- 위 문제를 다시 생각해보면, **`Buff` 자체의 `duration`이 설정되지 않기 때문으로 보인다.** 그래서 버프가 켜지자마자 꺼지는 듯.
+	- 실질적인 `duration`을 어디에서 관리해야 할까? 
+	- 지금의 구현을 보면 `StunBuff`가 있고, `StunOnHitBuff`가 있다.
+		- 전자는 기절 자체, 후자는 평타 시 일정 확률로 기절을 부여하는 버프임.
+
+```cs
+public class StunOnHitBuff : Buff
+{
+    private float stunChance;
+    private float stunDuration;
+
+    public StunOnHitBuff(float duration, float stunChance, float stunDuration)
+    {
+        buffName = "Stun On Hit";
+        this.duration = duration; // 버프 자체의 지속 시간
+        this.stunChance = stunChance;
+        this.stunDuration = stunDuration; // 버프로 인한 기절의 지속 시간
+    }
+
+    public override void OnAfterAttack(UnitEntity owner, UnitEntity target)
+    {
+        Debug.Log("공격 후 기절 확률 계산");
+        float variation = Random.value;
+        Debug.Log($"variation : {variation}, stunChance : {stunChance}, variation <= stunChance : {variation <= stunChance}");
+        
+        if (variation <= stunChance) // 예를 들어 25%라고 하면 이 조건이 맞음
+        {
+            if (target != null && target.CurrentHealth > 0)
+            {
+                StunBuff stunBuff = new StunBuff(stunDuration);
+                target.AddBuff(stunBuff);
+            }
+        }
+    }
+}
+```
+> 생성자 자체에서 `duration`을 받도록 수정하면 된다. 이는 `stunDuration`과 구분되는 개념으로, 전자는 버프의 지속시간, 후자는 스킬 효과의 기절 시간이 된다.
+
+#### `StunBuff` 이펙트 관련
+이펙트 데이터베이스의 초기화가 아래처럼 이뤄진다.
+```cs
+public void Initialize()
+{
+	buffVfxMap = new Dictionary<System.Type, GameObject>();
+
+	foreach (var mapping in effectMappings)
+	{
+		// 문자열 클래스 이름을 실제 Type으로 변환
+		System.Type buffType = System.Type.GetType(mapping.buffClassName);
+
+		if (buffType == null)
+		{
+			Debug.LogWarning($"버프 이펙트 데이터베이스에 : {mapping.buffClassName}이 없음");
+			return;
+		}
+		if (mapping.vfxPrefab == null)
+		{
+			Debug.LogWarning($"버프 이펙트 데이터베이스에 : {mapping.vfxPrefab}이 없음");
+			return;
+		}
+
+		// 실제 buffType이 있고, 이펙트 프리팹도 있다면 추가됨
+		if (!buffVfxMap.ContainsKey(buffType))
+		{
+			buffVfxMap.Add(buffType, mapping.vfxPrefab);
+		}
+	}
+}
+```
+> 여기서 `GetType`으로 문자열 클래스 이름에 해당하는 실제 타입을 찾기 때문에 해당 타입은 정확하게 넣어야 한다. 예를 들어 `StunBuff`라면 문자열에 `StunBuff`라고 넣어야 한다는 것.
+> - 만약 네임스페이스가 있다면 앞의 네임스페이스들도 다 적어줘야 함.
 
 # 250716 - 짭명방
 
