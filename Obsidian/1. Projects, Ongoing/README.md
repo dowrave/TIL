@@ -47,1236 +47,554 @@
 ### 작업 중
 
 >[!todo]
->- 스킬 시스템 수정 
-> 	- `StatModifierSkill, SmashSkill`은 완료
-> 	- 나머지 스킬들도 지금의 틀에 맞춰 수정할 예정.
 >- `DualBlade` 스킬 아이콘 만들기
 
 ### 예정
 - `1-3` 스테이지 구현 완료
 	- 보스 구현
 
-# 250717 - 짭명방
-
-## 작업 완료
->[!done]
->- 스킬 시스템 리팩토링
->	- `CrowdControl`을 `Buff`에 통합
->	- 행동 제약 플래그 반영
->- 버그 수정
->	- `SmashSkill` 관련
->		- 공격 후 SP가 초기화되지 않는 문제
->		- `enumeration` 관련 오류
->	- `StunOnHitEffect` 적용 시 스턴이 들어가지 않는 현상
->	- `StunEffect` 나타나지 않는 현상
-
-### 스킬 / 버프 시스템 수정
-- 지금처럼 `Buff` 시스템을 추가했을 때, 어디까지를 **`Buff`로 구현하고 어디까지를 `Skill`로 구현해야 하는가? 에 대한 고민이다.**
-
-#### 리팩토링 : CrowdControl -> Buff 시스템으로 통합
-- `Buff`에 `IsDebuff`라는 프로퍼티를 추가, `Stun`이나 `Slow` 등의 기존 `CrowdControl`로 구현된 클래스들을 모두 `Buff` 시스템으로 통합한다.
-- 이제 `UnitEntity`는 `Buff`로만 자신에게 적용된 버프, 디버프들을 모두 관리하는 방식.
-
-#### 행동 제약 플래그 시스템 : 비트 기반
-[[행동 제약 시스템 - 비트 연산]]에 별도로 정리.
-
-위처럼 행동 제약 시스템을 별도로 구현했다면, `UnitEntity`에서 행동 제약을 추가하고 제거하는 메서드를 만들고, `Buff`에서 이것들을 이용하면 된다.
-
-```cs
-[System.Flags] 
-public enum ActionRestriction
-{
-    None = 0,
-    Stunned = 1 << 0, // 00000001 (1)
-
-    // 아래는 참고로 쓰라는 예제들
-    // Frozen = 1 << 1,   // 빙결 상태 (2)
-    // Disarmed = 1 << 2, // 무장 해제 (공격만 불가) (4)
-    // Rooted = 1 << 3,   // 속박 (이동만 불가) (8)
-    // Casting = 1 << 4,  // 스킬 시전 중 (16)
-
-    CannotAttack = Stunned,
-    CannotMove = Stunned, 
-}
-```
-> 실제로 구현한 건 `Stun`밖에 없지만, 내 프로젝트가 아니더라도 다른 곳에서 다룰 걸 대비해서 여기서도 써둔다.
-
-- 위처럼 구현했다면 `UnitEntity`에 아래처럼 구현한다.
-```cs
-    public ActionRestriction Restrictions { get; private set; } = ActionRestriction.None;
-    
-    public void AddRestriction(ActionRestriction restirction)
-    {
-        Restrictions |= restirction; // 비트 OR 연산으로 플래그 추가
-    }
-
-    public void RemoveRestriction(ActionRestriction restirction)
-    {
-        Restrictions &= ~restirction; // AND, NOT 연산으로 플래그 제거
-    }
-    public bool HasRestriction(ActionRestriction restirction)
-    {
-        return (Restrictions & restirction) != 0; // 겹치는 비트가 있으면 true, 없으면 false.
-    }
-```
-> 비트 기반의 연산이다~ 하고 생각하면 대충 이해는 될 것이다.
-
-- 그러면 이제 `Buff`에서는 저 메서드들을 이용해 제약 플래그를 추가하거나 제거만 해주면 된다. 아래는 `StunBuff`.
-```cs
-    public override void OnApply(UnitEntity owner, UnitEntity caster)
-    {
-        base.OnApply(owner, caster);
-        owner.AddRestriction(ActionRestriction.Stunned);
-    }
-
-    public override void OnRemove()
-    {
-        owner.RemoveRestriction(ActionRestriction.Stunned);
-        base.OnRemove();
-    }
-```
-> 단순히 `기절`이라는 제약을 추가하고 지워주기만 하면 끝이다. 
-
-> 이제 `HasRestriction`을 조건처럼 쓰면 됨
-
-
-
-### 버그 수정
-#### SmashSkill 관련
-1. 스킬 발동 후 SP가 초기화되지 않음
-	- `OnAfterAttack(UnitEntity target)`이라고 설정해놓고 `Operator`에는 공격 대상으로 설정했다. **메서드 자체를 `OnAfterAttack(UnitEntity owner, UnitEntity target)`으로 수정.** 
-	- 공격 후에 상대에게 적용할 효과가 있고, 버프를 갖고 있는 이 캐릭터에게 적용할 효과가 별도이기 때문이다.
-- 2. `InvalidOperationException: Collection was modified; enumeration operation may not execute.` 오류
-```cs
-foreach (var buff in activeBuffs)
-{
-	buff.OnAfterAttack(this, target);
-}
-```
-> - **반복문 안에서 컬렉션을 건드리기 때문에 발생하는 오류**다. 
-> - 이전에도 배웠듯 이런 상황에서는 복사본을 만든 다음 진행하는 방법이 간단하게 먹힌다. 성능적인 부하도 크게 우려할 수준은 아니라고 한다. **`activeBuffs -> activeBuffs.ToList()`로 수정.**
-
-
-#### `StunOnHitBuff`가 적용됐을 때 적에게 스턴을 먹이지 않는 현상
-
-- 명방 업뎃했으니까 돌리고 작업 ㄱ
-- 생각보다 빨리 보고 왔다. 염국 배경의 스토리 중에 제일 좋았다.
-
-- 위 문제를 다시 생각해보면, **`Buff` 자체의 `duration`이 설정되지 않기 때문으로 보인다.** 그래서 버프가 켜지자마자 꺼지는 듯.
-	- 실질적인 `duration`을 어디에서 관리해야 할까? 
-	- 지금의 구현을 보면 `StunBuff`가 있고, `StunOnHitBuff`가 있다.
-		- 전자는 기절 자체, 후자는 평타 시 일정 확률로 기절을 부여하는 버프임.
-
-```cs
-public class StunOnHitBuff : Buff
-{
-    private float stunChance;
-    private float stunDuration;
-
-    public StunOnHitBuff(float duration, float stunChance, float stunDuration)
-    {
-        buffName = "Stun On Hit";
-        this.duration = duration; // 버프 자체의 지속 시간
-        this.stunChance = stunChance;
-        this.stunDuration = stunDuration; // 버프로 인한 기절의 지속 시간
-    }
-
-    public override void OnAfterAttack(UnitEntity owner, UnitEntity target)
-    {
-        Debug.Log("공격 후 기절 확률 계산");
-        float variation = Random.value;
-        Debug.Log($"variation : {variation}, stunChance : {stunChance}, variation <= stunChance : {variation <= stunChance}");
-        
-        if (variation <= stunChance) // 예를 들어 25%라고 하면 이 조건이 맞음
-        {
-            if (target != null && target.CurrentHealth > 0)
-            {
-                StunBuff stunBuff = new StunBuff(stunDuration);
-                target.AddBuff(stunBuff);
-            }
-        }
-    }
-}
-```
-> 생성자 자체에서 `duration`을 받도록 수정하면 된다. 이는 `stunDuration`과 구분되는 개념으로, 전자는 버프의 지속시간, 후자는 스킬 효과의 기절 시간이 된다.
-
-#### `StunBuff` 이펙트 관련
-이펙트 데이터베이스의 초기화가 아래처럼 이뤄진다.
-```cs
-public void Initialize()
-{
-	buffVfxMap = new Dictionary<System.Type, GameObject>();
-
-	foreach (var mapping in effectMappings)
-	{
-		// 문자열 클래스 이름을 실제 Type으로 변환
-		System.Type buffType = System.Type.GetType(mapping.buffClassName);
-
-		if (buffType == null)
-		{
-			Debug.LogWarning($"버프 이펙트 데이터베이스에 : {mapping.buffClassName}이 없음");
-			return;
-		}
-		if (mapping.vfxPrefab == null)
-		{
-			Debug.LogWarning($"버프 이펙트 데이터베이스에 : {mapping.vfxPrefab}이 없음");
-			return;
-		}
-
-		// 실제 buffType이 있고, 이펙트 프리팹도 있다면 추가됨
-		if (!buffVfxMap.ContainsKey(buffType))
-		{
-			buffVfxMap.Add(buffType, mapping.vfxPrefab);
-		}
-	}
-}
-```
-> 여기서 `GetType`으로 문자열 클래스 이름에 해당하는 실제 타입을 찾기 때문에 해당 타입은 정확하게 넣어야 한다. 예를 들어 `StunBuff`라면 문자열에 `StunBuff`라고 넣어야 한다는 것.
-> - 만약 네임스페이스가 있다면 앞의 네임스페이스들도 다 적어줘야 함.
-
-# 250716 - 짭명방
-
-## 작업 중
-
-- `DualBlade` 스킬들 구현
-	- 남은 건 아이콘인데 우선 이거 작업하기 전에 AI의 조언부터 생각해보고 넘어가자.
-
-### 스킬 시스템 확장은 계속 진행 중
-
-
+# 250718 - 짭명방
+- 오늘 스킬 리팩토링은 끝낸다...
+- 근데 수정해도 이해하기 좀 빡센 느낌은 있음.
 ## 작업 완료
 
 >[!done]
->1. **`AttackSource` 수정 및 스킬로 인한 `AttackType`을 반영하기**
->2. **오브젝트 풀 관리 로직 수정** : `OperatorData, EnemyData` 단위로 관리, 종류에 따른 인스턴스가 최초로 생성될 때 오브젝트 풀 생성, 필요할 때에 풀 확장, 게임 종료 시 오브젝트 풀 파괴
->3. `DualBlade` 스킬 구현 
->	- 1스킬 완료, 아이콘 작업 남음
->	- 2스킬 구현 중, 아이콘 작업 남음
->4. **스킬 시스템 수정 : 실질적인 효과는 버프로, 어떤 버프를 실행시킬 지는 스킬로, 버프를 담는 통은 캐릭터**로
->5. 기타 이슈 수정
->	- `RequestExit` = 수동으로 나가기 버튼을 눌렀을 때의 동작은 `GameOver`로 통합
->	- 로비로 돌아가는 버튼이 1번째 클릭은 동작하지 않는 이슈
+> 스킬 리팩토링
+> - `AmmoBasedSkill`
+> - `DoubleShotSkill`
+> - `AreaEffectSkill` 기반 : `Meteor, ArcaneField, AreaHasteHeal`
+> - `SlashSkill`
+> - `ShieldSkill`
 
-### 1. 스킬 등으로 인한 AttackType 변경
+### AmmoBasedSkill
+- 탄환 기반의 스탯 강화 스킬이다.
+	- 스탯 강화 버프는 이미 구현되어 있다.
+	- 여기에 추가로 **"공격 횟수를 세는" 버프만 추가**하면 된다.
+		- 이 버프는 자신이 동작할 때 자신과 연결된 다른 버프들을 해제시키기 위해, 동시에 실행되는 다른 버프들도 갖는다.
+		- 이건 스킬에서 설정해주면 됨.
+- 스킬은 이 두 개의 버프를 조합하는 방식.
 
->[!note]
->1. `OnBeforeAttack`에 변경하고 싶은 변수를 `ref`로 지정
->2. 기본적으로 `Operator`가 갖는 `attackType`을 지정하되 `OnBeforeAttack`에서 수정되어야 할 요소를 수정하면 됨
-
-- 스킬이 발동하는 상황에서 `AttackType`을 변경하려면
-
+1. **기존 `AmmoBasedActiveSkill` 구현**
 ```cs
-public virtual void OnBeforeAttack(Operator op, ref AttackType type, ref float damage, ref bool showDamagePopup){ }
-```
-> 이런 식으로 구현하면 된다. `ref`을 추가하면서 직접 해당 파라미터를 바꿀 수 있게 함.
+using UnityEngine;
+using System.Collections;
 
-- 그러면 아래처럼 공격을 시도하기 전, 오퍼레이터가 기본적으로 갖고 있는 타입을 갖고 온 다음 공격 직전에 검사해서 반영시킬 수 있음.
-```cs
-AttackType finalAttackType = AttackType;
-
-if (CurrentSkill != null)
+namespace Skills.Base
 {
-	CurrentSkill.OnBeforeAttack(this, ref damage, ref finalAttackType, ref showDamagePopup);
-}
-```
-> 자세한 구현은 스킬마다 달라지니까 거기서 사용하면 됨
-> 예를 들면 SP가 가득 찼을 때 1회성으로 발동되는 스킬이라면 거기서 조건을 넣으면 되고, 버프가 활성화됐을 때 계속 나가는 스킬이이도 마찬가지다.
-> - 물론 후자는 오퍼레이터의 공격 타입 자체를 바꿔버리는 방식으로도 구현할 수 있겠다.
-
-### 2. 오브젝트 풀 수정 : 생성은 사용할 때에, 파괴는 스테이지 종료 시에
-- 코드 중에 이런 지적사항이 있었다 : **개별 `Enemy`, 즉 인스턴스 ID마다 오브젝트 풀을 관리하는 것보다, 같은 종류의 `Enemy`라면 같은 오브젝트 풀을 사용하게 하고 더 생성하지 않는다**
-
-이 방식의 논리는 이렇다 
-- 현재의 구현은 적이 파괴될 때마다 풀이 파괴되므로 비효율적
-- 같은 종류의 적들은 같은 프리팹을 사용하므로 여러 적이 공유하는 하나의 오브젝트 풀을 만들고 거기서 꺼내서 사용하면 되는 방식
-- **풀의 파괴 시점은 개별 적이 파괴되는 시점이 아니라 스테이지가 종료될 때**
-- 풀의 확장 시점은 현재 활성화된 오브젝트가 너무 많아서 추가로 필요할 때에만 한정된다. 적이 생성될 때마다도 아니고 단순히 "오브젝트가 필요한데 부족할때" 뿐임.
-
-- 그러면 `Operator`에 대해서도, 재배치라는 동작이 분명하게 있으니까 똑같은 논리로 적용할 수 있겠다.
-	- 즉 생성은 오퍼레이터가 배치되는 시점. 재배치여도 1씩 증가하므로 성능에 큰 부하가 되지 않는다.
-	- 파괴는 스테이지가 끝날 때.
-
-- 이펙트도 똑같이 `ObjectPoolManager.CreatePool`에서 관리된다. 중복을 걱정할 필요는 없음.
-
-
-### 3. DualBlade 스킬 구현
-
-- 1번째 스킬
-	- `SmashSkill` 자체에 이제 `AttackType`이 구현 가능하기 때문에 , 같은 스크립트로 다른 스킬을 만들었다. 
-		- 기존 스나이퍼는 200% 물리 대미지였다면
-		- 이번엔 150% 마법대미지로 구현함. 
-- 2번째 스킬
-	- `StatModifierSkill`을 사용할 예정이므로 이것의 경우에는 
-		- 스킬이 활성화될 때 마법 공격으로 전환
-		- 스킬이 비활성화될 때 원래의 물리 공격으로 돌아온다.
-	- 추가로 공격 시 일정 확률로 스턴이 들어가는 것도 구현할 것
-
-### 4. Skill 시스템 관련 : "버프" 시스템으로의 확장
-
-> [!note]
-> 현재 방식은 스킬 스크립트가 직접 로직을 수행하는 직관적인 구조입니다. 만약 더 복잡한 효과(예: 독, 출혈, 여러 개의 버프/디버프)를 다루게 된다면, "버프/디버프 시스템"을 도입하는 것을 고려해볼 수 있습니다.
-> - 스킬이 활성화되면, Operator에게 **"공격 시 기절 효과를 부여하는 버프"**를 추가합니다.
-> - Operator의 OnAfterAttack에서는 자신이 가진 모든 버프를 순회하며 "공격 후 효과"를 발동시킵니다.**
->   이 방식은 스킬과 오퍼레이터의 결합도를 낮추고, 다양한 효과를 조합하기 쉽게 만들어주지만, 초기 설계가 더 복잡해집니다. 현재 요구사항에서는 제시해 드린 OnAfterAttack 훅을 직접 오버라이드하는 방식이 가장 간단하고 효율적입니다.
-
-- 이걸 구체적으로 물어봤다. **결론은 스킬과 버프를 분리해서 구현할 수 있다**는 것.
-- 크게 3개의 구조가 된다. 캐릭터, 스킬, 버프
-- 캐릭터는 버프들을 담는 통이 된다. 
-- 스킬은 지속시간 등을 관리하고 어떤 버프를 쓸지에 대한 인스턴스 등을 관리한다. 
-- 버프는 실질적인 효과.
-
-- 간략한 예시 
-
-1. 버프 시스템
-```cs
-// 버프 시스템의 기초
-public abstract class Buff
-{
-    public string buffName;
-    public float duration; // 지속 시간. 무한이면 float.PositiveInfinity
-    public UnitEntity owner; // 버프 소유 오퍼레이터
-    public UnitEntity caster; // 버프 시전자
-
-    public virtual void OnApply(UnitEntity owner, UnitEntity caster)
+    // 탄환 수가 제한되어 있고 지속시간이 무한인 스킬의 추상 클래스
+    public abstract class AmmoBasedActiveSkill : ActiveSkill
     {
-        this.owner = owner;
-        this.caster = caster;
-    }
+        [Header("Ammo Settings")]
+        [SerializeField] protected int maxAmmo;
 
-    public virtual void OnRemove() { } // 버프 제거 시에 호출
-    public virtual void OnUpdate() { } // 매 프레임마다 업데이트가 필요하면 호출
-    public virtual void OnBeforeAttack(UnitEntity target, ref float damage, ref AttackType attackType, ref bool showDamagePopup) { } // 공격 전 호출
-    public virtual void OnAfterAttack(UnitEntity target) { } // 공격 후 호출
-}
+        [Header("Attack Modifications")]
+        [SerializeField] protected float attackSpeedModifier = 1f;
+        [SerializeField] protected float attackDamageModifier = 1f;
 
-// 공격에 스턴이 묻어나가는 버프
-public class StunOnHitBuff : Buff
-{
-    private float stunChance;
-    private float stunDuration;
+        protected int currentAmmo;
 
-    public StunOnHitBuff(float chance, float duration)
-    {
-        buffName = "Stun On Hit";
-        stunChance = chance;
-        stunDuration = duration;
-    }
+        protected float originalAttackSpeed;
+        protected float originalAttackDamage;
 
-    public override void OnAfterAttack(UnitEntity target)
-    {
-        if (Random.value <= stunChance)
+        protected OperatorUI? operatorUI;
+
+        public int CurrentAmmo => currentAmmo;
+        public int MaxAmmo => maxAmmo;
+
+        public override void Activate(Operator op)
         {
-            if (target != null && target.CurrentHealth > 0)
-            {
-                StunEffect stunEffect = new StunEffect();
+            caster = op;
+            operatorUI = op.OperatorUI;
 
-                if (target is Operator opTarget)
-                {
-                    stunEffect.Initialize(opTarget, owner, stunDuration);
-                    opTarget.AddCrowdControl(stunEffect);
-                }
-                else if (target is Enemy enemyTarget)
-                {
-                    stunEffect.Initialize(enemyTarget, owner, stunDuration);
-                    enemyTarget.AddCrowdControl(stunEffect);
-                }
-            }
+            if (!op.IsDeployed || !op.CanUseSkill()) return;
+
+            PlaySkillVFX(op);
+            PlayAdditionalVFX(op);
+
+            currentAmmo = maxAmmo;
+
+            originalAttackSpeed = op.AttackSpeed;
+            originalAttackDamage = op.AttackPower;
+
+            // 스탯 변경 적용 
+            op.AttackPower *= attackDamageModifier;
+            op.AttackSpeed /= attackSpeedModifier;
+
+            // 스킬 사용 직후에는 공격 속도 / 모션 초기화
+            op.SetAttackDuration(0f);
+            op.SetAttackCooldown(0f);
+
+            // SPbar UI 업데이트
+            operatorUI?.SwitchSPBarToAmmoMode(maxAmmo, currentAmmo);
+
+            op.StartCoroutine(Co_HandleSkillDuration(op)); // 코루틴은 MonoBehaviour에서만 사용 가능함
         }
-    }
-}
-```
 
-2. 스킬 시스템
-```cs
-namespace Skills.OperatorSkills
-{
-    [CreateAssetMenu(fileName = "New Stat Modifier Skill", menuName = "Skills/Stat Modifier With OnHit Skill")]
-    public class StatModifierWithOnHitSkill : StatModifierSkill
-    {
-        [Header("On-Hit Effect Settings")]
-        [Range(0f, 1f)]
-        public float stunChance = 0f;
-        public float stunDuration = 1.0f;
-
-        // 스킬이 부여하는 버프를 저장하는 필드
-        private StunOnHitBuff stunBuffInstance;
-
-        protected override void PlaySkillEffect(Operator op)
+        public override void OnAfterAttack(Operator op)
         {
-            // 스탯 강화 효과
-            base.PlaySkillEffect(op);
+            // 스킬이 켜졌을 때에만 동작
+            if (!op.IsSkillOn) return; 
 
-            // 스턴 효과 추가
-            if (stunChance > 0)
+            // 공격 후 탄환 소모
+            ConsumeAmmo(op);
+
+            // 탄환이 소진되면 스킬 종료
+            if (CurrentAmmo <= 0)
             {
-                stunBuffInstance = new StunOnHitBuff(stunChance, stunDuration);
-                op.AddBuff(stunBuffInstance); // 버프를 추가하면 Buff.OnAfterAttack에 의해 기절 효과가 묻어나감
+                TerminateSkill(op);
             }
+            
+        }
+
+        protected virtual void ConsumeAmmo(Operator op)
+        {
+            currentAmmo = Mathf.Max(0, currentAmmo - 1);
+
+            // 탄환 소모 후 UI 업데이트
+            UpdateAmmoUI(op);
         }
 
         protected override void OnSkillEnd(Operator op)
         {
-            op.RemoveBuff(stunBuffInstance);
+            // 스킬 종료 시 원래 스탯으로 복원
+            op.AttackPower = originalAttackDamage;
+            op.AttackSpeed = originalAttackSpeed;
+
             base.OnSkillEnd(op);
         }
+
+        protected virtual void UpdateAmmoUI(Operator op)
+        {
+            op.OperatorUI?.UpdateAmmoDisplay(currentAmmo);
+        }
+
+        public virtual void TerminateSkill(Operator op)
+        {
+            OnSkillEnd(op);
+            operatorUI?.SwitchSPBarToNormalMode();
+        }
+
+        public override IEnumerator Co_HandleSkillDuration(Operator op)
+        {
+            OnSkillStart(op);
+            // op.StartSkillDurationDisplay(duration?ㅉ);
+            PlaySkillEffect(op);
+
+            while (op.IsSkillOn)
+            {
+                // 오퍼레이터 파괴 시 동작을 멈춤
+                if (op == null) yield break; 
+
+                // 탄환이 떨어지면 스킬 종료
+                if (currentAmmo <= 0)
+                {
+                    TerminateSkill(op); // 종료 로직은 이 안에 구현됨
+                    yield break;
+                }
+
+                // 기본) 무한 지속
+                yield return null;
+            }
+        }
     }
 }
 ```
-> - 버프의 세부 효과는 Buff에 구현되어 있기 때문에, Skill에서는 지속 시간을 관리해서 스킬이 켜질 때 버프들을 캐릭터에 등록하고 스킬이 꺼질 때 버프들을 캐릭터에서 제거시킨다.
-> - 이외에도 스킬 지속시간 동안 활성화되는 이펙트라든가, 오퍼레이터의 상태 등등을 관리한다.
-> 	- 예를 들어 스킬이 켜져 있다가 꺼졌다면 스킬은 오퍼레이터의 스킬이 켜져 있던 상태를 끄고, 오퍼레이터는 그런 상태의 변화에 따라 또 이벤트를 발생시키거나 직접 SPBar의 색을 변경하는 등의 실행을 시킨다.
 
-- 한편 기존 `SmashSkill` 같은 경우는 어떻게 구현할까? 자동으로 강화된 공격이 나가는 방식이었다.
-
-1. `Operator`에서는 `Update()`에서 스킬의 `OnUpdate()`를 실행시킨다. 
-2. 스킬에서는 오퍼레이터의 SP를 보고 있다가, SP 조건이 스킬을 실행할 수 있는 조건이 되면 스킬에 달려 있는 버프를 `Operator`의 버프 리스트에 추가한다.
-3. `Buff`에서는 공격 전에 스킬의 효과를 추가하고 공격 후에는 SP를 0으로 만들면서 자신을 해제하는 명령어를 오퍼레이터에 전달한다.
-
-
-### 5. 기타 이슈 수정
-- `RequestExit`의 로직은 `GameOver`로 수정
-	- 이 과정에서 `GameOver` 패널이 나타날 때 `ConfirmationReturnToLobbyPanel`은 사라져야 함. 그것도 구현.
-
-- 스테이지 패널에서 로비로 돌아가는 버튼 클릭 시 첫번째 클릭은 동작하지 않는 이슈
-	- 세부 구현을 보면
+2. **`AttackCounterBuff` 구현** : 연결된 버프들을 관리한다. 공격 횟수가 최대 횟수에 도달하면 연결된 버프를 해제하고 UI를 원래 상태로 되돌려놓음.
 ```cs
-    private void Awake()
+using System.Collections.Generic;
+using UnityEngine;
+
+public class AttackCounterBuff : Buff
+{
+    private int maxAttacks;
+    private int currentAttacks;
+
+    // 이 버프가 해제될 때 함께 해제될 버프들
+    private List<Buff> linkedBuffs = new List<Buff>();
+
+    private OperatorUI operatorUI;
+
+    public AttackCounterBuff(int maxAttacks)
     {
-        canvasGroup = GetComponent<CanvasGroup>();
-        gameObject.SetActive(false);
+        this.buffName = "Attack Counter";
+        this.duration = float.PositiveInfinity;
+        this.maxAttacks = maxAttacks;
     }
 
-    public void Initialize()
+    public void LinkBuff(Buff buffToLink)
     {
-        // 전투 중일 때 멈춤으로 전환
-        if (StageManager.Instance!.currentState == GameState.Battle)
+        if (buffToLink != null)
         {
-            StageManager.Instance!.SetGameState(GameState.Paused);
+            linkedBuffs.Add(buffToLink);
         }
+    }
 
-        // 멈춤 오버레이가 활성화된 경우 비활성화
-        StageUIManager.Instance!.HidePauseOverlay();
-        gameObject.SetActive(true);
+    public override void OnApply(UnitEntity owner, UnitEntity caster)
+    {
+        base.OnApply(owner, caster);
+        currentAttacks = maxAttacks; // 최대 횟수를 정해놓고 1씩 줄이느
+
+        // UI를 탄환 모드로 전환
+        if (owner is Operator op)
+        {
+            operatorUI = op.OperatorUI;
+            operatorUI?.SwitchSPBarToAmmoMode(maxAttacks, currentAttacks);
+        }
+    }
+
+    public override void OnAfterAttack(UnitEntity owner, UnitEntity target)
+    {
+        base.OnAfterAttack(owner, target);
+
+        currentAttacks = Mathf.Max(0, currentAttacks - 1);
+        operatorUI?.UpdateAmmoDisplay(currentAttacks);
+        if (currentAttacks <= 0)
+        {
+            // 연결된 모든 버프 제거
+            foreach (var buff in linkedBuffs)
+            {
+                owner.RemoveBuff(buff);
+            }
+
+            owner.RemoveBuff(this);
+        }
+    }
+
+    public override void OnRemove()
+    {
+        operatorUI?.SwitchSPBarToNormalMode();
+        
+        base.OnRemove();
+    }
+}
 ```
-처럼 구현되어 있었다. 
 
-잘 몰랐을 때에 작성된 스크립트이긴 한데, **이 방식의 문제가 뭐냐면 `Awake`는 최초로 활성화되는 시점에 실행된다는 것이다.** 즉, 개발 과정에서 이 오브젝트가 비활성화된 상태라면 `Awake`가 아예 동작하지 않게 된다. 이 상태에서 아래의 `gameObject.SetActive(true)`로 들어가면 `Awake`가 바로 동작해서 1번째 클릭이 동작하지 않는다.
+3. **`AmmoBasedSkill` 수정**
+- 버프가 종료되는 시점에 스킬이 종료돼야 함. 
+- 지속시간이 있는 스킬은 자체적으로 `duration`을 갖고 스킬 자체의 코루틴이 돌기 때문에 `OnSkillEnd`가 정상적으로 동작하지만, 지금처럼 지속시간이 무한인 스킬인 경우에는 버프가 종료되는 시점에 `OnSkillEnd`가 실행돼야 한다.
+- AI한테 관련 코드를 다 던져줘도 무시해서 한 번 더 물어봄. 역시 무지성 복붙은 좋지 않다.
+- 결론은 **`Buff`에서 스킬 종료 시에 이벤트를 발생시키고, 스킬에서 해당 이벤트를 구독**시키는 것.
 
-한편 2번째 클릭은 동작한다. `Awake`가 더 이상 동작하지 않기 때문이다.
+```cs
+// Buff에 아래 델리게이트 추가
+    public System.Action OnRemovedCallback; // 버프 종료 시에 호출되는 콜백 함수
 
-따라서 어떤 패널이 활성화되고 활성화되지 않는지에 대한 구현은 개별 패널에서 구현하는 대신, 이들을 통합하는 매니저에서 구현하는 게 좋다. 
+// Skill에서 이벤트 구독
+	attackCounterBuff.OnRemovedCallback += () => OnSkillEnd(op);
+```
+> **`OnSkillEnd(op)`가 파라미터를 받고, `OnRemovedCallBack`은 그렇지 않기 때문에 직접 받을 수 없다. 이럴 때 사용할 수 있는 게 람다식.**
 
-결론 ) **`Awake`에서 `gameObject.SetActive`를 다루는 건 좋지 않음.**
+- **그리고 이벤트 구독 해제 코드를 별도로 짤 필요는 없다.** 
+	1. `Buff`가 해제될 때 `Operator`에게 자신을 참조에서 해제하라는 명령어를 보냄(이게 중요!)
+	2. 참조에서 해제됨. 이 상태에서 이 `Buff`는 씬에 있는 어떠한 오브젝트와도 연결된 상태가 아니기 때문에 가비지 콜렉터에 의해 제거될 수 있는 요소가 된다.
 
+- 만약 미사일과 미사일의 피격이벤트를 메서드로 구독하는 GameManager가 있다고 하면, 미사일이 사라질 때 구독 해제를 하지 않았다고 하자. 이 때 미사일 - 게임 매니저를 연결하는 요소가 여전히 남아있기 때문에 이 미사일은 가비지 콜렉터에 의해 해제되지 않는다.
 
-
-# 250715 - 짭명방
-
-## 다음 날로 넘김
-
->[!todo]
->- DualBlade의 2가지 스킬을 구현
->- 1번째 스킬은 똑같이 강타인데, 강타가 나갈 때는 마법 대미지가 나가는 방식
->- 2번째 스킬은 아이디어 자체를 생각해봐야 함. 
->	- 일단은 별도의 이펙트를 구현하지 않고 만들 방법을 고민 중
->		- 그래서 버프 형식이 될 것 같다. 
->		- 공격력과 공격 속도가 증가하고 스킬이 켜진 동안 공격 타입이 마법이 되는 방식이면 될 듯. 
-
-- 1번째 스킬 구현
-	- 기존의 `SmashSkill`과 동일하되, 공격 타입만 바뀌는 방식이어야 함
-	- 이 과정에서 **기존의 공격 타입이 `ICombatEntity.AttackType`에 의존했는데, 대신 `AttackSource` 자체에 `AttackType`이 담기도록 변경함.**
-		- 그래야 기본적으로 `Physical` 공격을 하는 캐릭터라도 어떤 효과로 인해서 `Magical` 공격을 하도록 구현할 수 있기 때문에
-	- 이거 시스템을 건드린 거라서 생각보다 오래 걸릴 수도 있다.
-		- 어차피 언젠가 고칠 일이긴 했기 때문에 시간을 들여서 작업 ㄱㄱ
-		- 일단 시간이 없어서 여기까지 하는데 세부적으로 남은 것들 정리해봄
+- **UI에 연결하는 것도 이벤트 기반의 로직**으로 수정
+	- 1. 버프가 추가/제거될 때마다 `UnitEntity`에서 이벤트를 발생시킴
+	- 2. `UI`는 원하는 버프가 오퍼레이터에 추가된 걸 발견하면 `UI`의 초기화`OnApply` 및 업데이트 메서드를 등록시킴
 
 
-## 작업 완료
-
->[!done]
->**1. 아이콘 계단으로 깨져서 보이는 문제**
->2. 평타가 2번 나갈 때, **1번째 공격으로 적이 죽은 상황이라면 2번째 공격의 처리**를 어떻게 해야 하는가?
+### DoubleShotSkill
+- 기존 구현에서 핵심은 `ModifiesAttackAction`이라는 게 있었고, **해당 필드가 활성화**됐을 때 공격 매커니즘이 `Attack`이 아닌 **스킬에 있는 방식을 따르는 것**이었음.
+- 이걸 `Buff`로 옮기면 된다. 
 
 
-### 1. 아이콘 계단으로 깨져서 보이는 문제
->- 아이콘의 해상도를 256 x 256으로 올렸는데도 계속 깨져서 보이는 문제가 있음
->- 가우시안 블러 때문일 수 있겠다.... 싶어서 1024 이미지를 수정한 다음 작업해봄
->- **가우시안 블러 이미지를 다시 선명한 이미지로 놓고, 해상도를 높여봐도 발생하는 문제 동일함.** 왜 이 아이콘에 대해서만 이런 문제가 나타나는지는 모르겠지만 크게 개선될 기미는 안 보인다. **256으로 놓고 유지하겠음**
+### ArcaneFieldSkill
+1. **`CannotAttackBuff` 만들기**
+- 말 그대로 버프가 켜진 동안에 기본 공격을 하지 않음
+- 단 공격 쿨타임은 계속 돌아감 - 아무것도 하지 않는데도 계속 호출될 수 있기 때문에
+```cs
+public class CannotAttackBuff : Buff
+{
+    public CannotAttackBuff(float duration)
+    {
+        this.buffName = "Cannot Attack";
+        this.duration = duration;
+    }
 
+    public override bool ModifiesAttackAction => true;
 
-### 2. 2연속 공격의 2번째 공격의 처리
+    public override void PerformChangedAttackAction(UnitEntity owner)
+    {
+        // 공격 쿨타임만 돌리고 실질적으로 아무런 기능을 하지 않음을 표시함
+        // Buff와 똑같기 때문에 굳이 넣어도 되지 않지만, 가독성을 위해 넣음
+        // 쿨타임을 돌리는 이유는 계속된 호출을 방지하기 위함
+        base.PerformChangedAttackAction(owner);
+    }
+}
+```
 
-#### 원본 게임 테스트
-- 일단 지금의 구현은 1번째 공격으로 적이 죽었다면 2번째 공격은 나가지 않는 방식임.
-- 원본 게임을 뜯어보면 아래와 같다. 테스트는 바이비크와 첸으로 해봤다.
-1) 2개의 공격 각각에 온히트 처리를 하지 않고, **2번째 공격이 맞든 맞지 않든 SP는 1씩 참.**
-	- 이건 좀 의외다. 소드마스터는 당연히 SP가 2씩 차는 줄 알았음.
-2) 1번째 공격으로 적이 죽었을 경우, 2번째 공격의 피격음이 달라진다. 즉, **헛스윙에 대한 분기 자체는 있는 것으로 보임.** 
+2. `ArcaneFieldSkill` 수정하기
+- `CannotAttackBuff`를 자신에게 걸고, `ArcaneFieldController`을 소환하는 기능
+- 참고) 이 과정에서 `ActiveSkill -> AreaEffectSkill -> ...`으로 범위를 구현하는 스킬들이었던 `MeteorSkill`, `ArcaneFieldSkill`, `AreaHasteHealSkill` 등을 **단순하게 `ActiveSkill`에서 직접 상속받는 방식으로 변경한다.**
+	- 지금 수정되는 방식이 Fire and Forget이므로 Skill은 필요한 객체들을 발사하기만 하고, 생명주기는 각 객체가 스스로 책임지도록 하면 된다. 지금의 `AreaEffectSkill`에서 직접 관리할 필요는 없음.
+- `Controller`까지 한번에 싹 수정함. 
+- 생각보다 잘 된다.
 
-#### 구현 방향 설정
-- 이건 사실 정말 어떻게 구현하느냐에 따른 차이 같긴 한데, 난 온히트로 생각하고 작업을 했으니까..
-1. **온히트 효과로 구현. 적이 피격했다면 SP가 올라감**
-2. 단 **2회의 공격 이펙트는 항상 나타남.** 적이 맞았는지 여부는 피격 이펙트 재생이 별도로 있으니까 따로 구현하지 않아도 괜찮을 것 같다. 
-	- 이거를 하려면 공격 로직에서 적이 없어도 이펙트는 재생돼야겠다.
-
-#### 실제 구현
-- 이걸 어디서 구현해야 할까?
-	 - 처음엔 `Operator.cs`에서 구현해야 한다고 생각했다. 이중공격을 하는 상황 외에도 헛스윙이 발생할 수 있는 상황이 내가 예상치 못한 곳에서 있지 않을까? 라는 생각으로.
-	 - 그런데 **기존 코드가 헛스윙으로 인한 문제가 발생한 적이 없었고, 이중 공격을 하는 상황에서는 헛스윙이 발생할 걸 예측할 수 있는 상황**이므로 거기다 우선적으로 구현해놓는 게 맞다고 한다. 만약 나중에 비슷한 문제가 발생한다면 근본적인 메서드를 고쳐야 할 수는 있겠지만.
-
-- 따라서 `DualBladeOperator`에서 2번째 공격이 빗나갔을 때의 처리를 별도로 정의해둔다.
-
-- 대신 기존의 `Operator.PlayMeleeEffect`는 수정이 필요하다. `UnitEntity` 자체를 받는 걸로 설정이 되어 좌표를 수정하는 방식으로 수정함. 여기에 엮여있는 `CombatVFXController`까지 수정한다.
-
-
-
-
-# 250714 - 블로그
-- `ReviewCard`에서 별점 + 텍스트, 회차 + 텍스트를 묶게 되면서, 별점/회차의 유무에 따라 해당 줄의 높이가 달라지는 현상이 있다. 텍스트로 묶인 요소가 있을 때 줄이 차지하는 높이가 더 큼
-	- 높이값을 일괄적으로 부여하는 방식으로 해결하나?
-	- 그게 맞다. `h-`값을 부여하는 방식으로 해결함. `h-6` 정도를 줬다. 
-
-- 그리드 로딩이 2번씩 되는 현상
-	- 한번에 24개의 데이터를 불러와야 하는데 48개씩 불러오는 현상이 있다.
-	- 수정 완료. 조회 명령을 수행한 다음 딜레이를 줬다. 
-		- 이 딜레이를 줄 때 크게 2개를 고려했다.
-			1. 연속해서 2번 불러오면 안 됨
-			2. 휠을 클릭해서 스크롤바를 계속 아래로 당겼을 때 막히지 않아야 함
-
-2번 상황의 경우, **딜레이가 너무 짧으면 딜레이가 돌기 전에 스크롤바가 최하단에 닿아서 불러오기 기능이 정상적으로 동작하지 않는다.**  테스트해서 구한 시간은 **150ms** 정도.
-> 물론 굳이 이런 걸 신경쓰면서 구현할 필요가 없을 수도 있지만, 일일이 스크롤바를 아래로 당기는 방식보다 이 방식을 이용할 수도 있을 것 같아서 고려해봤음.
-
-# 250712 - 블로그
-
-## 리뷰 게시판
-- 별점 기준 수정
-	- "아쉽지만 재밌다"의 기준을 2.0으로 내림. 
-	- 1회차 만점 3.5
-	- 그리고 다회차 감상한 작품은 4.0, 4.5로 이분화
-	- **보다가 끊은 작품은 어디에 위치해야 할까**를 모르겠다. 
-		- **다 본 게 아니니까 별점이 없다---가 바람직할듯?**
+- 이 부분은 나도 작업하면서 머리가 좀 복잡해지는 내용이어서 정리해봄. 
 
 > [!note]
-> 1. **다회차 표시 기능을 추가**했음.
-> 	- **카드에서는 2회차 이상**일 때 나타남(그리드가 너무 번잡해지는 문제가 있음)
-> 	- **모달에서는 1회차 이상**일 때 나타남
-> 2. 이미 값이 채워진 자리에 빈 값을 보낼 때 변화가 반영되지 않는 현상 수정 
-> 	- 이건 그냥 값이 있을 때만 폼에 데이터를 추가해서 그렇다. 
-> 	- 수정 모드일 때에 값이 없다면 `''`을 보내도록 해서 수정함.
-
-
-
-
-## 기타 이슈 수정
-- 글을 **수정**할 때, 기존엔 글이 있었고 수정 후에는 글이 없는 상태였다면 수정된 글에는 아무런 내용이 없어야 하는데, 기존 글이 남아 있는 현상이 있음. 
-
-
-# 250710 - 블로그
-
-## 오늘의 교훈
-- 기능 구현은 간단해보여도 스타일이라든가 의외의 문제라든가 등등이 발생할 수 있으니 생각보다 시간을 많이 잡아먹는 일이다. 
-- 더 수정할 일이 없기를 바랍니다,,,, 이거 1시간이면 끝낼 줄 알았음... 곧 있으면 자정임,,,
-
-## 스포일러인 경우 블러 표시 & 스크롤 전파 디버깅
-- 스포일러가 활성화된 경우, 최초에는 본문을 보이지 않게 구현하겠음.
-	- 모달을 펼쳤을 때 블러 처리하는 외부 태그 + 클릭 시 내용이 보이게 하도록 구성할 계획.
->[!note]
->1. 클릭 가능한 별도의 패널을 따로 만듦
->2. 본문은 스포일러 상태에 따라 블러가 활성화되거나 비활성화됨. 
-
-추가) 지금 방식은 글의 길이에 영향을 받는다.   
-예를 들어서 한 줄짜리 스포일러 글이라면 스포일러 경고 영역의 내용이 잘리고, 너무 길다면 스포일러 경고 문구는 스크롤을 내려야 볼 수 있다.  
-
----
-
-따라서 스포일러 경고 영역 자체는 고정된 높이로 구현하고, 이를 클릭하면 본문이 들어가는 방식으로 구현해보겠음.
-
->[!note]
->제미나이에게 물어봤을 때 바로 나온 대답은
->1. 실제 컨텐츠 영역의 높이를 측정한다
->2. 경고가 활성화될 때는 해당 높이를 가진다
->3. 본문을 직접 보여줄 때는 측정한 높이를 사용한다 
->   
->이었다. 근데 이렇게 구현할 거면 그냥 **경고문을 보여줘서 해당 높이를 가진다** -> **본문을 보여줄 때 컨텐츠 영역에 실제 내용을 넣는다**가 훨씬 간단하게 구현하는 방법 같음. 
-
-뭔가 만족스럽지 않다. 또 생각이 많아진다. 방법이 크게 2가지가 떠오른다.
->[!note]
->1. 컨텐츠 영역 자체에만 스크롤을 구현하는 것. 
->2. (현재)모달 전체에 스크롤을 유지하되 위처럼 상태에 맞춰 영역을 바꾸는 것.
-
-1번이 나아보이기는 하는데, 본문 이외의 영역을 제목 부분이 항상 차지한다는 게 걸리는 느낌이다.
-그런데 1번처럼 구현하면 **푸터 영역을 제외**할 수 있다. 지금의 구현 자체가 푸터에 이중구현이 되어 있기는 함. 
-- 수정/삭제 버튼은 나만 볼 수 있게끔 윗쪽에 나타나 있고, 
-- 닫기 버튼도 이미 우측 상단에 있으니까. 
-
-그럼 짧은 글에 대해서는 어떻게 대처할 것이냐? css에서 최소 높이를 설정해주면 되지 않을까?
-
-그런데 예전에 생각했던 것 중에 그게 있었다. 본문이 끝나는 지점이 화면의 아랫쪽에 있으면 뭔가 이상한 느낌이었음. 
-
->[!warning]
-> 현재 문제 상황 : 모달이 활성화된 상태에서 모달 외부에 마우스 커서가 있을 때
-> 1. 모달 자체가 스크롤이 가능한 상황 - 외부에 커서를 놓으면 스크롤 가능
-> 2. 모달 자체가 스크롤이 불가능한 상황(내용이 적은 이유로) - 외부에 커서를 놓으면 스크롤 불가능
-> 3. 모달 내부에 커서가 있는 상태에서는 외부로 이벤트 버블링이 발생하는 건 아님
-> **여기서 문제가 되는 상황은 1번.** 
-
-ReviewModal의 스크립트를 보면
-```tsx
-  usePreventScroll(!!reviewId);
-  useModalHistory(!!reviewId, isEditing ? handleAttemptClose : onClose);
-```
-이 되어 있다. useEffect 문으로 감싼 요소는 아님.
-
-그러면 `usePreventScroll`(body의 스크롤을 막음)이 동작한 다음에 review의 content 들이 들어오면서 content가 있는 영역에 스크롤이 필요해지면 다시 렌더링되면서 `usePreventScroll`의 효과가 풀리는 게 아닐까... 라는 가설을 세워본다.
-즉, **내용이 들어온 다음에 usePreventScroll이 동작하면 되지 않을까?** 라는 생각으로 실험해봄.
-
->[!done]
-> 오래 걸렸다. 온갖 쇼를 다 해봤는데, `review-outer-modal`에서 상위 요소로 이벤트가 전파되는 상황이 있으면 막고, `review-inner-modal`에서도 자신부터 자신의 상위요소들을 차례대로 올라가면서 스크롤이 가능한 요소인지 체크, 불가능한 경우에는 스크롤을 다 막는 방식으로 구현했다.
-> - 내가 감을 잡고 짚어나가야 했다. AI님께서 계속 안되는 코드를 던져줘서..
-> - 그건 그렇고 제미나이 프로가 갑자기 왜 이렇게 아부를 떠는지 모르겠다. 부담스럽다.
-
-```tsx
-import { useLayoutEffect } from 'react';
-
-// 모달 배경의 클래스 이름
-const OUTER_MODAL_CLASS = 'review-outer-modal';
-const INNER_MODAL_CLASS = 'review-inner-modal';
-
-export const usePreventScroll = (isLocked: boolean) => {
-  useLayoutEffect(() => {
-    if (!isLocked) {
-      return;
-    }
-    // --- 1. 기존의 스타일 제어 (시각적 처리 및 기본 방어) ---
-    const originalOverflow = document.body.style.overflow;
-    const originalOverscrollBehavior = document.body.style.overscrollBehaviorY;
-
-    document.body.style.overflow = 'hidden';
-    document.body.style.overscrollBehaviorY = 'contain'; // 스크롤 체이닝 방지
-
-    // --- 2. 문제가 되는 상황을 위한 정밀 타격 (이벤트 제어) ---
-    const handleWheel = (e: WheelEvent) => {
-      const target = e.target as HTMLElement;
-
-      const innerModal = target.closest(`.${INNER_MODAL_CLASS}`);
-
-      // 1. 이벤트가 모달 내부에서 발생하지 않은 경우
-      if (!innerModal) {
-        // 경로에 outer-modal이 있다면 배경 스크롤을 시도하는 것이므로 차단함.
-        if (target.closest(`.${OUTER_MODAL_CLASS}`)) {
-            e.preventDefault();
-        }
-        return;
-      }
-
-      // 2. 이벤트가 모달 내부에서 발생한 경우
-      let current: HTMLElement | null = target;
-      let isScrollLegitimate = false;
-      
-      // 2. target부터 innerModal까지 올라가면서 스크롤 가능한 부모가 있는지 확인
-      while (current && current !== innerModal.parentElement) {
-
-        const style = window.getComputedStyle(current);
-
-        const isOverflowing = current.scrollHeight > current.clientHeight;
-        const isScrollAllowed = style.overflowY === 'auto' || style.overflowY === 'scroll';
-
-        // 요소의 영역이 보이는 영역보다 크다 + 스크롤을 허용한다
-        if (isOverflowing && isScrollAllowed) {
-            isScrollLegitimate = true;
-            break; // 합법적인 스크롤이므로 검사 중단
-        }
-
-        if (current === innerModal) break; // innerModal이 종점 
-
-        current = current.parentElement;
-      }
-
-      // 합법적인 스크롤 경로를 찾지 못했다면 외부로 이벤트가 나가려는 시도이므로 차단
-      if (!isScrollLegitimate) {
-        e.preventDefault();
-      }
-    };
-
-    // passive: false 옵션으로 preventDefault가 동작할 수 있음을 브라우저에 알림
-    window.addEventListener('wheel', handleWheel, { passive: false });
-
-    // --- 3. 클린업 함수: 모든 것을 원래대로 복원 ---
-    return () => {
-      document.body.style.overflow = originalOverflow;
-      document.body.style.overscrollBehaviorY = originalOverscrollBehavior;
-
-      window.removeEventListener('wheel', handleWheel);
-    };
-  }, [isLocked]);
-};
-```
-
-## 스크롤바로 인한 서식 변경 방지하기
-```tsx
-<div className={`flex-grow relative min-h-[150px]
-${review.is_spoiler && !isSpoilerRevealed ? 'overflow-y-hidden' : 'overflow-y-auto'}
-`}>
-```
-의 상태 변화로 인해서 오른쪽에 스크롤바가 생기는 경우, 글의 서식에 살짝 변화가 발생한다. 이 변화를 방지하고자 함.
-
-### 해결법1) scrollbar-gutter
-- 브라우저에게 "이 영역에 스크롤바가 생길 수 있으니 미리 공간을 확보해라"라고 알려준다. 실제 스크롤바가 나타나도 콘텐츠 너비는 변하지 않는다.
-
-### 해결법2) 스크롤바 스타일링
-- 크롬에서 모바일 서식의 스크롤바가 마음에 든다고 던져줬더니 커스텀 스크롤바 CSS를 던져줬다.
-- 근데 제대로 적용되지 않는 느낌이다. 파이어폭스용으로 던진 서식만 적용되는데 왜지?
-- 아무튼 좀 지친 상태라 너무 깊게 들어가지는 않음
-
->[!done]
->- 결과적으로 1, 2번을 함께 적용함
->- 추가로 발생한 문제로, `scrollbar-gutter`를 추가하면서 스포일러 경고 영역도 오른쪽에 스크롤바를 위한 영역을 남겨두는 현상이 발생
->	- 살짝 야매를 부렸다. 스포일러 영역에 `-inset-x-3` 정도를 부여해서 스크롤바에 해당되는 영역까지 덮게 만들었다. 이렇게 구현할 경우 x축으로 스크롤바가 생기기 때문에 이것에 영향을 받는 요소들에 `overflow-x-hidden`으로 가로 스크롤을 막았다.
-
-
-# 250708 - 짭명방
-- `DualBlade`의 클래스 아이콘 이미지 작업.
-	- 칼 2개와 명방의 마름모를 넣고 싶다. 마법 공격을 하는 2번째 직군이기도 해서.
-![[DualBlade_128.png]]
-> 뭔가 단순하고 마법의 맛이 없지만 그냥 이거 쓰기로 함. ChatGPT한테도 맡겨봤는데 스타일이 너무 화려해서 직접 그렸다.
-
-> 여기서 옵시디언으로 볼 때는 괜찮은데 인게임에서 아이콘을 보면 계단현상이 좀 두드러져 보인다. `Artillery`도 비슷한 현상이 있어서, 얘네 둘은 해상도를 256으로 올려서 넣겠음.
-
-- 스킬은 일단 나중에 구현하기로 하고 기초 테스트만 해본다
-	- `ScriptableData`로 만들고, Prefab 연결하고, ResourceManager에 연결된 `OperatorIcon`에 아이콘 추가하고. `Prefab`에는 `Operator` 대신  이전에 구현했던 `DualBladeOperator` 스크립트를 연결했다. 
-	- **무한 공격 이슈** : `DualBladeOperator`의 이중 공격 부분 다음에 `AttackDuration, AttackCooldown` 설정함.
-
-
-
-
-# 250706 - 블로그
-
-## 스타일 작업
-- 이전에 글씨 크기를 `text-base`로 통일하는 과정에서, `.ql-editor` 클래스를 사용하는 곳들 모두에 공통적으로 적용되지 않는다는 걸 알게 되었다. 
-- 글을 작성할 때랑 읽을 때의 서식을 통일해야 함 
-
-### `format` 중에 `list`를 사용할 것인가 말 것인가? 
-- 사실 크게 상관은 없는 것 같다. 왓챠에 `- 내용`처럼 서술한 다음에 복붙해도 자동으로 `li` 태그가 붙지는 않는다. 일단 내용이 그대로 들어감.
-- 이게 문제가 됐던 상황은 티스토리로 옮길 때였다. 근데 지금은 크게 상관없지 않을까.
-- 이거는 일단 **유지**하기로 결정. 문제가 되면 그 때 다시 보자.
-
-### quill 사용하는 기능과 각각의 클래스들 정리
-> 여기서 `quill` 클래스는 정확히는 `"quill "`으로 뒤에 공백이 하나 있다. 왜 이런지는 모르겠음.
-
-- `my-doing`
-	- 글 읽기 : `ql-snow ql-editor` (아래에 아무것도 없는 div 태그가 하나 더 있음)
-		- 아래의 `div` 태그 제거해봄
-	- 글 쓰기 : `quill ql-container(&ql-snow) ql-editor`
-
-- `post`
-	- 글 읽기 : `ql-snow ql-editor ql-container` 아래에 div 태그
-	- 글 쓰기 : `quill ql-container(&ql-snow) ql-editor`
-
-- `review`
-	- 글 읽기 : `review-content`
-	- 글 쓰기 : `quill ql-container(&ql-snow) ql-editor`
-
-1. **글 읽기에서 `ql-container`라는 게 굳이 필요할까?**
-	- `Post`의 경우 오른쪽에 `HeaderLinks`로 나타나는 부분에서 `.ql-container`의 아래에 있는 헤더들을 추적했다. 그런데 그냥 `.ql-editor`로 해버리면 되니까 그렇게 변경함.
-	- 대부분의 경우 `.ql-snow .ql-editor`가 공통되기 때문에 여기에만 적용해버려도 되지 않을까?
-	- 또 `Post`의 글 읽기에는 `article-content`라는 게 따로 있다. 이거는 스타일에는 사용되지 않고..
-
-- **전부 `.ql-snow .ql-editor` 으로 서식을 통일**
-	- `.my-doing .ql-editor`의 경우만 헤더 크기를 줄이는 식으로 수정함
-	- 이게 더 위지윅에 맞긴 하겠다.
-
-## 리뷰 카드 중 텍스트가 있는 것과 없는 것 표시
-- 리뷰 카드를 작성했지만 본문에 텍스트가 없을 수도 있다.
-- 이런 경우를 구분하기 위해 **제목 끝에 아이콘 하나를 추가**하려고 함.
-- 그래서 카드들에서 내용이 있는지 여부를 확인하고 글이 있다면 아이콘으로 표시해주는 게 좋을 것 같음. 위치는 제목이 끝난 바로 뒤로.
-- 카드로 보내는 시리얼라이저에 아래 필드를 추가한다.
-```python
-class ReviewListSerializer(serializers.ModelSerializer):
-    """목록 뷰(그리드)를 위한 시리얼라이저"""
-    has_content = serializers.SerializerMethodField(); # 읽기 전용 필드, get_ 접두사가 붙은 메서드를 통해 동적으로 생성된다.
-
-    class Meta:
-        model = Review
-        fields = [
-	        # ...
-	        ,
-            'has_content'
-            ]
-        
-    def get_has_content(sefl, obj: Review) -> bool:
-        """
-        Review 필드의 content 필드가 비어 있는지 확인한다.
-        None이거나 ""이 아니라면 True
-        """
-        return bool(obj.content) # 프론트에서 받은 백엔드의 빈 컨텐츠는 ""으로 되어 있음
-```
-> - 프론트에서도 이 필드를 추가하고, `has_content` 필드를 확인해서 값이 있으면 제목 뒤에 아이콘을 표시하는 방식이다.
-> - 프론트에서 비어있는 글의 백엔드의 데이터가 어떻게 오는지 확인했다. ""으로 옴.
-
-- 제목 뒤에 표시하려고 했는데 생각보다 별로다. `별점, 스포일러, 보는 중` 이 들어가는 줄에 추가.
-![[Pasted image 20250706171948.png]]
-
-
-# 250704 - 짭명방
-## 2번 공격하는 근접 직군 구현
-
-- 이름은 `DualBlade`?
-- 특징
-	- 기본 공격은 1번 공격 시 2회 타격함
-	- 모든 스킬은 공격 시 SP가 회복됨
-		- 즉 공격 쿨타임이 돌 때마다 2회 공격하고, SP는 때릴 때마다 1씩 총 2가 올라감.
-	- 컨셉은 살짝 바꾸겠음. 스킬을 켜지 않았을 때 물리딜을, 켜거나 사용할 때는 마법딜을 넣는 식으로.
-	- 1스킬은 강타로 구현하되 마법 타입으로 공격이 바뀌어서 나감
-	- 2스킬은 버프로 구현할까?
-
-- 견본이 좀 있나 찾아봤는데 소드마스터 자체가 5성 이하로 별로 없다. 바이비크, 타찬카, 커터 정도.
-	- 스탯은 바이비크의 것을 가져옴
-
-- 스크립트 자체는 이런 구현에서 시작.
+> **1. 수정 전** 
+> - `AreaEffectSkill`이라는 중앙 관리자가 있었다. 범위 스킬들을 묶어서 관리하기 위해 구현했던 건데, 서로 다른 방식으로 동작하는 스킬들(즉발, 지속시간 등)을 범위 스킬이라는 이유만으로 묶어서 관리하려고 했다.
+> - 씬에 생성된 모든 효과 객체들을 일일이 추적해서 시전자가 죽으며 직접 청소하는 등의 책임을 졌다.
+> 
+>**2. 수정 후**
+> - 중앙 관리자 `AreaEffectSkill`을 없앴다. 
+> - `Skill` : **어떤 효과를 발동시키는 명령자.** `Buff`를 부여하고 `Controller`을 맵에 나타나게 한다.
+> - `Buff` : **캐릭터에게 붙어서 특정 상태를 부여**하는 표식 / 지속 효과 등등
+> - `Controller` : **씬에 생성되어서 주어진 역할을 하고 사라진다.**
+
+- 구체적인 내용(제미나이 참고, 복붙은 아니고 옮겨적음)
+1. `AreaEffectSkill` : 제거됨
+- 대신 이것을 상속받던 스킬들 `MeteorSkill, AreaHasteHealSkill, ArcaneFieldSkill`은 `ActiveSkill`을 직접 상속받도록 변경했음
+- 왜?
+	- **추상화가 잘못됨** : "범위 효과"라는 기준만으로 지속형, 즉발형 스킬을 억지로 묶었다.
+	- **불필요한 복잡성** : 상속이 깊어질수록 코드를 이해하고 추적하기 어려워진다.
+	- **책임 과다** : 씬 객체 추적, 오브젝트 풀링, 시각화 등의 책임을 한 클래스가 모두 졌다.
+
+2. 효과 추적 및 생명주기 관리
+- `Skill`이 `Dict`와 `Event`를 통해 씬의 게임 오브젝트들을 추적하고 정리하는 로직 제거
+- 어떻게 : 
+	- **부모-자식 관계 활용** : 효과 객체들의 부모를 시전자로 설정해서 시전자가 파괴되면 함께 파괴되도록 수정
+	- **코루틴 활용** : 각 컨트롤러는 `Update` 대신 코루틴을 활용해 자신의 생명주기를 직접 관리하도록 변경
+- 왜 :
+	- 안정성 : 유니티 엔진의 내장된 생명주기 관리 기능 활용 
+	- 단순함 : **`Instantiate` 한 줄로 다 정리됨 - 스킬 시전 오브젝트를 부모로 둔 것** 만으로 수많은 이벤트 구독 / 해제 코드가 다 필요없어졌다.
+	- 성능 : 수십 개의 객체가 `Update`를 돌리는 것보다 코루틴의 `yield return`이 성능에 더 유리함
+
+3. 시각화 및 효과 생성 로직
+- `AreaEffectSkill`에 있던 공통 메서드들이 각 개별 스킬 클래스의 `private` 헬퍼 메서드로 변경됨
+- 각 스킬은 자신의 `PlaySkillEffect`에서 각각의 메서드에 정의된 함수들을 호출한다.
+- 왜 :
+	- 유연성 : 모든 범위 스킬이 똑같은 방식으로 시각화/효과를 생성하지 않는다. 각 스킬은 자신만의 고유한 연출과 로직을 가질 수 있는 자유가 부여됐다.
+	- 응집도 향상 : 해당 스킬의 모든 로직은 해당 클래스 파일 내에 있어서 가독성과 유지보수성이 향상됐다. 
+
+
+
+### SlashSkill
+- `SlashSkill`
+	- 일단 `SlashSkillController`에서 **파티클 시스템의 충돌 로직을 사용하고 있는데, 이게 성능적인 부하가 크다고 함.** 
+	- 그러나 **실질적으로 일회성으로 나가는 스킬이고 판정되는 경우도 많지 않기 때문에 유지**함
 ```cs
-public class DualBladeOperator : Operator
+using System.Collections.Generic;
+using Skills.Base;
+using UnityEngine;
+
+namespace Skills.OperatorSkills
 {
-    // 공격 사이의 간격
-    private float delayBetweenAttacks = 0.15f;
-
-    public override void Attack(UnitEntity target, float damage)
+    [CreateAssetMenu(fileName = "New Slash Skill", menuName = "Skills/SlashSkill")]
+    public class SlashSkill : ActiveSkill
     {
-        // 2회 공격 로직을 코루틴으로 구현
-        StartCoroutine(DoubleAttackCoroutine(target, damage));
-    }
+        [Header("Damage Settings")]
+        [SerializeField] private float damageMultiplier = 2f;
 
-    private IEnumerator DoubleAttackCoroutine(UnitEntity target, float damage)
-    {
-        bool showDamagePopup = false;
-        float polishedDamage = Mathf.Floor(damage);
+        [Header("Skill Settings")]
+        [SerializeField] private GameObject slashEffectPrefab = default!;
+        [SerializeField] private float effectSpeed = 8f;
+        [SerializeField] private float effectLifetime = 0.5f;
 
-        base.PerformAttack(target, polishedDamage, showDamagePopup);
-
-        yield return new WaitForSeconds(delayBetweenAttacks);
-
-        if (target != null && target.CurrentHealth > 0)
+        protected override void SetDefaults()
         {
-            base.PerformAttack(target, polishedDamage, showDamagePopup);
+            duration = 0f;
         }
-    }
-}
-```
 
-> 이거 일단 중지!
-
-## Operator 리팩토링
-
-### Skill - Operator 관계 재정립
-
-- `BaseSkill`의 경우
-```cs
-	public bool autoRecover = false; // 활성화시 자동 회복, 비활성화 시 공격 시 회복
-	public bool autoActivate = false; // 자동발동 여부
-	public bool modifiesAttackAction = false; // 공격 액션 변경 여부
-```
-이런 필드들이 있다. 그러면 이 필드의 값에 따라 SP 회복 로직이 달라진다든가, 입력을 대기하거나 스킬이 자동으로 나간다거나 하는 부분은 전부 Operator 자체에서 일어나야 하는 일이다.
-
-지금의 `SmashSkill` 같은 경우
-```cs
-protected override void SetDefaults()
-{
-	autoActivate = true;
-}
-
-// 공격에 묻어나가는 로직
-public override void OnBeforeAttack(Operator op, ref float damage, ref bool showDamage)
-{
-	if (op.CurrentSP >= op.MaxSP) 
-	{
-		damage *= damageMultiplier;
-		showDamage = true;
-		op.CurrentSP = 0;
-	}
-	else
-	{
-		op.CurrentSP += 1;
-	}
-}
-```
-이런 식으로 스킬 자체에서 오퍼레이터의 SP를 회복하는 로직이 있는데, 이렇게 구현하지 말고 
-
-- `Operator`에서는 **스킬 -> 오퍼레이터로 전달시켜서 회복시키는 게 아니라 오퍼레이터 자체에서 필드를 확인하고 그에 따른 동작을 수행하는 게 더 맞는 구현**이 된다.
-
-1. `SmashSkill`의 `else` 부분을 제외한다. 회복 동작은 `BaseSkill.autoRecover = false`일 때 `Operator`에서 동작한다.
-
-2. 공격 시 SP 회복 로직은 `Operator.PerformAttack`의 공격 후에서 구현한다.
-```cs
-    protected virtual void PerformAttack(UnitEntity target, float damage, bool showDamagePopup)
-    {
-		float spBeforeAttack = CurrentSP;
-	    // 공격 전
-        if (CurrentSkill != null)
+        protected override void PlaySkillEffect(Operator op)
         {
-            CurrentSkill.OnBeforeAttack(this, ref damage, ref showDamagePopup);
-        }
-		
-		// 실제 공격 동작
-		// ...
-		
-		// 공격 후
-        if (CurrentSkill != null)
-        {
-            CurrentSkill.OnAfterAttack(this);
-            
-            // SP 공격 시 회복 로직
-            if (!CurrentSkill.autoRecover && !IsSkillOn && spBeforeAttack != MaxSP)
+            if (slashEffectPrefab == null) return;
+
+            Vector3 spawnPosition = op.transform.position + op.transform.forward * 0.5f;
+            Quaternion spawnRotation = Quaternion.LookRotation(op.FacingDirection);
+            GameObject effectObj = Instantiate(slashEffectPrefab, spawnPosition, spawnRotation);
+
+            SlashSkillController controller = effectObj.GetComponent<SlashSkillController>();
+            if (controller != null)
             {
-                CurrentSP += 1; // 세터에 Clamp가 있으므로 여기서 하지 않아도 됨.
+                controller.Initialize(op, op.FacingDirection, effectSpeed, effectLifetime, damageMultiplier, skillRangeOffset, op.OperatorData.HitEffectPrefab, op.HitEffectTag);
+            }
+        }
+    }
+}
+```
+> 매우 짧아졌다. 
+> 추가로 눈치 못챘던 버그가 있었는데, `Controller`에 `damageMultiplier`가 들어가야 하는데 스킬에서 대미지를 계산해서 직접 넣고 있었다. 즉 대미지 계산 배율이 수백 단위가 된 거임. 이상하게 쎄긴 하더라.
+
+
+
+### ShieldSkill
+- `ShieldBuff`
+```cs
+using UnityEngine;
+using UnityEngine.VFX;
+
+public class ShieldBuff : Buff
+{
+    private float shieldAmount;
+    private GameObject shieldEffectPrefab;
+    private GameObject currentShieldEffect;
+
+    public ShieldBuff(float amount, float duration, GameObject vfxPrefab)
+    {
+        this.shieldAmount = amount;
+        this.duration = duration;
+        this.shieldEffectPrefab = vfxPrefab;
+        this.buffName = "Shield";
+    }
+
+    public override void OnApply(UnitEntity owner, UnitEntity caster)
+    {
+        base.OnApply(owner, caster);
+        if (owner is Operator op)
+        {
+            op.shieldSystem.OnShieldChanged += HandleShieldChanged;
+            op.ActivateShield(shieldAmount);
+            PlayShieldVFX(op);
+        }
+    }
+
+    public override void OnRemove()
+    {
+        if (owner is Operator op)
+        {
+            op.DeactivateShield();
+            op.shieldSystem.OnShieldChanged -= HandleShieldChanged;
+            RemoveShieldVFX();
+        }
+        base.OnRemove();
+    }
+
+    private void PlayShieldVFX(Operator op)
+    {
+        if (shieldEffectPrefab != null)
+        {
+            currentShieldEffect = GameObject.Instantiate(shieldEffectPrefab, op.transform.position, Quaternion.identity, op.transform);
+            currentShieldEffect.GetComponent<VisualEffect>().Play();
+        }
+    }
+
+    private void RemoveShieldVFX()
+    {
+        if (currentShieldEffect != null)
+        {
+            currentShieldEffect.GetComponent<VisualEffect>()?.Stop();
+            GameObject.Destroy(currentShieldEffect, 1f);
+        }
+    }
+
+    private void HandleShieldChanged(float currentShield, bool isShieldDepleted)
+    {
+        if (isShieldDepleted)
+        {
+            owner.RemoveBuff(this);
+        }
+    }
+}
+```
+
+- `ShieldSkill`
+```cs
+using UnityEngine;
+using Skills.Base;
+using UnityEngine.VFX;
+
+namespace Skills.OperatorSkills
+{
+    [CreateAssetMenu(fileName = "New Shield Skill", menuName = "Skills/Shield Skill")]
+    public class ShieldSkill : ActiveSkill
+    {
+        [Header("Shield Settings")]
+        [SerializeField] private float shieldAmount = 500f;
+
+        [Header("Stat Boost Settings")]
+        [SerializeField] private StatModifierSkill.StatModifiers statMods;
+
+        [Header("Shield Visual Effects")]
+        [SerializeField] private GameObject shieldEffectPrefab = default!;
+
+        private ShieldBuff? _shieldBuff;
+        private StatModificationBuff _statBuff;
+
+        protected override void PlaySkillEffect(Operator op)
+        {
+            _statBuff = new StatModificationBuff(this.duration, statMods);
+            op.AddBuff(_statBuff);
+
+            _shieldBuff = new ShieldBuff(shieldAmount, this.duration, shieldEffectPrefab);
+            op.AddBuff(_shieldBuff);
+        }
+
+        protected override void OnSkillEnd(Operator op)
+        {
+            // 지속시간이 다 되어서 끝나는 경우 - 적용된 버프들을 제거함
+            if (_statBuff != null) op.RemoveBuff(_statBuff);
+            if (_shieldBuff != null) op.RemoveBuff(_shieldBuff);
+            _statBuff = null;
+            _shieldBuff = null;
+
+            base.OnSkillEnd(op);
+        }
+
+    }
+}
+```
+> 이렇게 구현하는 경우 `ShieldBuff`가 깨지더라도 `StatBuff`는 지속시간 동안 유지된다. 
+> 만약 `ShieldBuff`가 깨졌을 때 `StatBuff`도 깨지게 하고 싶다면? 아래처럼 구현하면 된다. 여기선 사용하지 않음.
+```cs
+        protected override void PlaySkillEffect(Operator op)
+        {
+            _statBuff = new StatModificationBuff(this.duration, statMods);
+            op.AddBuff(_statBuff);
+
+            _shieldBuff = new ShieldBuff(shieldAmount, this.duration, shieldEffectPrefab);
+            op.AddBuff(_shieldBuff);
+
+            // _shieldBuff.LinkBuff(_statBuff);
+            // _shieldBuff.OnRemovedCallback += () => OnSkillEnd(op);
+        }
+```
+
+- 버프가 제거될 때 아래의 메서드가 호출되고
+```cs
+    public virtual void OnRemove()
+    {
+        // 연결된 버프들이 있다면 우선 제거함
+        foreach (var buff in linkedBuffs.ToList())
+        {
+            owner.RemoveBuff(buff);
+        }
+
+        // 스킬의 후처리 콜백 호출
+        OnRemovedCallback?.Invoke();
+        RemoveVFX();
+    }
+```
+
+- 이를 호출하는 `UnitEntity.RemoveBuff`는
+```cs
+    public void RemoveBuff(Buff buff)
+    {
+        if (activeBuffs.Contains(buff))
+        {
+            buff.OnRemove(); // 만약 연결된 다른 버프들이 있다면 여기서 먼저 제거됨
+            if (activeBuffs.Remove(buff))
+            {
+                OnBuffChanged?.Invoke(buff, false);
             }
         }
     }
 ```
-> 추가로, sp가 최대일 때 나간 공격은 `OnBeforeAttack`에서 스킬이 발동되면서 sp가 0이 되므로 해당 공격에서는 SP가 회복되지 않도록 수정했다.
 
-### 잠깐 휴식 전 정리
-- 지금 신경쓰이는 거
-```cs
-protected void HandleSPRecovery()
-{
-	// ...
+의 구조를 가진다. 그래서 위처럼 `Shield -> StatModifier`로 연결된 상태이고, 지속시간이 만료되지 않았는데 Shield가 파괴될 상황이라면
 
-	if (CurrentSP != oldSP && operatorUI != null)
-	{
-		operatorUI.UpdateUI();
-		OnSPChanged?.Invoke(CurrentSP, MaxSP);
-		
-		// ..
-	}
-}
-```
-> - 여기서 **OnSPChanged?.Invoke()로 operatorUi.UpdateUI까지 통합해버리는 게 좋아보인다.**
-> - 그런데 `OnSpChanged.Invoke` 이벤트를 구독하는 부분은 `DeployableActionUI` 이랑 `DeployableBarUI`이다. `OperatorUI`는 `DeployableBarUI.SetSPBarColor` 를 수정하고 스킬 아이콘 활성화 여부를 결정하는데..
-> - 이벤트로 다 묶어버릴 수 있을 것 같음.
-> - 문제라면 `DeployableBarUI`가 따로 있다는 것인데.. 이따 생각해보자.
+1. `ShieldBuff`에 연결된 `StatModiferBuff`부터 제외됨
+2. 마지막으로 `ShieldBuff`가 파괴됨
+3. `ShieldBuff`에 달아뒀던 `OnSkillEnd(op)`에 의해 스킬 종료 메서드가 실행됨
 
-- 휴식 끝!
-###  1. Operator - OperatorUI 정리
-1. `OperatorUI` 자체는 `Operator` 자체에서 생성과 파괴를 담당
-2. HP 변경, SP 변경 등은 이벤트로 관리
-	- 왜냐면 `1:多` 관계임. 저 사건들을 사용할 컴포넌트들을 일일이 관리하는 건 번거로움.
-	- 하지만 `UI 자체는 오퍼레이터와 1:1 관계`임
+의 구조를 갖는다.
 
-- 이런 구조로 바꿨다. 기존엔 이것저것 엉켜있었음.
-```
-[ Operator ]  <-- (데이터 소스)
-     |
-     | (이벤트 발생: OnHealthChanged, OnSPChanged, OnSkillStateChanged)
-     V
-[ OperatorUI ] (컨트롤러: 이벤트 구독 및 로직 분배)
-     |
-     | (메서드 호출: UpdateHealthBar, SetSPBarColor 등)
-     V
-[ DeployableBarUI ] (뷰: 단순한 API 제공 및 하위 컴포넌트 관리)
-     |
-     +--- [ HealthBar ] (실제 뷰)
-     |
-     +--- [ SPBar ] (실제 뷰)
-```
-
-### 2. Skill - Operator - OperatorUI 정리
-- 크게 2가지 궁금한 게 있다.
-	1. **오퍼레이터의 스킬을 켜고 끄는 걸 어디서 처리해야 할까?**
-		- **스킬의 시작과 끝을 처리하는 지점은 스킬 자체**다. 그래서 **어떤 시점에 어떤 동작을 해야 하는지 아는 스킬에서 오퍼레이터의 상태를 함께 관리**한다.
-		- 스킬은 `Operator`의 상태를 변경해달라고 요청하면 `Operator`는 요청을 받아 상태를 변경하고 변경된 사실을 외부에 방송한다.
-	2. 스킬이 켜졌을 때 SPBar의 동작은 어디에서 관리해야 할까?
-		- SPBar가 어떻게 변하는가는 SPBar 자체에서 처리하면 된다. 스킬에서 일일이 관리할 필요 없다.
-
-## 기타 버그
-- [x] `Artillery` 공격이 동작했는데도 대미지가 안 들어가는 것처럼 보이는 이슈
-	- `Projectile`에서 폭발하는 경우의 콜라이더 처리가 바뀌어야 한다. 원래는 `UnitEntity`를 직접 감지했으나, 이전에 `Body`를 각 객체의 자식 오브젝트로 별도로 구현하고 거기에 `BodyColliderController` 스크립트를 붙였던 적이 있다. 그 컴포넌트를 감지하도록 수정함.
-
-- [x] `MedicOperator`의 공격이 연속적으로 쫘라락 나가는 현상
-	- 공격 쿨타임 적용하는 로직을 Attack 내부로 바꾸면서 발생한 문제인 듯.
-	- 오버라이드하기에는 살짝 구조가 달라서 `SetAttackDuration, SetAttackCooldown`을 똑같이 `MedicOperator`에 넣었다.
-
-- [x] `Operator`의 저지도 이상하게 동작한다.
-	- 상황) Operator가 저지 중인 적을 성공적으로 제거했을 때, 콜라이더가 겹치지 않는 상황인데 해당 적이 저지당하는 현상이 있음. 이전과 달리 근거리, 원거리를 가리지 않음.
-	- `blockableEnemies`가 제대로 처리되지 않은 것으로 보인다. 즉, **콜라이더가 겹쳤을 때 저지 후보에는 들어갔는데, 콜라이더에서 이탈했는데도 저지 후보에서 제거되지 않은 것으로 보임**.
-	- `Operator`의 `public override void OnBodyTriggerExit(Collider other)`가 `private`으로 돼 있긴 했었다. 체크해보고 다시 실행시켜봄.
-
-- [x] `Operator`가 배치될 때 겹쳐진 적을 저지하지 않는 현상도 있다.
-	- 현재 `BodyCollider`로 뺀 상태이고 배치될 때 이를 활성화한다고 하자. 이 때, `OnTriggerEnter`는 이미 겹쳐진 콜라이더에는 동작하지 않는다. 
-	- 따라서 활성화 시점에서 겹쳐져 있으므로 동작하지 않고, 그 다음 프레임에도 `OnTriggerEnter`는 이미 겹쳐있으니까 동작하지 않는다. `OnTriggerStay`는 동작함.
-	- 성능까지 고려해본다면, 활성화 시점에 겹쳐진 콜라이더를 체크해서 `OnTriggerEnter`로 넘겨주면 되지 않을까?
-
-- `BodyColliderController`를 아래처럼 구현했다.
-```cs
-// 이 컨트롤러의 콜라이더 활성화 상태 결정
-public void SetColliderState(bool enabled)
-{
-	if (bodyCollider != null)
-	{
-		bodyCollider.enabled = enabled;
-
-		// 콜라이더가 켜지는 순간에는 수동 겹침 검사 실행
-		if (enabled)
-		{
-			CheckForInitialOverlaps();
-		}
-	}
-}
-
-// 콜라이더가 활성화된 시점에 겹쳐져 있는 코라이더를 찾아 `OnTriggerEnter`처럼 owner에게 전달한다.
-private void CheckForInitialOverlaps()
-{
-	if (owner == null) return;
-
-	// 콜라이더의 타입을 확인해 Overlap 함수를 사용한다.
-	if (bodyCollider is BoxCollider box)
-	{
-		// BoxCollider와 충돌하는 콜라이더들을 찾음
-		Collider[] overlappingColliders = Physics.OverlapBox(
-			transform.position + box.center,
-			Vector3.Scale(box.size, transform.lossyScale) / 2, // 스케일링을 고려한 실제 크기
-			transform.rotation,
-			-1, // 모든 레이어
-			QueryTriggerInteraction.Collide // 트리거 콜라이더와도 충돌하도록 설정
-		);
-
-		foreach (var otherCollider in overlappingColliders)
-		{
-			// 자기 자신은 무시
-			if (otherCollider == bodyCollider) return;
-
-			// 감지된 콜라이더를 owner에게 전달
-			owner.OnBodyTriggerEnter(otherCollider);
-		}
-	}
-}
-```
-
-- [x] 원거리 `Enemy`가 원거리 공격하지 않는 문제
-	- 이건 갑자기 왜 그러는 걸까?
-	- 얘도 비슷한 문제겠다. 즉, `OnTriggerEnter`에서 감지하는 게 `DeployableUnitEntity`를 직접 감지하는 게 아니라, 본체 트리거 감지 -> 그 부모에 `DeployableUnitEntity`가 있는가? 가 되는 것.
-	- **오늘 발생한 대부분의 문제가 이 본체 콜라이더를 자식으로 이동시키면서 발생한 문제들**이다. 
-
-- [x] `EnemyBarUI`의 체력 변화를 이벤트 기반 구독으로 변경
-	- `Operator`에 비해 훨씬 쉽다. 체력밖에 없고 고려할 것도 많이 없음
-
-# 250703 - 블로그
-
-## 오늘의 배운 점
-1. **모바일을 고려할 때, 화면에 띄울 요소이면서 잘리지 않기를 바란다면 `dvh`를 쓰자.**
-	- `vh`는 모바일 브라우저에서 주소창이 나타나지 않았을 때를 기준으로 뷰포트의 높이를 계산하므로 의도한 것보다 화면에 작게 나타날 수 있다. 
-
-## 리뷰 모달의 위아래가 잘려서 나타나는 현상
-- 기존 모달의 높이는 `max-h-[95vh]`로 구현했음. PC에서 모바일 너비로 테스트해도 위아래에 빈 공간이 조금 있는 식으로 잘 구현됨. 하지만 실제로 모바일 환경을 보면, **모달의 위아래 빈 공간이 없고 오히려 모달의 일부 공간이 잘리는 현상이 발생했음.**
-
-이런 현상은 모바일 웹 개발에서 발생하는 `100vh` 문제라고 한다. 
-
-### 100vh 문제
-- `Vertical Height` 단위의 기준은 뷰포트 높이의 1%이다. 
-- 그런데 **모바일 브라우저에서의 뷰포트 높이는 주소창이 축소되었을 때의 높이를 기준**으로 계산된다.
-	- 모바일 브라우저는 동작에 따라 주소창이 나타날 때도 있고 숨겨질 때도 있는데, 나타날 때에 문제가 된다는 것이다. 
-
-### 해결책
-- 가장 좋은 방법은 **`dvh`라는 걸 사용**하는 것이다. `vh`를 더 깊게 들어가면
-- `svh(Small vh)` : 브라우저 UI가 확장된 상태, 가장 작은 가시영역의 높이
-- `lvh(Large vh)` : 브라우저 UI가 축소된 상태, 가장 큰 가시영역의 높이 
-- `dvh(Dynamic vh)` : 브라우저 UI에 따라 동적으로 변하는 높이
-
-지금 상황에서 화면에 나타났을 때 잘리지 않고 꽉 차게 보여야 하는 요소라면 `dvh`나 `svh`가 적합하다.
-
-
-## 리뷰 모달이 떠 있는 상태에서 뒤로 가기나 새로고침 동작
-- 현재는 리뷰 모달이 떠 있는 상태에서 뒤로 가기를 누르면 아예 현재 창이 닫힌다. 이거는 `url` 단위로 움직이기 때문으로 보임. 
-- 모달이 떠 있는 상태에서 뒤로 가기 버튼이 눌리면 기존의 `url` 동작을 취소하고 현재 떠 있는 모달이 닫히는 방식으로 구현하면 될 것 같음.
-- 새로고침의 경우는 어떻게 구현해야 할까?
-	- 새로고침 자체가 거슬린다기보다는 **가장 윗스크롤에서 위로 화면을 더 당길 때 새로고침이 튀어나오는 게 거슬린다...** 인 것 같음.
-	- 저 동작만 막으면 되지 않을까? 
-
-### 뒤로 가기 동작 제어
-
-**원리**
-1. 모달이 열릴 때 `history.pushState()`로 브라우저의 방문 기록 상태에 가짜 상태를 하나 추가한다.
-2. 사용자가 뒤로 가기 버튼을 누르면 브라우저는 가짜 상태로 돌아가려는 `popstate` 이벤트를 발생시킨다.
-3. `popstate` 이벤트르 감지해서 모달을 닫는 함수를 실행한다.
-
-위 로직을 커스텀 훅으로 만들어서 깔끔하게 적용할 수 있다.
-```ts
-import { useEffect } from 'react';
-
-// 모달이 열려 있을 때 브라우저의 뒤로 가기 버튼을 누르면 모달을 닫도록 처리하는 훅
-export const useModalHistory = (isOpen: boolean, onClose:() => void) => {
-    useEffect(() => {
-        // 모달이 열렸을 때만 로직 실행
-        if (isOpen) {
-            // 히스토리 스택에 상태 추가 (URL 변경 X)
-            // 모달이 열렸음을 의미함
-            window.history.pushState({ modalOpen: true }, '');
-
-            // popstate 이벤트 리스너 정의
-            const handlePopState = () => {
-                // 뒤로 가기 시 모달 닫기 함수 호출
-                onclose();
-            }
-
-            window.addEventListener('popstate', handlePopState);
-
-            // 클린업 함수 : 컴포넌트가 언마운트되거나 isOpen = false일 때 실행
-            return () => {
-                window.removeEventListener('popstate', handlePopState); 
-
-                // 히스토리 스택의 현재 상태가 여기서 추가된 모달이라면
-                // 사용자가 뒤로가기 대신 다른 방법(X 버튼 등)으로 모달을 닫았다는 의미라서
-                // 스택에서 해당 상태를 제거해줘야 다음 뒤로가기가 정상적으로 작동한다.
-                if (window.history.state?.modalOpen) {
-                    window.history.back();
-                }
-            }
-        }
-    }, [isOpen, onClose])
-}
-```
-
-### 새로고침 제어
-
-**문제 상황 분석**
-1. 모달의 스크롤이 동작할 수 있는 상황이라면 `div.overflow-y-auto`에서 먼저 처리된다. 
-2. **모달의 스크롤이 불가능하다면 스크롤 이벤트를 부모로 넘겨준다.**
-3. 부모 요소의 스크롤이 동작한다. 예를 들면 `<body>`의 스크롤이 동작.
-
-이런 원리로 모달의 스크롤이 가장 위에 있는 상태에서 더 위로 스크롤하려고 할 때, 모바일 브라우저의 경우 `<body>`의 최상단에서 위로 스크롤하는 제스쳐는 `당겨서 새로고침(Pull-To-Refresh)` 기능과 연결되어 있고, 그래서 새로고침하려고 하는 것이다.
-
-이런 식으로 스크롤 동작이 불가능할 때 상위 요소로 스크롤 이벤트가 전달되는 것을 **`스크롤 체이닝`** 이라고 한다.
-
-**해결 원리** : `overscroll-behavior-y: contain`
-- `overscroll-behavior` : 스크롤 경계에 도달했을 때 브라우저의 동작을 정의하는 css 속성
-- `contain` : 스크롤 경계에 닿으면, 스크롤 이벤트를 부모 요소로 전파하지 말고 여기서 끝내라는 지시.
-
-위 동작을 모달이 열렸을 때 `<body>` 태그에 추가하고, 닫힐 때 `<body>` 태그에서 제거한다.
-이 로직도 커스텀 훅으로 구현할 수 있다.
-```ts
-import { useEffect } from 'react';
-
-// 특정 조건에서 body의 스크롤을 방지하는 훅.
-export const usePreventScroll = (isLocked: boolean) => {
-    useEffect(() => {
-        if (isLocked) {
-            const originalStyle = window.getComputedStyle(document.body).overflow;
-            const originalOverscrollBehavior = window.getComputedStyle(document.body).overscrollBehaviorY;
-
-            // 스크롤 방지 스타일 적용
-            document.body.style.overflow = 'hidden';
-            document.body.style.overscrollBehaviorY = 'contain';
-
-            // 클린업 함수 : 원래 함수로 복원
-            return () => {
-                document.body.style.overflow = originalStyle;
-                document.body.style.overscrollBehaviorY = originalOverscrollBehavior;
-            } 
-        }
-    }, [isLocked])
-}
-```
-
-### 적용
-- 모달 컴포넌트에 2개의 훅을 적용하면 된다. 페이지 단위로 적용하지 않아도 됨.
-```ts
-import { useModalHistory } from '../../hooks/useModalHistory'; // 뒤로가기 동작 관련
-import { usePreventScroll } from '../../hooks/usePreventScroll'; // 배경 스크롤 방지
-
-const ReviewModal: React.FC<Props> = ({ reviewId, onClose, mockData }) => {
-	// ...
-	
-	usePreventScroll(!!reviewId); // 모달이 열린 동안(reviewId가 있을 때) 배경 스크롤 / 새로고침 방지
-	useModalHistory(!!reviewId, onClose); // 뒤로가기 버튼에 모달 닫는 기능 추가
-	
-	//...
-  }
-```
-> `!!`는 어떤 값을 `boolean`으로 나타내기 위한 이중 변환이다. `falsy`한 값을 `false`로, `truthy`한 값을 `true`로 쓰기 위한 관용적인 표현`idiom`이라고 함.
-
-
-## 추가 수정 사항
-
-### 1. 모달을 켜고 다른 탭에 다녀올 때 현재 모달이 꺼지는 문제
-- 위에서 추가한 `useModalHistory`를 비활성화했을 때는 이 문제가 발생하지 않으므로 새로 추가한 기능이었던 이게 원인이 맞다. 
-- 일부 브라우저(크롬 포함)는 다른 탭으로 갔다가 다시 돌아올 때, 내부적으로 히스토리 상태를 확인하는 과정에서 `popstate` 이벤트를 발생시키는 경우가 있다. 
-- 따라서 `popstate` 이벤트가 발생했을 때 무조건 모달을 닫는 게 아니라, **이 이벤트가 실제로 사용자의 뒤로 가기 이벤트였는지를 추적**하는 게 더 좋다.
-
-```tsx
-useEffect(() => {
-	// 모달이 열렸을 때만 로직 실행
-	if (isOpen) {
-
-		// historyState가 없으면 추가한다. 불필요한 pushState 호출을 막는다.
-		if (!isModalStatePushed.current) {
-			window.history.pushState({ modalOpen: true }, '');
-			isModalStatePushed.current = true;
-		}
-
-		// popstate 이벤트 핸들러 정의. 사용자가 뒤로 가기를 했다는 의미.
-		const handlePopState = (event: PopStateEvent) => {
-			// popstate가 발생했으나 현재 state가 이 모달 state라면
-			// 즉 실제 뒤로 가기가 아닌 탭 전환 등의 이벤트라면 무시한다.
-			if (event.state?.modalOpen) {
-				return;
-			}
-
-			// 진짜 뒤로가기가 실행된 상황
-			onClose();
-		}
-		
-		window.addEventListener('popstate', handlePopState);
-
-		return () => {
-			// 클린업 함수 : 컴포넌트가 언마운트되거나 isOpen = false일 때 실행
-			window.removeEventListener('popstate', handlePopState);
-		}
-	}
-	// -- 모달이 닫혔을 때의 로직 --
-	else {
-
-		if (isModalStatePushed.current) { 
-			isModalStatePushed.current = false; // 상태를 먼저 변경해 무한 루프를 방지한다.
-			window.history.back(); // popstate 이벤트 발생
-		}
-	}
-}, [isOpen, onClose])
-```
-
-> 원리 이해하기
-- 모달을 열면 useModalHistory 훅이 실행된다. `window.history.pushState({ modalOpen: true }, '')`
-```
-[맨 위]  -> { state: { modalOpen: true }, URL: /reviews }  <-- 현재 위치 (모달 열림)
-[아래]   -> { state: null, URL: /reviews }                <-- 모달 열기 전 상태
-[그 아래] -> { state: null, URL: / }                       <-- 이전 페이지
-```
-
-**시나리오 A : 사용자의 뒤로 가기 버튼 입력**
-1. 히스토리 스택의 현재 위치를 한 단계로 내린다. `[아래]` 부분이 됨.
-2. 히스토리 변경을 알리기 위해 `popstate`를 발생시킨다.
-3. `handlePopState(event)`가 동작한다. `event`는 새롭게 이동한 위치의 상태가 담겨있다.
-4. `event.state`는 따라서 `null`이 된다. 
-
-**시나리오 B : 사용자가 다른 탭으로 갔다가 돌아옴**
-1. 일부 브라우저는 탭이 다시 활성화될 때, 현재 히스토리 상태를 확인하고 일관성을 유지하기 위해 `popstate` 이벤트를 발생시킬 수 있다.
-2. 이 때, 히스토리 스택은 여전히 `[맨 위]`다. 히스토리 스택 이동이 없었으니까.
-3. 따라서 `event.state`는 `{ modalOpen: true }`가 된다.
-
-### 2. 글 작성 시 번호나 리스트 (1. 2. 3. 이나 -)를 쓰면 자동으로 서식이 지정되는 현상
-- `HTML`과 부드럽게 연결되지 않으므로 이런 것들은 그냥 문자열들로 구현하려고 함
-- `QuillEditor`에서 `formats`에 있는 `list, bullet` 을 제거했다. 전자는 순서 리스트, 후자는 순서 없는 리스트.
-
-### 3. 헤더 스타일이 ReviewModal에 적용됐으면 좋겠음. 오른쪽 링크는 필요 없고.
-- `ReviewModal`의 본문 내용을 감싸는 `div.review-content` 클래스를 하나 만들어줬다. 
-- 스타일은 대부분 `ql-snow ql-editor h1~h3`에 해당하는 것을 가져와 수정했음.
-
-### 4. WriteReviewModal의 경우 배경 클릭 시
-- 배경을 클릭해도 모달이 꺼지지 않도록 구현한다. 왜냐면 작업 중인데 오조작 한 방에 작업 중이던 내용이 날아갈 수 있기 때문임.
-
-
-
-
-## 실패) 모바일 테스트 구현
-- 핸드폰을 usb에 연결해서 로컬 호스트에 접속 가능하게 하면 모바일 환경에서도 직접 `npm run dev` 환경으로 테스트할 수 있을 거라는 생각이 들어서 시도해봤다.
-- 연결 자체는 가능했는데, 중간에 무한 로딩이 걸려버려서 중지.
+- 쉴드랑 코스트 회복 잘 되는지 보고 마무리하겠음.
+- 스택 오버플로우 이슈가 있었다. 해결함. 근데 `Defender`가 이상하게 단단한 느낌도 있음.
 
 
 

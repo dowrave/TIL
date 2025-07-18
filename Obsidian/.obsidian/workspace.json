@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "6dd42baf23d1cbd9",
+        "id": "b7b961ee21b5727e",
         "type": "tabs",
         "children": [
           {
-            "id": "c541be742c03562b",
+            "id": "3cd95c7d7df0d154",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -209,22 +209,23 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "c541be742c03562b",
+  "active": "3cd95c7d7df0d154",
   "lastOpenFiles": [
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/행동 제약 시스템 - 비트 연산.md",
+    "1. Projects, Ongoing/블로그 만들기/월별 작업 기록/블로그_25년 6월.md",
+    "1. Projects, Ongoing/블로그 만들기/월별 작업 기록/블로그_25년 7월.md",
+    "1. Projects, Ongoing/블로그 만들기/이번 달 작업 기록.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/짭명방_25년 7월.md",
     "1. Projects, Ongoing/README.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/이벤트 구독 해제.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/행동 제약 시스템 - 비트 연산.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/오퍼레이터들 스탯 정리.md",
     "3. Resource/Image/DualBlade_128.png",
     "3. Resource/Image/Pasted image 20250706171948.png",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/짭명방_25년 7월.md",
-    "1. Projects, Ongoing/블로그 만들기/월별 작업 기록/블로그_25년 7월.md",
     "1. Projects, Ongoing/블로그 만들기/쌓이는 지식/기타/docker의 prune과 가상 디스크.md",
     "3. Resource/Image/Pasted image 20250701145309.png",
     "3. Resource/Image/Pasted image 20250701145246.png",
     "1. Projects, Ongoing/블로그 만들기/월별 작업 기록/25년 6월.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/짭명방_25년 6월.md",
-    "1. Projects, Ongoing/블로그 만들기/이번 달 작업 기록.md",
-    "1. Projects, Ongoing/블로그 만들기/월별 작업 기록/블로그_25년 6월.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/자료구조 - 해시.md",
     "3. Resource/Image/해시테이블.png",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/객체 지향 설계 기준점 잡기.md",
@@ -246,7 +247,6 @@
     "1. Projects, Ongoing/블로그 만들기/쌓이는 지식/React, Django, 웹/복합 - 헤더 노출시키기.md",
     "1. Projects, Ongoing/블로그 만들기/기능 추가 내용",
     "1. Projects, Ongoing/블로그 만들기/쌓이는 지식/MySQL/MySQL - DB 이전하기.md",
-    "1. Projects, Ongoing/블로그 만들기/월별 작업 기록/25년 4월.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이슈 해결하기",
     "3. Resource/Image/Barricade_256.png",
     "4. Archive/블렌더/한교수님 강의",
