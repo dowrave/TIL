@@ -41,14 +41,62 @@
 ### 작업 중
 - 보스 구현 시작
 
+### 발견한 이슈
+>[!bug]
+> - 장판 스킬들 범위 이펙트 안 나옴
+> - `MeteorSkill` 1번째 파티클이 너무 빨리 떨어짐
+> - 기절 이펙트 중첩 이슈
 
 ### 예정
 - `1-3` 스테이지 구현 완료
 	- 보스 구현
 
+# 250722 - 짭명방
+
+## 작업 완료
+
+### 스킬에서 사용하는 오브젝트 풀 관련
+>[!info]
+> - 스킬과 버프에 **공격 이펙트가 변경되는 경우에 대비한 필드** 작성
+> - 스킬의 오브젝트 풀을 생성하는 메서드는 스킬에 적어놓되 실행은 Operator가 배치되는 시점에 한다.
+> - Operator가 파괴되어도 오브젝트 풀이 파괴되지는 않는다. 재배치 등의 상황이 있기 때문에 굳이 지웠다가 다시 생성할 필요는 없다.
+> - 오브젝트 풀들은 스테이지가 종료되는 시점에 일괄적으로 파괴된다.
+- 일단 마법 공격으로 나가는 SlashEffect는 색깔이 보라색으로 바뀌어서 나가도록 수정함(시각화)
+
+#### 구현
+>[!done]
+>1. `Skill`에서 해당 스킬에 사용되는 이펙트 프리팹들을 필드로 정의한다.
+>	- 예시
+>		- 변경된 공격 이펙트`SlashEffect`
+>		- 장판 이펙트 
+>		- 실제 필드 효과 컨트롤러
+>		- 피격 이펙트 등등
+>	- 이 때 오브젝트 풀을 생성하는 메서드는 `BaseSkill`에서 정의한다. `BaseSkill`에서는 변경되는 공격 이펙트 부분만 구현하며, 나머지는 각각의 스킬에서 오버라이드해서 다시 정의한다.
+>2. `Buff`에서는 스킬로부터 오버라이드된 정보를 받는다. 
+>3. `Operator`가 배치되는 시점에 오브젝트 풀을 초기화한다. 이 때 현재 갖고 있는 스킬에 대한 초기화도 진행된다. 공격 이펙트가 변경되는 건 여기서 구현하는데, 이 부분만 스크립트 첨부함.
+
+```cs
+	// 기본적으로 Operator가 갖고 있는 공격 이펙트를 사용한다.
+	GameObject effectPrefab = OperatorData.meleeAttackEffectPrefab;
+	string effectTag = meleeAttackEffectTag;
+
+	// [버프 이펙트 적용] 물리 공격 이펙트가 바뀌어야 한다면 바뀐 걸 적용함
+	// 공격 이펙트가 바뀌는 버프는 1개만 있다고 가정한다.
+	var vfxBuff = activeBuffs.FirstOrDefault(b => b.MeleeAttackEffectOverride);
+	if (vfxBuff != null)
+	{
+		effectPrefab = vfxBuff.MeleeAttackEffectOverride;
+		effectTag = vfxBuff.SourceSkill.GetVFXPoolTag(this, effectPrefab);
+	}
+```
+
+
+
+
+
 # 250721 - 짭명방
 
-## 보스 구현 시작
+## 보스 구현 아이디어만
 - 기본적인 동작은 `Enemy`의 그것과 동일하다. 
 - 대신 일반적인 적과 달리 2가지 스킬을 구현할 예정
 
