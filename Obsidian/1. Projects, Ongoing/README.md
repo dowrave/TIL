@@ -42,20 +42,227 @@
 - 보스 구현 시작
 
 ### 발견한 이슈
->[!bug]
-> - 장판 스킬들 범위 이펙트 안 나옴
-> - `MeteorSkill` 1번째 파티클이 너무 빨리 떨어짐
-> - 기절 이펙트 중첩 이슈
 
 ### 예정
 - `1-3` 스테이지 구현 완료
 	- 보스 구현
 
+# 250723 - 짭명방
+## 버그 수정
+
+>[!done]
+>- 장판 스킬들 범위 이펙트 이슈
+>- `MeteorSkill` 1번째 파티클이 너무 빨리 떨어짐
+>- 기절 VFX 중첩 문제 + Buff 관련 리팩토링
+>- 공용 `Buff VFX` 들은 오브젝트 풀링으로 구현
+>	- `VFX`가 달려 있는 부모 오브젝트 파괴 시에 풀로 반환되지 않고 함께 제거되는 문제 수정
+
+### 장판 스킬들 범위 이펙트 이슈
+- **풀에 등록할 때의 태그와 사용할 때의 태그를 다른 걸 사용해서 발생했던 문제. 스킬 내에서 전역 태그값을 관리하는 방식으로 변경했다.**
+
+
+- 스킬이 켜졌을 때 범위 이펙트 관련 프리팹들이 동작하지 않는 것으로 보임. 
+	- 스킬을 1번 켜봤을 때 이펙트의 위치 좌표를 보면 모두 `(0, 0)`인 점
+	- 그렇다고 이펙트가 엉뚱한 위치에서 보이는 것도 아니었다.
+- **오브젝트 풀에 넣을 때의 태그와 풀에서 만들어낼 때의 태그가 다른 듯?** 
+	- 이펙트 태그로 스폰하려고 하는데 만들었을 때의 태그와 다르니까 스폰 자체가 불발되는 것으로 보인다. 
+
+- 스킬의 오브젝트 풀 등록에 사용되는 아래의 로직이 반복되고 있다.
+```cs
+	MELEE_ATTACK_OVERRIDE_TAG = GetVFXPoolTag(caster, meleeAttackEffectOverride);
+	if (!ObjectPoolManager.Instance.IsPoolExist(MELEE_ATTACK_OVERRIDE_TAG))
+	{
+		ObjectPoolManager.Instance.CreatePool(MELEE_ATTACK_OVERRIDE_TAG, meleeAttackEffectOverride);
+	}
+```
+이거를 조금 더 축약해서, `GetVFXPoolTag -> CreatePool`로 이어지는 과정을 메서드화함. `CreatePool` 내에 조건 체크가 있기 때문에` IsPoolExist`도 사실 필요하진 않다.
+```cs
+/// <summary>
+/// 스킬과 관련된 오브젝트 풀을 등록한다. 태그를 반환한다.
+/// </summary>
+protected virtual string RegisterPool(UnitEntity caster, GameObject prefab, int initialSize = 5)
+{
+	if (prefab == null) return null;
+
+	string poolTag = GetVFXPoolTag(caster, prefab);
+	ObjectPoolManager.Instance.CreatePool(poolTag, prefab, initialSize);
+	return poolTag;
+}
+```
+
+### `MeteorSkill` 1번째 파티클이 너무 빨리 떨어지는 문제
+- 1번째 파티클의 시작 지점 높이만 바꿔줬다. `1f`는 생각보다 낮은 듯.
+
+### 기절 이펙트 중첩되는 문제 + Buff 관련 리팩토링
+
+- `Buff` 중에서 기절이 다시 들어갈 때는 이전 버프를 파괴하고 새로운 버프를 등록하는 방식으로 진행했다. 이 파괴와 생성 로직 내에 이펙트를 없애고 다시 만드는 과정도 포함되어 있음.
+- 일단 기절 버프가 다시 들어갈 때 "파티클 이펙트를 중지하고 인스턴스를 파괴한다"는 **로직 자체는 디버깅 로그에서 정상적으로 출력되고 있음. 근데 파티클 이펙트가 중지되지 않음.**
+1. `ParticleSystem.Clear()`, `VFXGraph.Reinit()`을 넣어봄(새로운 파티클 생성 중지) : 그래도 안 됨.
+
+> 이거 도대체 뭐가 문제임?
+
+- 일단 요인 하나
+	- `UnitEntity.AddBuff`를 하면 그 안에 `Buff.OnApply()`가 기본적으로 함께 들어가 있는데, `OnApply`를 따로 구현해놓은 부분이 있음. 이거 제거.
+	- **이거 없애니까 해결됐다.**
+
+#### 왜 이런 문제가 발생했는지 정리하고 넘어감
+- **AI를 많이 쓰니까 구조 파악이 무뎌지는 느낌이 들어서 직접 정리**해본다.
+- 현재의 버프 구조를 보면 아래와 같다.
+
+1. `AddBuff` 
+	- `StunBuff`가 있다면 `RemoveBuff`로 해당 버프를 제거함
+	- `activeBuffs`에 해당 `buff`를 추가
+	- `buff.OnApply()` 실행
+		- `VFX` 실행 로직도 여기 있음
+	- `OnBuffChanged?.Invoke` 실행
+
+2. `StunBuff`는 `duration`으로 초기화한다.
+
+3. `Buff`에는 공통적으로 `OnUpdate` 로직이 있다. `duration`이 지나면 스스로가 있는 `UnitEntity`에 `RemoveBuff`를 실행시킨다.
+
+4. `RemoveBuff`
+	- `buff.OnRemove()` 실행
+		- VFX 제거 로직도 여기 있음
+	- `OnBuffChanged?.Invoke` 실행
+
+`MeteorSkillController`에서 발생했던 문제는 **1번에서 `AddBuff`를 실행한 다음 별도로 `Buff.OnApply()`를 실행했기 때문이었다.**
+
+```cs
+public override void OnApply(UnitEntity owner, UnitEntity caster)
+{
+	this.owner = owner;
+	this.caster = caster;
+	elapsedTime = 0f;
+
+	// 적용될 때 VFX 재생
+	PlayVFX();
+        
+	owner.AddRestriction(ActionRestriction.Stunned);
+}
+```
+1. `AddBuff`로 `OnApply`가 먼저 실행됨 -> VFX가 실행됨
+2. 1번의 상태에서 다시 `OnApply`가 실행됨 -> 시간이 초기화되고, VFX가 한 개 더 실행됨
+3. 시간이 지나고 `RemoveBuff`를 실행시키면 1번에서 실행된 VFX의 참조는 실종된다. 2번에서 다시 실행시켰던 VFX만 제거되게 된다.
+4. `StunBuff`가 다시 들어오더라도 1개의 이펙트가 계속 실행되는 상태에서, 추가로 다시 이펙트를 실행하게 됨. 
+
+> `VFX`의 경우 그 자체에서 파라미터를 노출시키는 것보다는 **지금처럼 계속 실행되게 하고 스크립트로 켜고 끄는 걸 조절하는 방법이 더 좋다고 함**
+---
+- 여기부턴 AI와 함께 정리. 최종적으로 `Buff`에서 `Owner`가 예기치 못한 방식으로 파괴될 때까지를 반영한 `OnDestroyed` 이벤트 구독 처리까지 포함해서 구현했다.
+	- 이것까지 구현한 이유는 기절 이펙트 오브젝트 풀을 10개를 만들었는데, 중간에 무슨 문제인지 1개가 사라져서 9개의 오브젝트만 보이는 현상이 있었기 때문이다. 즉, 예상치 못한 상황에서 오브젝트가 파괴되었던 것으로 보임.
+```
+정상 종료 (시간 초과): OnUpdate -> owner.RemoveBuff() -> OnRemove()
+정상 종료 (유닛 사망): owner.OnDeathAnimationCompleted -> HandleOwnerTermination -> OnRemove()
+비정상 종료 (강제 파괴, 씬 전환): owner.OnDestroyed -> HandleOwnerTermination -> OnRemove()
+위의 모든 경로가 결국 OnRemove라는 단일 정리 메서드로 모입니다.
+```
+> 대충 이런 것들이 반영되었다~
+
+> 이건 잡설이지만 요즘 제미나이가 사용자를 칭찬하는 방식이 부담스럽다. 옛날에 클로드가 비슷하게 부담스러웠던 기억이 있음.
+
+
+
+
+### 공용 이펙트 오브젝트 풀링으로 구현
+- `StunBuff` 같은 경우는 여러 상황에서 사용되므로 **스테이지가 시작되는 시점에 오브젝트 풀을 만들어놓으면 좋을 것 같음.** 
+	- 보통 오퍼레이터가 사용하는 오브젝트 풀은 오퍼레이터가 배치되는 시점에 생성된다. 이것과는 차이를 두려고 함.
+
+- 작업 방향
+1. `BuffVFXDatabase` : 프리팹 정보를 딕셔너리에 저장하고, 오브젝트 풀도 생성한다.
+2. `BuffVFXManager` : `ObjectPoolManager`에서 이펙트 오브젝트를 얻어 반환하는 `ReleaseBuffVFXObject`를 추가한다
+3. `Buff`는 `CreateBuffVFXObject`를 호출해서 이펙트를 가져오고 버프라 끝날 때 `ReleaseBuffVFXObject`를 호출해 풀에 반환한다.
+
+- 추가
+	- 이펙트 위치 문제. 지금은 `Stun`만 쓰니까 오브젝트의 머리 위에 이펙트를 나타나게 한다. 
+	- 만약 슬로우 같은 이펙트를 추가로 구현해야 한다면 오브젝트 아랫쪽에 이펙트가 나타나게 해야 함. 
+	- 이를 위해 `BuffVFXDatabase.BuffVFXMapping`을 아래처럼 구현한다.
+```cs
+    [System.Serializable]
+    public struct BuffVFXMapping
+    {
+        [Tooltip("버프 클래스의 정확한 이름 (네임스페이스 포함)")]
+        public string exactBuffClassName;
+        public GameObject vfxPrefab;
+        [Tooltip("풀의 초기 생성 개수")]
+        public int initialPoolSize;
+        [Tooltip("타겟을 기준으로 한 VFX의 로컬 위치 오프셋")]
+        public Vector3 vfxOffset; 
+    }
+```
+> 여기서 "클래스의 정확한 이름"을 입력해야 하는 이유는
+> 1. 유니티의 인스펙터에서 `System.Type`을 필드로 노출해서 드래그&드롭하는 기능을 지원하지 않음
+> 2. `string`은 인스펙터에서 매우 쉽게 입력하고 수정할 수 있으며, 직렬화도 용이함. 
+> 3. `DB`에서 특정 버프 클래스를 직접 참조하지 않고 문자열을 통해 런타임에 연결되기 때문에 클래스 파일의 위치 등에 의존하지 않는 느슨한 결합
+
+...등이 있다.
+
+
+#### 부모 오브젝트 파괴 시 풀로 반환되지 않고 함께 파괴되는 문제 수정
+- `Owner(UnitEntity)`가 파괴되는 시점에 이펙트들을 먼저 풀로 반환(및 `owner`의 자식에서 탈출)하기 위해 `OnDeathAnimationCompleted` 이벤트를 구독시켜서 탈출함
+
+- 여기서 알아둘 게 2가지 있는데
+1. **람다 함수로 구현하기 vs 래퍼 함수로 구현하기**
+- `OnDeathAnimationComplted`는 `UnitEntity`를 받아야 하는 액션이다. 반면 `RemoveVFX()`는 파라미터를 받지 않음.
+- 이를 구현하는 방법은 2가지다.
+1) 람다함수로 구현
+```cs
+owner.OnDeathAnimationCompleted += (deadOwner) => RemoveVFX();
+```
+2) 별도의 래퍼 함수 구현
+```cs
+	owner.OnDeathAnimationCompleted += RemoveVFX;
+}
+
+protected void RemoveVFX(UnitEntity owner)
+{
+	RemoveVFX();
+}
+```
+
+그런데 여기서 `Buff`의 오브젝트 풀들은 재사용될 수 있는 요소이므로, 구독 해제가 반드시 들어가야 한다.  이 때 차이가 생기는데
+1) 람다 함수로 구현
+- 여기서는 별도의 함수를 하나 만들어둔 상태이기 때문에, 저 람다함수를 별도의 델리게이트 상태로 갖고 있어야 한다.
+```cs
+private Action<UnitEntity> onOwnerDeathAction;
+
+// 생성 로직
+// 람다를 생성하여 변수에 저장합니다.
+onOwnerDeathAction = (deadOwner) => RemoveVFX();
+
+// 저장된 변수를 사용하여 이벤트를 구독합니다.
+owner.OnDeathAnimationCompleted += onOwnerDeathAction;
+
+// 해제 로직
+owner.OnDeathAnimationCompleted -= onOwnerDeathAction;
+onOwnerDeathAction = null; // 참조 정리
+```
+
+2) 래퍼 함수로 구현
+- 훨씬 간단하다. 이미 따로 정의를 해뒀기 때문에 그것만 그대로 이용하면 됨.
+```cs
+owner.OnDeathAnimationCompleted -= RemoveVFX;
+```
+
+> 참고) 이런 건 안됨
+```cs
+owner.OnDeathAnimationCompleted -= (deadOwner) => RemoveVFX();
+```
+> 왜냐하면 등록할 때의 람다 함수와 해제할 때의 람다 함수가 서로 다른 인스턴스이기 때문이다. 람다 함수라는 게 즉석에서 바로 만들어내는 방식인 걸 생각해보면 됨. 
+> 똑같이 `(deadOwner) => RemoveVFX();`라는 로직을 가져도 등록할 때와 해제할 때의 2개의 함수는 다르다는 것이다.
+
+
+2. **구독 해제 메서드 내에 자기 자신을 해제시키는 메서드가 들어간다면, 그 로직은 맨 앞에 놓기**
+```cs
+    protected virtual void RemoveVFX()
+    {
+        owner.OnDeathAnimationCompleted -= RemoveVFX;
+```
+> - 자기 자신의 재실행을 막기 위해, 구독 해제 메서드는 맨 앞에 구현한다. 
+
+
+
 # 250722 - 짭명방
 
-## 작업 완료
-
-### 스킬에서 사용하는 오브젝트 풀 관련
+## 스킬에서 사용하는 오브젝트 풀 관련
 >[!info]
 > - 스킬과 버프에 **공격 이펙트가 변경되는 경우에 대비한 필드** 작성
 > - 스킬의 오브젝트 풀을 생성하는 메서드는 스킬에 적어놓되 실행은 Operator가 배치되는 시점에 한다.
@@ -63,7 +270,7 @@
 > - 오브젝트 풀들은 스테이지가 종료되는 시점에 일괄적으로 파괴된다.
 - 일단 마법 공격으로 나가는 SlashEffect는 색깔이 보라색으로 바뀌어서 나가도록 수정함(시각화)
 
-#### 구현
+### 구현
 >[!done]
 >1. `Skill`에서 해당 스킬에 사용되는 이펙트 프리팹들을 필드로 정의한다.
 >	- 예시
