@@ -1,7 +1,19 @@
-1. 빈 게임 오브젝트 `vfx_Sparks_Loop`를 만듦
-2. `Prefabs/Sparks/` 폴더를 만들고 그 안에 프리팹으로 넣음
-3. `Particle System` 컴포넌트를 붙임
-4. 머티리얼에 `default-particleSystem` 등을 쓰는 방법도 있지만 셰이더 그래프로 구현
+#VFX #유니티VFX
+
+1. [[#1. Additive Shader|1. Additive Shader]]
+	1. [[#1. Additive Shader#파티클 시스템의 `Start Color`가 적용되도록 그래프 수정|파티클 시스템의 `Start Color`가 적용되도록 그래프 수정]]
+2. [[#2. 내 텍스쳐 만들기|2. 내 텍스쳐 만들기]]
+3. [[#3. 파티클 시스템 설명|3. 파티클 시스템 설명]]
+4. [[#4. 스파크에 디테일 더하기|4. 스파크에 디테일 더하기]]
+5. [[#5. Loop가 아닌 Spark 구현|5. Loop가 아닌 Spark 구현]]
+6. [[#6. 바리에이션|6. 바리에이션]]
+
+
+
+7. 빈 게임 오브젝트 `vfx_Sparks_Loop`를 만듦
+8. `Prefabs/Sparks/` 폴더를 만들고 그 안에 프리팹으로 넣음
+9. `Particle System` 컴포넌트를 붙임
+10. 머티리얼에 `default-particleSystem` 등을 쓰는 방법도 있지만 셰이더 그래프로 구현
 
 ## 1. Additive Shader
 - `Shaders/` 폴더에 `ParticleAdditive_HDR`이라는 이름의 `Unlit` 셰이더 그래프 생성
