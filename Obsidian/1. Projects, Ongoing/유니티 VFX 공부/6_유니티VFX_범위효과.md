@@ -422,4 +422,163 @@
 > - 뭔가 ㅋㅋㅋㅋㅋ 과자들 날라가는 것 같은 느낌도 있긴 하다
 > - 텍스쳐를 만들 때 **저 모양 처리를 잘 하는 게 중요한 것 같음.** 
 
+## Nature 버전 - 파트 1
+![[Pasted image 20250730154837.png]]
+이 2가지 색을 주로 써서
+![[Pasted image 20250730154905.png]]
+이런 느낌의 이펙트를 만들었다. 무슨 색을 어디에 넣을지는 마음대로 하면 됨
 
+- 여기에 추가로 자연을 나타내는 텍스쳐를 추가한다.
+- 이미지 검색으로 잎의 형태를 참고로 작업해도 ㅇㅋ
+![[Pasted image 20250730155257.png]]
+
+> 이번에 시험삼아서 AI로 테스트해봤는데
+> - `ChatGPT`![[LeafTexture (2).png]]
+> - `Gemini`![[unnamed (2).png]]
+> ...이다. **`ChatGPT`는 꽤 만족스러운 결과물을 보여주고 있다.** 물론 은은한 블러 효과가 바깥쪽에 살짝 있어서 이걸 다듬을 필요는 있다.
+> - 하지만 학습 과정에서는 직접 그려보는 게 더 좋지 않을까라는 생각도 든다. 텍스쳐가 어떻게 이펙트에 반영되는지를 보려면 그런 과정도 거쳐야 할 것 같음. 작업 속도가 빠를 필요성이 있다면 AI에게 의존하는 게 좋겠지만.
+> - 참고로 프롬프트는`투명한 배경의 잎 모양 텍스쳐를 하나 만들어주세요. 배경은 투명, 이미지는 여러 알파값이 섞인 흰색으로만 구성되어야 합니다.`으로 전달했다.
+![[Pasted image 20250730160706.png]]
+> 머티리얼 만들어서 적용해본 모습. 꽤 만족스러운 결과물이긴 하다. 
+![[Tut_Leaf (2).png]]
+> 직접 작업한 이미지
+![[Pasted image 20250730162703.png]]
+> 결과물
+
+- 다른 파트에서 작업하지 않은 내용만 정리함
+- **`Shape`는 `Circle`로 설정된 상태**
+- `Velocity Over Lifetime`
+	- 축 별로 설정할 수 있음
+	- `Space : World`로 변경
+	- `Linear - Y` 그래프를 +5에서 시작해서 -5에서 끝나도록 만듦
+	- 이러면 **이펙트가 나타나야할 위치에서 시작해서 위로 튀어오른 후에 다시 내려오는 효과**가 나옴.
+![[Pasted image 20250730163622.png]]
+
+- `Climax`의 `LeafsOut`
+	- `ParticlesVertical`과 유사하게 동작
+	- 대신 원 반경이 조금 더 넓다는 느낌?
+![[Pasted image 20250730164152.png]]
+- `Noise`도 추가한다.
+![[Pasted image 20250730164443.png]]
+이런 설정일 때, 올라가는 `Leaf` 이펙트에 흔들림이 추가됨.
+
+## Nature 버전 - 파트 2
+- 이펙트가 발생할 때, 원기둥 안에 **나선형으로 솟구쳐 올라가는 듯한 이펙트**를 추가해보자.
+
+### 블렌더
+1. `Plane`을 만듦
+2. `Add Modifier - Screw` 적용
+
+![[Pasted image 20250730164857.png]]
+
+3. `screw` 옵션 15m로 적용
+4. `Angle` 옵션은 회전하는 정도를 적용할 수 있음 - 360 유지
+5. `Steps Viewport` - 지오메트리 생성량. 16으로 유지.
+
+6.  현재 `Edit Mode`에서 이 도형의 버텍스를 잡아보면 여전히 `Plane`임.
+7. `Object Mode`로 변경 -> 우클릭 -> `Convert To Mesh` 클릭. 
+	- `Edit Mode`에서 봤을 때 생성된 `Screw` 전체가 버텍스로 잡혀야 함
+8. `Face` 선택 모드에서 한 면을 `Alt + 클릭`하면 해당 도형과 이어진 면들이 선택됨
+![[Pasted image 20250730165307.png]]
+9. 이 상태에서 `Ctrl + I`를 클릭하면 나머지 부분이 선택된다. `Delete 버튼 - Face`로 제거해준다.
+![[Pasted image 20250730165406.png]]
+10. 이름을 `Spiral01`로 변경.
+11. `U 클릭 -> Unwrap`
+	- 옵션은 크게 상관 없어보임
+12. `UV Editing`에서 생성된 `UV Map`을 아래처럼 펼침. 단순히 `G`와 `S`의 조합만으로 가능함.
+![[Pasted image 20250730165734.png]]
+13. `Add Modifier - Subdivision Surface` 추가
+	- 12까지 작업했을 때 폴리곤의 수가 적어서 `Edge`가 많아보인다. 이건 보기 좋지 않음.
+14. 내보내기 - `Sprial01.fbx`로 저장
+	- `Selected Object, Mesh` 옵션 체크.
+
+### 텍스쳐 만들기
+- 우선 블렌더에서 `UV - Export UV Layout`으로 `UV Map`을 내보낼 수 있다.
+- 강의에서는 이렇게 내보낸 이미지를 포토샵에 넣고, 그 위에서 UV 작업을 진행했음.
+![[Pasted image 20250730170528.png]]
+> 요런 느낌의 이미지를 만들면 된다~
+
+- 작업 과정을 보면 작은 `Opacity`를 가진 브러쉬들로 큰 것에서부터 시작해서 작은 것으로 그려나가면서 하나씩 겹쳐나간다는 느낌.
+- 프로크리에이트에서 이걸 구현한다면 각각을 다른 레이어에서 작업해야겠다.
+- 강의에선 위 / 아래를 연결하지 않았다. `Seamless`가 아니기 때문.
+- 그래서 그림을 그릴 때는 알파 = 100%인 브러쉬가 없으며, 형태를 다 잡은 후에는 포토샵에서 `Outer Glow`을 적용한다. 
+ ![[Spiral01 (2).png]]
+- 이런 느낌.
+
+### 유니티
+- `SpiralOut`이라는 파티클 시스템을 만든다.
+	- `Climax`의 `Cylinder`을 복붙해서 `Spiral`을 만들고 메쉬 할당, 머티리얼도 `Impact01_Add`을 복붙해서 텍스쳐 할당.
+- `Model` 자체는 `Scale`을 10으로 해서 옮겼는데, 이 경우 너무 커 보임
+	- `3D Start Size`을 `1, 10, 2.5`로 변경
+- 나선의 한 방향이므로 **`Start Rotation`만 180도 돌린 다른 나선도 하나 생성해줌**
+	- 여기서 방향을 돌린다는 건 `Particle System`의 `Start Rotation` 값임.
+	- 나머지는 직접 만져보면서 작업하면 된다.
+	- 회전을 늘려도 되고`Rotation Over Lifetime` 자체의 `Lifetime`을 늘려도 되고...
+![[Pasted image 20250730190313.png]]
+
+## 셰이더 그래프 : Scroll & Distortion Shader
+- 원래 다음 챕터에서 다룰 내용인데, 마지막 수정 전에 해당 셰이더를 여기서도 적용한다고 해서 먼저 작성한다.
+- `ParticlesAddtivie_HDR` 셰이더를 복붙, **`ParticlesAddScroll_HDR`로 수정**
+
+### 스크롤 구현
+- 원래는 `Tiling And Offset`을 써서 `Time * MainSpeed(Vector2)` 값을 `Tiling And Offset`의 `UV`에 연결하는 방식이었음.
+- 여기선 노이즈까지 구현할 예정이라서 `UV`를 별도로 구현한다.
+	- 이 경우 위의 `Time * MainSpeed`를 `UV`에 더하는 방식으로 스크롤을 구현할 수 있음.
+### Distortion 구현
+- 프로퍼티를 추가한다 : `DistortionAmount, float`
+	- `Slider`, `0~1`
+- `Lerp` 노드에 대한 설명
+	- 인풋 A, B, T를 받으며 0~1인 T에 따라 A와 B 사이의 보간된 값을 반환함
+	- T = 0이면 A, T = 1이면 B.
+- 스크롤에서 구현한 UV를 A에, DistortionAmount를 T에 넣는다. 
+- B에는 노이즈 텍스쳐를 넣을 거다
+- 셰이더 그래프에서 지원하는 기본 노이즈 텍스쳐의 종류
+	- `Simple Noise`
+	- `Gradient Noise`
+	- `Voronoi`
+- 여기선 `Gradient Noise`를 사용함.
+
+![[Pasted image 20250730192046.png]]
+여기서 윗 부분은 텍스쳐의 `MainSpeed`를 적용한 부분이고, 아랫부분은 `NoiseSpeed`를 적용한 부분이다.
+![[Pasted image 20250730192134.png]]
+> 기본 `Flare` 텍스쳐 기준, `DistortionAmount = 0.1`일 때 이런 모양으로 스크롤이 우->좌로 `MainSpeed`에 따라 흘러간다.
+> 스크롤의 속도는 `MainSpeed`를, `Noise`가 자글거리는 정도는 `NoiseSpeed`를 따름.
+
+
+- 추가로 `Gradient Noise`의 `Scale`에 적용할 `Noise Scale`도 설정할 수 있다.
+
+여기까지 만들어놓고 다시 기존 강의로 돌아감. 
+
+## 최종 수정
+- 처음에 작업했던 `vfx_AreaOfEfefct_v1`을 `v2`로 복사해서 하나 생성해준다.
+- `Cylinder`에 위에서 작업했던 셰이더 그래프를 적용해줌. `MainSpeed`와 `NoiseSpeed` 값이 들어가면 된다.
+
+>[!warning]
+>- 내 경우 `MainSpeed, NoiseSpeed` 값이 적용되지 않는 듯한 이슈가 있음.
+>- 강의에선 파티클 시스템을 멈췄을 때에도 기둥이 흔들리는 효과가 있는데 내 꺼에선 그냥 멈춰있다. 노이즈 자체는 잘 적용되고 있음. 
+>- 저런 UV가 이동하는 효과 자체가 적용되고 있지 않은 듯? 이유는 모르겠다. 일단 진행.
+
+- 그 외 수정사항 : **`Cylinder`와 `Particle`에 `Alpha Blended`이 적용된 이펙트들이 추가됨.** 
+	- 이 구현은 렌더링 순서를 -1로 지정하는 것도 물론 가능하지만, 일반적인 파티클들의 경우 단순히 조금 더 적은 수의 검은 파티클들을 추가하는 것으로도 가능하다. 
+	- `Anticipation`
+		- `ParticiesIn`에 파란 계열의 파티클을 추가한다.
+		- 저 파란 색은 `Cylinder`의 `Color over lifetime`에서도 시작색으로 적용한다. 가장 뚜렷한 시점의 색은 기존의 분홍-보라 사이의 그 색깔.
+		- 이를 위해 `Cylinder`의 `Start Color`는 흰색으로 변경한다. **색상을 적용할 때는 둘 중 하나만 써야 하는 듯.**
+		- 대조를 강화하기 위해 `BeamGroundAB`의 파티클을 하나 더 추가한다.
+		- `CylinderAB`도 만든다. `Impact01_ADD`를 복붙해서 `Impact01_AB`을 추가함. 
+			- `Order In Layer : -1`
+			- `Start Color : Black, Alpha: 100%`
+			- 그대로 구현하면 잘 안보이니 기존 이펙트 대비 z축을 늘린다든가 하는 식으로 배경을 감싸도록 할 수 있음.
+		- `ParticlesIn`에 대해서도 대조를 줄 수 있다.
+			- `Beam01_AB` 적용
+			- `ParticlesIn`보다는 마지막 파티클 부분이 조금 더 적게
+			- `Hemisphere`의 반경도 조금 더 크게 줬음.
+	- `Climax`
+
+- 최종
+- `Anticipation`
+![[Pasted image 20250730200417.png]]
+
+- `Climax`
+- ![[Pasted image 20250730200449.png]]
+- ![[Pasted image 20250730200511.png]]
