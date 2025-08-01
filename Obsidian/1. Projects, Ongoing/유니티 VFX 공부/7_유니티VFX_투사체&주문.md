@@ -1,3 +1,24 @@
+1. [[#강사님 스케치|강사님 스케치]]
+2. [[#Projectile Mesh|Projectile Mesh]]
+	1. [[#Projectile Mesh#블렌더 작업|블렌더 작업]]
+	2. [[#Projectile Mesh#유니티|유니티]]
+3. [[#텍스쳐 만들기|텍스쳐 만들기]]
+4. [[#꼬리 궤적(Trail)|꼬리 궤적(Trail)]]
+	1. [[#꼬리 궤적(Trail)#텍스쳐 만들기|텍스쳐 만들기]]
+	2. [[#꼬리 궤적(Trail)#셰이더 그래프 작업|셰이더 그래프 작업]]
+5. [[#Projectile Scene으로 변경|Projectile Scene으로 변경]]
+6. [[#충격 효과 - Impact, Hit|충격 효과 - Impact, Hit]]
+7. [[#발사 효과 - Muzzle|발사 효과 - Muzzle]]
+	1. [[#발사 효과 - Muzzle#블렌더 : 메쉬 만들기|블렌더 : 메쉬 만들기]]
+	2. [[#발사 효과 - Muzzle#유니티|유니티]]
+8. [[#전기 버전 - ElectricLocal, ElectricWorld|전기 버전 - ElectricLocal, ElectricWorld]]
+	1. [[#전기 버전 - ElectricLocal, ElectricWorld#Flipbook Animation 작성하기|Flipbook Animation 작성하기]]
+9. [[#Electric Circle 만들기|Electric Circle 만들기]]
+	1. [[#Electric Circle 만들기#메쉬 만들기 - 블렌더|메쉬 만들기 - 블렌더]]
+	2. [[#Electric Circle 만들기#유니티|유니티]]
+10. [[#전기 효과 - Impact, Muzzle|전기 효과 - Impact, Muzzle]]
+	1. [[#전기 효과 - Impact, Muzzle#타격 효과|타격 효과]]
+	2. [[#전기 효과 - Impact, Muzzle#Muzzle 효과|Muzzle 효과]]
 
 
 - 여기서도 레퍼런스 참조와 스케치는 유용하다
@@ -241,7 +262,7 @@
 > 여전히 `Projectile`의 파티클들만 보이지 않는 게 거슬린다. `Projectile`의 나머지 파트는 운동 갔다 와서 마저 함. 
 > **오늘 다 끝내려고 했는데 실습까지 겸하면 무리다. 6시간 강의라고 내가 배우는 데 6시간이 걸린다는 뜻은 아님 ㅋㅋ;**
 
-## 전기 버전
+## 전기 버전 - ElectricLocal, ElectricWorld
 - 기본적으로 노랑 - 주황 계열의 색으로 바꾼다.
 - 특이사항
 
@@ -317,3 +338,87 @@
 - `ElectricLocal`을 복붙, `ElectricWorld`를 만듦.
 	- `SimulationSpace : World`
 	- `Rate Over Distance : 3`
+
+## Electric Circle 만들기
+- 위에서 `Flipbook Animation`으로 `Electric` 파티클들을 만들었잖음?
+- 그거의 원형 버전이다. 
+![[ElectricCircle01-2x3 (2).png]]
+- 스프라이트 시트를 만든다. 이건 내가 만든거.
+- 강의에서도 머티리얼을 뭘 만들고 할당하라는 말은 없음
+
+### 메쉬 만들기 - 블렌더
+- 모든 각도에서 이펙트를 보기 위해 메쉬도 추가로 구현한다.
+
+- `Mesh - Circle`을 만듦
+	- `Vertices` : 16
+	- `Extrude`로 Z축에 대해 0.3만큼 뽑아냄
+	- UV 맵 생성, 가운데의 넓은 원을 줄여준다. 버텍스들을 잡고 `S`키로 조절하면 됨.
+
+![[Pasted image 20250801140340.png]]
+
+- 상단 `UV` 메뉴에서 `Live Unwrap`을 켠다.
+- `Ctrl + R`로 도형의 중앙에 버텍스들을 추가한다. 
+	- `Ctrl + R`로 클릭한 상태에서 `Cut` 값을 `3`으로 지정
+
+![[Pasted image 20250801140856.png]]
+
+- 가장 위와 아래의 버텍스들 잡고 가운데로 모이는 모양을 만든다.
+- 가장 가운데의 버텍스들을 잡고 밖으로 살짝 크게 만든다.
+![[Pasted image 20250801141251.png]]
+
+>[!tips]
+>UV Map에서 `Image - Open`으로 텍스쳐 이미지를 할당해볼 수 있다.
+
+![[Pasted image 20250801141356.png]]
+> 만든 텍스쳐가 메쉬에 어떻게 들어가는지 볼 수 있음.
+
+- 이렇게 작업하면 텍스쳐가 메쉬에 들어가기 때문에 어떤 각도에서든 이펙트를 볼 수 있게 됨
+> 물론 `Billboard`로 작업해도 항상 카메라를 향하니까 이펙트를 볼 수 있다는 건 똑같지만, 앵글에 따른 이펙트의 변화가 있으려면 메쉬에 텍스쳐를 넣는 식의 구현이 좋다는 의미인 것 같다. 
+
+- `Ring01`이라는 이름으로 fbx 파일과 blender 파일을 저장한다.
+	- 오브젝트 모드에서 메쉬를 선택한 상태로 `Selected` 및 `Mesh` 체크는 잊지 말 것.
+### 유니티
+- 메쉬는 기존에 해왔던 것과 동일하게 `Scale : 100`, 머티리얼과 애니메이션은 끈다.
+- `ProjectileOut`을 복붙해서 설정함.
+	- `Duration` : `1.00`
+	- `Looping : True`
+	- `Start Lifetime : .6 ~ .8`
+	- `3D start Size : 1, 1, 1, ~ 1.25, 1.25, 1.5`
+	- `Rate over Time : 5 ~ 7` / Burst 해제
+	- `Texture Sheet Animation` : `Grid, x=2, y=3`
+	- 색은 `ElectricLocal`에서 가져옴
+	- 머티리얼은 기존의 텍스쳐 시트 애니메이션에 사용했던 머티리얼에서 텍스쳐만 바꿔서 사용함
+
+
+- `Velocity Over Lifetime` 설정
+	- `0, 0, 0` ~ `0, 0, -2.5`
+	- 파티클이 뒤로 나가는 듯한 이펙트. `Projectile`과 유사한 효과가 된다. 
+
+![[Pasted image 20250801142820.png]]
+> 이번에 구현한 이펙트만 놓고 보면 이런 모양이고
+
+![[Pasted image 20250801142850.png]]
+> 전체적으로 보면 이런 모양이다. `ProjectileOut`은 눈으로 보면서 어떤 위치로 설정하면 좋을지 직접 Z축의 `Transform`을 만지면서 테스트해보자.
+
+
+- `Color over Lifetime` : `ElectricLocal`에서 가져온다. 
+	- 전기 효과니까 깜빡이는 효과를 `ElectricLocal`에서 구현한 적이 있었다. 그걸 사용하는 것.
+- `Rotation over Lifetime` : `-720 ~ 720`
+
+
+## 전기 효과 - Impact, Muzzle
+
+### 타격 효과
+- `vfx_Hit_Electric_v1`을 만든다. 
+	- 파티클 중 하나만 노란색으로 만듦
+	- 여기선 기존의 `Impact, Circle` 대신 `Projectile`에서 만든 `ElectricLocal, ElectricCircle`을 복붙한다. `Transform`도 리셋해주자.
+	- 자세한 설정은 강의를 직접 보자.
+		- `ElectricCircle`의 경우 
+			- `Projectile`에선 투사체를 감싸는 모양이므로 `Local`이지만
+			- `Hit`에선 사용자에게 이펙트가 직접 보여야 하므로 `View`로 구현한다.
+
+![[Pasted image 20250801144311.png]]
+
+### Muzzle 효과
+![[Pasted image 20250801144741.png]]
+
