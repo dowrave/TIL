@@ -35,8 +35,7 @@
               "title": "짭명방_25년 7월"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -225,11 +224,19 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "aa46185be2b7a8f6",
+  "active": "3cd95c7d7df0d154",
   "lastOpenFiles": [
-    "1. Projects, Ongoing/README.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/짭명방_25년 8월.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/짭명방_25년 7월.md",
+    "1. Projects, Ongoing/README.md",
+    "1. Projects, Ongoing/들고 다닐 지식들/VFX/유니티 파티클 시스템 - 방향성이 있는 텍스쳐.md",
+    "3. Resource/Image/ForObsidian_Smash01.png",
+    "3. Resource/Image/Pasted image 20250806163228.png",
+    "1. Projects, Ongoing/들고 다닐 지식들/시스템/무제",
+    "1. Projects, Ongoing/들고 다닐 지식들/VFX",
+    "1. Projects, Ongoing/들고 다닐 지식들/시스템",
+    "1. Projects, Ongoing/들고 다닐 지식들",
+    "3. Resource/Image/ForObsidian_Smash01 (3).png",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/짭명방_25년 8월.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트/파티클 시스템 - Rate over Time과 적은 수의 파티클.md",
     "3. Resource/Image/Buff_Heal.gif",
     "3. Resource/Image/Buff_Defense.gif",
@@ -243,10 +250,7 @@
     "1. Projects, Ongoing/유니티 VFX 공부/9_유니티VFX_결론.md",
     "1. Projects, Ongoing/유니티 VFX 공부/7_유니티VFX_투사체&주문.md",
     "3. Resource/Image/Pasted image 20250801165615.png",
-    "3. Resource/Image/Pasted image 20250801165601.png",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트/프로크리에이트로 텍스쳐 작업 시 유의할 점.md",
-    "3. Resource/Image/Pasted image 20250801163358.png",
-    "3. Resource/Image/Texture01_8x8 (2).png",
     "1. Projects, Ongoing/유니티 VFX 공부/5_유니티VFX_스파크만들기.md",
     "1. Projects, Ongoing/유니티 VFX 공부/4_유니티VFX_실습 사전 세팅.md",
     "1. Projects, Ongoing/유니티 VFX 공부/3_유니티VFX_제작 전.md",
@@ -264,15 +268,9 @@
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/오퍼레이터들 스탯 정리.md",
     "1. Projects, Ongoing/블로그 만들기/쌓이는 지식/기타/docker의 prune과 가상 디스크.md",
     "1. Projects, Ongoing/블로그 만들기/월별 작업 기록/25년 6월.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/짭명방_25년 6월.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/자료구조 - 해시.md",
     "1. Projects, Ongoing/블로그 만들기/기능 추가 내용",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이슈 해결하기",
     "4. Archive/블렌더/한교수님 강의",
-    "4. Archive/블렌더",
-    "2. Area/글쓰기",
-    "4. Archive/컴퓨터 기초",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지",
     "3. Resource/Canvas/ListView 상속계층도.canvas"
   ]
 }

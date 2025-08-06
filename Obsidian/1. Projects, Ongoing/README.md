@@ -49,6 +49,127 @@
 - `1-3` 스테이지 구현 완료
 	- 보스 구현
 
+# 250806 - 짭명방
+
+> [!done]
+> - `CombatVFXController` 수정 
+> 	- 이펙트의 방향 설정 가능
+> - 기존 이펙트 수정 : 파티클 날아가는 속도, `Simluation Speed` 통일 등등
+> - `Slash` 대신 사용할 `Smash` 이펙트 구현
+> - 버그 수정 : `Enemy_Tanker`에 `Attack_Smash` 이펙트를 할당했는데 이전에 구현했던 `Slash`가 나가는 현상
+
+> [!review]
+> 하 오늘 이펙트 하나밖에 못했네;;
+
+## 이펙트 작업 
+
+### `Smash` 이펙트
+![[ForObsidian_Smash01 (3).png]]
+> 이런 텍스쳐를 만들었다. 베는 컨셉의 캐릭터가 아니라면 `Slash` 대신 사용할 거임
+
+- 부모 오브젝트에 `Rotation`을 줘도 `Billboard` 설정이라서 텍스쳐가 회전하지는 않는다.
+- 일단 `Start Rotation` 값을 설정해서 텍스쳐 자체를 회전시키는 건 가능한데, 게임과 연동해야 함.
+
+- 중요) **텍스쳐와 이펙트의 방향**
+>[!done]
+>- 방향성이 있는 텍스쳐 + Billboard를 쓸 때는 텍스쳐의 머리 부분이 이미지의 왼쪽을 향하도록 그려야 한다. (완전히 새로운 파티클 시스템을 만들어서 테스트도 해 봄)
+1. `Billboard`로 텍스쳐를 띄울 경우 항상 카메라를 보며, 회전은 적용되지 않음
+	- 파티클 시스템 내의 `Rotation` 값으로만 설정할 수 있음
+2. **`Stretched Billboard`**를 쓸 경우, 방향에 따라 파티클의 회전이 달라짐
+	1) 파티클 시스템에서 설정하는 `Rotation` 관련 값들은 적용되지 않음
+	2) **텍스쳐의 방향 : -X 방향, 즉 왼쪽을 보도록 그려야 파티클의 이동 방향과 텍스쳐의 머리 방향이 일치하는 걸 확인할 수 있었다.**
+		- 이 부분에서 혼동이 많이 왔는데, ChatGPT도 Gemini도 모두 `+y` 방향으로 그리랬다가, `+x` 방향으로 그리랬다가... 테스트해보니까 아래처럼 해야 그나마 맞음.
+
+![[Pasted image 20250806163228.png]]
+
+- [[유니티 파티클 시스템 - 방향성이 있는 텍스쳐]]에도 정리.
+
+#### 실제 적용 시 발생하는 문제
+- 오퍼레이터 / 적의 Rotation 값이 적용되지 않은 듯? 이펙트가 계속 +z 방향으로 나간다.
+- 이게 어떤 상황이냐면
+```cs
+case VFXRotationType.sourceToTarget:
+	Vector3 hitDirection = (transform.position - attackSource.Position).normalized;
+	if (hitDirection != Vector3.zero)
+	{
+		transform.rotation = Quaternion.LookRotation(hitDirection);
+	}
+	break;
+```
+> `transform.position = attackSource.Position` 이라서 방향 계산이 안 된다. 
+
+- 아래 `CombatVFXController` 수정을 다시 수정했음.
+
+- 이펙트의 `Z`값 설정을 만져서 적당히 튀어나가면서 `Hit_Impact`와 겹쳐지게끔 구현함. 
+
+
+
+## 프로젝트 적용 시 문제 상황들
+- `Hit` 이펙트를 구현하면서 파티클이 튀는 방향을 설정하는 구현 
+	- 특정 이펙트는 방향이 적용되어야 하고 다른 이펙트는 기본 설정을 따르게 해야 함
+
+### `CombatVFXController` 수정
+- 타격, 피격 이펙트 등에 들어가는 VFX 실행 스크립트. 방향 설정과 재생을 담당한다.
+
+```cs
+public enum VFXRotationType
+{
+    None,
+    targetToSource, // 타겟을 향함
+    sourceToTarget, // 공격이 온 방향을 바라봄
+}
+```
+을 인스펙터에서 설정할 수 있게 함. 이 값에 따라
+
+```cs
+private void PlayPS()
+{
+	if (ps != null)
+	{
+		Vector3 baseDirection = Vector3.forward; // 모든 이펙트는 +Z축으로 진행된다고 가정함
+		switch (rotationType)
+		{
+			// 옵션 1) 피격자 -> 공격자 방향의 이펙트 진행
+			case VFXRotationType.targetToSource:
+
+				Vector3 directionToSource = (attackSource.Position - targetPosition).normalized;
+				if (directionToSource != Vector3.zero)
+				{
+					Quaternion rotation = Quaternion.FromToRotation(baseDirection, directionToSource);
+					transform.rotation = rotation;
+				}                
+				break;
+
+			// 옵션 2) 공격자 -> 피격자 방향의 이펙트 진행
+			case VFXRotationType.sourceToTarget:
+				Vector3 directionToTarget = (targetPosition - attackSource.Position).normalized;
+				if (directionToTarget != Vector3.zero)
+				{
+					Quaternion rotation = Quaternion.FromToRotation(baseDirection, directionToTarget);
+					transform.rotation = rotation;
+				}
+				break;
+
+			// 옵션 3) 별도 설정 필요 없음
+			case VFXRotationType.None:
+				break;
+		}
+
+		ps.Play(true); // true 시 모든 자식 이펙트까지 한꺼번에 재생함
+	}
+}
+```
+이러한 구현을 따르도록 한다. 
+
+> 일단 대부분의 이펙트는 부모 오브젝트의 회전을 따르기 때문에 크게 상관 없지만, 타격 이펙트의 파티클 튀는 방향을 설정하기 위해서 집어넣은 옵션이다. 대부분 `None`으로 해도 무방함.
+
+## 버그 수정
+- `Enemy_Tanker`에 `Smash` 이펙트를 할당했는데 `Slash`가 나가는 현상이 있음
+	- `Enemy_Tanker` 프리팹에 할당되는 데이터가 `Enemy_Default`였다.  엌ㅋㅋㅋ 
+	- 모델링은 프리팹에 있고 눈에 보이지 않는 데이터만 다른 곳에서 가져오니까 헷갈릴 만 했다.
+	- `Enemy_Tanker`로 수정하고 다시 테스트.
+	- 수정 완료.
+
 # 250805 - 짭명방
 
 ## 이펙트 작업
