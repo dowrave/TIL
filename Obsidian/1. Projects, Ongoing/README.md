@@ -49,6 +49,100 @@
 - `1-3` 스테이지 구현 완료
 	- 보스 구현
 
+# 250807 - 짭명방
+>[!done]
+> - 이펙트 만들기 
+> 	- `Hit_Impact_v2` - 방향성 관련 추가 구현 
+> 		- `Stretched Billboard`를 써보려고 했는데 제약이 있다. 정리해뒀음.
+> 	- `Attack_Slash_v1` 
+> 		- 기존 `VFX Graph`로 만들었던 메쉬랑 쉐이더가 있다. 그걸 활용해보려고 함.
+> - `CombatVFXController`에 `Billboard`의 회전 케이스도 추가.
+> 	- 회전 관련 : `FromToRotation` vs `LookRotation`
+> - 버그 수정
+> 	- 텍스쳐에 그린 적 없는 선이 나타나는 현상
+
+>[!doing]
+>- 배치 이펙트 구현 중 일단 중지
+## Impact_v2 구현하기
+- 어제 `Stretched Billboard`에 대해 알았으니까 적용해보려고 했음
+	- 텍스쳐의 방향을 우->좌로 진행하는 걸 알게 됐으니까 회전도 쉽게 적용할 수 있지 않을까? 라는 생각으로 시도해봤다.
+- 하지만 **제약이 있다.** 
+	- 예를 들면 크기 변경. `Pivot`의 방향으로 **날아가는 파티클**을 구현하는 용도로 만든 거라서 멈춰 있는 파티클의 크기를 변경하면 텍스쳐의 크기가 축소되긴 하는데 이동하면서 축소되는 느낌으로 나타난다.
+- 따라서 **`Mesh`를 쓰지 않으면서 방향성이 있는 파티클을 구현하려면 `Billboard + 코드`로 제어하는 게 지금 상황에서는 가장 좋은 방법**인 듯. `Start Rotation` 값을 만지는 방식으로.
+
+- `vfx_Hit_Impact_v2`를 만들었다. 일단은 이 정도에서 만족.
+
+- 게임 테스트) 내부 컴포넌트인 `Particles`과 달리 방향이 돌아가지 않는 문제가 있어서 그거 만지는 중 -> 아래 스크립트 구현으로 완료.
+
+### 결과물
+![[Hit_Smash_v2.gif]]
+
+## Attack_Slash_v1 구현하기
+- 메쉬는 기존에 만들어놨던 게 있다. UV Map만 어떻게 생겼는지 확인했음.
+- 방향 설정에 관한 이슈가 있기는 한데, 기존 쉐이더도 보면 극좌표를 이용해서 정중앙 부분을 밝게, 바깥 부분을 어둡게 구현한 게 있음.
+- 이를 참고해서 쉐이더에 극좌표 관련 기능을 추가해서 중앙 부분을 밝게 하고 바깥 부분을 어둡게 만드는 구현만 더하면 되지 않을까 싶다. `AddScroll`에 노이즈 관련 기능은 이미 붙어 있기 때문에 이를 기반으로 쉐이더 그래프를 하나 더 만들었다. 이를 `AddScrollRadial`이라고 표기.
+
+- 이전 예제에서는 텍스쳐 없이 보로노이 노이즈 + 극좌표만을 이용했는데, 이번에 텍스쳐는 새로 그렸다. 
+
+![[ForObsidian_SlashMesh01.png]]
+
+왜 이렇게 만들었냐면 이전에 만들어놓은 메쉬의 UV Map이 아래처럼 생겼기 때문이다.
+![[Pasted image 20250807174832.png]]
+![[Pasted image 20250807174801.png]]
+그래서 나머지 절반 부분의 텍스쳐는 있을 필요가 없고, 왼쪽 절반만 그리고 회전만 맞추면 될 것 같았음.
+
+![[Attack_Slash_v1.gif]]
+> `gif` 파일이라 느려 보이는데 실제로는 0.1초 정도만 나타나는 이펙트이므로 매우 빠르게 지나가며, 보로노이 노이즈가 적용된 상황이라 특정한 모양의 도형이 빙글빙글 도는 느낌만 나는 것도 아니다.
+
+생각보다 더 만족스럽게 나왔다. 도형이 도는 문제나 이펙트가 너무 일정해보이는 문제는 `size`, `lifetime`, 텍스쳐의 노이즈 설정 등을 조절해서 해결했음.
+
+휘두르는 방향의 바리에이션은 `3D Start Rotation`의 `Y`값을 바꿔서 설정할 수 있었다. `0 ~ 180`으로 설정.
+
+여기서 문제는, 저 이펙트에 `Alpha Blended`가 적용된 메쉬를 하나 더 띄우려고 할 때인데, `Sub Emitter`에 `Rotation` 설정이 있긴 하지만 그건 이럴 때 쓰는 게 아니다. 
+
+이것도 스크립트로 제어가 가능하다고 함. 근데 너무 품이 많이 드는 것 같아서 일단은 저대로 구현하겠음. 
+
+- 원래는 파티클 튀는 것도 구현했는데, `Hit` 이펙트에 파티클이 이미 튀기 때문에 여기서는 저것과 알파 블렌디드만 적용하고 마무리.
+- Ally, Enemy, Magical(DualBlade 스킬)에 대해 이펙트 구현 및 적용 테스트 완료. 
+
+
+## CombatVFXController - Billboard의 회전도 반영되도록 수정
+```cs
+// 방향 계산 로직은 이전에 올렸으니 생략
+// Billboard의 회전이 필요한 파티클 시스템은 인스펙터에서 등록할 수 있도록 했음.
+
+if (direction != Vector3.zero)
+{
+	// 파티클 시스템 오브젝트의 회전
+	// Quaternion objectRotation = Quaternion.FromToRotation(baseDirection, direction);
+	Quaternion objectRotation = Quaternion.LookRotation(direction);
+	transform.rotation = objectRotation;
+
+	// 빌보드 파티클의 회전
+	// 오브젝트의 Y축 회전값을 라디안으로 변환, startRotationZ값을 업데이트한다. 
+	float billboardRotationInRadians = objectRotation.eulerAngles.y * Mathf.Deg2Rad;
+
+	// 캐싱된 모든 모듈의 startRotation에 반영
+	for (int i = 0; i < billboardParticles.Count; i++)
+	{
+		if (billboardParticles[i] != null)
+		{
+			var ps = billboardParticles[i];
+			var mainModule = ps.main;
+			mainModule.startRotationZ = new ParticleSystem.MinMaxCurve(billboardRotationInRadians);
+		}
+	}
+}
+```
+> `FromToRotation`과 `LookRotation`의 차이 : [[유니티 - LookRotation vs FromToRotation]]
+- 요약) 대부분의 경우 `LookRotation(forward, upwards)`을 쓴다고 생각하면 된다. 로컬 Z축을 `forward` 방향으로 향하게 하면서 `upward`을 가능한 `0, 1, 0`을 보게 하려는 동작이다.
+
+## 기타 버그(?) 수정
+
+### 그린 적 없는 선이 나타남
+![[Pasted image 20250807132920.png]]
+- 여기서 왼쪽에 나타난 선. 저 부분은 그린 적 없다.
+- 해결 방법 : **텍스쳐의 `Wrap Mode - Repeat`가 켜져 있다면 `Clamp`로 바꾸기.** 
 # 250806 - 짭명방
 
 > [!done]
