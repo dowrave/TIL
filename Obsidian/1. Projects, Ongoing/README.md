@@ -42,6 +42,11 @@
 ## 짭명방 예정
 
 ### 작업 중
+
+>[!WIP]
+>`Projectile`을 충돌 기반으로 변경했는데, 판정이 정상적으로 동작했는데도 `nullReferenceException`이 나타나는 현상
+
+
 >[!todo]
 >- 보스 이펙트 만들기
 >- 기존 이펙트 수정하기
@@ -73,10 +78,162 @@
 - `1-3` 스테이지 구현 완료
 	- 보스 구현
 
+# 250812 - 짭명방
+>[!done]
+>- 주로 `Projectile` 스크립트의 수정과 리팩토링을 진행했다.
+>1. `Projectile`이 사라진 후에 파티클 남기기
+>2. `Projectile` 구조 - 콜라이더 기반으로 변경하기
+>	- 단 지금의 "마지막으로 알려진 위치 기반" 로직은 유지해야 한다. 적이 죽었을 때 이미 생성된 투사체는 적의 마지막 위치까지 날아가서 사라지도록 함.
+>3. 기타 수정 사항 
+>- `Operator`에서 `Projectile`의 생성 위치 수정
+>- `Muzzle` 이펙트 오브젝트 풀링 
+>
+
+## Projectile 사라진 후에 파티클 남기기
+1. `mainParticle.Stop(false)` 적용해봄
+	- 안 됨. 
+	- 1번째 파라미터는 `withChildren`인데, 파티클의 실행을 중단시킬 때 자식 파티클의 실행도 중단시키는가? 인데, `false`로 지정해도 안 되는 듯.
+
+2. 메인 파티클이 사라지는 시점에 부모-자식 관계를 끊은 다음 메인 파티클의 실행을 중단시키고 오브젝트 풀로 돌아가기 전에 다시 부모 - 자식 관계를 설정하기
+
+...지금 보니까 스크립트 바꿔놓고 인스펙터에서 할당 다시 안해놨다. ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ 그리고 `IEnumerator`로 메서드 작성해놓고 `StartCoroutine`으로 안 돌리고 그냥 실행시켰다 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
+
+- 아무튼 위 요소들을 다 수정하고 다시 테스트해봤다. 1번과 2번이 완전히 구분되는 개념은 아니다. 자식 파티클 중에도 실행되어야 하는 파티클이 있고, 실행되지 말아야 하는 파티클이 있기 때문이다.
+- `TrailRenderer`는 크게 상관 없을 것 같다.  오브젝트가 꺼지지 않는 이상 `Trail`은 남는 듯.
+
+### 수정 완료
+- 이제 `Projectile`에는 `mainParticle` 외에도 남겨야 하는 파티클을 별도로 구현한다.
+```cs
+[Header("VFX")]
+[SerializeField] private VisualEffect? vfxGraph;
+[SerializeField] private ParticleSystem? mainParticle;
+[SerializeField] private List<ParticleSystem> remainingParticles; // mainParticle이 사라지더라도 표시되는 파티클
+```
+
+- 그리고 파티클이 사라질 때 이 코루틴 메서드를 실행한다.
+```cs
+private IEnumerator ReturnToPoolAfterSeconds(float seconds)
+{
+
+	if (vfxGraph != null)
+	{
+		vfxGraph.Reinit(); 
+	}
+	else if (mainParticle != null)
+	{
+		// 부모-자식 관계를 일시적으로 끊어서 부모 파티클의 실행을 멈춰도 자식 파티클은 계속 재생되게 함
+		foreach (var ps in remainingParticles)
+		{
+			ps.transform.parent = null;
+			ps.Stop(true, ParticleSystemStopBehavior.StopEmitting); // 파티클의 추가 생성을 막음
+			// ps.Play() // 굳이 필요 없어서 주석 처리해봄
+		}
+
+		// 남기지 않아도 되는 파티클들 모두 제거
+		mainParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+	}
+
+	yield return new WaitForSeconds(seconds);
+
+	// 다시 부모 파티클에 할당
+	foreach (var ps in remainingParticles)
+	{
+		ps.transform.parent = mainParticle.transform;
+	}
+
+	ObjectPoolManager.Instance!.ReturnToPool(poolTag, gameObject);
+}
+```
+
+- 추가로 이전처럼 투사체가 바로 사라지는 게 아니기 때문에 판정에 대한 플래그도 하나 설정해준다.
+```cs
+private bool isReachedTarget = false;
+```
+> `Initialize`에서 `false`로 초기화해주고, `OnReachTarget`이 동작하면 `true`로 바뀐다. `true`로 바뀌면 `OnReachTarget`이 실행되지 않음.
+
+## Projectile 판정 콜라이더 기반으로 변경
+- 단 기존의 `Update` 문에 있던 거리 기반 계산 로직은 남겨둔다. 투사체가 날아가는 중에 적이 사라지는 경우도 다뤄야 하기 때문이다.
+```cs
+private void OnTriggerEnter(Collider other)
+{
+	// 이미 목표에 도달했거나, 타겟이 없으면 무시
+	if (isReachedTarget || target == null) return;
+
+	// 충돌한 오브젝트가 내 타겟인지 확인
+	BodyColliderController hitUnitCollider = other.GetComponent<BodyColliderController>();
+	if (hitUnitCollider.ParentUnit == target)
+	{
+		// OnReachTarget() 대신 새로운 공용 함수 호출
+		HandleHit(target.transform.position);
+	}
+}
+```
+
+## 기타 수정 사항
+### `Projectile`의 생성 위치 수정
+```cs
+// Vector3 spawnPosition = transform.position + Vector3.up * 0.5f;
+Vector3 spawnPosition = transform.position + transform.forward * 0.5f;
+```
+> 오퍼레이터가 보는 방향 쪽에서 생성. 기존엔 오퍼레이터보다 "위"에서 생성되었는데 화살의 경우 시각적으로 어색해보여서 수정함.
+
+### Muzzle 이펙트가 생성되기만 하고 풀로 되돌아가지 않음
+- 처음엔 귀찮아서 `Operator`에서 `Muzzle` 실행시킨 다음 1초 후에 풀로 되돌렸음
+- 근데 `Muzzle` 개념은 `Enemy`에서도 쓸 거잖아? 그러니 `MuzzleVFXController`을 별도로 구현하는 게 낫다.
+```cs
+using UnityEngine;
+using System.Collections;
+using UnityEngine.VFX;
+
+// 오브젝트 풀로 돌아가는 기능만 수행함
+public class MuzzleVFXController : MonoBehaviour
+{
+    private string poolTag;
+
+    [Header("Settings")]
+    [SerializeField] private ParticleSystem ps;
+    [SerializeField] private VisualEffect vfxGraph;
+    [SerializeField] private float vfxLifetime = 1f;
+
+    public void Initialize(string poolTag)
+    {
+        this.poolTag = poolTag;
+
+        if (ps != null)
+        {
+            ps.Play(true);
+        }
+        else if (vfxGraph != null)
+        {
+            vfxGraph.Play();
+        }
+
+        StartCoroutine(WaitAndReturnToPool(vfxLifetime));
+    }
+
+    private IEnumerator WaitAndReturnToPool(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        ObjectPoolManager.Instance.ReturnToPool(poolTag, gameObject);
+    }
+}
+```
+> 사실 오브젝트 풀에서 스폰 -> 컴포넌트 얻기 -> Initialize하기 여서 뭔가 부자연스러운 느낌은 있는 듯 한데, 대안도 없다.
+
+### OnTriggerEnter가 null로 뜨는 이슈
+```cs
+    private void OnTriggerEnter(Collider other) {
+    }
+        // 충돌한 오브젝트가 내 타겟인지 확인
+        BodyColliderController hitUnitCollider = other.GetComponent<BodyColliderController>();
+```
+> 위아래는 대충 생략. 저기서 `null` 예외가 발생 중.
+
+근데 타격 판정 자체는 잘 발생했음.  **이거 마무리 못했음!!**
 
 
 # 250811 - 짭명방
->[!doing]
 
 
 >[!done]
