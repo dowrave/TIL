@@ -54,9 +54,7 @@
 >[!todo]
 >남은 이펙트 정리해보기
 >1. 투사체
->	- 적 평타
->	- 아틸러리 평타
->		- 폭발
+>	- 아틸러리 타격 이펙트 ) 폭발
 >2. 스킬
 >	- 범위 관련 이펙트들 : 기존에도 파티클 시스템이었을 거라 만질 게 많진 않고 바운더리에서 올라오는 이펙트들의 존재감이 너무 강하기 때문에 이것만 줄여주면 될 듯.
 >	- 메테오 스킬
@@ -65,13 +63,133 @@
 >3. 보스
 >	- 최종적으로 보스까지 구현하면 완료인 듯?
 
-- **직후의 계획**
-1. `Artillery`의 평타 + 폭발 이펙트
 ### 발견한 이슈
 
 ### 예정
 - `1-3` 스테이지 구현 완료
 	- 보스 구현
+
+# 250816 - 짭명방
+
+> [!done]
+> - 이펙트 구현
+> 	- `VFX_Projectile_Missile_v1`
+> - 기타 이슈 수정
+
+
+## 이펙트 구현 - Projectile_Missile
+- `Artillery`의 평타에 사용될 이펙트.
+
+### Mesh
+![[Pasted image 20250816135720.png]]
+Gemini에게 Mark Seam을 어떻게 해야 할지를 물어봤다.
+
+- `MarkSeam`은 절제선을 어디로 설정하는가라고 생각하면 쉽다고 함. 해당 엣지들에 가위질을 했을 때 3D 도형을 2D로 펼칠 수 있는가를 생각해보면 된다.
+> 물론 말은 쉽다. ㅋㅋㅋㅋㅋ 처음엔 반구와 원기둥 사이의 경계면에만 넣었는데, 추가로 원기둥의 옆면 + 바닥면까지도 포함해야 했음.
+
+- `Mark Seam`을 설정했다면 `Unwrap`을 할 때 `Smart UV Project` 대신 기존에 사용하던 기본적인 `UnWrap`으로 풀어내면 된다. 
+> 물론 이 프로젝트에서는 저 메쉬는 단색으로 구현할 거라서 UV Map을 추출해서 사용할 일이 없겠지만, 만들어놨다면 UV Map과 함께 저장해두는 게 좋겠음.
+
+- 원기둥 옆면에 뭔가 노랑/검정 같은 이미지 추가해서 조금 더 눈에 띄게 하고 싶어서 보는데 어디가 윗면이지? ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
+	- UV Map 기준 오른쪽이 윗면이다. ㅋㅋㅋㅋㅋㅋㅋ
+
+![[Missile01.png]]
+
+> 이런 이미지를 만들었음.
+![[Pasted image 20250816150619.png]]
+ 이런 느낌으로 들어간다. 완전 처음 해본 것 치고는 괜찮은 듯.
+
+이걸 추가하니까 머리 부분에 이펙트도 하나 추가해보고 싶다. 기존에 `ProjectileMesh`가 있었고, 이것의 Uv Map이 가운데로 모이는 모양인 걸 참고해서 가운데 부분에만 이미지가 있는 텍스쳐를 하나 쪄봄. `EffectTextureMaker`를 사용해서 만들었다.
+
+![[Projectile_Missile_v1.gif]]
+
+- 추가로 전체적인 파티클의 사이즈들을 줄임
+- 여기서 타격 이펙트도 다시 만져볼 계획.
+
+
+
+
+## 추가 수정
+- `Projectile` 생성 위치 : `Operator`가 보는 방향 + 0.5에서 0.25로 줄임. 위 움짤을 보면 너무 앞에서 움직이는 느낌이 있다. 
+
+
+# 250815 - 짭명방
+>[!done]
+> - 이펙트 구현
+> 	- `vfx_Projectile_Molotov_v1`
+> - 이슈 수정
+> 	- `Enemy_Ranged`가 새롭게 배치된 `Operator`을 공격하지 않는 현상
+> 	- 기타 이슈들
+
+뭔가 적당한 타협이 됐다. 
+
+![[Projectile_Molotov_v1.gif]]
+
+- `Molotov`를 `Mesh`로 구현하는 게 더 나아보이긴 한다..
+	- 메쉬로 구현하면 메쉬의 특정 위치에 `Fire` 파티클을 붙일 수 있기 때문인데, 지금은 일단 파티클시스템으로 메쉬 생성하고 이를 감싸는 이펙트들을 구현하는 방식이 됐음.
+	- 불 위치가 조금 어색해서 메쉬 대비 +z 쪽으로 위치를 수정했다.
+
+- `Trail` 자체는 `Gabriel Aguiar` 센세의 튜토리얼을 따라 셰이더를 만들고 텍스쳐도 이런 모양을 만들어서 넣었는데, 막상  유니티에서는 모양은 잡히지만 내용물에 알파값이 잡히지 않고 전부 다 흰색으로 인식하는 현상이 있다.  왜 그런 건지 모르겠음.. 지금 모양도 물론 만족스럽긴 하지만, 이 이슈는 한 번 생각해볼 필요는 있어 보인다.
+![[ForObsidian_Trail03.png]]
+> 이 부분은 궁금해서 더 자세히 테스트를 해봤는데, 아무래도 빛산란에 의한 효과인 듯?
+> 애초에 **텍스쳐 자체의 알파값, 혹은 밝기가 그렇게 높으면 안되는 것 같음. 대부분 50 언더로 해야 할 듯?** 낮은 알파값들로 텍스쳐를 만들고, 빛산란으로 더 많이 겹쳐진 부분을 더 밝게 해야 할 듯.
+> 강의에서도 여러 번 나왔던 내용이지만, 알파값을 그렇게 높게 설정하지 않고 작업했다. 높아봐야 30% 정도? 
+> 뭐가 어디까지 맞고 아닌지 모르겠다!!!!! 알파를 겁나게 낮춰서 넣어도 뭔가뭔가 애매한 느낌이다. 이런 걸 보면 겹쳐 그리는 게 중요한 건가?
+
+## Enemy_Ranged가 공격 몇 번 후 공격하지 않는 현상
+- 딱 5번 하고 공격하지 않는다. 왜?
+- 이거는 다른 현상일 수도 있다 : **`Operator`가 `Enemy`의 공격 범위 내에 배치됐을 때, `ColliderEnter`가 동작하지 않는 현상일 수 있음.**
+- 후자가 맞아보임. 
+- 이거 예전에 구현했던 거 같은데 아니었나보다?
+	- **새롭게 배치된 유닛 시점에서만 처리했고, 기존 유닛 입장에선 처리하지 않은 듯 하다.**
+
+- `DeployedUnitEntity`의 배치에 관한 static event를 추가하고, 이를 `EnemyAttackRangeController`에서 감지한다.
+```cs
+private void HandleNewlyDeployed(DeployableUnitEntity target)
+{
+	if (owner == null || !enabled) return;
+
+	BodyColliderController targetColliderController = target.GetComponent<BodyColliderController>();
+	if (targetColliderController != null)
+	{
+		Collider targetCollider = targetColliderController.BodyCollider;
+
+		if (targetCollider != null)
+		{
+			// 두 콜라이더가 겹치는지 검사 수행
+			bool isOverlapping = Physics.ComputePenetration(
+				attackRangeCollider, transform.position, transform.rotation, // 이 콜라이더의 정보
+				targetCollider, targetCollider.transform.position, targetCollider.transform.rotation, // 타겟 콜라이더의 정보
+				out Vector3 direction, out float dist // 출력 변수 : 사용하지 않음
+			);
+
+			if (isOverlapping)
+			{
+				Debug.Log("새롭게 배치된 유닛이 Enemy의 콜라이더 내에 있어서 공격 대상으로 추가");
+				owner.OnTargetEnteredRange(target);
+			}
+		}
+	}
+}
+```
+
+위의 과정을 구현하면서 이런 생각이 들었다 : `Operator` 입장에서 `enemy`가 생겼을 때도 비슷한 현상이 일어나지 않을까?
+
+- 근데 `BodyColliderController`라는 모든 엔티티에게 있는 요소는 자신이 활성화된 시점에 자신과 겹친 콜라이더를 체크하는 로직을 넣어놨다. 
+- `Enemy`의 경우 이 로직에 의해 자신이 생성된 시점에 자신과 겹친 타일과의 충돌 트리거가 발동하고, 해당 타일을 공격범위로 하는 오퍼레이터에 의해 공격 대상으로 지정될 수 있다. 이것과는 다른 로직임.
+- 결론은 기억력 이슈지만, 충분히 헷갈릴 수 있는 지점이었다고 생각함. 해결 완료.
+
+
+## 기타 이슈
+1. `Molotov` 투사체의 판정이 발생하지 않음
+	- `Rigid Body`, `Sphere Collider`을 넣지 않아서 발생한 문제
+
+2. `Projectile_Arrow`의 `Trail`이 1번 생성된 이후 사라지는 현상
+	- **`Trail Renderer`의 `AutoDestruct`가 켜져 있으면 파괴**되기 때문이다. **오브젝트 풀을 이용할 거라면 저 기능은 사용하지 않는 게 좋겠다.**
+3. 저지 로직도 이상하게 동작하는 듯?
+	- 보통 한 군데서 버그가 생기면 다른 곳에서 이어질 가능성이 있다. 2번부터 체크해봄.
+
+
 
 # 250814 - 짭명방
 
