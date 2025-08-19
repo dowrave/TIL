@@ -63,6 +63,158 @@
 ### 예정
 - `1-3` 스테이지 구현 완료
 	- 보스 구현
+
+# 250819 - 짭명방
+
+>[!done]
+> - 기타 이슈 수정
+> 	- `UnitEntity`의 콜라이더 관련 : `0.5, 1, 0.5`로 수정
+> 	- 사망 애니메이션 : 자식 메쉬 렌더러가 여러 개일 경우도 고려
+> 	- `Operator` 배치 시에 공격 범위 내에 적이 있는데 공격하지 않는 현상 수정
+> 	- `Caster` 레벨당 공격력 수정(9.3(??) -> 2.3)
+
+## VFX_Projectile_Medic 구현 시작
+- `Medic`도 투사체가 있었다.
+
+
+
+
+## 기타 이슈 수정
+
+### UnitEntity의 콜라이더 관련
+- `Projectile`이 목표물에 명중할 때, 생각보다 좀 일찍 사라지는 느낌이 있음. `Trail`이 사라지는 지점이 목표물에 닿지 않은 지점으로 보이기 때문에 눈에 띈다.
+- 특히 `Operator`에게 공격이 들어갈 때가 그렇다. 이는 `Operator`의 콜라이더 사이즈가 `0.8, 1, 0.8`이기 때문임
+	- 참고로 `Enemy`는 `.2, 1, .2`를 갖는다
+- 일단 `Enemy`의 콜라이더 사이즈가 대체로 캡슐의 사이즈와 비슷해 보인다. 그래서 `Enemy`한테 공격이 들어갈 때는 그렇게 어색하게 보이지 않음.
+- 반면 `Operator`에게 공격이 들어갈 때는 메쉬에 닿는 것처럼 보이지 않는데 타격 판정이 발생함
+
+- `Enemy`가 2개의 타일에 걸치는 효과도 고려해야 함.
+
+- 일단 **지금까지 구현한 모든 프리팹에 대해서는 `0.5, 1, 0.5`에서 출발해본다.**
+	- 오퍼레이터가 타일 B에 있고, 적이 타일 A에서 B로 넘어갈 때 타일과 타일의 경계에서 저지당하는 느낌이 됨
+	- 여전히 캡슐에 비해 피격 범위가 넓어보이긴 할 거임. 
+	- 이거 수정하다가 아래 렌더러 이슈 수정하고 왔다. 갑자기 생각나서 ㅎㅎ;
+	- 일단 `0.5`로 수정했을 때 대체로 괜찮아 보인다. **오른쪽에서 공격이 들어왔을 때만 살짝 어색해보이는 수준?** 
+	- 다른 방법으로 생각난 것들이 아래의 요소들임.
+		- 콜라이더를 하나 더 구현해서 판정
+		- 기존 구현대로 거리 기반으로 타격 여부 계산하기 -> `Update`를 계속 돌려야 하므로 성능적인 이슈가 있을 수 있음
+		- **일단 대체로 괜찮은 느낌이 나오고 있기 때문에 지금 상태를 유지해본다.** 
+
+### 사망 애니메이션 여러 메쉬 렌더러에 대해 동시 재생
+- `Enemy_Tanker` 처럼 여러 개의 메쉬 렌더러를 갖는 오브젝트의 사망 시, 모든 렌더러에 대해 사망 애니메이션이 재생되게 해야 함
+
+- 기존 코드
+```cs
+Renderer renderer = GetComponentInChildren<Renderer>();
+
+// 동일한 머티리얼을 사용하는 모든 객체에 적용되는 걸 막고자 머티리얼 인스턴스를 만들고 진행한다.
+if (renderer != null)
+{
+	Material materialInstance = new Material(renderer.material);
+	renderer.material = materialInstance;
+
+	SetMaterialToTransparent(materialInstance);
+
+	// DOTween 사용하여 검정으로 변한 뒤 투명해지는 애니메이션 적용
+	// materialInstance.DOColor(Color.black, 0f);
+	materialInstance.DOFade(0f, 0.2f).OnComplete(() =>
+	{
+		OnDeathAnimationCompleted?.Invoke(this); // 사망할 것임을 알리는 이벤트
+		Destroy(materialInstance); // 메모리 누수 방지
+		Destroy(gameObject);
+	});
+}
+```
+> `GetComponentInChildren`으로 구현되므로 1개만 찾는다. 여러 개일 경우에 문제가 됨.
+
+- 수정 방향
+	- 우선, 기존의 구현은 애니메이션이 끝나면 머티리얼 인스턴스와 게임 오브젝트를 파괴시키는 방식이었다.
+	- **어떻게 `OnComplete`를 여러 개에 대해 실행시킬 수 있을까?** 가 핵심이겠음.
+	- **`DOTween`에서는 `Sequence()`라는 기능을 제공**한다. 함수가 호출된 시점에 **애니메이션(트윈)들을 `Join`으로 등록**해놓으면 시스템이 다음 프레임에 시퀀스를 감지해서 실행시키는 방식임.
+```cs
+// 시퀀스로 만들어 여러 개의 애니메이션을 하나의 그룹으로 묶어서 관리한다
+Sequence deathSequence = DOTween.Sequence();
+
+List<Material> materialInstances = new List<Material>();
+
+foreach (Renderer renderer in renderers)
+{
+	// 1. 머티리얼 인스턴스로 만들어 동일한 머티리얼을 사용하는 다른 객체에 영향을 주지 않게 한다
+	Material materialInstance = new Material(renderer.material);
+	renderer.material = materialInstance;
+	materialInstances.Add(materialInstance);
+
+	// 2. 투명 렌더링 모드로 전환
+	SetMaterialToTransparent(materialInstance);
+
+	// 3. 각 렌더러의 머티리얼에 대한 페이드 아웃 트윈을 생성
+	Tween fadeTween = materialInstance.DOFade(0f, 0.2f);
+
+	// 4. 시퀀스에 조인함. 
+	deathSequence.Join(fadeTween);
+}
+
+deathSequence.OnComplete(() =>
+{
+	OnDeathAnimationCompleted?.Invoke(this);
+
+	foreach (Material mat in materialInstances)
+	{
+		Destroy(mat);
+	}
+
+	Destroy(gameObject);
+});
+```
+
+### Operator 배치 시에 공격 범위 내에 적이 있는데 공격하지 않는 현상
+-  `Enemy`가 저지당하고 있는 상태에서 `Operator`가 배치됐을 때 저지당하고 있는 적이 공격 범위 타일 내에 있는데도 공격하지 않는 현상.
+	- 정확한 원인은 몰라도 오퍼레이터가 공격 범위 내에 있는 적들을 제대로 캐치하지 못하는 현상이므로 관련 로직을 보면 될 듯.
+	- 일단 `Enemy`가 밟고 있는 타일이 바뀌지 않는 상태여야 함
+
+```cs
+UpdateAttackableTiles(); // 방향에 따른 공격 범위 타일들 업데이트
+RegisterTiles(); // 타일들에 이 오퍼레이터가 공격 타일로 선정했음을 알림
+```
+- `Deploy()`에서 실행되는 로직인데, 이 부분의 순서가 바뀌어 있었다. 이걸 바꿔보고
+
+```cs
+// 공격 범위 타일들에 이 오퍼레이터를 등록
+private void RegisterTiles()
+{
+	foreach (Vector2Int eachPos in CurrentAttackableGridPos)
+	{
+		Tile? targetTile = MapManager.Instance!.GetTile(eachPos.x, eachPos.y);
+		if (targetTile != null)
+		{
+			targetTile.RegisterOperator(this);
+			
+		}
+	}
+}
+```
+이 메서드에서 타일들에게 자신을 공격 범위로 삼은 오퍼레이터를 등록했는데, 여기에 추가로 타일들에서 오퍼레이터에게 자신을 밟고 있는 `Enemy`의 정보도 전달해야 할 것으로 보임.
+
+```cs
+if (targetTile != null)
+{
+	targetTile.RegisterOperator(this);
+
+	// 타일 등록 시점에 그 타일에 있는 적의 정보도 Operator에게 전달함
+	foreach (Enemy enemy in targetTile.EnemiesOnTile)
+	{
+		OnEnemyEnteredAttackRange(enemy);
+	}
+}
+```
+
+- 일단 이렇게 수정하니까 **비슷한 현상은 발생하지 않고 있다.**
+- 추가로, **걸리적거렸던 것 중에 원거리 오퍼레이터를 배치했는데 왜 바로 공격하지 않지? 라는 게 있었다. 이것도 해결된 것으로 보임.** 
+
+
+
+
+
 # 250818 - 짭명방
 
 >[!done]
