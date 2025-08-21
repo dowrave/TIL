@@ -49,14 +49,12 @@
 
 >[!todo]
 >남은 이펙트 정리해보기
->1. 투사체
->	- 메딕
->2. 스킬
+>1. 스킬
 >	- 범위 관련 이펙트들 : 기존에도 파티클 시스템이었을 거라 만질 게 많진 않고 바운더리에서 올라오는 이펙트들의 존재감이 너무 강하기 때문에 이것만 줄여주면 될 듯.
 >	- 메테오 스킬
 >	- 슬래쉬 스킬
 >	- 코스트...는 냅둘까?
->3. 보스
+>2. 보스
 >	- 최종적으로 보스까지 구현하면 완료인 듯?
 
 ### 발견한 이슈
@@ -65,342 +63,98 @@
 - `1-3` 스테이지 구현 완료
 	- 보스 구현
 
-# 250820 - 짭명방
+# 250821 - 짭명방
 
 >[!done]
->- 이펙트 구현
->	- `Projectile_Orb_Heal_v1`
->- 기타 수정
->	- `Projectile` 히트 판정 시 메쉬 렌더러도 꺼짐
-
-## VFX_Projectile_OrbHeal_v1
-- 메딕이 힐할 때 던지는 투사체. 이게 있다는 걸 잊고 있었다.
-- 아이디어 고갈이라 레퍼런스들을 찾아보는 중. 아트스테이션, 핀터레스트, 명일방주.
-
-### 레퍼런스(명일방주)
-
-- 안셀
-![[Screenshot_20250820_134650.jpg]]
-
-- 켈시
-![[Screenshot_20250820_134749.jpg]]
-
-- 힐이야(스킬OFF)
-![[Screenshot_20250820_134801.jpg]]
-
-- 힐이야(스킬ON)
-![[Screenshot_20250820_134848.jpg]]
-
-- 파피루스, 실론
-![[Screenshot_20250820_134933.jpg]]
-> 실론의 경우 Trail을 구성하는 요소가 1개가 아닌 것으로 보였음. 같은 텍스쳐가 여러 번 반복되면서 파도 효과를 내는 방식.
-
-전반적으로 파티클이 두드러지는 느낌보다는 궤적이 더 두드러지는 느낌이 강함.
-`TrailRenderer`처럼 궤적이 늘어지는 느낌은 아니었다. 
-
-이것저것 텍스쳐를 구현해봤는데 다 마음에 들지 않는다. 기존에 있던 Trail 쉐이더를 이용함.
-
-- 기존에 튜토리얼을 따라 만든 Trail 쉐이더는 `Trail Shader`에서 색상 설정을 해도 적용되지 않았다. `Color1, 2`만 머티리얼 단위로 인풋을 받았기 때문인데, `Vertex Color`를 곱하게끔 수정함.
-	- `Trail Renderer`의 색상 설정 반영도 `Vertex Color`로 설정된다.
-
-- 근데 이상한 버그?가 발생했다. 색깔 선택 기준으로 오른쪽 반원에 해당하는 색들은 잘 나타나는데 왼쪽 반원에 해당하는 색들은 채도가 높을수록 투명해보임
-	- 알파 클립 때문에 발생한 문제 같긴 한데... 왜 색깔을 바꿨는데 투명해지는지는 잘 모르겠음. **이거 원인 찾으려고 하면 한나절 걸릴 거 같으니까 이번엔 그냥 넘어간다.** 알파 클립을 0으로 만든 뒤에는 다시 발생하진 않음
-	- `Vertex Color`를 반영시키고 색깔도 반영해봤는데 역시 투명해보이는 효과가 있음. 그래서 셰이더는 원본의 그걸 유지한다.
-
-- `Orb`의 형태가 메쉬여서, 충돌이 발생한 후에도 사라지지 않는 문제가 있었다. 이를 수정한 최종 버전.
-![[Projectile_Heal_v1.gif]]
-> - 이렇게 보니까 Hit이 좀 아쉬운 느낌이 있음. 
-> - 레퍼런스를 본 의미가 있나 싶어지는....?
-
-## VFX : Area_Caster2ndSkill 
-- 각 변에서 올라오는 이펙트에만 효과를 주고 싶음
-- 예전엔 이런 생각을 못했는데, 지금은 이런 생각이 든다 : **바닥에서 올라오는 일렁이는 효과는 `Trail`을 구현하는 거랑 큰 차이가 없지 않을까?** 
-
-![[Pasted image 20250820172509.png]]
-이런 느낌으로다가. `Quad`랑 `Trail02` 머티리얼로만 구현했다.
-원래의 이펙트가 좌 -> 우 방향인데, `Quad`를 회전시키면 효과도 위처럼 자연스럽게 회전되어서 나타남.
-
-이런 느낌을 전기 버전으로 하나 만들어두면 되지 않을까?
-
-... 싶었는데 생각보다 쉽지 않다. 일단은 아래처럼 구현했음.
-![[Area_CasterSkill_v1.gif]]
-
-영역의 가장자리 부분, 즉 벽 부분이 뭔가 심심해서 아쉬운데 다르게 구현할 방법도 딱히 떠오르지 않는다. 능력 부족을 오랜만에 느껴버리는..
-
-## 기타 수정
-### Projectile.cs - 타격 시 메쉬 렌더러도 비활성화
-- 기존엔 파티클 시스템에 메쉬를 넣어서 구현했는데, 메쉬를 직접 띄울 수 있는 상황도 종종 있어서 추가함.
-```cs
-
-	// Initialize()
-	// 메쉬로 구현된 요소가 있다면 활성화
-	if (renderers != null)
-	{
-		foreach (MeshRenderer renderer in renderers)
-		{
-			renderer.enabled = true;
-		}
-	}
-
-	// HandleHit()
-	// 메쉬 렌더러로 구현된 요소들이 있다면 이들을 모두 비활성화
-	if (renderers != null)
-	{
-		foreach (MeshRenderer renderer in renderers)
-		{
-			renderer.enabled = false;
-		}
-	}
-```
-
-
-
-# 250819 - 짭명방
-
->[!done]
-> - 기타 이슈 수정
-> 	- `UnitEntity`의 콜라이더 관련 : `0.5, 1, 0.5`로 수정
-> 	- 사망 애니메이션 : 자식 메쉬 렌더러가 여러 개일 경우도 고려
-> 	- `Operator` 배치 시에 공격 범위 내에 적이 있는데 공격하지 않는 현상 수정
-> 	- `Caster` 레벨당 공격력 수정(9.3(??) -> 2.3)
-
-## 기타 이슈 수정
-
-### UnitEntity의 콜라이더 관련
-- `Projectile`이 목표물에 명중할 때, 생각보다 좀 일찍 사라지는 느낌이 있음. `Trail`이 사라지는 지점이 목표물에 닿지 않은 지점으로 보이기 때문에 눈에 띈다.
-- 특히 `Operator`에게 공격이 들어갈 때가 그렇다. 이는 `Operator`의 콜라이더 사이즈가 `0.8, 1, 0.8`이기 때문임
-	- 참고로 `Enemy`는 `.2, 1, .2`를 갖는다
-- 일단 `Enemy`의 콜라이더 사이즈가 대체로 캡슐의 사이즈와 비슷해 보인다. 그래서 `Enemy`한테 공격이 들어갈 때는 그렇게 어색하게 보이지 않음.
-- 반면 `Operator`에게 공격이 들어갈 때는 메쉬에 닿는 것처럼 보이지 않는데 타격 판정이 발생함
-
-- `Enemy`가 2개의 타일에 걸치는 효과도 고려해야 함.
-
-- 일단 **지금까지 구현한 모든 프리팹에 대해서는 `0.5, 1, 0.5`에서 출발해본다.**
-	- 오퍼레이터가 타일 B에 있고, 적이 타일 A에서 B로 넘어갈 때 타일과 타일의 경계에서 저지당하는 느낌이 됨
-	- 여전히 캡슐에 비해 피격 범위가 넓어보이긴 할 거임. 
-	- 이거 수정하다가 아래 렌더러 이슈 수정하고 왔다. 갑자기 생각나서 ㅎㅎ;
-	- 일단 `0.5`로 수정했을 때 대체로 괜찮아 보인다. **오른쪽에서 공격이 들어왔을 때만 살짝 어색해보이는 수준?** 
-	- 다른 방법으로 생각난 것들이 아래의 요소들임.
-		- 콜라이더를 하나 더 구현해서 판정
-		- 기존 구현대로 거리 기반으로 타격 여부 계산하기 -> `Update`를 계속 돌려야 하므로 성능적인 이슈가 있을 수 있음
-		- **일단 대체로 괜찮은 느낌이 나오고 있기 때문에 지금 상태를 유지해본다.** 
-
-### 사망 애니메이션 여러 메쉬 렌더러에 대해 동시 재생
-- `Enemy_Tanker` 처럼 여러 개의 메쉬 렌더러를 갖는 오브젝트의 사망 시, 모든 렌더러에 대해 사망 애니메이션이 재생되게 해야 함
-
-- 기존 코드
-```cs
-Renderer renderer = GetComponentInChildren<Renderer>();
-
-// 동일한 머티리얼을 사용하는 모든 객체에 적용되는 걸 막고자 머티리얼 인스턴스를 만들고 진행한다.
-if (renderer != null)
-{
-	Material materialInstance = new Material(renderer.material);
-	renderer.material = materialInstance;
-
-	SetMaterialToTransparent(materialInstance);
-
-	// DOTween 사용하여 검정으로 변한 뒤 투명해지는 애니메이션 적용
-	// materialInstance.DOColor(Color.black, 0f);
-	materialInstance.DOFade(0f, 0.2f).OnComplete(() =>
-	{
-		OnDeathAnimationCompleted?.Invoke(this); // 사망할 것임을 알리는 이벤트
-		Destroy(materialInstance); // 메모리 누수 방지
-		Destroy(gameObject);
-	});
-}
-```
-> `GetComponentInChildren`으로 구현되므로 1개만 찾는다. 여러 개일 경우에 문제가 됨.
-
-- 수정 방향
-	- 우선, 기존의 구현은 애니메이션이 끝나면 머티리얼 인스턴스와 게임 오브젝트를 파괴시키는 방식이었다.
-	- **어떻게 `OnComplete`를 여러 개에 대해 실행시킬 수 있을까?** 가 핵심이겠음.
-	- **`DOTween`에서는 `Sequence()`라는 기능을 제공**한다. 함수가 호출된 시점에 **애니메이션(트윈)들을 `Join`으로 등록**해놓으면 시스템이 다음 프레임에 시퀀스를 감지해서 실행시키는 방식임.
-```cs
-// 시퀀스로 만들어 여러 개의 애니메이션을 하나의 그룹으로 묶어서 관리한다
-Sequence deathSequence = DOTween.Sequence();
-
-List<Material> materialInstances = new List<Material>();
-
-foreach (Renderer renderer in renderers)
-{
-	// 1. 머티리얼 인스턴스로 만들어 동일한 머티리얼을 사용하는 다른 객체에 영향을 주지 않게 한다
-	Material materialInstance = new Material(renderer.material);
-	renderer.material = materialInstance;
-	materialInstances.Add(materialInstance);
-
-	// 2. 투명 렌더링 모드로 전환
-	SetMaterialToTransparent(materialInstance);
-
-	// 3. 각 렌더러의 머티리얼에 대한 페이드 아웃 트윈을 생성
-	Tween fadeTween = materialInstance.DOFade(0f, 0.2f);
-
-	// 4. 시퀀스에 조인함. 
-	deathSequence.Join(fadeTween);
-}
-
-deathSequence.OnComplete(() =>
-{
-	OnDeathAnimationCompleted?.Invoke(this);
-
-	foreach (Material mat in materialInstances)
-	{
-		Destroy(mat);
-	}
-
-	Destroy(gameObject);
-});
-```
-
-### Operator 배치 시에 공격 범위 내에 적이 있는데 공격하지 않는 현상
--  `Enemy`가 저지당하고 있는 상태에서 `Operator`가 배치됐을 때 저지당하고 있는 적이 공격 범위 타일 내에 있는데도 공격하지 않는 현상.
-	- 정확한 원인은 몰라도 오퍼레이터가 공격 범위 내에 있는 적들을 제대로 캐치하지 못하는 현상이므로 관련 로직을 보면 될 듯.
-	- 일단 `Enemy`가 밟고 있는 타일이 바뀌지 않는 상태여야 함
-
-```cs
-UpdateAttackableTiles(); // 방향에 따른 공격 범위 타일들 업데이트
-RegisterTiles(); // 타일들에 이 오퍼레이터가 공격 타일로 선정했음을 알림
-```
-- `Deploy()`에서 실행되는 로직인데, 이 부분의 순서가 바뀌어 있었다. 이걸 바꿔보고
-
-```cs
-// 공격 범위 타일들에 이 오퍼레이터를 등록
-private void RegisterTiles()
-{
-	foreach (Vector2Int eachPos in CurrentAttackableGridPos)
-	{
-		Tile? targetTile = MapManager.Instance!.GetTile(eachPos.x, eachPos.y);
-		if (targetTile != null)
-		{
-			targetTile.RegisterOperator(this);
-			
-		}
-	}
-}
-```
-이 메서드에서 타일들에게 자신을 공격 범위로 삼은 오퍼레이터를 등록했는데, 여기에 추가로 타일들에서 오퍼레이터에게 자신을 밟고 있는 `Enemy`의 정보도 전달해야 할 것으로 보임.
-
-```cs
-if (targetTile != null)
-{
-	targetTile.RegisterOperator(this);
-
-	// 타일 등록 시점에 그 타일에 있는 적의 정보도 Operator에게 전달함
-	foreach (Enemy enemy in targetTile.EnemiesOnTile)
-	{
-		OnEnemyEnteredAttackRange(enemy);
-	}
-}
-```
-
-- 일단 이렇게 수정하니까 **비슷한 현상은 발생하지 않고 있다.**
-- 추가로, **걸리적거렸던 것 중에 원거리 오퍼레이터를 배치했는데 왜 바로 공격하지 않지? 라는 게 있었다. 이것도 해결된 것으로 보임.** 
-
-
-
-
-
-# 250818 - 짭명방
-
->[!done]
->1. 이펙트 구현
->	- `Hit_Explosion`
->	- `Area - Medic2ndSkill`
->		- `SkillRangeVFXController` 스크립트 수정 
->2. 이슈 수정
->	- `Distortion` 쉐이더의 이슈 
->		- 파티클 시스템에서 게임 뷰에 쓰일 때 검정색의 메쉬가 나오는 현상
->		- 해결할 필요가 없었다. 실제 게임에서는 투명한 메쉬가 잘 나옴. 몇 시간을 헤맸나..
-
-## 이펙트 구현 - Hit_Explosion
-- 남은 요소는 크게 2개였다 : 폭발 이펙트와 투명한 충격파 구현하기.
-
-### 투명한 충격파
-- `Heat Distortion`이라고 부를 수도 있는 요소인데, 그저께 찾아봤는데 답을 쉽게 얻지 못했다. 
-- **센세께서 올려두신 영상이 있었다.** [# Unity VFX Graph - Heat Distortion Effect Tutorial](https://www.youtube.com/watch?v=CXCyVDEplyM)
-	- 이 중에서는 쉐이더에 관한 내용만 가져가면 된다. URP와 HDRP의 내용이 다른 부분이 꽤 있기 때문에 URP에 있는 부분만 가져가면 됨.
-
-- 프로젝트의 `Default Render Pipeline`에 해당하는 파일에서, **`Rendering` 탭에 있는 `Depth Texture`, `Opaque Texture`를 켜야 한다.**
-	- 이게 꺼져 있으면 셰이더 그래프에서 `Scene Color`를 적용해도 아무 변화가 없음. 반대로 켜져 있으면 해당 메쉬의 뒷쪽이 그대로 투명하게 비친다. 알파값과는 무관함.
-
-- **구현도 간단하다!** [[투명한 왜곡 효과]]에 정리.
-![[Pasted image 20250818155210.png]]
-- `Scene Color`를 이용하면 배경의 색을 그대로 보여준다. 여기에 변화된 `Screen Position`을 `Scene Color`의 UV 인풋에 보내면 해당 메쉬에는 왜곡된 배경이 나타난다.
-
-#### 이 과정에서 발생한 이슈
-- 씬 뷰에서는 투명하게 잘 나타나는데, 게임 뷰에서는 검정색으로 이펙트가 나타남
-	- 어떻게 해결해야 하나 한참 찾아 헤맸는데, **실제 게임 & 게임 뷰에서는 아무 이상 없어서 해결하지 않아도 되는 이슈**였음. 몇 시간을 썼는데,,,
-### 메쉬
-- 블렌더에서 `Torus`를 만들었다. 버텍스 숫자를 좀 줄인 상태로.
-
-
-- `ExplosionDebris`라는 폭발 흔적 텍스쳐를 하나 만들었고, `Crack01`도 텍스쳐 자체의 밝기? 불투명도를 크게 줄인 버전으로 수정했다.
-
-![[Hit_Explode_v1 1.gif]]
-연기가 너무 많나 싶기는 한데..? 일단 인게임 테스트.
-여기서 검게 보이는 부분은 인게임에서는 투명해짐. 
-- 연기랑 파티클이 너무 높게 올라가는 것처럼 보여서 추가로 수정
-
-![[Hit_Explode_v1_Ingame.gif]]
-이런 느낌으로 마무리해본다. gif 파일로 보니까 생각보다 더 괜찮은 것 같음.
-
-## 이펙트 구현 - Area_Medic2ndSkill
-- 이건 기존에 파티클 시스템으로 구현되어 있었기 때문에 이번엔 수정만 한다.
-- 아마 `Area`마다 다르겠지만 `Medic2ndSkill`의 경우 파티클 1개를 띄워놓고 실행시키는 방식이었는데, 굳이 이렇게 구현할 필요는 없어보인다. `Quad`를 변에 세우고 셰이더만 적용하면 될 거임.
-
-### SkillRangeVFXController 수정
-- 그래서 기존에 이러한 타일 기반 범위 이펙트에 구현했던 `SkillRangeVFXController`도 수정한다. 
-- 기존 : 파티클 시스템 기반
-	- 오브젝트 기반으로 구현하고, 방향에 따라 이펙트를 실행하는 스크립트에서 해당 오브젝트에 파티클 시스템이 있는지를 검사해서 오브젝트를 활성화시키는 방식으로 수정함.
-```cs
-private void SetUpVisuals(Vector2Int position, HashSet<Vector2Int> effectRange)
-{
-	// 유효하지 않은 위치는 아무것도 표시하지 않음
-	if (MapManager.Instance.CurrentMap == null || !MapManager.Instance.CurrentMap.IsTileAt(position.x, position.y))
-	{
-		return;
-	}
-
-	floorImage.gameObject.SetActive(false);
-
-	// 방향에 따른 타일 검사로 이펙트 실행 여부 결정
-	foreach (var direction in directions)
-	{
-		Vector2Int neighborPos = position + direction;
-		bool showEffect = !effectRange.Contains(neighborPos) || !MapManager.Instance.CurrentMap.IsTileAt(neighborPos.x, neighborPos.y);
-
-		var (effectObject, boundary) = directionEffects[direction];
-
-		effectObject.SetActive(showEffect);
-		boundary.gameObject.SetActive(showEffect);
-
-		// 파티클 시스템으로 구현된 경우 파티클 시스템을 실행시킴
-		ParticleSystem directionParticleSystem = effectObject.GetComponent<ParticleSystem>();
-		if (directionParticleSystem != null)
-		{
-			PrewarmTrailAndPlayVFX(directionParticleSystem); // effect.Play() 포함
-		}
-	}
-
-	// 언덕 타일 위치 보정
-	Tile? currentTile = MapManager.Instance.GetTile(position.x, position.y);
-	if (currentTile != null && currentTile.data.terrain == TileData.TerrainType.Hill)
-	{
-		transform.position += Vector3.up * 0.2f;
-	}
-}
-```
-
-![[Area_Heal_v1.gif]]
-> 언덕 타일에서 살짝 띄워져보이는 게 어색해보이긴 한다. 수정해야 할까는 고민 대상인 듯.
-
-일단 오늘은 여기까지!!
-
+>1. 셰이더 공부 & 수정
+>2. `Wall` 셰이더 구현 및 적용
+>3. `MeteorSkill` - 떨어지는 투사체 구현
+>	- 타격이랑 범위 이펙트는 내일!
+## 셰이더 탐구 : AddScroll과 Trail
+- 어제 벽 효과 관련, `AddScroll` 쉐이더랑 `Trail` 쉐이더의 차이점을 알고 싶어졌다. 
+	- 원하는 효과는 `Trail`인데, `AddScroll`도 그게 가능하지 않을까 싶어서 테스트해봤는데 그런 느낌이 나지 않았기 때문이다.
+
+### `Trail` 쉐이더
+![[Pasted image 20250821124715.png]]
+> `Add`로 들어오는 `A`는 `Simple Noise`에 스크롤을 더한 값.
+
+- 분석
+	- `One Minus`는 왼쪽이 1, 오른쪽이 0인 행렬
+	- `Add`로 노이즈 값들이 더해짐
+	- 여기서 왼쪽이 0, 오른쪽이 1인 행렬을 뺌
+	- 최종적으로 왼쪽은 1보다 크거나 1에 가까운 값들이 주로 오고 오른쪽은 0에 가까운 값들이 주로 오게 됨. 노이즈에 따라 값 편차는 있겠지만 전체적으로 이런 경향을 따르는 편.
+
+### `AddScroll` 쉐이더
+- 원리는 위와 크게 다르지 않다.
+- 차이점
+	1. `Gradient Noise`를 썼다는 것
+	2. `UV`의 R값들을 이용한 `Color` 계산이 들어가지 않았다는 것
+- 그래서 상대적으로 텍스쳐를 탄다. 
+
+
+### 결론
+- `AddScroll`로도 구현이 가능하다. 단, 텍스쳐를 탄다.
+- `Trail`은 `U`값을 기반으로 한 밝기 설정이 추가로 들어가 있다. 그래서 어떤 텍스쳐를 받아도 방향 설정만 잘 해두면 일렁이는 효과를 낼 수 있다.
+- **알파 클립 기능은 이런 경우에는 이용하지 않는 편이 더 좋아보인다.** 물론 케바케지만, 전체적인 알파 값들이 그렇게 밝지 않기 때문에 살짝만 건드려도 이펙트가 어색해보임.
+- 불이 일렁이는 듯한 효과는 `Simple Noise`가 일단은 더 그런 느낌으로 보인다. 
+
+![[Pasted image 20250821134243.png]]
+> 왼쪽이 `Trail` 쉐이더를 이용한 `Quad`, 오른쪽이 `AddScroll` 쉐이더를 이용한 `Quad`이다.
+
+## 셰이더 수정
+- `Trail, AddScroll`에 노이즈에 `Power` 값을 곱하는 프로퍼티 추가
+- ~~`AddScroll`의 경우 `Simple Noise`와 `Gradient Noise` 중 선택 가능하게 구현~~
+	- `Simple Noise`를 선택하는 경우의 효과가 미미함. 추가적인 세팅이 들어가야 할 것으로 보여서 일단 `Gradient Noise`만 사용 가능하도록 유지함.
+
+### Gradient Noise에 마젠타색이 나타나는 현상
+- `Gradient Noise`에 `Power`를 연결했을 때 발생하는 현상.
+![[Pasted image 20250821134001.png]]
+
+- 이유)
+	- **`Gradient Noise`는 -1 ~ 1 사이의 값을 갖는다.** 
+	- 그래서 음수의 거듭제곱을 시도할 때, 예를 들어 `(-2)^5/2` 같은 연산도 발생할 수 있다. 음수의 제곱근은 실수 범위에서 존재하지 않기 때문에 `NaN`을 반환하게 된다.
+
+- 해결)
+	- `Gradient Noise`에 `Power`를 사용하려는 경우에는 `Remap`이나 `Saturate(0, 1 사이로 강제 제한)` 등을 연결해서 사용해야 한다.
+
+## Wall 셰이더 만들기
+- 텍스쳐의 좌우 스크롤 + 노이즈의 상하 스크롤로 텍스쳐에서 파티클들이 시작해서 서서히 위로 올라가면서 사라지는 듯한 효과를 주려고 함
+- 생각보다 쉽진 않다. **텍스쳐의 경계와 노이즈의 경계가 부드럽게 녹아드는 느낌이 잘 안 나기 때문**임. `Lerp`라든가 `SmoothStep`이라든가 다 써보긴 했는데 잘 모르겠다. 스읍..
+![[Pasted image 20250821152842.png]]
+> 일단은 이런 느낌으로 마무리. 
+
+> 인게임에서 보면 이런 느낌으로 들어갔다. 생각보다 괜찮다. 
+> - 연기가 조금더 올라갔으면 하는 생각이 있다. 텍스쳐 모양만 어떻게 잡으면 구현이 될지도 모르겠다.
+![[Area_CasterSkill_v1 1.gif]]
+
+## MeteorSkill - 떨어지는 물체 구현
+- 특사스의 3스킬이 모티브이긴 한데, Mesh로 구현해야 할까? Billboard로 구현해야 할까?
+- `Mesh`로 검 모양을 만들고 모서리마다 윤곽선을 그리는 방식을 시도해봤는데, UV Map 만드는 부분에서 막혔다. **어디를 잘라야 전개도가 잘 그려지는지 감이 안 잡힘.**
+- 그래서 텍스쳐만 만들고 빌보드 파티클을 이용하는 방식으로 구현한다.
+
+![[Area_Meteor_v1.gif]]
+> `MeteorSkill`은 타겟의 좌표를 정확히 추적하면서 y좌표만 +에서 -로 내리꽂는 방식인데, 이상하게 게임 화면에서는 살짝 뒷쪽으로 떨어지는 듯한 인상이 있다. 
+> 근데 뚜렷한 해결법은 모르겠음.
+
+**`Hit` 이펙트랑 `Area` 이펙트는 내일 해야겠다. 오늘 `Hit` 이펙트에 사용할 텍스쳐를 만들어봤는데 잘 모르겠음..**
 
 ## 기타 수정
 - `Projectile`의 콜라이더 크기 `0.1`로 통일
 	- 기존) `0.25` : 오브젝트에 부딪히기 전에 사라지는 것처럼 보여서.
 
+- `MeteorSkill` 스크립트 수정
+	- 메테오를 소환하는 로직 수정
+		- 기존에는 2개를 만들어 놓은 다음 딜레이 후 1개씩 떨어뜨렸다면
+		- 1개를 만듦 -> 딜레이 -> 다시 1개를 만드는 방식으로 수정함
+	- `MeteorSkill` 자체는 `ScriptableObject`의 상속이므로 `Coroutine`의 실행이 불가능하다. `Operator`에 실행을 요청하는 방식으로 넣으면 됨. 이 때 `IEnumerator` 메서드는 `public`일 필요는 없는 듯?
+```cs
+	if (enemyIdSet.Add(enemy.GetInstanceID()))
+	{
+		// 코루틴은 Monobehaviour을 받는 객체에서만 실행 가능
+		// 이 스크립트는 ScriptableObject의 상속임. 실행 가능한 객체에게 요청한다.
+		op.StartCoroutine(CreateMeteorSequence(op, enemy));
+	}
+```
 
 
 
