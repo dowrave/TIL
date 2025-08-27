@@ -20,6 +20,18 @@
               "icon": "lucide-file",
               "title": "README"
             }
+          },
+          {
+            "id": "c30232f627e19ea3",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.9.12"
+              },
+              "icon": "lucide-book-up",
+              "title": "릴리즈 노트 1.9.12"
+            }
           }
         ]
       }
@@ -213,24 +225,24 @@
   },
   "active": "bfcf7769fb748efb",
   "lastOpenFiles": [
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/짭명방_25년 8월.md",
+    "1. Projects, Ongoing/README.md",
+    "3. Resource/Image/Pasted image 20250827234616.jpg",
+    "3. Resource/Image/Skill_Slash_v2.gif",
+    "3. Resource/Image/Skill_Slash_v1 1.gif",
+    "1. Projects, Ongoing/유니티 VFX 공부/2_유니티VFX_VFX의 기초, 원칙.md",
+    "1. Projects, Ongoing/유니티 VFX 공부/3_유니티VFX_제작 전.md",
     "3. Resource/Image/Skill_Slash_v1.gif",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트/셰이더 혼합 개념 정리.md",
-    "1. Projects, Ongoing/README.md",
     "3. Resource/Image/Pasted image 20250825144849.png",
     "3. Resource/Image/Pasted image 20250825144820.png",
     "3. Resource/Image/Pasted image 20250825144653.png",
     "3. Resource/Image/Pasted image 20250825144631.png",
     "3. Resource/Image/Pasted image 20250825144426.png",
     "3. Resource/Image/Pasted image 20250825144353.png",
-    "3. Resource/Image/Hit_Meteor_v1.gif",
-    "3. Resource/Image/Pasted image 20250822164932.png",
-    "3. Resource/Image/Area_Meteor_v1 1.gif",
-    "3. Resource/Image/Area_ArcaneField_v1.gif",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/짭명방_25년 8월.md",
     "1. Projects, Ongoing/유니티 VFX 공부/5_유니티VFX_스파크만들기.md",
     "1. Projects, Ongoing/유니티 VFX 공부/6_유니티VFX_범위효과.md",
     "1. Projects, Ongoing/유니티 VFX 공부/4_유니티VFX_실습 사전 세팅.md",
-    "1. Projects, Ongoing/유니티 VFX 공부/3_유니티VFX_제작 전.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/오퍼레이터들 스탯 정리.md",
     "1. Projects, Ongoing/들고 다닐 지식들/유니티/VFX/투명한 왜곡 효과.md",
     "1. Projects, Ongoing/들고 다닐 지식들/유니티/VFX/유니티 파티클 시스템 - 방향성이 있는 텍스쳐.md",
@@ -240,7 +252,6 @@
     "1. Projects, Ongoing/유니티 VFX 공부/컬러 팔레트 참고용.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/짭명방_25년 7월.md",
     "1. Projects, Ongoing/유니티 VFX 공부/1_유니티VFX_이펙트의 종류.md",
-    "1. Projects, Ongoing/유니티 VFX 공부/2_유니티VFX_VFX의 기초, 원칙.md",
     "1. Projects, Ongoing/들고 다닐 지식들/유니티/시스템/유니티 - LookRotation vs FromToRotation.md",
     "1. Projects, Ongoing/들고 다닐 지식들/유니티/시스템",
     "1. Projects, Ongoing/들고 다닐 지식들/시스템/무제",
