@@ -38,189 +38,201 @@
 ---
 # 작업 일지
 
-
 ## 짭명방 예정
 
 ### 작업 중
->[!todo]
->- 현재 작업 중
->	- 보스 스킬 구현
+
+>[!wip]
+>- 보스 구현
+>	- 스킬
 >		- 이펙트
->			- `Anticipation`까지 완료, **단 파티클이 떨어지는 로직은 스크립트로 별도로 구현해야 함.**
+>			- `Anticipation`, `Cast` 이펙트 구현 완료
+>				- 참고) 스킬 시전에 소요되는 시간은 0.5초이며, 이 동안 보스는 움직이거나 공격하지 못한다.
 >			- `Climax`, 즉 실제 폭발 효과는 구현해야 함
 >		- 효과
 >			1. 13칸에 범위 대미지
 >			2. 자신을 저지한 적을 지나가기
->	- 쉴드 스킬은 냅둘지 말지 아직 모르겠음. 
+>	- 보스 스크립트 구현, 스킬 시스템 변화
+>- 쉴드 스킬은 냅둘지 말지 아직 모르겠음. 
+
+
+>[!todo]
 >- 남은 작업
 >	- 스테이지 1-3 완성
 >	- 남은 스테이지들 밸런스 수정
-# 250830 - 짭명방
+
+# 250901 - 짭명방
+
 >[!done]
->- 보스 스킬 전조 효과 구현
->	- 파티클이 바닥으로 서서히 떨어지는 효과다.
->	- 참고) 아래 gif 파일에서는 파티클 시스템으로 구현했지만, 이동에 따른 파티클 방출 구현 때문에 **실제 오브젝트를 움직이는 스크립트를 별도로 구현해야 함.** 
-- 이 GIF 파일은 떨어지는 파티클을 파티클 시스템으로 구현한 거고 **실제로는 자식 파티클 시스템 자체가 움직이면서 파티클을 남길 예정**이라 스크립트로 `Sun` 부분의 움직임을 별도로 컨트롤할 거임.
-
-- 어제 만들었던 `Area_Anticipation`과의 조합
-![[BossSkill_Anticipation.gif]]
-> 강의에서는 `Burst`를 2번 하고 랜덤한 색 사이를 고르도록 구현했는데, **색깔의 경우 이펙트가 나타날 때마다 랜덤성이 생기는 게 좋은건지 아닌지 아직 확신이 서지 않는다.** 
-> 파티클이 튀는 방향 같은 건 몰라도 색깔 같은 건 눈에 띄는 요소이기도 해서, 그냥 **개별 파티클 시스템을 만들고 각 파티클 시스템이 내보내는 색은 항상 일정하게끔 구현했다.** 
-
-
-
-# 250829 - 짭명방
-
->[!Done]
->- 아이콘 제작 : `SlashSkill`
->- 보스 스킬 이펙트 제작 시작
->	- 영역) 전조 이펙트 : 바닥이 깜빡이는 효과
-## SlashSkill 아이콘 다시 제작
-- 크기는 256으로 넣었다. 
-![[SlashSkill_256.png]]
-
-뭔가 꽉 찬 느낌이 안 나서 Muzzle 같은 효과도 넣어보고 했는데 그냥 검기들 크기만 키우고 마무리했다. 지금 보면 좀 쓸데 없는 고민을 너무 길게 한 느낌이 있음.
-- **SlashSkill은 이걸로 마무리.** 며칠 걸렸냐 후
-
-## 보스 스킬 이펙트 시작
-- 우선 영역 표시부터 시작. 범위 스킬에 사용한 요소들은 `Operator`의 요소만을 받지 않기 때문에 기능은 거의 그대로 넣을 수 있을 것 같다. 
-
-- 바닥 표시 관련
-	- 알파값이 커졌다가 작아졌다가를 반복하는 이펙트를 구현할 것
-	- 셰이더로 구현하는 건 타이밍 때문에 맞지 않을 거 같음. 파티클 시스템으로 ㄱㄱ
-	- **`Color over Lifetime`을 구현할 때 갯수 제한**이 있다. 없는 줄 알았음 ㅋㅋ
-
-### 깜빡이는 효과 구현
-- 처음엔 **느리게 깜빡이다가 나중엔 빠르게 깜빡이는 효과를 구현**하고 싶은데, 파티클을 얼마나 구현할지, `lifetime`을 어떻게 설정할지 등이 고민되는 부분임
-- `EaseIn`도 알아봤다. 애니메이션 등에서 자연스러운 움직임을 사용할 때 쓰는 함수임
-- 이걸 제미나이한테 계산을 맡겨봤는데 마지막 부분에 깜빡이는 효과가 갑자기 너무 급해지는 현상이 있었음.
-- 그래서 눈대중으로 보고 이펙트를 구현했다.
-	- 대신 `Ease` 시리즈에서 아이디어를 얻은 건 있다 : **초반에 느릿하게 깜빡이는 부분은 큰 변동 없이 여러 번(2~3번) 보여주는 것이 포인트 같음.** 
-- 일단은 5단계로 가져감
-	- 0.75 -> 0.7 -> 0.6 -> 0.45 -> 0.25
-![[Area_Anticipation.gif]]
-> 이렇게 구현하면 대충 3초 근처로 전조를 맞출 수 있다. 일단은 여기까지 진행함.
-
-# 250828 - 짭명방
-
-## SlashSkill 완성하기
-
-### 이펙트
-- 결국 버전 1을 사용함.
-
-![[Skill_Slash_v1_Final.gif]]
-
-구름이 모이는 효과, 1번째 공격에도 작은 Beam 추가, 각 슬래쉬에 서브 에미터로 파티클 추가 등등의 작업을 추가로 거쳤다.
-
-일단은 이 정도로 하고 실제 효과 구현함.
-
-### 효과
-- 기존 `SlashSkill`을 보면...
+>- 보스 범위 스킬 구현
+>	- `Anticipation` 이펙트(완)
+>- 스킬 시전 시 보스에게 나타나는 스킬 시전 이펙트 `VFX_Cast_BossRangedSkill_v1` 구현
+- 작업을 빨리 하고 싶은데 설계할 때 어떻게 해야할 지 뇌가 하얘지는 것이에요~ 이럴 때 참 답답하고 조급해진다.
+- AI를 활용해서 개요를 짜고 있긴 한데 가끔 필요 없거나 기반 스크립트를 다 넘겨주지 않아서 괜히 더 복잡해지는 답변이 올 때도 있다. 
+- AI를 어떻게 써야 할지는 쓸 때마다 참 고민되는 부분. 클로드 코드마냥 스크립트를 항상 박아놔야 하나. 
+## 보스 범위 스킬 구현
+- 스크립트(Sun Particle)
 ```cs
-protected override void PlaySkillEffect(Operator op)
+using UnityEngine;
+using System.Collections;
+
+public class BossSunSkillController : MonoBehaviour
 {
-	if (slashEffectPrefab == null) return;
+    [Header("Sun Particle Settings")]
+    [SerializeField] private ParticleSystem mainParticle;
+    [SerializeField] private GameObject sunObject;
+    [SerializeField] private float sunSpeed = 1f; // 일단 이렇게 구현. ScriptableObject를 받아서 구현해야 할 수도 있음.
+    [SerializeField] private float sunDuration = 3f; // 파티클이 내려오는 시간.
 
-	Vector3 spawnPosition = op.transform.position + op.transform.forward * 0.5f;
-	Quaternion spawnRotation = Quaternion.LookRotation(op.FacingDirection);
-	GameObject effectObj = Instantiate(slashEffectPrefab, spawnPosition, spawnRotation);
+    [SerializeField] private float startYPos = 3f;
 
-	SlashSkillController controller = effectObj.GetComponent<SlashSkillController>();
-	if (controller != null)
+    private void Start()
+    {
+        Initialize();
+    }
+
+    // 파티클 시스템 실행 및 효과 재생
+    public void Initialize()
+    {
+        StopAllCoroutines();
+
+        // 위치 초기화
+        sunObject.transform.localPosition = new Vector3(0f, startYPos, 0f);
+
+        // 파티클 시스템 재생
+        mainParticle.Play(true);
+
+        // Sun 파티클 위치 변화 코루틴 시작
+        StartCoroutine(FallSunParticle());
+    }
+
+    public IEnumerator FallSunParticle()
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime <= sunDuration)
+        {
+            sunObject.transform.localPosition = new Vector3(
+                sunObject.transform.localPosition.x,
+                sunObject.transform.localPosition.y - sunSpeed * Time.deltaTime,
+                sunObject.transform.localPosition.z
+            );
+
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }        
+    }
+}
+```
+
+> 이거 자체는 Boss 스킬에 포함된 것중 하나임. 본격적인 효과가 나타나기 전, 해당 위치에 대미지가 들어갈 것이라는 `Anticipation` 개념이다. 
+
+## Boss 스크립트 설계와 리팩토링
+- `Enemy`의 동작을 따르되 2개의 스킬이 추가된다.
+- 근거리 스킬 : 저지당했을 때 자신을 저지한 적에게 대미지를 주고 그 다음 타일로 통과
+- 원거리 스킬 : 범위 내의 오퍼레이터를 중심으로 13칸 범위에 대미지 (및 틱뎀)
+
+- `EnemyBoss`의 거동은 `Enemy`를 상속받되 스킬에 관한 로직만 추가하면 될 것 같음. 
+
+>[!question]
+>- 기존의 `BaseSkill`은 `Operator`를 위주로 설계되었음. `Enemy`에 사용되는 스킬은 별도의 개념으로 가야할까?
+>-> `BaseSkill` 위에 추상화 클래스를 하나 더 추가한다. `UnitEntity Caster`를 받게끔. 
+
+### Update - 템플릿 메서드 패턴
+- 기존에 `Enemy`에 구현한 행동 로직을 별도의 가상 메서드로 분리한다. 자식 클래스가 생겼기 때문에, 자식 클래스에서 별도의 행동이 필요하다면 거기서 오버라이드해서 사용하도록 함.
+```cs
+protected override void Update()
+{
+	if (StageManager.Instance!.currentState == GameState.Battle && // 전투 중이면서
+		currentDespawnReason == DespawnReason.Null // 디스폰되고 있지 않을 때
+		)
 	{
-		controller.Initialize(op, op.FacingDirection, effectSpeed, effectLifetime, damageMultiplier, skillRangeOffset, op.OperatorData.HitEffectPrefab, op.HitEffectTag);
+		// 행동이 불가능해도 동작해야 하는 효과
+		UpdateAttackDuration();
+		UpdateAttackCooldown();
+		base.Update(); // 버프 효과 갱신
+
+		if (HasRestriction(ActionRestriction.CannotAction)) return;
+
+		// 판단하고 행동하는 로직을 가상 메서드로 분리, 자식 클래스에서 별개로 구현할 수 있도록 함
+		// 이를 템플릿 메서드 패턴이라고 한다.
+		DecideAndPerformAction();
+	}
+}
+
+// 행동 규칙. 원래는 Update에 있던 내용들이다.
+protected virtual void DecideAndPerformAction()
+{
+	if (nextNodeIndex < pathData.nodes.Count)
+	{
+		if (AttackDuration > 0) return;  // 공격 모션 중
+
+		// 공격 범위 내의 적 리스트 & 현재 공격 대상 갱신
+		SetCurrentTarget();
+
+		// 저지당함 - 근거리 공격
+		if (blockingOperator != null && CurrentTarget == blockingOperator)
+		{
+			if (AttackCooldown <= 0)
+			{
+				PerformMeleeAttack(CurrentTarget!, AttackPower);
+			}
+		}
+		else
+		{
+			// 바리케이트가 타겟일 경우
+			if (targetBarricade != null && Vector3.Distance(transform.position, targetBarricade.transform.position) < 0.5f)
+			{
+				PerformMeleeAttack(targetBarricade, AttackPower);
+			}
+
+			// 타겟이 있고, 공격이 가능한 상태
+			if (CanAttack())
+			{
+				Attack(CurrentTarget!, AttackPower);
+			}
+
+			// 이동 관련 로직.
+			else if (!isWaiting)
+			{
+				MoveAlongPath(); // 이동
+			}
+		}
 	}
 }
 ```
-> `SlashSkillController`라는 컴포넌트를 가진 이펙트 오브젝트를 하나 생성했다. 
-> 이 컨트롤러는 목표 타일 위에 있는 적들에 대해 파티클과 적이 충돌했을 때 대미지를 입히는 방식으로 구현되었다. 1개의 검날 파티클이 앞으로 나아가는 방식으로 구현됐기 때문이다.
+> 이전에도 이런 방식으로 몇 번 구현한 적은 있지만, 이름은 몰랐다. 이걸 **`템플릿 메서드 패턴`이라고 함.** 
 
-- 그런데 지금의 구현은 4개의 타일에 콜라이더를 놓고, 거기에 적이 있다면 **이펙트의 타이밍에 맞춰서 대미지를 넣는 방식으로 구현**하면 된다. 어떻게 보면 `ArcaneField`와 비슷한 면이 있겠음. 
+## Boss Skill 구현
+### BaseSkill 리팩토링
+- `BaseSkill -> OperatorSkill`로 변경
+- 기반이 되는 `UnitSkill`이라는 스크립트 추가.
+	- `BossSkill`은 이를 상속받아서 만듦.
+- `BaseSkill`은 `OperatorSkill`으로 이름을 변경. 
+	- 최상위 클래스의 `caster`는 `UnitEntity`이므로 `Operator`로 사용하고 싶다면 별도의 읽기 프로퍼티 필드만 하나 추가해주면 됨.
+```cs
+protected Operator Caster => caster as Operator;
+```
 
-#### 또 컴퓨터가 말썽이다
-- 잘 돌아가다가 갑자기 멈추더니 화면들 다 나감. 컴퓨터는 계속 켜진 상태. 반복적으로 발생하는 이슈라서 결국 다시 본체를 열었다.
-- 그래픽 카드를 뺐다가 다시 꼈다. 
-	- 램 이슈면 차라리 나은데 그래픽 카드는 나사까지 돌려야 하니까 배로 귀찮다. 슬롯에 끼워도 나사 고정 때문에 위치가 조정되는데, 그래서 나사를 조이기 전에 잘 돌아가다가 나사를 조인 후에 또 돌아가지 않는 등의 이슈도 있었다.
-	- 한 번에 해결되지 않아서 여러번 뺐다가 꼈다.
+### Boss Skill 구현
+- 보스가 하나 있는 게임이라 `EnemyBoss`에 죄다 통합해버리는 방법이 더 빠르겠지만, 그래도 **설계를 해봤냐 아니냐는 차이가 있는 것 같아서 구현**함.
+- 우선 보스 스킬들이 공유하는 요소를 만듦
+	- 쿨타임
+	- 이펙트
+	- 메서드
+- 스크립트들 정리하고 있다. 뭐 하고 있는지 슬슬 헷갈리므로 이건 쉴 때가 되었다는 뜻. 쉬고 마저 한다.
 
-- 만약 **컴퓨터를 바꾼다면 9060xt 16gb 정도를 보고 있는데..** 지금 지출하기엔 좀 큰 돈이다.
-	- 플레이엑스포 때 네오위즈 부스에서 내 바로 앞에서 다른 사람이 가져간 9070xt가 아른거린다..
+### CastVFX 구현
+- 내 게임에는 **엔티티들의 애니메이션이 없기 때문에 스킬을 시전할 때는 스킬을 시전한다는 표시**를 하는 게 좋을 듯
+- **오퍼레이터의 경우 별도로 구현하지 않았음** : 사용자의 조작 직후에 바로 스킬이 실행되기 때문에, 스킬 실행한다는 별도의 표시가 필요할 것 같지 않아서.
 
-#### 아무튼 다시 돌아옴
-- 위에서는 "별도의 콜라이더를 만들고 거기에 충돌한 적들에게 대미지를 넣는다"라고 썼다.
-- 그런데 공격 범위 타일이 정해져 있다면, **스킬 자체가 콜라이더를 갖는 경우 범위 밖의 적에게도 대미지를 주는 일이 발생할 수 있음.** 의도치 않게 대미지가 들어갈 수 있기 때문에 설명과는 조금 다른 효과를 가질 수 있겠다는 생각이 든다. 
-- 그래서 타일 위에 있는 적들을 가져오는 정도로만 구현하면 충분할 것 같음. 별도의 콜라이더를 넣지 않고. 
+![[VFX_Cast_BossRangedSkill_v1.gif]]
 
-#### 스크립트 구현과 디테일 설정
-- 기존 `SlashSkill`은 `Legacy`로 빼뒀다. 이름 앞 뒤에 Legacy를 붙여서 남겨놨음.
-- 이펙트 안에 실제 스킬 효과도 함께 들어갔다.
-- 설계도 안에 스킬의 효과를 넣는 구현도 있지만, 설계도는 `MonoBehaviour`를 상속받지 않은 요소이므로 지금처럼 타이밍에 맞춰 대미지를 넣는 코루틴 구현이 불가능하다. 
-- 그래서 설계도인 `SlashSkill.cs`는 공격 범위까지만 설정해서 `Controller`에 넘겨주고, `Controller`는 이를 받아 이펙트와 실제 공격 판정 기능을 수행한다.
+놀랍게도 재탕할 것들이 꽤 있었다. `Cylinder`의 벽 부분이라든가, `Trail02` 같은 요소라든가. 
+저 `Trail`이 각이 져서 사라지는 모습이 살짝 어색하므로 `Trail`은 파티클이 사라질 때 함께 사라지도록 수정했다. 
 
-- 전체적인 구현은 마쳤음.
-
-- **스킬 이펙트는 잘 나타나지만 판정이 제대로 들어가지 않는 이슈** 수정.
-	- 수정 완료 : `SlashSkill`에 공격 범위를 안 넣었다 엌ㅋㅋ
-
-- **스킬을 시전하는 동안에는 평타 공격을 멈추는 구현도 추가**해야 할 듯. 
-	- 기존의 `ActionRestriction`이 있었다. 이걸 스킬 컨트롤러에서 스킬이 시작할 때 오퍼레이터에게 걸고, 스킬이 끝날 때 해제하는 방식의 구현을 시도해봤음.
-		- 기능적으로는 문제가 없지만, **구조상 어떤 제약을 걸고 해제하는 로직은 오퍼레이터 자체에서 이뤄져야 한다**고 한다.
-	- ~~그러면 스킬에 공격을 중단해야 하는지를 표시해두고, 오퍼레이터가 스킬을 사용할 때 해당 부분을 체크해서 공격을 중단해야 하는 경우 자신에게 제약을 걸고 스킬이 끝날 때 푸는 방식으로 구현해야겠음.~~
-	- 기존 스킬 중 스킬 동작 중에는 공격하지 않는 스킬이 있었다. `ArcaneField`인데, `CannotAttackBuff`를 `Operator`에게 추가해서 공격을 막는 방식이었음.
-		- 다만 이 방식은 "여러 오퍼레이터가 같은 스킬을 쓸 때" 문제가 발생할 수 있다고 한다. **별도의 인스턴스를 갖는 개념이 아니기 때문에, `ScriptableObject`에서 상태를 갖는 건 권장되는 방식은 아니라는 듯.** 
-		- 즉 다른 캐릭터의 스킬 동작에 의해 기존 캐릭터의 스킬 동작이 덮어씌워질 수 있다는 말임
-	- 근데 그러면 어떻게 해제해야 할까?
-		- **`UnitEntity`에서 스킬 단위로 버프를 해제할 수 있게 만듦.** 스킬이 끝나는 타이밍에 자신을 보내서 자신과 관련된 버프들을 해제하게 만듦.
-		- **각 버프는 생성될 떄 어떤 스킬에 의해 생성되었는지 설정을 추가함**
-			- **생성자를 Buff에 구현하지는 않았음.** 자식 생성자에서 대부분의 요소를 일일이 다시 쓰는데 이게 코드가 더러워보여서..
-
-- 기능 구현은 거의 끝남. 저 스킬 사용 중 공격을 막는 로직 구현에 시간을 좀 썼다.
-	1. 판정은 0초, 0.3초 0.45초, 0.6초에 발생한다. 그 동안 가드는 공격하지 않음.
-	2. 배율은 1타는 공격력의 2배, 3번에 걸쳐 들어가는 대미지들은 각각 1.25배가 들어간다. 
-
-![[Skill_Slash_v1_RealFinal.gif]]
-- 이펙트가 지나간 다음에도 피격 이펙트가 나오는게 살짝 어색한 감이 있어서, 판정 간격을 줄여보고 있다. 위 gif는 간격이 0.15초였음.
-- 0.1초가 적당해보여서 그렇게 설정함. 오늘은 여기까지! 내일은 아이콘 수정하고 드디어 보스 구현을 시작할 수 있겠다. 더 수정할 게 있나? 모르겟음.
-
-- 비교) 기존 구현
-![[Skill_Slash_Legacy.gif]]
-
-
-
-### 스킬 아이콘
-![[Skill_Slash_128.png]]
-- 기존 스킬 아이콘
-- 이걸 넣어본 다음에 나노바나나를 써봤는데 말한 대로 반영되지 않는다. 설명을 잘못한 탓일까 ㅋㅋ 어쨌든 스킬의 형태가 달라졌으니 아이콘도 다시 그려야 함
-
-
-# 250827 - 짭명방
-
-## SlashSkill 이펙트 구현(계속)
-- 좌락 스킨 버전 3스킬도 참고해봤다.
-- 반쪽짜리 화살표 이펙트가 먼 곳에서 날아와서 꽂히고 마지막에 두루마리가 펼쳐지는 모양임
-	- 이 화살표 이펙트들은 0.2초 정도 유지된다.
-	- 실제 시간으로 보면 정말 순식간에 지나가니까 보이지 않는 요소인데, 저런 짧은 순간에도 "어디선가 이펙트가 날아온다" 정도의 인식을 할 수 있었음.
-- 그러면 지금의 검날 이펙트의 경우도 단순히 나타났다가 사라지는 게 아니라 `Guard`로부터 뻗어나오는 방식으로 연출할 수 있겠다.
-
-### 일단 결과물
-- 버전1 : 직진 후 검기
-![[Skill_Slash_v1 1.gif]]
-
-- 버전2 : 검기 후 직진
-![[Skill_Slash_v2.gif]]
-
-> 개인적으론 버전2가 마음에 드는데, 뭔가를 모으는 이펙트와 검기가 같이 나가는 건 이상하면서 번잡하다는 생각도 든다. 
-> 스킬은 누르는 즉시 나가야 하는 걸 생각하면 버전 1이 나을지도 모르겠다. 원본 게임에서도 스킬을 누른 다음에 딜레이가 있는 경우는 거의 없는 걸로 기억함. 그나마 마르실 정도?
-
-### 갑자기 컴퓨터가 사망했다.
-다행히 소생시켰다.
-- 램 탈착도 해보고 글카 탈착도 해보고 메인보드 배터리도 다시 바꾸는 등 
-![[Pasted image 20250827234616.jpg]]
-
-...이기 때문에 일은 마무리. **이펙트랑 스킬 효과 모두 다시 생각해봐야 할 듯.**
-이럴 때마다 컴퓨터를 바꿔야 하나 싶지만 100만원 정도 되는 거금을 쓸 걸 생각하면 또 있는 거나 잘 쓰자~로 회귀.
-
-# 이전 일지단
+# 이전 일지
 
 - 깃허브 링크는 향후 프로젝트 폴더 링크 이동에 따라 손상될 수 있음
 - 이 경우 대부분 `4.Archive` 폴더에서 볼 수 있다.
