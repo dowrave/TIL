@@ -20,18 +20,6 @@
               "icon": "lucide-file",
               "title": "README"
             }
-          },
-          {
-            "id": "c30232f627e19ea3",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.9.12"
-              },
-              "icon": "lucide-book-up",
-              "title": "릴리즈 노트 1.9.12"
-            }
           }
         ]
       }
@@ -225,9 +213,10 @@
   },
   "active": "bfcf7769fb748efb",
   "lastOpenFiles": [
+    "1. Projects, Ongoing/README.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트/프로크리에이트로 텍스쳐 작업 시 유의할 점.md",
     "3. Resource/Image/VFX_Cast_BossRangedSkill_v1.gif",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/짭명방_25년 8월.md",
-    "1. Projects, Ongoing/README.md",
     "3. Resource/Image/BossSkill_Anticipation.gif",
     "3. Resource/Image/Area_Anticipation.gif",
     "3. Resource/Image/SlashSkill_256.png",
@@ -237,7 +226,6 @@
     "3. Resource/Image/Skill_Slash_v1_Final.gif",
     "3. Resource/Image/Pasted image 20250827234616.jpg",
     "3. Resource/Image/Skill_Slash_v2.gif",
-    "3. Resource/Image/Skill_Slash_v1 1.gif",
     "1. Projects, Ongoing/유니티 VFX 공부/2_유니티VFX_VFX의 기초, 원칙.md",
     "1. Projects, Ongoing/유니티 VFX 공부/3_유니티VFX_제작 전.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트/셰이더 혼합 개념 정리.md",
@@ -263,7 +251,6 @@
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트/파티클 시스템_상속 시 유의사항.md",
     "1. Projects, Ongoing/유니티 VFX 공부/8_유니티VFX_성능.md",
     "1. Projects, Ongoing/유니티 VFX 공부/9_유니티VFX_결론.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트/프로크리에이트로 텍스쳐 작업 시 유의할 점.md",
     "1. Projects, Ongoing/유니티 VFX 공부/유데미 강의 - Gabriel Aguiar",
     "1. Projects, Ongoing/유니티 VFX 공부/5_유니티VFX_스파크",
     "1. Projects, Ongoing/유니티 VFX 공부",
