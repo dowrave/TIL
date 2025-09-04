@@ -53,6 +53,127 @@
 >	- 스테이지 1-3 완성
 >	- 남은 스테이지들 밸런스 수정
 
+# 250904 - 짭명방
+>[!done]
+>- 보스 스킬 구현
+>- `ScriptableObject`의 정보들을 이용한 `Initialize` 관련
+>	- "파라미터가 3~4개를 넘어가면 하나의 객체로 묶는 걸 고려하기 시작해야 한다" 라는 원칙이 있다고 함
+
+
+## ScriptableObject의 정보를 활용한 Initialize
+```cs
+// ScriptableObject에서 관리하는 Skill에 관한 정보. Initialize에 개별 필드를 전달하고 있다. 
+controller.Initialize(
+	caster: caster,
+	skillRangeGridPositions: caster.GetCurrentSkillRange(),
+	fieldDuration: castTime,
+	tickDamageRatio: tickDamageRatio,
+	interval: damageInterval,
+	castTime: castTime,
+	fallDuration: fallDuration,
+	lingeringDuration: lingeringDuration,
+	hitEffectPrefab: caster.BaseData.HitEffectPrefab, // 임시
+	hitEffectTag: $"{caster.BaseData.entityName}_{skillName}"
+);
+```
+> 이런 식으로 구현하면 파라미터가 추가될 때마다 계속 수정해야 함. 
+
+그래서 이 `ScriptableObject`를 직접 전달하는 방식으로 수정한다.
+
+>[!question]
+>1. 개별 필드를 `public`으로 정의, 프로퍼티를 별도로 정의할 필요 없이 직접 접근할 수 있게 한다
+>2. 지금처럼 개별 필드를 `Initialize`로 전달한다
+> 3. **개별 필드를 `[SerializeField] private`으로 정의하고 게터 프로퍼티를 열어놓는다**
+
+...여태까지 해왔던 것처럼, 3번이 가장 좋은 선택이다. 외부에서 실수로라도 변경할 수 없게 해야 하기 때문임. 
+
+## 일단 프리팹 만들고 초기화하는 것까지는 구현함
+```cs
+private IEnumerator PlaySkillCoroutine()
+{
+	// 1. 영역 표시
+	VisualizeSkillRange(caster, skillRangeGridPositions);
+
+	// 2. 해 파티클 목표 위치에 떨어지는 효과 실행
+	fallingSunController.Initialize();
+	yield return new WaitForSeconds(fallDuration); // 낙하시간 동안 대기
+
+	// 3. 낙하 후에 폭발 이펙트 실행, 대미지를 가함
+
+	ApplyExplosionDamage();
+
+
+
+	// 4. 폭발 시 범위 타일들에 임팩트 대미지를 주고 지속 대미지를 입히는 필드가 남음
+
+	yield return new WaitForSeconds(lingeringDuration); // 필드 지속시간 동안 대기
+}
+```
+> 일단 전체적인 프로세스는 이런 느낌이다.
+
+여기서 추가로 구현할 거는
+1. 폭발 이펙트 구현
+2. 지속 대미지 이펙트 남기기
+3. 지속 대미지 효과 구현하기
+
+... 등이 있으며 지금 고민 중인 거는
+- 오브젝트 풀링을 구현하는 위치 : `CastVFX`나 `BossExplosionSkillController`, `hitVFXPrefab`, `AreaVFX` 등은 `ScriptableObject`에서 구현한다고 치는데 스킬의 움직임에 딸려 있는 해 파티클이 떨어지는 효과나 바닥에 남는 지속 대미지 이펙트 등은 어디서 구현하면 좋을지 모르겠음. 
+	- 저것들을 프리팹인 `BossExplosionSkillController`에 딸려 있는 개념으로 한번에 넣어서 구현해야 하나? 아니면 아예 따로 빼서 구현해야 하나?
+		- 한 번에 넣어서 구현해도 무방함 : 여러 번 사용하지만 한 번에 여러 개가 등장하는 스킬은 아니기 때문임 - 이 경우 스크립트를 어떻게 짜야 하나?
+		- `AreaVFX`는 기존에 `ScriptableObject`인 `Skill`의 설계도에서 생성 로직을 넣어놨음. 지속 대미지 이펙트도 같은 로직으로 넣을 수 있음. 
+
+일단 쉬고 와서 계속함.
+
+### 어떤 식으로 구현해야 하는가?
+
+1. 스킬 컨트롤러, 혹은 스킬 핸들러는 파티클 시스템이 나타나는 타이밍과 실제 스킬의 효과를 담당함.
+2. 개별 이펙트 프리팹은
+	1) `ScriptableObject`에서 `InitializeObjectPool`에서 생성함. 이는 `EnemyBoss`가 생성되는 타이밍에 실행된다.
+	2) 스킬 컨트롤러에서는 태그만을 이용해서 원하는 위치에 해당 오브젝트를 생성시킴. 컨트롤러의 자식에 이펙트를 둘지 말지는 경우에 따라 다르다. 꼭 하나로 묶어둘 필요는 없다.
+
+... 이런 식으로 정리하겠음
+
+#### 추가로 ScriptableObject에서 태그를 갖게 할 건데
+- 직접 필드를 갖는 것보다는, 항상 동일한 결과를 반환하는 메서드를 구현하는 구현도 가능하다고 함. 이를 `Stateless` 패턴이라고 한다.
+- 
+```cs
+// 항상 동일한 태그를 반환하는 메서드
+public string GetSkillEffectTag(UnitEntity caster) => $"{caster.name}_{skillName}_skillEffect";
+public string GetHitVFXTag(UnitEntity caster) => $"{caster.name}_{skillName}_hit";
+// 기타 이펙트 태그들 구현..
+```
+이제 스킬 컨트롤러에서는 `SkillData`만 갖고 있고, 관련 정보를 얻으려면 `SkillData`를 참조하기만 하면 됨. `SkillData`에서는 인게임 중에 변하는 정보가 없음!
+
+개요 부분만 쫙 쓰고 일단 마무리함. 비염 기운이 또 올라왔다.
+```cs
+private IEnumerator PlaySkillCoroutine()
+{
+	// 1. 영역 표시
+	VisualizeSkillRange(caster, skillRangeGridPositions);
+
+	// 2. 해 파티클 목표 위치에 떨어지는 효과 실행
+	GameObject sunParticleObj = ObjectPoolManager.Instance.SpawnFromPool(skillData.GetFallingSunVFXTag(caster), mainTarget.transform.position, Quaternion.identity);
+	FallingSunVFXController sunParticleSystem = sunParticleObj.GetComponent<FallingSunVFXController>();
+	if (sunParticleSystem != null)
+	{
+		sunParticleSystem.Initialize();
+	}
+	yield return new WaitForSeconds(fallDuration); // 낙하시간 동안 대기
+
+	// 3. 낙하 후에 폭발 이펙트 실행, 대미지를 가함
+
+	// 필요) 폭발 이펙트 실행 메서드
+	ApplyExplosionDamage(); // 실제 효과
+
+	// 4. 폭발 시 범위 타일들에 임팩트 대미지를 주고 지속 대미지를 입히는 필드가 남음
+	// 필요) 타일 틱뎀 이펙트 실행 메서드
+	ApplyTickDamage(); // 틱댐 실제 효과
+
+	yield return new WaitForSeconds(lingeringDuration); // 필드 지속시간 동안 대기
+}
+```
+
+
 # 250903 - 짭명방
 >[!done]
 >- EnemyBoss 스킬 구현하기
