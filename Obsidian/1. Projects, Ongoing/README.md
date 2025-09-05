@@ -36,22 +36,109 @@
 
 >[!wip]
 >- 보스 구현
->	- 스킬
+>	- 원거리 폭발 스킬
 >		- 이펙트
 >			- `Anticipation`, `Cast` 이펙트 구현 완료
->				- 참고) 스킬 시전에 소요되는 시간은 **0.5초**이며, 이 동안 보스는 움직이거나 공격하지 못한다.
->			- `Climax`, 즉 실제 폭발 효과는 구현해야 함
->		- 효과(스크립트)
->			1. 13칸에 범위 대미지
->			2. 자신을 저지한 적을 지나가기
->	- 보스 스크립트 구현(거의 다 된 듯
->- 쉴드 스킬은 냅둘지 말지 아직 모르겠음. 
+>			- **폭발, 바닥에 틱댐 이펙트는 구현 필요**
+>		- 스크립트
+>			- **전체적인 흐름은 정리 완료. 세부적으로 다듬을 필요 있음**
+>	- 근거리 통과 스킬
+>		- 구현 필요 : **이펙트, 실제 효과**
+>	- **보스 스크립트는 구현**한 듯? 이것도 테스트하면서 다듬는 단계
+>- 쉴드 스킬
+>	- 유지? 
 
 
 >[!todo]
 >- 남은 작업
 >	- 스테이지 1-3 완성
 >	- 남은 스테이지들 밸런스 수정
+
+
+# 250905 - 짭명방
+>[!done]
+>- 보스 원거리 스킬 컨트롤러 큰 흐름은 완성함
+>	- 세부적으로는 버그가 발생 중
+
+>[!WIP]
+>- 보스 스킬 구현
+>	- 컨트롤러 설계 완성
+>	- 세부 이펙트(폭발, 바닥) 이펙트 구현
+
+## 컨트롤러의 전체 동작
+```cs
+private IEnumerator PlaySkillCoroutine()
+{
+	// 1. 영역 표시
+	VisualizeSkillRange(caster);
+
+	// 2. 해 파티클 목표 위치에 떨어지는 효과 실행
+	GameObject sunParticleObj = ObjectPoolManager.Instance.SpawnFromPool(skillData.GetFallingSunVFXTag(caster), mainTarget.transform.position, Quaternion.identity);
+	FallingSunVFXController sunParticleSystem = sunParticleObj.GetComponent<FallingSunVFXController>();
+	if (sunParticleSystem != null)
+	{
+		sunParticleSystem.Initialize(fallDuration);
+	}
+	yield return new WaitForSeconds(fallDuration); // 낙하시간 동안 대기
+
+	// 3. 낙하 후에 폭발 이펙트 실행, 대미지를 가함
+	PlayExplosionVFX();
+	ApplyInitialEffect(null); // 실제 효과
+
+	// 4. 폭발 시 범위 타일들에 임팩트 대미지를 주고 지속 대미지를 입히는 필드가 남음
+	PlayPeriodicVFX();
+	StartCoroutine(PeriodicEffectCoroutine());
+
+	yield return new WaitForSeconds(lingeringDuration); // 필드 지속시간 동안 대기
+
+		ObjectPoolManager.Instance.ReturnToPool(skillData.GetSkillControllerTag(caster), gameObject); // 풀로 되돌림
+}
+```
+
+## 스킬 범위 인식 관련
+- 원래 `Enemy`에 들어가 있는 `AttackRangeCollider`를 이용하려고 했음
+- 근데 공격 타입이 `Melee`면 기본적으로 비활성화하는 설정이다.
+- 보스 한정으로 별도로 할당하는 `EnemyBossSkillRangeCollider`를 구현하는 쪽으로 작업
+	- 원거리 스킬에 한해서만 동작함
+
+
+## 아 왜 스킬 안써!!!!!!
+- 로 계속 머리 싸매는 중!
+
+
+## 세부사항 구현
+
+### 이펙트 실행 중 부모가 파괴됐을 때
+```cs
+ParticleSystem castVFX = castVFXObject.GetComponent<ParticleSystem>();
+if (castVFX != null)
+{
+	castVFX.Play(true);
+}
+
+// 시전 동작 중에는 대기 - 이거 기다리는 중에 비활성화되면 그 아래는 실행되지 않음
+yield return new WaitForSeconds(castTime);
+ObjectPoolManager.Instance.ReturnToPool(GetCastVFXTag(caster), castVFXObject);
+```
+> 만약 `CastVFX`가 실행되고 도중에 `caster`가 파괴됐다면?
+> - 이 코루틴의 실행 자체가 중지되기 때문에 실행 중인 `castVFX`가 풀로 돌아가지 못함
+
+따라서 그냥 `ParticleSystem`으로 넣는 것보다는 스스로 실행 시간을 정해두고 실행이 끝나면 스스로 오브젝트 풀로 돌아가는 스크립트를 구현하는 게 좋다. 어차피 이펙트는 프리팹으로 구현하기도 하니까.
+
+그래서 이 개념을 확장하면, **오브젝트 풀링으로 관리되는 거의 모든 객체는 이런 구조를 이용하면 좋다.** 
+
+### Caster가 파괴되어도 스킬은 유지되게 하고 싶을 때
+>[!note]
+>- 참고) 함께 파괴되게 하려면 단순히 `SetParent`로 자식 오브젝트로 넣으면 가장 간단함
+
+>[!question]
+>- `caster`가 파괴되어도 스킬 효과를 유지시키고 싶다고 하자. `caster`의 대미지를 가져와야 하는데, `caster`가 파괴되었다. 어디서 가져와야 할까?
+
+>[!answer]
+>- **`Initialize`할 때 스킬 컨트롤러 자체에 `caster`의 공격력을 복사해두면 됨.**
+
+이게 답변을 얻으면 와 되게 당연한 거네? 싶은데, 막상 궁금할 때는 이런 생각이 안 떠오른다.
+
 
 # 250904 - 짭명방
 >[!done]
