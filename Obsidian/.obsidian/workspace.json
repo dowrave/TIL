@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "b7b961ee21b5727e",
+        "id": "22e5de205ae41dc4",
         "type": "tabs",
         "children": [
           {
-            "id": "bfcf7769fb748efb",
+            "id": "cd570733c9cf412c",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1. Projects, Ongoing/README.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "README"
+              "title": "새 탭"
             }
           }
         ]
@@ -88,7 +84,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 296.5
+    "width": 343.5
   },
   "right": {
     "id": "e94ea327b6cf935a",
@@ -211,27 +207,26 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "bfcf7769fb748efb",
+  "active": "cd570733c9cf412c",
   "lastOpenFiles": [
+    "1. Projects, Ongoing/유니티 VFX 공부/유데미 강의 - Gabriel Aguiar/폭발 이펙트 강의/5. Aftermath 구현 - GroundCrack.md",
+    "1. Projects, Ongoing/작업 일지(Readme).md",
+    "3. Resource/Image/VFX_Explosion_Crack 1.gif",
+    "3. Resource/Image/VFX_Explosion_Crack.gif",
+    "1. Projects, Ongoing/유니티 VFX 공부/유데미 강의 - Gabriel Aguiar/폭발 이펙트 강의/7. Aftermath 구현 - Smoke.md",
+    "3. Resource/Image/Pasted image 20250911165517.png",
+    "3. Resource/Image/Pasted image 20250911165512.png",
+    "3. Resource/Image/ForObsidian_GroundCrack02_albedo.png",
+    "3. Resource/Image/ForExplain.png",
     "3. Resource/Image/VFX_Explosion_Fin.gif",
     "1. Projects, Ongoing/유니티 VFX 공부/유데미 강의 - Gabriel Aguiar/폭발 이펙트 강의/9. 바리에이션과 마무리.md",
     "1. Projects, Ongoing/유니티 VFX 공부/유데미 강의 - Gabriel Aguiar/폭발 이펙트 강의/8. 디테일 추가.md",
-    "1. Projects, Ongoing/README.md",
     "1. Projects, Ongoing/유니티 VFX 공부/유데미 강의 - Gabriel Aguiar/폭발 이펙트 강의/10. 마무리.md",
     "3. Resource/Image/Pasted image 20250910195044.png",
     "3. Resource/Image/Pasted image 20250910194931.png",
     "3. Resource/Image/VFX_Explosion_MidFin.gif",
-    "3. Resource/Image/VFX_BouncingParticle.gif",
-    "3. Resource/Image/Pasted image 20250910181916.png",
-    "3. Resource/Image/Pasted image 20250910180320.png",
-    "3. Resource/Image/Pasted image 20250910180101.png",
-    "1. Projects, Ongoing/유니티 VFX 공부/유데미 강의 - Gabriel Aguiar/폭발 이펙트 강의/7. Aftermath 구현 - Smoke.md",
-    "3. Resource/Image/Pasted image 20250910173915.png",
     "1. Projects, Ongoing/유니티 VFX 공부/유데미 강의 - Gabriel Aguiar/폭발 이펙트 강의/6. Aftermath 구현 - GroundImpact.md",
-    "3. Resource/Image/VFX_ExplosionUntilSmoke.gif",
-    "3. Resource/Image/Pasted image 20250910161136.png",
     "GroundImpact02_albedo.png.md",
-    "1. Projects, Ongoing/유니티 VFX 공부/유데미 강의 - Gabriel Aguiar/폭발 이펙트 강의/5. Aftermath 구현 - GroundCrack.md",
     "1. Projects, Ongoing/유니티 VFX 공부/유데미 강의 - Gabriel Aguiar/폭발 이펙트 강의/4. 충격 이펙트 - 플립북.md",
     "1. Projects, Ongoing/유니티 VFX 공부/유데미 강의 - Gabriel Aguiar/폭발 이펙트 강의/3. 부가 이펙트들.md",
     "1. Projects, Ongoing/유니티 VFX 공부/유데미 강의 - Gabriel Aguiar/폭발 이펙트 강의/2. 폭발과 연기 이펙트.md",
