@@ -576,7 +576,7 @@
 여기까지 만들어놓고 다시 기존 강의로 돌아감. 
 
 ## 최종 수정
-- 처음에 작업했던 `vfx_AreaOfEfefct_v1`을 `v2`로 복사해서 하나 생성해준다.
+- 처음에 작업했던 `vfx_AreaOfEffect_v1`을 `v2`로 복사해서 하나 생성해준다.
 - `Cylinder`에 위에서 작업했던 셰이더 그래프를 적용해줌. `MainSpeed`와 `NoiseSpeed` 값이 들어가면 된다.
 
 >[!warning]
