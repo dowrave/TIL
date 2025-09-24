@@ -51,6 +51,192 @@
 >	- 스테이지 1-3 완성
 >	- 남은 스테이지들 밸런스 수정
 
+# 250924 - 짭명방
+
+## 아틀라스 작업
+- 텍스쳐를 정리했으니까 이제 아틀라스로 만들어서 사용해본다. 
+- 자동화하는 방법도 있지만 일단 배운 대로 써먹어봄. 
+- 프로크리에이트로 옮겨서 정리하는데, `png` 파일은 투명한 배경이 그대로 1024 x 1024로 들어가는 게 아니라 **투명한 부분은 데이터가 없는 것처럼 취급해서 이미지의 비율이 캔버스의 비율을 유지하지 않는다.** 
+	- 그렇기 때문에 **실제로 이펙트를 넣은 상황과 다르게 동작할 수 있음.** 아틀라스에 넣는 과정에서 비율이 달라졌기 때문이다. 그래서 이펙트들에 대한 전반적인 재점검이 필요함
+
+### 참고) 아틀라스에 넣으면 안되는 텍스쳐
+- `Tiling And Offset`이 적용되는 텍스쳐
+	- **UV 기반으로 계산하기 때문에 한 이미지는 하나의 텍스쳐에 관한 정보만을 갖고 있어야 함**
+	- 물론 커스텀 셰이더를 구현하면 특정 UV 내에서만 반복되게끔 구현하는 것도 가능함
+	- 일단은 이렇게 알고 있자.
+
+### Sprite Sheet Animation에서 주의할 점
+- 1개의 텍스쳐를 골라서 띄울 때 Frame Over Time 값은 0으로 설정해야 함
+	- 1로 설정하면 의도한 값(인덱스) 다음의 텍스쳐를 지정하는 느낌으로 나타나고 있음
+
+### 기본적으로 Add랑 AB 위주로 수정
+- 나머지 셰이더들을 사용한 경우는 어떻게 처리할지 생각 좀 해야 할 듯
+- 보로노이로 구현한 게 있고 노이즈로 구현한 게 있고 이것저것 다양하다.
+
+```
+보류한 이펙트 목록
+- Attack에 있는 평타의 Slash 이펙트(Voronoi)
+- BuffOn에 있는 Spiral 이펙트 (Scroll)
+- 보스 스킬 시전 이펙트 - Trail (Scroll)
+- Arrow Hit 이펙트의 Corona (Scroll)
+- Hit_Explode 이펙트의 Distortion (UV Distortion)
+- Hit_Fire 이펙트의 Corona (Mat: Corona01_AddScrollRadial)
+- Hit_Heal 이펙트의 Spiral (Mat: Spira02_AddScroll)
+- Projectile_Orb_Heal 이펙트의 Sphere (Mat : Spehre01_AddScroll)
+- Explosion 스킬의 Explosion 부분 (Mat : NukeExplosion01)
+- Explosion의 FallingParticle (Mat: MeteorEffect01)
+- Explosion의 CrackedGround (Mat: Crack02)
+	  - Parallax Occlusion Mapping 때문임
+- Trail Renderer을 사용한 Trail들 : 텍스쳐 시트에 넣지 않음
+- SlashThrough의 Slash 효과들
+	- Slash(Outer, Inner, AB) : 커스텀 채널을 이용해 UV값에 따라 나타나는 효과
+	- Aura : Dissolve 효과
+
+
+기타 참고할 사항
+- VFX_Cast_BossRangedSkill에 사용한 30번째 인덱스의 경우 일부러 가로를 256으로 맞추지 않았는데 빈 공간이 보이는 이슈가 있음 : 몇 픽셀인데 생각보다 눈에 띈다.
+  
+```
+
+### 작업 중 텍스쳐 시트 2개로 분리
+- `Animation`에 해당하는 텍스쳐들은 별도 파일로 분리함
+
+> 일단 오늘은 여기까지
+> 다른 셰이더들을 어떻게 적용할지 생각해봐야겠음
+
+
+![[ForObsidian_VFXTextureSheet01 (1).png]]
+
+![[ForObsidian_AnimationTextureSheet01 (1).png]]
+
+
+
+
+# 250923 - 짭명방
+
+## 텍스쳐, 머티리얼 정리
+- 사용하지 않는 텍스쳐와 머티리얼을 정리하고 사용 중인 텍스쳐의 이름을 다듬을 예정
+- 머티리얼에서 사용하지 않는 텍스쳐는 사용하지 않는 텍스쳐로 봐도 되겠지? 
+- 문제라면 사용하지 않는 머티리얼의 경우인데.. `Find Reference In Projects`을 돌려봤는데 잘 동작하지 않는 듯.
+
+- 텍스쳐 
+```
+baldo01-3x3
+Beam01
+Circle01
+Cloud01
+Cloud03_3x3
+Corona01
+Corona02
+Crack01
+Defender128
+ExplosionDebris01
+Fire01_3x3
+GroundTexture01
+GroundCrack02_Albedo
+GroundCrack03
+GroundCrack03_Normal
+Gradient00
+GradientDBD01
+Gradient_BtmUp01
+Glow01
+Impact01
+Impact02
+Impact03
+Lightning01
+Lightning01-3x3
+Lightning01_Seamless
+medical_128
+Missile01
+Spark01
+swords_128
+SlashLeft01-2x2
+SlashMesh01
+Slash01_Albedo
+SlashAura01-1
+SlashThrough01
+Smash01
+Spiral01
+Thunder01
+Trail02
+Trail03
+Triangle01
+Wall01
+Wall03
+```
+
+여기 없는 것들을 정리함.
+
+- 머티리얼
+```
+AttackIcon01_Add
+Baldo01_Add
+Beam01_Add
+Beam01_Brighter
+Beam01_AB
+Crack01_Add
+Crack01_AB
+Crack02
+Cloud01_Add
+Cloud01_AB
+Cloud02_Add
+Circle01_Add
+Circle01_AB
+CrackedBall01
+Corona01_Add
+Corona01_AB
+Corona01_AddScrollRadial
+CylinderWall01_Add
+CylinderWall02_Add
+Debris01
+Distortion01
+DefenceIcon01_Add
+ExplosionDebris01_AB
+Fire01_Add
+GroundTexture01_AB
+HealIcon01_Add
+Impact01_Add
+Impact01_AB
+Impact02_Add
+Impact02_AB
+Impact03_Add
+Impact03_AB
+Kira02_Add
+Molotov01
+MeteorEffect01
+Missile01
+NukeExplosion01
+NoTexture_Add
+Orb01
+Spark01_Add
+Spark01_AB
+Spark01_AddScroll
+Sphere01_AddScroll
+Spiral01_AddScroll
+Spiral02_AddScroll
+Slash01_AddScrollRadial
+Slash01_AB
+Slash01_2x2_Add
+Slash01_2x2_AB
+Slash02_Add
+Slash02_AB
+SlashAura01
+Smash01_Add
+Smash01_AB
+Snowflake01_Add
+SmokeTrail01
+Thunder01_Add
+Thunder01_AB
+Trail02_Trail
+Trail03_Trail
+Trail04_Trail
+Trail06_Trail
+Wall02_WallAnimation
+Wall04_Add
+```
+
+- 새로 텍스쳐 만들면서 이미지나 머티리얼이 이중으로 관리되고 있는데 이런 부분들 수정해나가야 할 듯. 뱅가드 2스킬에 문제 발생했으니 참고.
+
 # 250922 - 짭명방
 
 ## VFX : SlashThroughSkill의 이펙트 수정
