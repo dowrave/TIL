@@ -34,22 +34,125 @@
 ### 작업 중
 
 >[!wip]
->- `SlashThrough` : 스킬 구현 완료, 이펙트 작업 진행 중
+>- 머티리얼 변경하면서 제대로 나타나지 않는 이펙트들 수정 중
+
 
 >[!todo]
+>- 오퍼레이터 A를 배치할 때, **방향 설정 로직 중 오퍼레이터 B의 위치에서 마우스 커서를 떼면 배치되면서 해당 마우스 커서의 위치에 있는 오퍼레이터가 클릭되는 현상**이 있음
 >- 보스 구현
->	- 원거리 폭발 스킬
->		- 실제 효과, 이펙트 구현 완료
->		- 버그 발견 시 수정하는 정도만 필요할 듯
->	- 근거리 통과 스킬
->		- 실제 효과 구현 완료
->		- 이펙트 구현 필요
->	- **보스 스크립트는 구현**한 듯? 이것도 테스트하면서 다듬는 단계
 >	- 쉴드 스킬
->		- 유지? 
+>		- 얘만 지금 VFX Graph로 남아 있음.
 >- 남은 작업
 >	- 스테이지 1-3 완성
 >	- 남은 스테이지들 밸런스 수정
+
+# 250929 - 짭명방
+- 9월이면 끝낼 수 있을 줄 알았는데 자만함과 나태함과 자신에 대한 과대평가와 이슈에 대한 과소평가 등 이것저것이 겹치고 있다. 후다닥 달리자.
+- 아이패드 프로도 결국 충전 단자가 가버렸다. 수리를 맡겼는데 배터리 교체까지 포함하면 최소 30은 나올 듯.. 
+	- 이라고 생각했는데 배터리 효율이 89%라고 한다. ? 18만원 선에서 수리받았다. 휴..
+
+>[!done]
+>1. `Enemy`와 `Operator`가 겹쳤을 때 `Operator` 클릭이 동작하지 않는 이슈 수정
+>	- `RaycastAll` 사용 + 모든 `Operator`에 기존보다 더 큰 콜라이더 넣음
+>	- 콜라이더 위치와 크기 수정 : 가능한 타일에 가깝게(z축 위아래 겹쳤을 때 위 오퍼레이터를 클릭하기 힘든 현상 때문)
+>2. 기타 이슈 수정
+>	- `statisticItem`의 아이콘 색상에 오퍼레이터의 색상 반영되지 않는 현상 수정
+>	- 제대로 나타나지 않는 머티리얼 수정
+>		- 스킬 사용 가능 아이콘
+>		- `VFX_Arcane_Hit`
+>		- `SlashSkill`
+>		- `Projectile_Molotov`
+>		- `SkillRange_Boundary`
+>		- `MeteorSkill`
+>			- 영역 벽 부분
+>			- 메테오 파티클
+>		- `StunEffect`
+>		- `Projectile_Missile`
+## 레이캐스트 관련
+- 오퍼레이터를 클릭하려고 하는데 다른 유닛이 겹친 상황인 경우, 오퍼레이터 클릭이 동작하지 않는 현상이 있음
+### 접근 시도
+- 현재 코드가 이렇다. `UI` 판별 부분은 제외했음.
+```cs
+private void ProcessClickMapObject()
+{
+	// 1. 배치 중 드래깅 혹은 방향 선택 상태라면 클릭 처리 중단
+	// 배치 상황은 DeployableManager에서 처리한다. 여기서는 다른 오브젝트의 클릭 동작을 막기 위해 남겨둠.
+	if (DeployableManager.Instance!.IsSelectingDirection)
+	{
+		Debug.Log("HandleClick : 배치 중 드래깅 혹은 방향 선택 상태 - 클릭 처리 중단");
+		return;
+	}
+
+	// 2. 3D 오브젝트 클릭 처리
+	Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+	if (Physics.Raycast(ray, out RaycastHit clickableHit, Mathf.Infinity, clickableLayerMask))
+	{
+		HandleObjectClick(clickableHit);
+	}
+	else
+	{
+		HandleEmptySpaceClick();
+	}
+}
+```
+> `Enemy`들에 대해 저 `clickableLayerMask`이 할당되어 있는 게 문제일까?
+
+- 옵션을 보면 `Deployable, UI_Overlay, UI_WorldSpace` 이렇게만 `ClickableLayerMask`에 할당되어 있다. `Enemy`는 `Default` 레이어에 해당하므로 여기에 없는 듯.
+- 클릭되어야 하는 오브젝트들은 `Deployable`에 할당되어 있음.
+
+
+1. `RayCastAll`으로 수정 - 지금의 코드는 가장 위에 있는 것만 잡아서 보여주는 방식임
+2. `Operator`의 콜라이더 관련
+	- 기존 `Enemy`와의 충돌을 감지하기 위한 콜라이더보다 더 넓은 범위의 클릭을 감지하게 하고 싶음
+	- 클릭 감지를 위한 콜라이더를 별도로 추가해야 함. 일단 모든 오퍼레이터에 `BoxCollider`만 자식 오브젝트로 추가해봄.
+		- **이것만으로 잘 구현되는 것 같다.** 이 현상이 주로 오퍼레이터가 위에 있고 적이 아래에서 저지당한 상태일 때, 적의 위치를 클릭하면 아무 반응이 없는 것 때문에 신경쓰였던 부분이었다. 
+
+
+### 이슈 수정하다가 추가 수정
+- `BoxCollider`의 스케일을 `1, 1, 1`로 구현했는데, 이렇게 할 경우 **위 타일과 아래 타일에 오퍼레이터가 겹쳐 있으면 위 타일의 오퍼레이터를 클릭하기 매우 힘든 현상**이 있음
+- 그래서 가능한 타일에 가까운 위치로 설정함 
+	- 중심 위치는 `0, -0.4, 0`
+	- 스케일은 `1, 0.1, 0`
+
+
+## 기타 이슈 수정
+
+### 결과 카드 아이콘 색상
+- 결과 카드에서 오퍼레이터 색상 반영되는 부분이 모두 흰색으로 나타남 
+	- `250926`에 바꿨던 부분 때문에 발생한 현상.
+
+```cs
+// 이전
+operatorIcon.color = opData.prefab.GetComponentInChildren<Renderer>().sharedMaterial.color;
+
+// 수정
+operatorIcon.color = opData.PrimaryColor;
+```
+
+### 제대로 나타나지 않는 요소들 수정
+- `SkillAvailableIcon`
+	- `OperatorUI`에 머티리얼 할당이 해제되어 있었다. 텍스쳐를 지운 것도 아니고 머티리얼을 지운 것도 아닌데 왜 없어져 있었는지는 모르겠음.
+- `Arcane_Hit`
+	- `Trail02` 수정
+	- `Trail` 셰이더 자체도 `Vertex Color` 반영되도록 수정
+- `SlashSkill`
+	- ...인 줄 알았는데 `Legacy`로 할당되어 있던 부분이었다. 새로 수정한 `SlashSkill`은 잘 나타남.
+- `Projectile_Molotov`
+	- `Trail` 너비가 너무 넓어서 줄였음
+- `SkillRange_Boundary`
+	- **셰이더를 삭제했었다. 휴지통을 뒤져보니 있어서 다행히 구조해옴**
+	- 유니티에서 삭제했던 파일들 되돌렸을 때 원본 참조 유지하는 거 보면 신기하다. `Meta` 파일의 역할인건가?
+- `MeteorSkill`
+	- 스킬 시전시 한 번 들썩이는 모양 -> 수정 완료(가장 기본적인 그래디언트 텍스쳐 사용)
+	- 메테오 파티클 : 계속 `Vertical Billboard`로 적용되는 현상이 있음 -> `Stretched`여야 하는데 반영이 안 된다. 왜 그런지는 휴식 겸 수리점 다시 갔다 와서 수정함
+		- 반영 완료. 디폴트 속도를 `Velocity over Lifetime`에서 `-y`로 아주 작은 값을 설정해서 파티클의 방향을 설정했다. 기존엔 어떻게 했는지 기억 안 남.
+- `StunEffect`
+	- 파티클은 `TextureSheet`, 트레일은 `Trail02_White` 사용함
+	- 이거는 가끔 머티리얼이 마젠타 색으로 나타날 때가 있었음. 그거까지 테스트해봄.
+		- 이 문제는 계속 발생하진 않는 듯?
+- `Projectile_Missile`
+	- `Spark01_AB` : 텍스쳐 시트 기반으로 변경
+	- `Smoke`도 `AnimationSheet` 기반으로 변경
 
 
 # 250926 - 짭명방
