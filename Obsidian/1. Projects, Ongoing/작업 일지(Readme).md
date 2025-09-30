@@ -26,6 +26,8 @@
 	- 일관성 때문에 다른 곳에서도 구현을 해보고는 싶은데, 일단 보류.
 	- 현재는 정예화 패널에서만 스킬 범위를 볼 수 있음.
 
+
+
 ---
 # 작업 일지
 
@@ -38,18 +40,111 @@
 
 
 >[!todo]
->- 오퍼레이터 A를 배치할 때, **방향 설정 로직 중 오퍼레이터 B의 위치에서 마우스 커서를 떼면 배치되면서 해당 마우스 커서의 위치에 있는 오퍼레이터가 클릭되는 현상**이 있음
 >- 보스 구현
 >	- 쉴드 스킬
 >		- 얘만 지금 VFX Graph로 남아 있음.
 >- 남은 작업
 >	- 스테이지 1-3 완성
 >	- 남은 스테이지들 밸런스 수정
+### 간헐적인 이슈
+- 이슈가 있다고 느꼈는데 다시 테스트했을 때 재현이 안된 것들을 정리함
+
+- 오퍼레이터 A를 배치할 때, 방향 설정 로직 중 오퍼레이터 B의 위치에서 마우스 커서를 떼면 배치되면서 해당 마우스 커서의 위치에 있는 오퍼레이터가 클릭되는 현상
+
+# 250930 - 짭명방
+
+## 이슈 수정
+
+### 어제 적어둔 거
+
+오퍼레이터 A를 배치할 때, **방향 설정 로직 중 오퍼레이터 B의 위치에서 마우스 커서를 떼면 배치되면서 해당 마우스 커서의 위치에 있는 오퍼레이터가 클릭되는 현상**이 있음
+
+- 오늘 다시 테스트해봤는데 **괜찮았음** 
+	- 간헐적으로 발생할 수도 있는 이슈라서 일단 기록은 해두고 다른 걸로 넘어감
+
+### 오퍼레이터 UI 관련
+- `InStageInfoUI`를 띄운 상태에서 해당 오퍼레이터가 아닌 다른 오퍼레이터가 죽었을 때 `InStageInfoUI` 클릭 상태가 초기화되는 현상
+	- `DeployableManager.OnDeployableRemoved` 에 `HideDeployableInfo`가 들어가 있다. 이걸 수정해줘야 함.
+```cs
+// 배치된 요소가 제거되었을 때 동작함
+public void OnDeployableRemoved(DeployableUnitEntity deployable)
+{
+	deployedItems.Remove(deployable);
+	StageUIManager.Instance!.HideDeployableInfo();
+	
+	// ...
+	
+}
+```
+
+그러면 현재 제거된 `deployable`이랑 `StageUIManager`에서 현재 띄우고 있는 `deployable`이 같은지 다른지 점검하는 조건을 추가해야 함.
+
+1. 현재 정보를 띄운 오퍼레이터가 제거되면 정보 패널이 사라져야 하고
+2. 다른 정보를 띄웠을 때는 어떤 오퍼레이터가 제거되면 정보 패널이 유지되게 하기 위함
+
+그러면 `StageUIManager`나 `InStageInfoPanel`에서 현재 띄우고 있는 오퍼레이터/배치가능요소의 정보를 갖고 있어야 함
+
+> 여기서 고민했던 건 `InstageInfoPanel`에서 현재 띄우고 있는 정보를 갖느냐 아니면 `StageUIManager`에서 정보를 갖느냐였는데, SRP에 의하면 **항상 자기가 처리할 정보는 자기가 갖고, 매니저는 단순한 연결고리 역할만 해주면 됨.**
+> `currentDeployableInfo`라는 걸 활용하고 있기 때문에, 이에 대한 게터 프로퍼티만 패널에 만들어주고, 스테이지 매니저에서도 저 스크립트에 대한 게터 프로퍼티를 만들어주고, `DeployableManager`에서 아래처럼 연결
+```cs
+if (deployable == StageUIManager.Instance!.InStageInfoPanel.CurrentDeployableInfo.deployedDeployable)
+{
+	StageUIManager.Instance!.HideDeployableInfo();
+}
+```
+- 코드가 지저분해졌다. 더 개선할 수 있다. `StageUIManager`에서 `InstageInfoPanel`은 어떤 정보를 갖고 있는지 관리하는 메서드를 별도로 구현하고, 여기서는 해당 메서드만 요청하면 됨.
+
+#### 조금 더 개선
+- 요런 느낌. `DeployedOperator`를 구분한 이유는 기존 구현에 `Deployable`과 `Operator`를 구분했기 때문에 이렇게 해놨음. 
+
+- `InStageInfoPanel`
+```cs
+    public bool IsCurrentlyDisplaying(DeployableUnitEntity entity)
+    {
+        // 패널이 비활성화거나, 표시중인 정보가 없거나, 표시 중인 배치된 유닛이 없다면 false
+        if (!gameObject.activeSelf ||
+            CurrentDeployableInfo == null ||
+            CurrentDeployableInfo.deployedDeployable == null ||
+            CurrentDeployableInfo.deployedOperator == null)
+        {
+            return false;
+        }
+
+        if (entity is Operator op)
+        {
+            return CurrentDeployableInfo.deployedOperator == op;
+        }
+
+        return CurrentDeployableInfo.deployedDeployable == entity;
+    }
+```
+
+- `StageUIManager`
+```cs
+public void HideInfoPanelIfDisplaying(DeployableUnitEntity entity)
+{
+	if (inStageInfoPanelScript.IsCurrentlyDisplaying(entity))
+	{
+		HideDeployableInfo();
+	}
+}
+```
+
+- `DeployableManager`
+```cs
+	// 현재 나타나고 있는 InstageInfoPanel의 정보가 제거된 deployable이라면 정보를 가림
+	StageUIManager.Instance.HideInfoPanelIfDisplaying(deployable);
+```
+
+### InStageInfoPanel은 유지되는데 다른 정보가 사라짐
+- 예를 들면 클릭 가능한 요소(스킬 버튼, 퇴각 버튼) 같은 게 사라진다. 일단 오늘은 여기까지만 작업해둠
+
+---
 
 # 250929 - 짭명방
 - 9월이면 끝낼 수 있을 줄 알았는데 자만함과 나태함과 자신에 대한 과대평가와 이슈에 대한 과소평가 등 이것저것이 겹치고 있다. 후다닥 달리자.
 - 아이패드 프로도 결국 충전 단자가 가버렸다. 수리를 맡겼는데 배터리 교체까지 포함하면 최소 30은 나올 듯.. 
-	- 이라고 생각했는데 배터리 효율이 89%라고 한다. ? 18만원 선에서 수리받았다. 휴..
+	- 이라고 생각했는데 배터리 효율이 89%라고 한다. ? 거의 5년 넘게 썼는데? 18만원 선에서 수리받았다. 휴..
 
 >[!done]
 >1. `Enemy`와 `Operator`가 겹쳤을 때 `Operator` 클릭이 동작하지 않는 이슈 수정
