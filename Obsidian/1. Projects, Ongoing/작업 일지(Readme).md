@@ -35,22 +35,137 @@
 
 ### 작업 중
 
->[!wip]
->- 머티리얼 변경하면서 제대로 나타나지 않는 이펙트들 수정 중
->- 쉴드 스킬 파티클 시스템으로 변경
->- 스테이지 밸런싱
-
 >[!todo]
->- 보스 구현
->	- 쉴드 스킬
->		- 얘만 지금 VFX Graph로 남아 있음.
 >- 남은 작업
 >	- 스테이지 1-3 완성
 >	- 남은 스테이지들 밸런스 수정
+>	- 소리 추가
+>	- `OperatorSkill` 상속받는 요소들이 오브젝트 풀링화
+>		- 1개를 쓰더라도 보스 스킬이랑 똑같은 느낌으로 관리하는 게 일관성 측면에서 나을 듯?
+
+>[!wip]
+>- 머티리얼 변경하면서 제대로 나타나지 않는 이펙트들 수정 중
+>- 스테이지 밸런싱
 ### 간헐적인 이슈
 - 이슈가 있다고 느꼈는데 다시 테스트했을 때 재현이 안된 것들을 정리함
-
 - 오퍼레이터 A를 배치할 때, 방향 설정 로직 중 오퍼레이터 B의 위치에서 마우스 커서를 떼면 배치되면서 해당 마우스 커서의 위치에 있는 오퍼레이터가 클릭되는 현상
+
+# 251002 - 짭명방
+
+>[!done]
+>1. `Shield VFX` 수정
+>	- 기존 `VFX Graph` 기반이었던 것을 `Particle System`으로 고침
+>2. 사라진 머티리얼들 복구하기
+>	- `TileHighlight` : 아예 하이라이트되는 원리 자체를 바꿈 - **별도의 머티리얼을 사용하지 않고,** `Unit`들에 할당했던 방식(**동일한 머티리얼, 런타임 시점에 `MaterialPropertyBlock`을 이용해 색만 변경**)을 사용함
+>	- `Shader_PathTrail` : 복구했으나 다시 제거. `Trail03`을 새로 만들고 `Intensity`를 크게 올리는 식으로 비슷하게 구현 가능
+>	- `Shader_SkillAvailableIcon` : 얘는 따로 필요하므로 유지
+
+## Shield VFX 수정
+- **파티클 시스템 기반으로 수정**함
+- 셰이더 그래프를 고쳐야 한다고 생각했는데, **거의 그대로 쓸 수 있었다.** 바리에이션을 구현한다면 별도의 머티리얼을 쓰기는 해야 할 건데 그럴 계획은 없으니까 괜찮을 듯
+
+- **오브젝트 풀링 기반으로 수정해야 함**
+	- 이거 `Operator` 스킬들 대부분이 `Instantiate` -> `Destroy` 방식으로 구현되어 있음 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ 하
+		- 일단 오늘 작업은 `Shield` 이펙트에 한해서만 오브젝트 풀링으로 구현함. 사실 오브젝트 풀링일 필요도 없긴 하다. 한 객체에 대해서 한 번에 1개만 나타나기 때문임.
+	- `ShieldBuff`에서 이펙트 부분은 분리
+		- 이 때 **쉴드가 다 까졌을 때 이펙트가 사라져야 하는 부분**은 따로 구현해야 할 것으로 보임. 이건 이펙트 단위에서 처리함.
+		- `SelfReturnVFXController`을 상속받은 `ShieldVFXController`을 따로 만듦
+
+```cs
+using System.Collections;
+using UnityEngine;
+
+// 쉴드는 쉴드가 깨지는 이벤트가 발생하면 사라져야 하므로 그 부분만 추가
+public class ShieldVFXController : SelfReturnVFXController
+{
+    private UnitEntity owner;
+
+    public void Initialize(UnitEntity owner, float duration)
+    {
+        this.owner = owner;
+
+        // 일단 쉴드 시스템이 Operator에만 구현되어 있기 때문에 이렇게 만듦
+        if (owner is Operator op)
+        {
+            op.shieldSystem.OnShieldChanged += HandleShieldChanged;
+        }
+
+        base.Initialize(duration);
+    }
+
+    protected override void ReturnToPool()
+    {
+        if (owner is Operator op)
+        {
+            op.shieldSystem.OnShieldChanged -= HandleShieldChanged;
+        }
+
+        base.ReturnToPool();
+    }
+
+    protected void HandleShieldChanged(float currentShield, bool isShieldDepleted)
+    {
+        if (isShieldDepleted)
+        {
+            ReturnToPool();
+        }
+    }
+}
+```
+
+> 상속받아서 실행시키는데 `ps.Play`가 정상적으로 동작하지 않는 듯(`base.Initialize` 부분)
+> 런닝 뛰고 와서 마저 함
+> --> 스크립트 만들어놓고 할당은 `SelfReturnVFXController`로 되어 있었음 ㅋㅋㅋ
+
+![[VFX_Skill_Shield.gif]]
+
+> - 스킬 만료시 쉴드 해제 & 흐릿한 버프 VFX도 해제된다.
+> - 쉴드 수치를 1로 설정한 구현도 해봤고, 한 대 맞자마자 쉴드 이펙트는 사라지고 버프 이펙트는 남는 것까지 확인했음.
+
+- 이제 **진짜로 소실된 머티리얼들이랑 스테이지 밸런싱, 소리 추가**하면 얼추 될 듯?
+
+## 기타 오류 수정
+
+### `TileHighlight` 소실
+- 배치 가능한 타일을 초록색으로 강조해주는 효과. 파일들 정리하면서 이 머티리얼이 참고로 하는 셰이더가 없어진 것으로 보인다. 
+- 근데 기존 구현이 게임 시작할 때 하이라이트용 머티리얼 리스트를 만들고, 하이라이트되어야 하는 상황에서 머티리얼 리스트를 스왑하는 구현이었다. 
+- **이렇게 할 필요가 없지 않을까?** 머티리얼 하나로 구현하고 필요한 경우 색만 바꾸는 식으로 하면 충분하지 않을까?
+
+- 유닛에서 했던 것처럼, 모든 머티리얼 정보를 별도로 구현해서 쓰는 것보다는 **머티리얼은 1개만 쓰고 런타임 시점에 `MaterialPropertyBlock`을 이용해서 색상 정보들을 할당하는 방식**이 가장 좋아보임
+	- `Lit` 셰이더를 쓰므로 머티리얼의 `Emission`에 어두운 초록색을 할당하고, 하이라이트 상황에서 `Emission`을 켜는 방식만 구현하면 될 듯?
+	- 이렇게 쓰는 경우에도 `materialInstance`에 접근해서 설정을 바꾸는 것보다 `MaterialPropertyBlock`을 쓰는 게 좋다고 한다. `materialInstance`의 설정을 바꾸는 순간 자신만의 고유한 머티리얼 인스턴스를 갖게 되며, 드로우 콜의 수가 증가하게 됨
+
+- `Tile` 수정하는 과정에서 난리가 났음
+1. **`Emission`에 `Color`을 반영해도 `Emission Color`에는 반영됐는데 실제 화면에는 나타나지 않는 현상**
+	- `VFXTestScene`이나 프리팹 단위에서는 `Green`값을 `0.01 ~ 0.03`만 봐도 눈에 확 띄었는데, 인게임에서는 티가 안 난다. 
+	- `Tile` 스크립트에 하이라이트 색상을 내장해뒀음. 최종값은 `0f, 0.25f, 0f`
+		- 인스펙터에선 쨍한 연두색이 나오는데 인게임에선 괜찮게 나온다. 
+2. **공격 범위 미리보기도 `MaterialPropertyBlock`으로 바꾸는 과정에서 색상이 다르게 나옴**
+	- 메딕이면 파란색, 공격 가능 오퍼레이터는 주황색이 나와야 함
+	- 일단 타일에 할당된 머티리얼이 셰이더 자체에 붙어있는 머티리얼이라서 셰이더를 통해 머티리얼을 새로 만들고 모든 타일에 다시 할당해봄 -> 안됨
+	- AI가 던져준 코드를 그냥 아니까 바로 쓰면 되겠다고 해서 받아먹었는데, `AttackRange`는 별도의 셰이더를 썼다. 여기에 쓰는 색깔 프로퍼티는 이름이 `Color`이므로 `_BaseColor`가 아니라 `_Color`를 바꿔야 함.
+```cs
+public void ShowAttackRange(bool isMedic)
+{
+	Color targetColor = isMedic ? medicIndicatorColor : defaultIndicatorColor;
+
+	attackRangeIndicator.GetPropertyBlock(indicatorPropBlock);
+	indicatorPropBlock.SetColor("_Color", targetColor); // URP Lit과 달리, attackRange라는 별도의 셰이더가 있고 Color라는 프로퍼티가 있음
+	attackRangeIndicator.SetPropertyBlock(indicatorPropBlock);
+
+	attackRangeIndicator.gameObject.SetActive(true);
+}
+```
+
+> 참고) Tile의 `ExecuteAlways`를 꺼뒀음. 헷갈린다.
+
+### 다른 소실된 머티리얼들도 복구
+- 휴지통에 버렸다가 '이거 여기에 쓰였네?'로 구출된 셰이더들.
+	- `Shader_PathTrail`
+	- `Sahder_SkillAvailableIcon`
+
+
+
 
 # 251001 - 짭명방
 
