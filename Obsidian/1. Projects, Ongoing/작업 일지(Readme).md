@@ -37,18 +37,141 @@
 
 >[!todo]
 >- 남은 작업
->	- 스테이지 1-3 완성
->	- 남은 스테이지들 밸런스 수정
+>	- 스테이지들 만지기
 >	- 소리 추가
 >	- `OperatorSkill` 상속받는 요소들이 오브젝트 풀링화
 >		- 1개를 쓰더라도 보스 스킬이랑 똑같은 느낌으로 관리하는 게 일관성 측면에서 나을 듯?
 
 >[!wip]
->- 머티리얼 변경하면서 제대로 나타나지 않는 이펙트들 수정 중
 >- 스테이지 밸런싱
+>	- 아예 이런 식으로 스테이지마다 특징을 부여하면 좋을 듯?
+>	- `1-0`은 튜토리얼 개념
+>	- `1-1`은 바리케이드를 통한 진로 변경
+>	- `1-2`는 여러 종류의 적을 보여줌(방어력 강화, 저지 무시) 
+>	- `1-3`은 앞에서 배운 것들 활용 + 보스 출현
+>- 테스트 중 제대로 나타나지 않는 머티리얼들 수정
+>- 테스트 중 발생하는 이슈/오류 수정
 ### 간헐적인 이슈
 - 이슈가 있다고 느꼈는데 다시 테스트했을 때 재현이 안된 것들을 정리함
 - 오퍼레이터 A를 배치할 때, 방향 설정 로직 중 오퍼레이터 B의 위치에서 마우스 커서를 떼면 배치되면서 해당 마우스 커서의 위치에 있는 오퍼레이터가 클릭되는 현상
+
+# 251007 - 짭명방
+- 연휴라서 쉬려고 했는데 스팀 서버가 터졌다. 요즘 하는 대부분의 게임이 스팀 기반이기에 할 게 없어져서 프로젝트 진도나 조금이라도 빼야겠음.
+
+> [!done]
+> 1. 스테이지 `1-0` 다시 세팅
+> 	- 스테이지별로 하나씩 목표를 정한다는 느낌으로 구현하겠음. 자세한 내용은 `WIP`에 구현.
+> 2. 기타 이슈 수정
+> 	- 오퍼레이터 퇴각 버튼을 클릭해도 정보가 유지되는 현상
+> 		- 이 과정에서 `UnitEntity.OnDeathStarted` 이벤트 추가
+> 	- 시전자 파괴 시 `SelfReturnVFXController`가 제대로 처리되지 않는 현상 수정
+
+
+## 스테이지 설정
+- `1-0`은 튜토리얼 개념, `1-1`은 바리케이드를 통한 진로 변경, `1-2`는 방어력이 강한 적이나 저지를 무시하고 통과하는 적 같은 개념을 보여주고 `1-3`은 앞에서 배운 것들 활용 + 보스 같이 구현해보려고 함
+- 이걸 감안하면 스테이지 `1-3`은 맵 구조를 바꿔야 할 듯
+
+### 1-0
+- 기존의 5마리 적은 좀 심심한 감이 있어서 숫자를 살짝 늘림
+- 원거리는 추가하면 게임이 아슬아슬해지는 느낌이 있어서 남용은 자제하는 게 좋을 듯
+- 여기는 간단하게 근거리 하나, 원거리 하나 추가했다.
+
+### 1-1
+- 기존의 스테이지 `1-1`은 `1-1`의 난이도가 아니었다. 적이 우르르르 쏟아져 나옴.
+
+## 기타 버그 수정
+
+### 오퍼레이터 퇴각 버튼 클릭해도 정보 유지됨
+- 오퍼레이터의 퇴각 버튼 클릭 시 오퍼레이터 정보가 유지되는 현상
+	- `InstageInfoPanel` 관련 이슈
+	- 일단 오브젝트 활성화 -> 컴포넌트 초기화 과정에서 **활성화 로직을 어디에 구현하는가?** 부터 다시 점검해봄. 기존에는 매니저에서 활성화하고 초기화는 하위 클래스에서 진행했음.
+	- **자신의 활성화와 초기화는 해당 클래스 자체에서 실행**되도록 하면 좋다. 역시 캡슐화 관련 이슈임. 활성화를 별도의 클래스에 구현해놓으면, 결합도가 높아지는 이슈가 생김.
+	- `InstageInfoPanel`의 요소들을 수정, 오퍼레이터의 정보를 띄우는 시점에 `Operator.OnDeathAnimationCompleted`을 구독시킴
+
+#### 그 과정에서 발생한 이상한 버그
+- 이상한 버그 발생 : 스테이지 씬에 들어가면 맵이 바로 나타나야 하는데 화면이 갑자기 흑백이 됨
+	- 카메라 설정이 아예 틀어진 듯? `Main Camera`가 게임 시작 시점에 `Map`에 있는 카메라 위치 정보로 이동해야 하는데 `0, 0, 0`으로 이동한다.
+	- 특이한 건 하단 `DeployableBox`를 클릭하면 원하는 방식의 구동은 된다는 거임
+
+- **`Hide`를 구현하면서 카메라 위치 정보도 초기화하는 로직을 추가했는데, 그게 `Awake`에서 동작하는 기존 패널을 감추는 로직이랑 충돌한 것으로 보임**
+```cs
+// StageUIManager.cs
+
+private void Awake()
+{
+	if (Instance == null)
+	{
+		Instance = this;
+	}
+	else
+	{
+		Destroy(gameObject);
+	}
+
+	// 비활성화 전에 참조를 넣어두기
+	inStageInfoPanelScript = infoPanelObject.GetComponent<InStageInfoPanel>();
+
+	// 최초에 꺼져야 할 패널들 비활성화
+	gameOverPanelObject.SetActive(false);
+	gameWinPanelObject.SetActive(false);
+	inStageInfoPanelScript.Hide(); // 이 부분이 문제
+	stageResultPanelObject.SetActive(false);
+	confirmationReturnToLobbyPanel.gameObject.SetActive(false);
+
+	HideItemPopup();
+}
+
+
+// InstageInfoPanel.cs
+public void Hide(UnitEntity unit)
+{
+	Hide();
+
+	if (currentDeployableInfo.deployedOperator != null)
+	{
+		currentDeployableInfo.deployedOperator.OnDeathAnimationCompleted -= Hide;
+	}
+	else if (currentDeployableInfo.deployedDeployable != null)
+	{
+		currentDeployableInfo.deployedOperator.OnDeathAnimationCompleted -= Hide;
+	}
+}
+
+public void Hide()
+{
+	gameObject.SetActive(false);
+	CameraManager.Instance!.AdjustForDeployableInfo(false);
+}
+```
+
+- 따라서 `StageUIManager`의 저 부분은 단순히 해당 게임 오브젝트를 감추는 방식으로만 구현하면 됨.
+
+#### 다시 원래 디버깅 진행
+- 이번에는 `InstageInfoPanel`에 `Operator/Deployable`의 정보가 들어가지 않고 있음
+	- 이건 쉽게 수정함 : 배치된 상황과 그렇지 않은 상황을 구분하지 않았기 때문
+
+- 그 다음은 파괴된 시점에 UI가 정상적으로 사라지지 않는 현상임
+```cs
+public void Hide(UnitEntity unit)
+{
+	Debug.Log($"currentDeployableInfo : {currentDeployableInfo}");
+	Debug.Log($"currentDeployableInfo.deployedOperator : {currentDeployableInfo.deployedOperator}");
+}
+```
+처럼 **맨 앞에 추가해보면 메서드가 2번 호출**되는 걸 볼 수 있었다
+
+- `UnitEntity`의 사망 이벤트 관련, 사망이 호출된 시점에 발생하는 이벤트도 하나 추가해뒀다. 즉, `UnitEntity`의 사망 이벤트가 2번 발생한다는 뜻이므로 그 부분을 봐야할 듯.
+
+- 근데 사망은 1번 발생한다. `TakeDamage`도 현재 체력이 0 이하라면 동작하지 않는다.
+- 즉 1번의 사망 이벤트에 의해 `Hide`가 2번 실행된 건데.. 정확한 원인이 어디 있는지는 모르겠음. 
+- 그래서 **그냥 `currentDeployableInfo`가 `null`이 아닌 상황에서만 실행되도록 했다.** 이 오브젝트가 활성화될 때 `null`이 아니게 되고, 비활성화될 때 `null`이 되며, 그 외의 다른 경우는 없기 때문에..
+
+### 시전자 파괴 시 SelfReturnVFXController 처리
+- 원래 `UnitEntity.OnDestroyed`로 처리가 되어 있는데 이 경우 참조할 `Caster`가 없어서 반환되지 않는 듯
+- 그래서 위에서 수정하면서 구현한 `UnitEntity.OnDeathStarted`로 참조할 이벤트를 바꿔봄
+	- 잘 되는 듯? 근데 이거도 정확히 어떤 상황에서 발생하는지 체크하진 못했어서..
+
+
 
 # 251004 - 짭명방
 >[!done]
