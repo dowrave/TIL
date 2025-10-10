@@ -55,6 +55,52 @@
 - 이슈가 있다고 느꼈는데 다시 테스트했을 때 재현이 안된 것들을 정리함
 - 오퍼레이터 A를 배치할 때, 방향 설정 로직 중 오퍼레이터 B의 위치에서 마우스 커서를 떼면 배치되면서 해당 마우스 커서의 위치에 있는 오퍼레이터가 클릭되는 현상
 
+# 251010 - 짭명방
+
+>[!done]
+>- `UnitEntity` 피격 시 `EmissionColor`을 밝게 해서 해당 유닛이 피격되었음을 표시
+>	- `Global Illumination(GI)`을 `None`으로 설정했다. `Baked`의 경우 색 변화가 인스펙터 상에는 보이는데 인게임에서는 보이지 않음.
+
+## 피격 이펙트
+- 이미 `GetHit` 이펙트가 있지만 모든 `UnitEntity`가 대미지를 받을때 잠깐 반짝이는 효과를 구현하려고 함
+- 메쉬의 셰이더는 `URP Lit`을 사용하고 있기 때문에, `Emission`값만 순간적으로 높였다가 낮춰주는 방식으로 구현했다. `UnitEntity.TakeDamage`에 구현.
+```cs
+    protected float flashDuration = .15f;
+    protected Color flashColor = new Color(.3f, .3f, .3f, 1);
+
+    private IEnumerator PlayTakeDamageVFX()
+    {
+        foreach (Renderer renderer in renderers)
+        {
+            // 현재 렌더러의 프로퍼티 블록 상태를 가져옴 (다른 프로퍼티 유지를 위해)
+            renderer.GetPropertyBlock(propBlock);
+            // Emission 색상만 덮어씀
+            propBlock.SetColor(EmissionColorID, flashColor);
+            renderer.SetPropertyBlock(propBlock);
+        }
+
+        Debug.Log("피격당해서 색 변함");
+
+        yield return new WaitForSeconds(1f); // 테스트용 시간
+
+        foreach (var renderer in renderers)
+        {
+            // Dictionary에서 해당 렌더러의 원래 색상을 찾아옴
+            Color originalColor = originalEmissionColors[renderer];
+            
+            renderer.GetPropertyBlock(propBlock);
+            propBlock.SetColor(EmissionColorID, originalColor);
+            renderer.SetPropertyBlock(propBlock);
+        }
+
+        Debug.Log("원래 색으로 돌아옴");
+
+
+        _flashCoroutine = null;
+    }
+```
+이 과정에서 **사망 애니메이션이 구현되는 방식이 별도의 머티리얼을 만들고 실행하는 방식으로 되어 있기에 이 과정도 수정이 필요**하다. 이건 나중에 하겠음. 
+
 # 251007 - 짭명방
 - 연휴라서 쉬려고 했는데 스팀 서버가 터졌다. 요즘 하는 대부분의 게임이 스팀 기반이기에 할 게 없어져서 프로젝트 진도나 조금이라도 빼야겠음.
 
