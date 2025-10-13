@@ -12,14 +12,12 @@
 ## 사용 툴
 - `Unity`
 - UI 이미지 제작 : `Procreate`
-- `VFX` 제작 사용 툴(강의 보면서 따라함)
-	- `Krita`
-	- `Blender`
+- `VFX` 제작 사용 툴(강의 보고 따라했거나 직접 만듦)
+	- 텍스쳐 제작 : `Procreate` / `Krita`
+	- 메쉬 제작 : `Blender`
 
 ## 하고 싶은데 못한 것
-- 캐릭터 스프라이트 
-	- 현재 Capsule로 Operator나 Enemy 등을 구현한 상태
-	- 이걸 투명한 Quad로 바꾸고 그 위에 2D 스프라이트들을 구현하는 방식이 명방에서 쓰고 있는 방식으로 보임
+- 2D로 오브젝트들 구현하기
 	- 직접 하려면 배워서 할 수는 있겠지만 시간이 문제겠다. 
 - 도전과제 구현
 - 인게임 / 다른 패널에서 스킬 범위 보여주기 
@@ -31,29 +29,182 @@
 ---
 # 작업 일지
 
-## 짭명방 예정
+## 짭명방 
 
-### 작업 중
+### 남은 내용
 
 >[!todo]
 >- 남은 작업
->	- 스테이지들 만지기
->	- 소리 추가
->	- `OperatorSkill` 상속받는 요소들이 오브젝트 풀링화
->		- 1개를 쓰더라도 보스 스킬이랑 똑같은 느낌으로 관리하는 게 일관성 측면에서 나을 듯?
-
->[!wip]
->- 스테이지 밸런싱
->	- 아예 이런 식으로 스테이지마다 특징을 부여하면 좋을 듯?
->	- `1-0`은 튜토리얼 개념
->	- `1-1`은 바리케이드를 통한 진로 변경
->	- `1-2`는 여러 종류의 적을 보여줌(방어력 강화, 저지 무시) 
->	- `1-3`은 앞에서 배운 것들 활용 + 보스 출현
+>	- 스테이지들 만지기 : 스테이지마다 특징을 부여하면 좋을 듯?
+>		- `1-0`은 튜토리얼 개념
+>		- `1-1`은 바리케이드를 통한 진로 변경
+>		- `1-2`는 여러 종류의 적을 보여줌(방어력 강화, 저지 무시) 
+>		- `1-3`은 앞에서 배운 것들 활용 + 보스 출현
 >- 테스트 중 제대로 나타나지 않는 머티리얼들 수정
 >- 테스트 중 발생하는 이슈/오류 수정
+>- 눈에 보이는 개선이 필요한 사항 수정
+>	- 소리 추가
+>- 기타 이슈들 수정
+
+### 현재 진행 중
+>[!wip]
+>- 스테이지 설정 변경 : 생성 / 파괴 기반 -> 스테이지 준비 과정에서 생성한 다음 오브젝트 풀링으로 관리
+>1. ~~스킬은 어떻게 할 건지(기존 : `UnitEntity - Caster`)~~
+>2. ~~유닛들 자체도 어떻게 할 건지(태그를 어디서 갖고 있을 건지)~~
+>3. `ObjectPoolManager`의 활성화는 스테이지 로딩 시점에 이미 되어 있어야 함
+>4. `DeployableUnitEntity(Operator)`의 `Initialize` 및 `Deploy`, `Enemy`의 `Initialize` 등등의 로직들도 생성 / 파괴 기반에서 오브젝트 풀 활성화 / 비활성화로 바꿔야 함
+>5. `BossSkill`은 어떻게 할 건지
+
+
+
 ### 간헐적인 이슈
 - 이슈가 있다고 느꼈는데 다시 테스트했을 때 재현이 안된 것들을 정리함
 - 오퍼레이터 A를 배치할 때, 방향 설정 로직 중 오퍼레이터 B의 위치에서 마우스 커서를 떼면 배치되면서 해당 마우스 커서의 위치에 있는 오퍼레이터가 클릭되는 현상
+
+# 251013 - 짭명방
+
+>[!done]
+>1. `UnitEntity` 사망 애니메이션 머티리얼 변경하는 로직 수정
+
+>[!wip]
+>1. 생성 / 파괴 -> 오브젝트 풀링 기반으로 변경 시작
+
+## `UnitEntity` 사망 애니메이션 변경 로직 수정
+
+- 기존 방식
+	- 별도의 머티리얼 인스턴스를 만들고, 투명 렌더링 모드로 바꿔서 머티리얼들에 `DOTween`의 페이드아웃 트윈을 만들어서 시퀀스로 넣는 방식
+	- 이 과정에서 머티리얼을 수정하는 메서드가 있었고, 이는 `Opaque -> Transparent`로 변경하는 로직이 들어가 있음(이후 투명화 애니메이션을 구현하기 위해)
+- 수정
+	1. (2번에 통합) **메쉬 머티리얼을 `Opaque -> Transparent`로 변경**
+		- `Transparent`가 `Opaque`보다 더 무겁다 : `Opaque`는 `Z-Buffer`를 통해 다른 불투명 픽셀보다 뒤에 있다면 그리는 연산 자체가 생략되는 반면, `Transparent`는 한 픽셀에 여러 번의 연산이 들어가기 때문임
+		- 하지만 크게 고려될 요소는 아니다. 
+	2. **아예 `URP/Lit`을 사용한 셰이더를 새로 만듦**
+		- 기존에 적용되던 프로퍼티들(Metalic, Smoothness 등등)의 이름은 그대로 넣고 `FadeAmount`만 새로 적용해서 `Map * Color -> Split(Alpha)`에 곱해서 알파값으로 전달하는 방식임
+		- 이러면 `Ghost`, 즉 알파값이 주기적으로 커졌다가 작아졌다가 하는 셰이더와 통합할 수 있겠다는 생각도 들었는데 웬만하면 분리하는 게 좋다. **범용적으로 사용하는 셰이더와 특정 유닛만을 위한 셰이더는 따로 구현해놓는 게 나음.** 이것도 단일 책임 원칙에 해당한다. 굳이 범용적으로 사용하는 셰이더 내부에 주기적으로 불투명도를 조절하는 스위치 기능을 넣을 필요는 없다는 말이다.
+		- 대신 일관성을 위해 `Ghost`에 사용되던 셰이더를 방금 만든 `Unit` 셰이더를 복붙한 다음, `Alpha`만 주기적으로 변하는 방식으로 수정했음
+
+### 추가 발생 문제
+![[Pasted image 20251013152719.png]]
+이런 식으로 UI와 오브젝트가 겹칠 때, UI가 오브젝트를 뚫고 보이는 현상이 있음. 오브젝트의 알파값은 1.
+
+#### 이유
+- 위에서 말한 `Z-Buffer` 이슈로, **투명한 오브젝트는 `Z-Buffer`에 깊이 정보를 입력하지 않는다.** 만약 기록한다면 그 뒤에 그려져야 하는 다른 투명 오브젝트가 가려지는 문제가 발생하기 때문이다.
+- 따라서 `Transparent`에서는 `ZWrite(=Depth Write)`가 `Off`로 꺼져 있음.
+#### 해결
+- **셰이더나 머티리얼의 설정에서 `Depth Write`를 보면 `Auto`로 되어 있는데 이를 `ForceEnabled`로 켜면 됨**
+
+> 대신 만약 다른 투명 오브젝트와 겹쳐질 때 렌더링 순서에 의해 일부 오브젝트가 그려지지 않는 문제가 발생할 수 있음
+
+## `UnitEntity`도 오브젝트 풀링 기반으로 구현
+
+- 기존 방식
+	- 생성되어야 할 때 생성되고, 파괴되어야 할 때 파괴됨
+
+오브젝트 풀링을 사용하는 이유는 **인스턴스화 / 파괴 로직이 연산을 많이 잡아먹기 때문에 가능한 게임 중에 실행되는 걸 방지하기 위함**이었다. 그래서 이 부분도 오브젝트 풀링으로 따로 빼두겠음. 스테이지 로딩 씬에서 설정되는 게 좋겠다.
+
+근데 그러면 **스킬 관련 오브젝트 풀도 전부 게임 시작 시점 - 즉 로딩되는 시점에 생성되어야 할 듯?** 
+- 지금은 각 유닛이 등장(생성, 배치)하는 시점에 해당 요소들이 생성되는데, 이것도 저 오브젝트 풀링을 쓰는 이유랑 어긋나는 면이 있음. 얘네들도 고려해봐야 할 듯.
+
+- 그러면 크게 2가지로 분류된다.
+	1. 스테이지에서 사용되는 유닛 오브젝트 자체
+	2. 유닛들이 사용하는 오브젝트들
+
+- 기본적인 원리는 `SkillData`에서 사용하는 것과 동일하다. 
+	- 단, 스킬을 사용하는 주체가 생기기 전에 오브젝트 풀이 생성되어야 하므로 참조 대상이 바뀌어야 하는데, **플레이 내내 불변의 데이터로 존재하는 `Data` 및 `Data`에서 관리되는 정보가 그 기준이 된다.**
+	- 이 경우 **같은 종류의 다른 유닛은 같은 오브젝트 풀을 사용**하게 된다. 
+
+- 일단 유닛에 딸린 보조 요소들은 거의 구현이 됐음. 
+- 남은 과제는..
+	1. 스킬은 어떻게 할 건지(기존 : `UnitEntity - Caster`)
+	2. 유닛들 자체도 어떻게 할 건지(태그를 어디서 갖고 있을 건지)
+	3. `ObjectPoolManager`의 활성화는 스테이지 로딩 시점에 이미 되어 있어야 함
+	4. `DeployableUnitEntity(Operator)`의 `Initialize` 및 `Deploy`, `Enemy`의 `Initialize` 등등의 로직들도 생성 / 파괴 기반에서 오브젝트 풀 활성화 / 비활성화로 바꿔야 함
+	5. `BossSkill`은 어떻게 할 건지
+
+등등이 있겠다. 
+
+
+### 1. 스킬 수정
+1. `GetVFXPoolTag(UnitEntity caster, GameObject vfxPrefab)`이었는데 이걸 `OperatorData`를 받도록 함
+```cs
+public virtual string GetVFXPoolTag(OperatorData ownerData, GameObject vfxPrefab)
+{
+	if (vfxPrefab == null)
+	{
+		Debug.LogError("[BaseSkill.GetVFXPoolTag] vfxPrefab이 null임!!");
+		return string.Empty;
+	}
+
+	return $"{ownerData.entityName}_{this.name}_{vfxPrefab.name}";
+}
+```
+> 관련 메서드들도 수정. 어려운 이슈는 아니었는데 괜히 생각을 어렵게 한 듯..
+
+2. 스쿼드 단위에서 스킬을 골라서 들어가는 구조이기 때문에, "선택된 스킬"에 대한 정보는 `OperatorData`에 들어가 있지 않다. 따라서 이는 `StageManager` 자체에서 선택된 스킬의 인덱스를 파악하고 넣는 방식이 됨.
+```cs
+// 3-b. Opereator의 종속 오브젝트
+foreach (var opInfo in squadData)
+{
+	OperatorData opData = opInfo.op.OperatorProgressData;
+	if (opData == null) continue;
+	opData.CreateObjectPools();
+
+	// 스킬 오브젝트 풀 생성
+	// "선택된 스킬"이라는 정보는 여기나 스쿼드 단위에서 관리되므로 여기서 구현
+	int skillIndex = opInfo.skillIndex;
+	if (skillIndex >= 0 && skillIndex < 2)
+	{
+		// 인덱스는 0 or 1
+		OperatorSkill selectedSkill = skillIndex == 0 ? opData.elite0Skill : opData.elite1Unlocks.unlockedSkill;
+		if (selectedSkill != null)
+		{
+			selectedSkill.PreloadObjectPools(opData);
+		}
+	}
+}
+```
+
+### 2. 유닛 태그 위치
+- 유닛에서 관리되는 데이터들과 동일하게, 해당 유닛의 `Data`에서 태그 메서드를 `Stateless`로 구현해놨음.
+
+> 인터페이스로 통합할 수도 있는데, 일단 헷갈리니까 따로 구현했음
+
+```cs
+// 적
+foreach (var enemyPrefab in uniqueEnemyPrefabs)
+{
+	Enemy enemy = enemyPrefab.GetComponent<Enemy>();
+	if (enemy == null || enemy.BaseData == null) continue;
+	EnemyData enemyData = enemy.BaseData;
+
+	string poolTag = enemyData.GetUnitTag();
+	ObjectPoolManager.Instance.CreatePool(poolTag, enemyPrefab, 10);
+}
+
+// 배치 가능 요소들
+foreach (var deployablePrefab in uniqueDeployablePrefabs)
+{
+	DeployableUnitEntity deployableUnit = deployablePrefab.GetComponent<DeployableUnitEntity>();
+	if (deployableUnit != null)
+	{
+		if (deployableUnit is Operator op)
+		{
+			OperatorData opData = op.OperatorData;
+			string opPoolTag = opData.GetUnitTag();
+			ObjectPoolManager.Instance.CreatePool(opPoolTag, deployablePrefab, 1);
+		}
+		else
+		{
+			DeployableUnitData deployableData = deployableUnit.DeployableUnitData;
+			string deployablePoolTag = deployableData.GetUnitTag();
+			ObjectPoolManager.Instance.CreatePool(deployablePoolTag, deployablePrefab, 1);
+		}
+	} 
+}
+```
+
+일단은 여기까지!
+
 
 # 251010 - 짭명방
 
