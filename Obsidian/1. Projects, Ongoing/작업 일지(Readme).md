@@ -51,15 +51,172 @@
 >- 스테이지 설정 변경 : 생성 / 파괴 기반 -> 스테이지 준비 과정에서 생성한 다음 오브젝트 풀링으로 관리
 >1. ~~스킬은 어떻게 할 건지(기존 : `UnitEntity - Caster`)~~
 >2. ~~유닛들 자체도 어떻게 할 건지(태그를 어디서 갖고 있을 건지)~~
->3. `ObjectPoolManager`의 활성화는 스테이지 로딩 시점에 이미 되어 있어야 함
+>3. ~~`ObjectPoolManager`의 활성화는 스테이지 로딩 시점에 이미 되어 있어야 함~~
 >4. `DeployableUnitEntity(Operator)`의 `Initialize` 및 `Deploy`, `Enemy`의 `Initialize` 등등의 로직들도 생성 / 파괴 기반에서 오브젝트 풀 활성화 / 비활성화로 바꿔야 함
->5. `BossSkill`은 어떻게 할 건지
-
-
+>	- 현재 작업 중. 
+>	- 생성 / 배치, 퇴각 / 사망 등이 오브젝트 풀링에 기반해서 작동되는지 오퍼레이터 / 적 별로 일일이 확인해줘야 함
+>	- 251016 기준 수정 필요
+>		- 퇴각해서 본 모델은 사라졌는데 자식 오브젝트들이 남아있는 현상이 있음
+>5. `BossSkill`도 게임 시작 시점에 준비되어 있어야 함
 
 ### 간헐적인 이슈
 - 이슈가 있다고 느꼈는데 다시 테스트했을 때 재현이 안된 것들을 정리함
 - 오퍼레이터 A를 배치할 때, 방향 설정 로직 중 오퍼레이터 B의 위치에서 마우스 커서를 떼면 배치되면서 해당 마우스 커서의 위치에 있는 오퍼레이터가 클릭되는 현상
+
+# 251016 - 짭명방
+
+>[!wip]
+>- 유닛 생성, 파괴 로직 오브젝트 풀링 기반으로 변경
+
+## (계속) 유닛 생성 파괴 로직 오브젝트 풀링 기반으로 변경
+
+### 일단
+- `251014`에 작업한 내용 중 `DeployableUnitEntity` 등에서 `Data`를 가져오는 부분은 수정이 필요하다 - 얘네는 런타임 중에 할당되는 요소라서 사전 준비 작업에는 `Data`가 할당되지 않은 상태임
+
+- 이 부분을 다 날리고
+```cs
+// c. 수집된 모든 배치 가능 유닛 프리팹 풀링
+// foreach (var deployablePrefab in uniqueDeployablePrefabs)
+// {
+//     DeployableUnitEntity deployableUnit = deployablePrefab.GetComponent<DeployableUnitEntity>();
+//     if (deployableUnit != null)
+//     {
+//         if (deployableUnit is Operator op)
+//         {
+//             OperatorData opData = op.OperatorData;
+//             string opPoolTag = opData.GetUnitTag();
+//             ObjectPoolManager.Instance.CreatePool(opPoolTag, deployablePrefab, 1);
+//         }
+//         else
+//         {
+//             DeployableUnitData deployableData = deployableUnit.DeployableUnitData;
+//             string deployablePoolTag = deployableData.GetUnitTag();
+//             ObjectPoolManager.Instance.CreatePool(deployablePoolTag, deployablePrefab, 1);
+//         }
+//     } 
+// }
+```
+
+- Data에서 꺼내는 부분에서 한꺼번에 풀 생성까지 작업함
+	- `Data`를 할당하는 부분의 변경
+		- 기존) 인게임에서 각 객체가 초기화되는 시점에 할당되는 `Data`를 사용
+		- 변경) 외부에서 `Data`를 갖는 별도의 클래스를 구성
+```cs
+// a. 스쿼드
+foreach (var opInfo in squadData)
+{
+	if (opInfo.op.OperatorProgressData != null)
+	{
+		OperatorData opData = opInfo.op.OperatorProgressData;
+		GameObject operatorPrefab = opData.prefab;
+
+		string opPoolTag = opData.GetUnitTag();
+		ObjectPoolManager.Instance.CreatePool(opPoolTag, operatorPrefab, 1);
+	}
+}
+// b. 맵 전용
+if (stageData != null && stageData.mapDeployables != null)
+{
+	foreach (var mapDeployableData in stageData.mapDeployables)
+	{
+		if (mapDeployableData != null)
+		{
+			DeployableUnitData deployableData = mapDeployableData.DeployableData;
+			GameObject deployablePrefab = deployableData.prefab;
+
+			string deployablePoolTag = deployableData.GetUnitTag();
+			ObjectPoolManager.Instance.CreatePool(deployablePoolTag, deployablePrefab, 1);
+		}
+	}
+}
+```
+
+- 다만 **`Enemy`의 경우**는 조금 작업이 달라지는데 `Spawner`에 할당된 독립된 유닛들을 수집해서 거기서 `Data` 정보를 빼내는 구조였다. 얘는 아예 구조를 새로 만들어줘야 할 듯?
+	- 근데 **프리팹의 스크립트 필드에 이미 할당되어 있으면 저거도 쓸 수 있지 않나?**
+		- 기존 프리팹의 구조를 보면 `Operator`에는 `OperatorData`가 `SerializeField`로 사전에 할당되지 않은 반면 `Enemy`에는 할당되어 있다. 
+		- 일단 프리팹에 전부 자신에 해당하는 `OperatorData`나 `EnemyData`를 할당했다. 
+
+
+- 일단 이 과정에서 하나 얻고 가는 지식
+>[!note]
+>- **`[SerializeField] protected` 필드와 이 필드에 관한 게터 프로퍼티를 구현했다면 그냥 이 2가지만 쓰면 된다. 굳이 세터 프로퍼티를 따로 구현해서 코드를 번거롭게 길게 만들 필요는 없음.**
+>- 이 때 **필드 이름은 `_`을 붙이고 프로퍼티 이름은 대문자로 시작**하는 게 표준이라고 함
+>	- 필드 : `_deployableData`
+>	- 게터 프로퍼티 : `DeployableData => _deployableData`
+
+하나하나 수정해나가고 있는데 뭔가 많이 꼬여 있다. 시간 좀 걸릴 듯.
+
+### 수정된 내용들
+- `Box`를 클릭했을 때, 드래그했을 때 동작들 다시 점검해봐야 할 듯
+
+- `DeployableManager` 싹 뜯어보는 중
+	1. 박스에서 다시 꺼내는 과정은 수정 완료
+	2. 타일 위에 올렸을 때 배치 안되는 문제 있음 - 수정 완료
+	
+- 각 `UnitEntity` 상속 유닛들에 `poolTag` 설정 할당하고 `PlayDeathAnimation`에서 유닛을 `Destroy` 하는 대신 `ReturnToPool`로 수정
+
+- 배치 중에 취소했을 때 `ReturnToPool` 구현되어 있음
+
+- `ResetPlacement` 구현 관련, 배치 후에는 오브젝트가 풀로 반환되면 안됨
+	- 그래서 이 둘을 구분해서 `ResetPlacement` 메서드를 구현할까 했는데 `currentDeployable.IsPreviewMode`로 조건을 통제하는 게 있어서 이걸로 제어함
+
+- `Box` 색깔 반영 안되는 문제도 수정
+
+
+# 251014 - 짭명방
+
+## (계속)유닛 생성 파괴 -> 오브젝트 풀링 기반으로 변경 
+- 남은 과제들
+>[!note]
+>1. `ObjectPoolManager`의 활성화는 스테이지 로딩 시점에 이미 되어 있어야 함
+>2. `DeployableUnitEntity(Operator)`의 `Initialize` 및 `Deploy`, `Enemy`의 `Initialize` 등등의 로직들도 생성 / 파괴 기반에서 오브젝트 풀 활성화 / 비활성화로 바꿔야 함
+>3. `BossSkill`은 어떻게 할 건지
+
+### 1. ObjectPoolManager의 활성화 시점 
+- `StageLoader`의 `LoadStage`를 보면
+```cs
+// 비동기 씬 로드
+AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(STAGE_SCENE);
+asyncLoad.allowSceneActivation = false;
+
+// 씬 로드 진행 - 로딩이 90% 되었을 때 다음으로 넘어간다.
+while (asyncLoad.progress < 0.9f)
+{
+	yield return null;
+}
+
+// 최소 로딩 시간 보장
+float elapsedTime = Time.time - loadStartTime;
+if (elapsedTime < MIN_LOADING_TIME)
+{
+	yield return new WaitForSeconds(MIN_LOADING_TIME - elapsedTime);
+}
+
+asyncLoad.allowSceneActivation = true;
+
+// 씬의 모든 활성 오브젝트의 Awake 메서드가 호출됨
+// 싱글턴은 Awake에서 설정되므로 ObjectPoolManager도 이 시점에서 초기화됨
+while (!asyncLoad.isDone)
+{
+	yield return null;
+}
+```
+
+다만 더 나은 구조를 갖게 하고 싶다면, `StageManager`에서 `ObjectPoolManager` 필드를 할당하고 초기화 순서를 더 명료하게 할 수 있음. 지금은 `StageLoader`가 `StageManager`와 `ObjectPoolManager`의 초기화가 끝났다고 가정하는 상황이기 때문이다.
+
+일단 그렇다는 것만 알아두고 지금 구조를 유지한다. 나중에 문제가 발생하면 그 때 수정하겠음.
+
+### 2. 유닛 초기화 : 생성 -> 풀링 기반으로 변경
+- 유저가 직접 배치하는 **배치 요소**와 **적** 2가지로 나뉜다.
+- 어느 쪽이든 풀 태그를 가져와야 하는 식으로 바뀌기 때문에 풀 태그를 어떻게 가져올 건지만 설정하면 되겠다.
+
+- 공통적으로 `UnitEntity`에 자체적으로 `PoolTag` 필드 하나 설정함
+#### 배치 요소
+- 기존엔 `currentDeployableInfo.Prefab`을 가져와서 인스턴스화를 했는데 여기에도 `poolTag`를 넣어주면 됨. 프리팹을 대체할 수 있을 것 같긴 한데 일단 구현하면서 보겠음
+
+- **하단 `Box`는 이미 `SetActive`로 관리되는 요소임** - 수정할 필요 없음
+
+작업하다가 멈췄음 - 이 날은 여기까지
 
 # 251013 - 짭명방
 
