@@ -47,11 +47,24 @@
 >- 기타 이슈들 수정
 
 ### 현재 진행 중
->[!wip]
+- `Todo` 내용 작업 진행
+- 버그 수정
+	- (미해결)**원거리 적 유닛이 아군 오퍼레이터가 사라졌는데도 그 자리를 공격하는 이슈**가 있음
+
+
+### 간헐적인 이슈
+- 이슈가 있다고 느꼈는데 다시 테스트했을 때 재현이 안된 것들을 정리함
+- 오퍼레이터 A를 배치할 때, 방향 설정 로직 중 오퍼레이터 B의 위치에서 마우스 커서를 떼면 배치되면서 해당 마우스 커서의 위치에 있는 오퍼레이터가 클릭되는 현상
+
+# 251017 - 짭명방
+>[!done]
 >- 스테이지 설정 변경 : 생성 / 파괴 기반 -> 스테이지 준비 과정에서 생성한 다음 오브젝트 풀링으로 관리
->1. ~~스킬은 어떻게 할 건지(기존 : `UnitEntity - Caster`)~~
->2. ~~유닛들 자체도 어떻게 할 건지(태그를 어디서 갖고 있을 건지)~~
->3. ~~`ObjectPoolManager`의 활성화는 스테이지 로딩 시점에 이미 되어 있어야 함~~
+>
+>  여기 써놓은 건 오늘 다 구현 끝낸 듯 함
+>- 앞으로는 **문제 발생 시 수정해나가는 정도로만 구현하면 충분할 듯**
+>1. 스킬은 어떻게 할 건지(기존 : `UnitEntity - Caster`)
+>2. 유닛들 자체도 어떻게 할 건지(태그를 어디서 갖고 있을 건지)
+>3. `ObjectPoolManager`의 활성화는 스테이지 로딩 시점에 이미 되어 있어야 함
 >4. `DeployableUnitEntity(Operator)`의 `Initialize` 및 `Deploy`, `Enemy`의 `Initialize` 등등의 로직들도 생성 / 파괴 기반에서 오브젝트 풀 활성화 / 비활성화로 바꿔야 함
 >	- 현재 작업 중. 
 >	- 생성 / 배치, 퇴각 / 사망 등이 오브젝트 풀링에 기반해서 작동되는지 오퍼레이터 / 적 별로 일일이 확인해줘야 함
@@ -59,9 +72,80 @@
 >		- 퇴각해서 본 모델은 사라졌는데 자식 오브젝트들이 남아있는 현상이 있음
 >5. `BossSkill`도 게임 시작 시점에 준비되어 있어야 함
 
-### 간헐적인 이슈
-- 이슈가 있다고 느꼈는데 다시 테스트했을 때 재현이 안된 것들을 정리함
-- 오퍼레이터 A를 배치할 때, 방향 설정 로직 중 오퍼레이터 B의 위치에서 마우스 커서를 떼면 배치되면서 해당 마우스 커서의 위치에 있는 오퍼레이터가 클릭되는 현상
+## (계속) 유닛 생성 / 파괴 로직 오브젝트 풀링 기반으로 변경
+
+### 어제의 이슈
+
+>[!note]
+>퇴각 / 사망 시 본 모델은 사라졌는데 자식 오브젝트들이 남아있는 현상
+
+- 일단 `Retreat`에 대응할 `DieInstantly` 메서드를 `UnitEntity`에 구현해뒀다. `Die`와 비슷하게 동작하지만 애니메이션 후에 사라지는 개념이 아니라 바로 사라지는 개념.
+- 이걸 연결한 다음 `Retreat`를 해봤는데 풀이 없다는 오류가 나옴
+- 해결
+	- `SetPoolTag()`을 구현해놓고 실행을 안 했다.
+	- 원리) 오브젝트 풀이 생성되는 시점, 즉 오브젝트가 만들어지고 비활성화될 때 `Awake()`에서 먼저 동작하고 비활성화된다.
+	- 실행) 따라서 `UnitEntity`에 빈 메서드 `SetUnitTag()`을 구현하고 `Awake()`에서 실행시킨 다음, 자식 클래스들에서 메서드의 구체적인 내용을 구현하면 됨.
+
+
+## EnemyBoss 관련 요소들도 시작 시점에 구현
+- 이 과정에서 `ScriptableObject(SO로 축약함)`에 들어간 태그 이름을 설정하는 부분을 수정했다.
+	- 기존) `UnitEntity(런타임 중에만 활성화)`에 의존
+	- 수정) `SO`의 엔티티 이름을 쓰거나, 스킬 이름만으로 설정
+		- 스킬 이름만 쓴다면 발생할 수 있는 이슈? : 여러 오퍼레이터가 동일한 스킬(예를 들면 공격력 버프)을 사용한다면?
+
+## 기타 수정사항
+### `Enemy` 유닛 풀 
+- `Enemy`의 종류와 수를 체크하고 그것에 맞게끔 정량으로 생성하면 된다. 지금은 `Enemy`마다 별도로 구현하고 있음. 
+- 이런 식으로 변경하면 됨
+```cs
+// var uniqueEnemyPrefabs = new HashSet<GameObject>();
+var enemyPrefabCounts = new Dictionary<GameObject, int>();
+
+foreach (var spawner in currentMap.EnemySpawners)
+{
+	if (spawner.spawnList == null) continue;
+	foreach (var spawnInfo in spawner.spawnList.spawnedEnemies)
+	{
+		if (spawnInfo.prefab != null)
+		{
+			// 이미 존재하면 갯수 추가
+			if (enemyPrefabCounts.ContainsKey(spawnInfo.prefab))
+			{
+				enemyPrefabCounts[spawnInfo.prefab]++;
+			}
+			// 없다면 딕셔너리에 새로 추가
+			else
+			{
+				enemyPrefabCounts.Add(spawnInfo.prefab, 1);
+			}
+		}
+	}
+}
+```
+> `ContainsKey`로 키값이 있는지 확인, 있다면 갯수만 추가하고 없다면 새로운 키-값을 만들어준다.
+> 자꾸 까먹는 부분이니까 어떻게 쓰는지 체크해두자.
+
+```cs
+foreach (var entry in enemyPrefabCounts)
+{
+	GameObject enemyPrefab = entry.Key;
+	int requiredAmount = entry.Value;
+	
+	// ...
+}
+```
+> 기존 해쉬셋에서 바꾸기도 편리하다. 기존엔 `enemyPrefab`만을 사용했다면 이번엔 `Key, Value`값으로 둘 모두를 꺼내서 쓰는 방식.
+> 여기서 `var`은 `System.Collections.Generic.KeyValuePair<TKey, TValue>`이라는 타입이다.
+
+### Enemy : Operator가 없어졌는데 계속 그 자리 공격
+- (미해결)원거리 적 유닛이 아군 오퍼레이터가 사라졌는데도 그 자리를 공격하는 이슈가 있음
+
+### Enemy : Projectile 자체 생성 -> Data 기반 생성으로 변경
+- 수정 완료
+	-  `SO`에 의해 게임이 시작되는 시점으로 생성 시점을 옮겼는데, `Enemy` 자체에서 초기화될 때 오브젝트 풀을 생성하는 로직이 남아 있었음. 실제 사용되는 투사체도 `Enemy` 자체에서 생성한 오브젝트 풀이었다.
+
+
+
 
 # 251016 - 짭명방
 
