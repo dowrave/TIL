@@ -24,8 +24,6 @@
 	- 일관성 때문에 다른 곳에서도 구현을 해보고는 싶은데, 일단 보류.
 	- 현재는 정예화 패널에서만 스킬 범위를 볼 수 있음.
 
-
-
 ---
 # 작업 일지
 
@@ -46,15 +44,219 @@
 >	- 소리 추가
 >- 기타 이슈들 수정
 
-### 현재 진행 중
+### 해결 필요
 - `Todo` 내용 작업 진행
 - 버그 수정
-	- (미해결)**원거리 적 유닛이 아군 오퍼레이터가 사라졌는데도 그 자리를 공격하는 이슈**가 있음
-
+	- (미해결)**원거리 적 유닛이 아군 오퍼레이터가 사라졌는데도 그 자리를 공격하는 이슈**
+		- 재배치할 때도 보면 미리보기로 떠 있는데 공격하는 걸로 봐서는 `CurrentTarget`이 제대로 해제되지 않은 듯
+	- HitVFX가 나타나야 할 자리에 MeleeAttackVFX도 번갈아가면서 나타나는 현상
+		- 최초에 생성된 프리팹들은 정상적으로 재생됨
+		- 최초에 생성된 풀 갯수만큼 재생된 후
+			- 오류 1)`AttackEffect`가 새로 생성되며, 이게 `PlayMeleeAttackEffect`에 의해 나타나는 듯(오퍼레이터 위치에 휘두르는 이펙트가 나타남)
+			- 오류 2)`HitVFX`가 나타나지 않고 피격 대상 위치에 `AttackEffect`가 나타남
 
 ### 간헐적인 이슈
 - 이슈가 있다고 느꼈는데 다시 테스트했을 때 재현이 안된 것들을 정리함
 - 오퍼레이터 A를 배치할 때, 방향 설정 로직 중 오퍼레이터 B의 위치에서 마우스 커서를 떼면 배치되면서 해당 마우스 커서의 위치에 있는 오퍼레이터가 클릭되는 현상
+
+# 251020 - 짭명방
+
+>[!done]
+>1. 테스트하면서 나타나는 문제들 수정
+>	- 재배치 로직
+>		- 재배치 시 유닛 미리보기에서 방향 표시기가 나타나는 이슈
+>			- **`Awake` 시점에 `StageUIManager`에 할당된 방향 표시기 프리팹을 이용해 자식 오브젝트로 생성**함
+>		- 죽어서 사라진 유닛 재배치 시 머티리얼 초기화 안 된 이슈
+>	- 사망 후 재배치 시 유닛 렌더링 문제
+
+>[!wip]
+>- `SO`의 오브젝트 풀을 제대로 사용하지 않는 문제 수정
+
+## 점검과 수정
+- 퇴각 후 재배치했을 때 의도한 구현들이 정상적으로 동작하는지 테스트
+- 까먹을까봐 기록해 둠 : 뱅가드는 30초, 나머지는 70초
+
+### 1. (해결)재배치 시 미리보기 상태에서 방향 표시기가 나타남
+```cs
+protected void CreateDirectionIndicator()
+{
+	// 자식 오브젝트로 들어감
+	DirectionIndicator indicator = Instantiate(StageUIManager.Instance!.directionIndicator, transform).GetComponent<DirectionIndicator>();
+	indicator.Initialize(this);
+
+	// 오퍼레이터가 파괴될 때 함께 파괴되므로 전역변수로 설정하지 않아도 됨
+}
+```
+> 방향 표시기는 `Operator.Deploy()`에서 이런 식으로 인스턴스화되는 요소임
+
+1. 게임을 플레이하는 중에 `Instantiate`가 동작하는 게 바람직한 방식은 아니다. 
+2. 프리팹에 `DirectionIndicator`를 자식 오브젝트로 할당하는 방법
+	- 모든 오퍼레이터가 공통으로 사용하는 필드를 일일이 할당하는게 맞나? 이런 식으로 작업한 게 있긴 한데 바람직한 방식은 아니라는 생각이 듦. 규모가 조금만 더 커져도..
+
+아래의 `가상의 이슈`를 거쳐서...  
+
+정리해보면
+>[!conclusion]
+>1. 이미 `Operator`는 오브젝트 풀링으로 관리되고 있음
+>2. 따라서 오브젝트 풀이 생성되는 시점의 `Awake`에서 `StageUIManager`에 있는 `DirectionIndicator`를 생성함
+
+정도가 되겠다. 이 부분은 오브젝트 풀링으로 구현할 필요도 없다. 한 번 만들면 계속 `Operator`의 자식 오브젝트로 남아 있고 활성화 / 비활성화 여부만 조절해주면 되기 때문.
+
+#### 추가 이슈
+- (완료) 방향이 제대로 반영되지 않는 이슈
+	- `DirectionIndicator`의 `Initialize` 시점은 배치되는 시점이어야 함. 생성되는 시점이 아님.
+
+---
+#### 가상의 이슈
+>[!question]
+>- 지금의 시나리오는 "모든 오퍼레이터가 동일한 방향 표시기를 사용한다"이다.
+>- 만약 방향 표시기 스킨이 있다고 가정한다면 이 방향 표시기 프리팹 필드의 위치는 어디로 지정해야 할까?
+
+- 방향 표시기 프리팹 필드의 적절한 위치
+1. `전역 매니저` : 모든 오퍼레이터가 공통된 표시기를 쓰며, 커스터마이징이 없을 때
+	- **디폴트 프리팹은 아예 여기에 둬도 무방!**
+2. 커스텀 개념, 즉 스킨 개념이 있는 경우에는 아예 스킨만을 위한 `SO`를 별도로 구현하고, `소유한 오퍼레이터` 데이터에 어떤 스킨들을 갖고 있는지에 관한 필드를 구현하면 됨.
+	- 여기서 **`SO`는 해당 오퍼레이터에 관한 모든 정보**이고, **`소유한 오퍼레이터`는 유저가 갖고 있는 정보**들이다. 성장, 스킨 보유 여부 등에 관한 정보들. 
+
+> 이거는 '이러이러한 상황이면 어떻게 되지?'라는 생각이 들어서 정리해둔 내용이다. 
+---
+#### 지식이 늘었다
+>[!note]
+>1. `MonoBehaviour.IsActiveAndEnabled` : 오브젝트와 스크립트 모두 활성화됐을 때만 `true`를 반환한다.
+>	- 일반적으로 스크립트를 비활성화하는 경우가 잘 없어서 혼동하기 쉬운데 차이점은 명확히 알아두면 좋다.
+>	- 오브젝트 활성화 : `gameObject.activeInHierarchy`
+>	- 스크립트 활성화 : `script.enabled`
+
+### 2. 사망 후 재배치 시 투명한 상태로 등장
+- (수정 완료)`Initialize`에서 렌더링 초기화를 해줘야 할 듯
+	- 유닛 셰이더의 `FadeAmount` 값을 수정했던 내용이므로 `Initialize`에
+```cs
+protected void InitializeVisuals()
+{
+	foreach (Renderer renderer in renderers)
+	{
+		renderer.GetPropertyBlock(propBlock);
+		propBlock.SetFloat("_FadeAmount", 1f);
+		renderer.SetPropertyBlock(propBlock);
+	}
+}
+```
+을 추가해줬다.
+## SO에서 만든 풀을 제대로 사용하지 않았던 문제 수정
+- 1번의 이슈 외에도 `배치 이펙트(SO에서 가져옴)`, `OperatorUI(Operator 자체에 할당)`이 로딩 시점에 인스턴스로 만들어지지 않고 인게임에서 만들어짐
+- 이외에도 **`SO`의 태그를 이용해 만든 풀을 사용하지 않고 있던 요소들을 사용하도록 수정함** 
+
+
+#### 배치 이펙트
+- `SO`에서 가져오는 방식의 경우 예전에는 `OperatorData`를 할당하는 시점에 관한 이슈가 있었으나, 지금은 프리팹의 스크립트 자체에 `SO` 필드를 할당해놨음. 따라서 생성하는 시점을 `Awake`으로 옮길 수 있다. 
+- 근데 `OperatorData.CreateObjectPools`를 구현하는 과정에서 배치 이펙트에 관한 오브젝트 풀을 만드는 로직을 이미 추가했다. 그렇기 때문에 만드는 로직은 별도로 구현할 필요가 없음
+
+#### OperatorUI
+- `DirectionIndicator`와 비슷한 방법으로 관리되면 좋을 듯 : 즉 `StageUIManager`에서 관리하고 `Operator`들이 접근하는 방식
+
+#### Projectile
+- `OperatorData`에서 만드는 그걸 안 쓰고 `Operator` 자체의 것을 사용하고 있었음
+
+#### AttackSource
+- `hitEffect` 관련, 원래는 프리팹이랑 태그를 함께 첨부했는데 **태그가 있으면 프리팹을 첨부할 필요는 없어보임**
+
+```cs
+protected virtual void PlayGetHitEffect(AttackSource attackSource)
+{
+	GameObject sourceHitEffectPrefab = attackSource.HitEffectPrefab;
+	string sourceHitEffectTag = attackSource.HitEffectTag;
+
+	if (sourceHitEffectPrefab == null || sourceHitEffectTag == string.Empty) return;
+
+	string attackerName;
+
+	if (attackSource.Attacker is Operator op)
+	{
+		OperatorData opData = op.OperatorData;
+		attackerName = opData.entityName;
+		if (sourceHitEffectPrefab == null)
+		{
+			sourceHitEffectPrefab = opData.hitEffectPrefab;
+		}
+	}
+	else if (attackSource.Attacker is Enemy enemy)
+	{
+		EnemyData enemyData = enemy.BaseData;
+		attackerName = enemyData.EntityName;
+		if (sourceHitEffectPrefab == null)
+		{
+			sourceHitEffectPrefab = enemyData.HitEffectPrefab;
+		}
+	}
+	else
+	{
+		Debug.LogError("이펙트 없음");
+		return;
+	}
+
+	if (sourceHitEffectPrefab != null)
+	{
+		Vector3 effectPosition = transform.position;
+
+		// 풀에서 이펙트 오브젝트 가져오기
+		if (sourceHitEffectTag == string.Empty)
+		{
+			Debug.LogWarning("[TakeDamage] hitEffectTag 값이 null임");
+		}
+
+		GameObject? hitEffect = ObjectPoolManager.Instance!.SpawnFromPool(sourceHitEffectTag, effectPosition, Quaternion.identity);
+
+		if (hitEffect != null)
+		{
+			CombatVFXController hitVFXController = hitEffect.GetComponent<CombatVFXController>();
+			hitVFXController.Initialize(attackSource, this, sourceHitEffectTag);
+		}
+	}
+}
+```
+> `TakeDamage`의 이펙트를 실행하는 코드인데, 상당 부분이 필요없어짐. 다 `AttackSource`의 `Tag` 하나만으로 처리가 가능해졌다.
+
+```cs
+protected virtual void PlayGetHitEffect(AttackSource attackSource)
+{
+	string sourceHitEffectTag = attackSource.HitEffectTag;
+
+	if (sourceHitEffectTag != string.Empty)
+	{
+		Vector3 effectPosition = transform.position;
+		GameObject? hitEffect = ObjectPoolManager.Instance!.SpawnFromPool(sourceHitEffectTag, effectPosition, Quaternion.identity);
+
+		if (hitEffect != null)
+		{
+			CombatVFXController hitVFXController = hitEffect.GetComponent<CombatVFXController>();
+			hitVFXController.Initialize(attackSource, this);
+		}
+	}
+}
+```
+
+- 여기 부분 생각보다 고칠 게 많아서 일일이 정리하진 않겠음. 작업 내용은 크게
+1. `StageUIManager`에서 공통적인 UI 요소들을 관리하고, 각 유닛에서 사용하는 거
+2. `AttackSource` 관련 - 프리팹 필드 삭제
+3. 이외에 유닛 자체에서 생성되는 오브젝트 풀 -> `SO` 기반으로 변경
+
+이 되겠다. 그 중에서 특기할 문제만 기록하겠음.
+
+#### HitVFX가 나타나야 할 자리에 MeleeAttackVFX도 번갈아가면서 나타나는 현상
+- 로깅을 해봤는데 원인을 못 찾겠음
+
+- 현상
+	- 최초에 생성된 프리팹들은 정상적으로 재생됨
+	- 최초에 생성된 풀 갯수만큼 재생된 후
+		- 오류 1)`AttackEffect`가 새로 생성되며, 이게 `PlayMeleeAttackEffect`에 의해 나타나는 듯(오퍼레이터 위치에 휘두르는 이펙트가 나타남)
+		- 오류 2)`HitVFX`가 나타나지 않고 피격 대상 위치에 `AttackEffect`가 나타남
+
+- 근데 생성되는 프리팹 이름은 멀쩡함
+
+...왜인지 모르겠다. 나중에 시도해봄.
+
+
+
 
 # 251017 - 짭명방
 >[!done]
