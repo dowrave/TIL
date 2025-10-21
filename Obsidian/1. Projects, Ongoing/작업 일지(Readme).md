@@ -47,8 +47,6 @@
 ### 해결 필요
 - `Todo` 내용 작업 진행
 - 버그 수정
-	- (미해결)**원거리 적 유닛이 아군 오퍼레이터가 사라졌는데도 그 자리를 공격하는 이슈**
-		- 재배치할 때도 보면 미리보기로 떠 있는데 공격하는 걸로 봐서는 `CurrentTarget`이 제대로 해제되지 않은 듯
 	- HitVFX가 나타나야 할 자리에 MeleeAttackVFX도 번갈아가면서 나타나는 현상
 		- 최초에 생성된 프리팹들은 정상적으로 재생됨
 		- 최초에 생성된 풀 갯수만큼 재생된 후
@@ -57,7 +55,75 @@
 
 ### 간헐적인 이슈
 - 이슈가 있다고 느꼈는데 다시 테스트했을 때 재현이 안된 것들을 정리함
-- 오퍼레이터 A를 배치할 때, 방향 설정 로직 중 오퍼레이터 B의 위치에서 마우스 커서를 떼면 배치되면서 해당 마우스 커서의 위치에 있는 오퍼레이터가 클릭되는 현상
+	- 오퍼레이터 A를 배치할 때, 방향 설정 로직 중 오퍼레이터 B의 위치에서 마우스 커서를 떼면 배치되면서 해당 마우스 커서의 위치에 있는 오퍼레이터가 클릭되는 현상
+
+# 251021 - 짭명방
+
+>[!done]
+>- 버그 수정
+>	- `Enemy` : `Operator`가 사라졌는데도 공격하는 현상
+>	- `MeleeAttackEffect`와 `HitEffect`가 섞이는 현상 : 정확히는 `HitEffect`가 나타나야 할 자리에 `MeleeAttackEffect`가 섞이는 현상에 가깝다. 
+## 버그 수정하기
+
+### Enemy) Operator가 사라졌는데도 공격하는 현상
+- 예전에 `static event`로 오퍼레이터가 죽었을 때 모든 적에게 알리는 코드를 구현했던 거 같은데 없다? 
+#### 해결
+1.  `DeployableUnitEntity`
+```cs
+public static event Action<DeployableUnitEntity> OnDeployableDied = delegate { };
+```
+> 이벤트 추가, `Despawn`에서 `Invoke`
+
+2. `Enemy`
+ - ~~`Initialize`에서 전역 이벤트 등록, `Despawn`에서 전역 이벤트 해제~~
+ - `OnEnable`에서 등록, `OnDisable`에서 해제
+```cs
+public void HandleDeployableDied(DeployableUnitEntity disabledEntity)
+{
+	if (targetsInRange.Contains(disabledEntity))
+	{
+		targetsInRange.Remove(disabledEntity);
+
+	}
+
+	// 타겟이 범위에서 벗어났어도 현재 타겟으로 지정되는 상황이 있을 수 있으니 위 조건과는 별도로 구현했음
+	if (CurrentTarget == disabledEntity)
+	{
+		CurrentTarget = null;
+	}
+}
+```
+- `CurrentTarget` 프로퍼티의 세터의 이벤트 발생 메서드는 제거했음.
+
+> [!done]
+> 1. `Operator`가 사라진 자리를 `Enemy`가 계속해서 공격하는 문제
+> 2. 미리보기 상태인데도 `Enemy`가 해당 미리보기 객체를 향해 공격하는 문제
+
+> [!tips]
+> - **개별 객체에서 전역 이벤트를 등록하고 해제하는 로직은 다른 객체에게 영향을 주지 않는다.**  갑자기 궁금해져서 AI에게 물어봤음.
+### HitVFX와 MeleeAttackVFX가 번갈아가며 나타나는 현상
+- 어제 해결하려다가 해결 못한 문제
+- 이건 답을 못 찾았기 때문에 관련 요소들 긁어다가 AI한테 던져줬다. 이 부분이 문제였음.
+
+```cs
+private IEnumerator WaitAndReturnToPool(float duration = 1f)
+{
+	yield return new WaitForSeconds(duration);
+
+	if (gameObject != null)
+	{
+		ObjectPoolManager.Instance!.ReturnToPool(_tag, gameObject);
+	}
+	
+	// else문은 필요 없음 - null이면 Destroy 호출 불가능
+}
+```
+> - 여기서 `_tag` 부분이 `attackSource.HitEffectTag`으로 되어 있었다. 이걸 `_tag`로 수정해서 인풋으로 받은 태그로 풀을 돌려줬음.
+
+> [!done]
+> 1. 오브젝트 풀을 이용하지 않고 계속 인스턴스를 생성하는 문제
+> 2. `hitEffect`가 나타나야 할 자리에 `MeleeAttackEffect`가 나타나는 문제
+
 
 # 251020 - 짭명방
 
