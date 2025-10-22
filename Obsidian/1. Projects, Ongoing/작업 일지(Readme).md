@@ -44,19 +44,119 @@
 >	- 소리 추가
 >- 기타 이슈들 수정
 
-### 해결 필요
+### 현재 진행 중
 - `Todo` 내용 작업 진행
-- 버그 수정
-	- HitVFX가 나타나야 할 자리에 MeleeAttackVFX도 번갈아가면서 나타나는 현상
-		- 최초에 생성된 프리팹들은 정상적으로 재생됨
-		- 최초에 생성된 풀 갯수만큼 재생된 후
-			- 오류 1)`AttackEffect`가 새로 생성되며, 이게 `PlayMeleeAttackEffect`에 의해 나타나는 듯(오퍼레이터 위치에 휘두르는 이펙트가 나타남)
-			- 오류 2)`HitVFX`가 나타나지 않고 피격 대상 위치에 `AttackEffect`가 나타남
+- 버그
+	- 배치 불가능한 곳에 바리케이드를 띄운 상태에서 마우스 커서를 놨을 때 바리케이드가 남아 있는 현상
 
 ### 간헐적인 이슈
 - 이슈가 있다고 느꼈는데 다시 테스트했을 때 재현이 안된 것들을 정리함
 	- 오퍼레이터 A를 배치할 때, 방향 설정 로직 중 오퍼레이터 B의 위치에서 마우스 커서를 떼면 배치되면서 해당 마우스 커서의 위치에 있는 오퍼레이터가 클릭되는 현상
 
+---
+# 251022 - 짭명방
+
+>[!done]
+>- 구조 변경
+>	- `DeployableInfo`를 `DeployableManager`에서 분리
+>- 버그 수정
+>	- `InstageInfoPanel` : 바리케이드를 클릭했는데 해당 정보로 업데이트되지 않는 현상
+
+## 구조 변경
+- `DeployableInfo`를 `DeployableManager`에서 분리해서 개별 스크립트로 만듦
+```cs
+    // 일반 배치 가능한 유닛일 때 할당
+    public List<DeployableUnitEntity> deployedDeployables = new List<DeployableUnitEntity>();
+    public DeployableUnitData? deployableUnitData;
+```
+> `deployedDeployables`을 `List`로 수정했다 : 바리케이드는 여러 개가 배치될 수 있기 때문임.
+
+~~그리고 배치된 `Deployables`을 관리하는 로직도 추가해야 한다. ~~
+
+****
+## 사소한 이슈 수정
+
+### 스테이지 `1-1` : `PreloadStageObjectPools` 이슈
+![[Pasted image 20251022171238.png]]
+> 항목이 있는데도 `Element`가 나타나지 않는 현상
+
+- 해결) `MapDeployableData`에서
+```cs
+[SerializeField] protected GameObject deployablePrefab = default!;
+[SerializeField] protected DeployableUnitData deployableData = default!; // 기본 데이터. 별도의 초기화 로직을 거치지 않게 하기 위함. 
+[SerializeField] protected int maxDeployCount = 0; // 최대 배치 가능 수 
+```
+> 이전엔 `public`이었다가  `protected`로 바꿨는데, 이 경우 인스펙터에서 렌더링할 요소를 찾지 못한다. 그래서 앞에 `[SerializeField]`를 추가함.
+> 접근자 자체는 저렇게 관리해주는 게 좋다. 외부에 의한 변경을 막아야 하기 때문.
+
+### `DeployableUnitEntity` : 인게임 정보 인포 갱신 안됨
+- 오퍼레이터 정보는 잘 나타나고 있고 바리케이드 같은 `DeployableUnitEntity`를 클릭했을 때 정보 갱신이 되지 않았음
+- `InstageInfoPanel`에 로깅해보니
+```cs
+public void UpdateInfo(DeployableManager.DeployableInfo deployableInfo, bool IsClickDeployed)
+{
+	gameObject.SetActive(true); // 정보 업데이트라서 오브젝트 활성화
+	currentDeployableInfo = deployableInfo;
+	currentDeployableUnitState = DeployableManager.Instance!.UnitStates[currentDeployableInfo];
+
+	if (currentDeployableUnitState == null)
+	{
+		Debug.LogError("현재 배치 요소의 정보가 없음");
+		return;
+	}
+
+	// 박스에서 꺼내는 요소인 경우, 맵의 남은 부분을 클릭하면 현재 동작을 취소할 수 있음
+	if (!IsClickDeployed)
+	{
+		cancelPanel.gameObject.SetActive(true);
+		cancelPanel.onClick.AddListener(OnCancelPanelClicked);
+	}
+
+	// 1. 배치된 Operator
+	if (currentDeployableInfo.deployedOperator != null)
+	{
+		Operator op = currentDeployableInfo.deployedOperator;
+		op.OnDeathStarted += Hide;
+		CameraManager.Instance!.AdjustForDeployableInfo(true, op);
+		UpdateOperatorInfo();
+	}
+	// 2. 박스의 Operator
+	else if (currentDeployableInfo.ownedOperator != null)
+	{
+		OwnedOperator op = currentDeployableInfo.ownedOperator;
+		CameraManager.Instance!.AdjustForDeployableInfo(true);
+		UpdateOperatorInfo();
+	}
+	else if (currentDeployableInfo.deployedDeployable != null)
+	{
+		DeployableUnitEntity deployable = deployableInfo.deployedDeployable;
+		deployable.OnDeathStarted += Hide;
+		CameraManager.Instance!.AdjustForDeployableInfo(true, deployable);
+		UpdateDeployableInfo();
+	}
+	else
+	{
+		Debug.LogError("UpdateInfo를 클릭했으나 갱신된 정보가 없음");
+	}   
+}
+```
+> 여기서 `else`문이 출력되고 있음 
+> 따라서 `deplyoableDeployable`이 제대로 할당되지 않고 있다는 거고, 이건 `DeployableManager`의 초기화에 관한 이슈로 보임
+
+.. 이게 생각보다 복잡한 문제가 됐다. `deployedDeployable`이 1개가 아니라서 발생하고 있는 문제임. (바리케이드라는 데이터 1개로 3개의 개체까지 관리할 수 있기 때문)
+
+- 일단 스크립트를 통째로 받아서 AI에게 넘겨주니까 큰 규모의 리팩토링을 해줬는데, **내 능지로는 이해가 안돼서 다시 어제 커밋으로 되돌린 다음 더 간단하고 이해가 가는 버전으로 수정**하고 있다. 
+
+- `InStageInfoPanel` 부분에 관해 
+	- `UpdateInfo`에 파라미터를 받아서 **배치된 요소/배치되지 않은 요소 처리 메서드를 나눴다.**
+	- 그리고 각각의 메서드는 `DeployableUnitEntity`와 `Operator`를 구분해서 처리하는 방식이다.
+	- 지금 보면 `StageUIManager`에서는 `Info`와 배치된 객체를 구분해서 처리했느데, `InstageInfoPanel`에서는 `UpdateInfo(DeployableInfo)`로 억지로 통합해서 처리해서 코드가 더 복잡해보이는 느낌이 있음.
+	- 이런 걸 보면 **스크립트가 길어지더라도  혼동 가능성을 줄이는 게 더 바람직한 코드인 것 같음.** 지금 보면 괜히 꼬여있는 느낌이 있다.
+
+- 일단 이렇게 처리했을 때 바리케이드를 클릭했을 때 바리케이드 UI가 나타나고 있어서 1번째 문제 해결은 성공
+
+
+---
 # 251021 - 짭명방
 
 >[!done]
@@ -124,7 +224,7 @@ private IEnumerator WaitAndReturnToPool(float duration = 1f)
 > 1. 오브젝트 풀을 이용하지 않고 계속 인스턴스를 생성하는 문제
 > 2. `hitEffect`가 나타나야 할 자리에 `MeleeAttackEffect`가 나타나는 문제
 
-
+---
 # 251020 - 짭명방
 
 >[!done]
