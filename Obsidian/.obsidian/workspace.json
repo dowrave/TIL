@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 343.5
+    "width": 233.5
   },
   "right": {
     "id": "e94ea327b6cf935a",
@@ -176,8 +176,8 @@
             "state": {
               "type": "advanced-tables-toolbar",
               "state": {},
-              "icon": "lucide-file",
-              "title": "플러그인이 더 이상 활성화돼있지 않음"
+              "icon": "spreadsheet",
+              "title": "Advanced Tables"
             }
           }
         ],
@@ -185,8 +185,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 222.5,
-    "collapsed": true
+    "width": 222.5
   },
   "left-ribbon": {
     "hiddenItems": {
