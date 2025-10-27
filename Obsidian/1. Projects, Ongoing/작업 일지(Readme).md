@@ -46,17 +46,75 @@
 
 ### 현재 진행 중
 - `Todo` 내용 작업 진행
-- `ClickDetectionSystem` 정리 중
-	- 유니티에서 자체적으로 동작하는 `EventSystem`과는 완전히 별도로 동작시키는 게 목표
-	- `DeployableActionUI`의 버튼들이 정상적으로 동작해야 한다.  현재는 클릭해도 아무 동작이 없음.
+>[!wip]
+>- `DeployableManager` 기능 분리 
+>	- 배치하는 과정에서의 마우스 클릭과 그로 인한 상태 변화가 함께 들어가 있는데, 마우스를 이용한 부분은 별도로 관리하려고 함
+>	- 대부분의 기능을 구현. 드래그가 끝나고 호버링된 타일에 스냅핑되는 것까진 되는데, 그 이후인 방향을 정하는 로직으로 넘어가지 않는다. 더 살펴보면 `InstageInfoPanel`의 `CancelPanel`과 충돌이 발생하고 있는데 오늘 해결하진 못했음. 일단 여기까지 하고 내일 더 진행하기로 함.
 
 
 ### 간헐적인 이슈
 - 이슈가 있다고 느꼈는데 다시 테스트했을 때 재현이 안된 것들을 정리함
-	- 오퍼레이터 A를 배치할 때, 방향 설정 로직 중 오퍼레이터 B의 위치에서 마우스 커서를 떼면 배치되면서 해당 마우스 커서의 위치에 있는 오퍼레이터가 클릭되는 현상
+
 
 ---
+# 251027 - 짭명방
 
+> [!Done]
+> 1. `ClickDetectionSystem` 관련 수정 완료
+> 	- 이제 해당 시스템은 오브젝트 클릭 부분만 감지하며, 버튼 UI 감지는 `EventSystem`에서 처리한다.
+> 	- 다만 이런 문제가 있음) 퇴각 버튼 자리에 배치된 유닛이 있을 경우, 퇴각 버튼을 클릭하면 버튼 클릭 + 유닛 오브젝트 클릭이 함께 동작하는 현상
+
+>[!wip]
+>- `DeployableManager` 기능 분리 
+>	- 배치하는 과정에서의 마우스 클릭과 그로 인한 상태 변화가 함께 들어가 있는데, 마우스를 이용한 부분은 별도로 관리하려고 함
+>	- 대부분의 기능을 구현. 드래그가 끝나고 호버링된 타일에 스냅핑되는 것까진 되는데, 그 이후인 방향을 정하는 로직으로 넘어가지 않는다. 더 살펴보면 `InstageInfoPanel`의 `CancelPanel`과 충돌이 발생하고 있는데 오늘 해결하진 못했음. 일단 여기까지 하고 내일 더 진행하기로 함.
+
+## ClickDetectionSystem 수정 계속
+- 현재 상황
+1. `DeployableActionUI`(World Space)와 `CancelPanel`(Screen Space - Overlay)이 겹치는 상황, `ClickDetectionSystem`의 `UI` 인식 부분은 다 지워둔 상태
+
+- UI 요소의 경우 아래의 우선순위를 가짐
+	1. `Screen Space - Overlay`
+	2. `Screen Space - Camera`
+	3. `World Space`
+
+- 따라서 `DeployableActionUI`는 `CancelPanel`에 의해 가려지게 됨
+
+### ICanvasRaycastFilter
+이 때 사용할 수 있는게 `ICanvasRaycastFilter`이다. 
+- [[Unity - ICanvasRaycastFilter]]
+- `IsRaycastLocationValid`라는 메서드가 `true`를 반환하면 해당 객체의 클릭 이벤트 처리를 하고, `false`를 반환하면 해당 객체를 무시한다. 
+- 이런 처리들은 `EventSystem`에서 진행됨.
+
+- 위 요소를 `InstageInfoPanel`에 있는 `CancelPanel`에 적용했음.
+
+> [!done]
+> - `CancelPanel` 뒤에 있는 버튼(퇴각, 스킬)이 정상적으로 동작함
+
+>[!bug]
+>- 하지만 `InstageInfoPanel`의 `CancelPanel` 클릭 이벤트가 정상적으로 동작하지 않고 있음.(배치/액션 행동 취소)
+- `Box`를 클릭한 상태에서는 정상적으로 `CancelPanel`이 동작하는데, 배치된 유닛을 클릭했을 때는 동작하지 않는다.
+- 이벤트 등록 시점을 `Awake`로 옮겼기 때문에 이벤트 등록이 해제된 이슈는 아니다. 패널이 비활성화됐을 때 이벤트가 제거될 이유도 없음.
+
+- 그러면 단순히 조건문 이슈일 수 있음. 이전에 어떻게 구현했는지 모르겠는데 **"배치된 요소를 클릭한 상태"에 관한 상태가 `DeployableManager`에 없다.** 그래서 새로 추가함.
+
+- 해결) 실제로 조건문 이슈였음. "현재 배치된 요소를 클릭 중인가?"라는 상태를 추가했다.
+
+## DeployableManager 기능 분리
+- 입력 처리 부분과 규칙 / 상태 관리를 동시에 수행하고 있기 때문에, **입력 처리 부분은 분리하려고 한다.** 
+
+- 일단 **`ClickDetectionSystem`에서 `DeployableBox` 관련 처리하는 부분은 제거**했다. 이걸 없애도 `DeployableBox`가 `IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler` 등을 상속받는 요소이기 때문에 이벤트 시스템에 처리를 맡기면 됨. 
+	- 그래서 `ResetPlacement`가 한번에 2번씩 실행되는 현상은 해결했다.
+
+- `DeploymentInputHandler`라는 하위 오브젝트를 만들고, 동작에 의한 기능을 대부분 옮겨놓았음.
+	- 타일 지정 후에 방향을 설정하는 부분이 제대로 동작하지 않고 있음.
+	- 위에서 구현했던 `CancelPanel`이랑 충돌하는 듯? 
+- **위 이슈에서 막혀서 내일 진행하기로 한다.** `CancelPanel`을 어떻게 처리할 것인가, 배치 중일 때 오퍼레이터에서 절댓값으로 근접한 거리에서는 취소 동작이 동작하면 안되는 등의 이슈를 생각해봐야 함. 
+	- 명방에서는 아래처럼 구현되어 있음.
+		- 마름모 내를 터치하면 동작 유지
+		- 드래그하면서 일정 거리 이상으로 벗어나면 배치 동작 수행
+		- 마름모 외부를 터치하면 전체 배치 동작이 취소
+---
 # 251023 - 짭명방
 
 >[!done]
