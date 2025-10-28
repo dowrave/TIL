@@ -47,9 +47,11 @@
 ### 현재 진행 중
 - `Todo` 내용 작업 진행
 >[!wip]
->- `DeployableManager` 기능 분리 
->	- 배치하는 과정에서의 마우스 클릭과 그로 인한 상태 변화가 함께 들어가 있는데, 마우스를 이용한 부분은 별도로 관리하려고 함
->	- 대부분의 기능을 구현. 드래그가 끝나고 호버링된 타일에 스냅핑되는 것까진 되는데, 그 이후인 방향을 정하는 로직으로 넘어가지 않는다. 더 살펴보면 `InstageInfoPanel`의 `CancelPanel`과 충돌이 발생하고 있는데 오늘 해결하진 못했음. 일단 여기까지 하고 내일 더 진행하기로 함.
+>- 배치 로직 이슈
+>	- 타일에 배치한 다음 방향으로 설정하는 부분으로 넘어가지 않음
+>	- `DiamondMask` 로직도 정상적으로 동작하지 않는 듯
+>- 체력이나 SP Bar를 클릭했을 때 해당 부분의 레이캐스트를 끌지, 아니면 켜놓고 상위 `DeployableUnitEntity`를 찾게 설정할지 생각
+>- 스테이지 로딩 현황도 게이지로 보여주면 좋을 것 같음. 지금은 어떻게 되고 있는지 파악하기 어려워서.
 
 
 ### 간헐적인 이슈
@@ -57,6 +59,209 @@
 
 
 ---
+# 251028 - 짭명방
+>[!wip]
+>- 클릭 충돌 문제 해결하기 : `DeploymentInputHandler`와 `InstageInfoPanel.CancelPanel`
+
+## 클릭 충돌 문제 해결하기
+- `currentDeployableEntity`를 추적해보니까 아예 `Box`에서 꺼낼 때부터 제대로 할당이 안 되어 있다. `DeployableBox`가 어떻게 초기화되는지부터 확인해야 할 듯.
+
+- `DeployableInfo`에서 관리하는 `DeployedOperator`, `DeployedDeployable` 필드에 관한 정리를 해야 하나?
+
+### 정리
+- `DeployableManager`
+```cs
+// BottomPanelOperatorBox 마우스버튼 다운 시 작동, 배치하려는 오퍼레이터의 정보를 변수에 넣는다.
+public bool StartDeployableSelection(DeployableInfo deployableInfo)
+{
+	ResetPlacement();
+	SetCurrentDeployableInfo(deployableInfo);
+	StageUIManager.Instance!.ShowUndeployedInfo(CurrentDeployableInfo);
+
+	// 박스 선택 상태
+	CurrentDeployableBox.Select();
+
+	// 하이라이트 처리
+	HighlightAvailableTiles();
+
+	return true;
+}
+
+private void SetCurrentDeployableInfo(DeployableInfo deployableInfo)
+{
+	if (deployableInfo != null)
+	{
+		CurrentDeployableInfo = deployableInfo;
+
+		// CurrentDeployableEntity = deployableInfo.deployedOperator != null ?
+		//     deployableInfo.deployedOperator :
+		//     deployableInfo.deployedDeployable;
+
+		// Debug.Log($"DeployableManager.CurrentDeployableEntity : {CurrentDeployableEntity}");
+		if (CurrentDeployableInfo == null) throw new InvalidOperationException("CurrentDeployableInfo가 null임");
+
+		CurrentDeployableBox = deployableUIBoxes[CurrentDeployableInfo];
+		if (CurrentDeployableBox == null) throw new InvalidOperationException("CurrentDeployableBox가 null임");
+	}
+}
+
+public void CreatePreviewDeployable()
+{
+	InstanceValidator.ValidateInstance(CurrentDeployableInfo);
+
+	CurrentDeployableObject = ObjectPoolManager.Instance.SpawnFromPool(CurrentDeployableInfo.poolTag, Vector3.zero, Quaternion.identity);
+	CurrentDeployableEntity = CurrentDeployableObject.GetComponent<DeployableUnitEntity>();
+
+	if (CurrentDeployableEntity is Operator op)
+	{
+		op.Initialize(CurrentDeployableInfo!);
+	}
+	else
+	{
+		CurrentDeployableEntity!.Initialize(CurrentDeployableInfo!);
+	}
+}
+```
+> - `StartDeployableSelection, SetCurrentDeployableInfo` 부분에서 원래 `CurrentDeployableEntity`를 초기화했는데, 배치된 요소가 없으니까 저렇게 설정하면 `null`이 나올 수밖에 없음
+> - **그래서 미리보기를 생성하는 시점에 `CurrentDeployableEntity`를 할당하는 것으로 변경했다.** `DeployableInfo`에서 "현재 배치된 배치 요소"를 관리하는 부분을 가져오는 건 의미상으로도 맞지 않음.
+
+### 그 다음이 안됨
+- 그래서 방향 설정 로직으로 넘어가는 것까지는 되지만 **그 다음이 안된다** ㅋㅋㅋ
+- 이 부분이 `CancelPanel`과 충돌이 일어나는 걸지도? 근데 저번에 `RaycastPassThroughFilter`를 구현할 때 `DeployableUI` 부분도 감지되는 레이캐스터로 지정해놓긴 했다. 여기 로깅을 해봐야 할 듯.
+
+#### `enum` 관련 이슈
+```cs
+private enum InputState { None, SelectingBox, SelectingTile, SelectingDirection }
+public InputState CurrentState { get; private set; } = InputState.None;
+// Inconsistent accessibility: property type 'DeploymentInputHandler.InputState' is less accessible than property 'DeploymentInputHandler.CurrentState'[CS0053]
+```
+> 타입의 접근자가 `private`이라서 `InputState`라는 타입이 외부에 공개되어 있더라도 그 타입이 어떤 정보인지를 알 수 없기 때문에 발생하는 오류
+
+- **타입도 `public`으로 노출시키면 해결**되는 이슈
+
+#### 계속
+- `ClickDetectionSystem` 에서 `HandleSpecialUIClick` 부분이 원래 다이아몬드 내부 클릭을 감지하는 부분이었는데, 지금은 `EventSystem`에 의한 동작을 분리하기로 했단 말임? 근데 저 부분이 아직 남아 있어서 정리를 더 해야 할 것 같음
+- 따라서 수정해야 하는 부분은 크게 2가지임
+	1. `DiamondMask` 클릭 처리
+	2. 체력 바 등이 클릭됐을 때, 그 체력 바를 갖고 있는 `DeployableUnitEntity`가 클릭되도록 하기
+
+### DiamondMask 클릭 처리
+- `DiamondMask` 부분을 수정하면서, 아예 `InstageInfoPanel`의 `CancelPanel`을 꺼봄
+- 그리고 **상호작용이 필요 없는 요소의 `Raycast Target`을 모두 해제함**
+	- `EventSystem.current.IsPointerOverGameObject()`는 `Raycast Target`이 켜진 요소를 감지함
+	- **`Image`나 `TMP`의 `Raycast Target`을 해제**하면 됨
+		- 지금까지 전~혀 신경쓰지 않던 요소라서 하나하나 살펴봐야 할 듯
+		- **`Button` 같은 경우도 `Button`의 세부 요소로 하위 오브젝트에 `Image`나 `Text`를 넣을 때가 있는데, 이런 경우에도 하위 오브젝트의 `Raycast Target`을 끄는 게 좋다.**  
+		- 끄지 않더라도 이벤트 버블링으로 상위 오브젝트를 찾아 `OnClick` 이벤트를 동작시키지만, 성능상 가장 좋은 상황은 그런 거 없이 애초에 클릭 요소를 곧바로 찾아내는 것이기 때문이다.
+	- `Maskable`과의 차이
+		- `Maskable`은 시각적 렌더링을 위한 옵션으로, 켜져 있다면 상위 계층의 `Mask`나 `RectMask2D` 컴포넌트의 영향을 받아 잘려 보일 수 있다.
+
+- `DiamondMask`랑 `DeploymentInputHandler` 사이의 역할을 정리해야 함. 지금은 겹치는 느낌이 있음.
+	- `DiamondMask` : 클릭을 감지하고 `DeploymentInputHandler`에게 드래그 시작 신호와 `minDirectionDistance` 값을 전달함
+
+#### 기존 스크립트의 문제점
+```cs
+if (CurrentState == InputState.SelectingDirection && Input.GetMouseButtonDown(0))
+{
+	deployManager.ResetHighlights();
+
+	if (currentHoveredTile != null)
+	{
+		Vector3 dragVector = Input.mousePosition - mainCamera.WorldToScreenPoint(currentHoveredTile.transform.position);
+		float dragDistance = dragVector.magnitude;
+		Vector3 newDirection = DetermineDirection(dragVector);
+
+		placementDirection = newDirection;
+
+		if (currentDeployableEntity != null && currentDeployableEntity is Operator op)
+		{
+			op.SetDirection(placementDirection);
+			op.HighlightAttackRange();
+		}
+
+		deployManager.UpdatePreviewRotation(placementDirection);
+		Debug.Log("방향 미리보기 수정됨");
+
+		if (Input.GetMouseButtonUp(0))
+		{
+			Debug.Log("방향 선택 중 마우스 버튼 업 감지");
+			Debug.Log($"dragDistance : {dragDistance}");
+			Debug.Log($"minDirectionDistance : {minDirectionDistance}");
+
+			// 일정 거리 이상 커서 이동 시 배치
+			if (dragDistance > minDirectionDistance)
+			{
+				deployManager.DeployDeployable(currentHoveredTile, placementDirection);
+				lastPlacementTime = Time.time; // 배치 시간 기록
+			}
+			// 바운더리 이내라면 다시 방향 설정(클릭 X) 상태
+			else
+			{
+				IsMousePressed = false;
+				deployManager.ResetHighlights();
+			}
+		}
+	}
+}
+```
+> **`MouseButtonDown()` 내에 `MouseButtonUp()`이 함께 들어가 있는데, 이 경우 `MouseButtonUp()`은 절대 동작하지 않는다.**
+
+그래서 **`DiamondMask` 내부를 클릭했을 때 드래그 상태를 활성화**하는 식으로 다르게 구현함.
+```cs
+    public void HandleDirectionSelection()
+    {
+        // 드래그 시작 후에만 방향 업데이트 & 마우스 버튼 Up 로직 실행
+        if (CurrentState != InputState.SelectingDirection) return;
+
+        // 1. 드래그 중 - 매 프레임 방향 미리보기 업데이트
+        Vector3 dragVector = Input.mousePosition - mainCamera.WorldToScreenPoint(currentHoveredTile.transform.position);
+        Vector3 newDirection = DetermineDirection(dragVector);
+
+        // 방향 변경 시에만 업데이트
+        if (placementDirection != newDirection)
+        {
+            placementDirection = newDirection;
+            if (currentDeployableEntity is Operator op)
+            {
+                op.SetDirection(placementDirection);
+                op.HighlightAttackRange();
+            }
+            deployManager.UpdatePreviewRotation(placementDirection);
+        }
+
+        // 2. 마우스 버튼 Up - 배치 / 배치 취소 결정
+        if (Input.GetMouseButtonUp(0))
+        {
+            float dragDistance = dragVector.magnitude;
+
+            // 일정 거리 이상 커서 이동 시 배치
+            if (dragDistance > minDirectionDistance)
+            {
+                // 배치 시 이 스크립트의 상태도 초기화됨
+                deployManager.DeployDeployable(currentHoveredTile, placementDirection); 
+                lastPlacementTime = Time.time;
+            }
+
+            // 일정 거리 이상 이동하지 않았다면 배치 로직 유지
+            else
+            {
+                deployManager.ResetHighlights();
+                IsDragging = false;
+            }
+        }
+	}
+```
+
+> 추가 이슈로, **타일을 정하자마자 배치되는 현상**이 있음
+> - 일단 `CurrentState`와 `IsDragging`을 별도로 구현한다. 전자는 배치 로직의 어느 단계인지를 상태적으로 표시하는 거고, `IsDragging`은 `MouseButtonDown`이 들어가고 있는지를 체크하는 것인데 명시적으로 표시하기 위해 별도의 상태로 관리함
+> 	- 따라서 `CurrentState`와 `IsDragging`의 조합으로 현재 어떤 상태에서 어떤 동작을 하고 있는지를 검사하는 방식이 됐음.
+
+- 이 부분은 해결하지 못했다. 내일 작업하는 걸로. 
+	 - 해결하지 못해서 계속 딜레이된다..
+
+
+
+
 # 251027 - 짭명방
 
 > [!Done]
