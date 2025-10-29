@@ -48,10 +48,7 @@
 - `Todo` 내용 작업 진행
 >[!wip]
 >- 배치 로직 이슈
->	- 타일에 배치한 다음 방향으로 설정하는 부분으로 넘어가지 않음
->	- `DiamondMask` 로직도 정상적으로 동작하지 않는 듯
->- 체력이나 SP Bar를 클릭했을 때 해당 부분의 레이캐스트를 끌지, 아니면 켜놓고 상위 `DeployableUnitEntity`를 찾게 설정할지 생각
->- 스테이지 로딩 현황도 게이지로 보여주면 좋을 것 같음. 지금은 어떻게 되고 있는지 파악하기 어려워서.
+>	- 스테이지 로드 시 스테이지 로딩 현황 게이지로 보여주기 
 
 
 ### 간헐적인 이슈
@@ -59,6 +56,129 @@
 
 
 ---
+
+# 251029 - 짭명방
+
+>[!done]
+>1. 타일에 배치한 다음 방향으로 설정하는 부분으로 넘어가지 않음
+>	- `DiamondMask`는 UI 역할만 하고 배치 로직은 `DeploymentInputHandler`에서 다 처리
+>	- 방향 설정 시작 시점에 공격 범위 하이라이트 보이지 않는 문제 수정
+>2. 회전이 들어가지 않는 `DeployableUnitEntity`가 배치되지 않는 문제 수정
+>3. ~~체력이나 SP Bar를 클릭했을 때 해당 부분의 레이캐스트를 끌지, 아니면 켜놓고 상위 `DeployableUnitEntity`를 찾게 설정할지 생각~~
+>	- 레이캐스트 다 뺴보고 진행했는데 기존 구현에서 잘 되는 것으로 보임
+
+## 타일 배치 후 다음으로 넘어가지 않음
+- `DiamondMask` 부분은 그냥 시각적으로 보여주는 역할만 하고, `DeploymentInputHandler`에서 대부분의 로직을 처리하는 것으로 수정함. **스크린 너비 기준으로 최소 드래그 길이를 계산함.**
+- 대신 UI로 보여주는 마스크의 범위랑 실제 클릭되는 지점 간의 불일치? 같은 게 생기는 느낌은 있음. 
+
+### 이 부분 로직은 정확히 정리해둠
+- [[유니티 드래그 처리]]에 아래 내용 복붙해서 정리.
+1. **`Input.GetMouseButtonDown()`과 `Input.GetMouseButtonUp()`은 동시에 동작할 수 없음.**
+2. 따라서 **아래처럼 처리하는 게 명확하다.**
+	- **`Input.GetMousebuttonDown()`은 드래그를 시작하는 분기**
+	- **`Input.GetMouseButton()`은 드래그 중일 때의 동작**
+	- **`Input.GetMouseButtonUp()`은 드래그가 끝났을 때의 동작**
+
+> 예전에 분명히 이렇게 배웠는데 기능을 한참 안 쓰다가 다시 쓰려니까 완전히 잊어버렸다. 코드를 쓸 때 주석을 명확히 잘 달아야겠음.
+
+### 방향 설정 중 하이라이트 보이지 않는 문제 수정
+- 하이라이트를 처리할 때, 동작을 시작하는 시점인 `MouseButtonDown()`에서도 하이라이트 로직을 넣어줘서 해결함
+
+### 최종본
+```cs
+    public void HandleDirectionSelection()
+    {
+        // 드래그 시작 후에만 방향 업데이트 & 마우스 버튼 Up 로직 실행
+        if (CurrentState != InputState.SelectingDirection) return;
+
+        // 클릭 중이 아닐 때는 타일 하이라이트 제거
+        if (!IsDragging)
+        {
+            deployManager.ResetHighlights();
+        }
+
+        Vector3 basePosition = mainCamera.WorldToScreenPoint(currentHoveredTile.transform.position);
+        Vector3 dragVector = Input.mousePosition - basePosition; // 스크린에 투사한 타일 위치 ~ 커서 위치
+
+        // 마우스 버튼을 누르는 순간 드래그 시작
+        if (Input.GetMouseButtonDown(0))
+        {
+            // 클릭이 된 지점이 마름모 밖이라면 배치 로직 취소
+            if ((Input.mousePosition - basePosition).magnitude > minDirectionDistance)
+            {
+                Debug.Log($"기준 위치에서의 거리 : {(Input.mousePosition - basePosition).magnitude}");
+                Debug.Log($"최소 거리 : {minDirectionDistance}");
+
+                Debug.Log("클릭 시작 지점이 마름모 밖이므로 배치 로직이 취소됨");
+                deployManager.CancelPlacement();
+                return;
+            }
+
+            IsDragging = true;
+
+            // 커서 방향으로 공격 범위 하이라이트 및 회전 설정(드래그 시작 & 드래그 중일 때 동작하는 로직)
+            placementDirection = DetermineDirection(dragVector);
+                if (currentDeployableEntity is Operator op)
+                {
+                    op.SetDirection(placementDirection);
+                    op.HighlightAttackRange();
+                }
+            deployManager.UpdatePreviewRotation(placementDirection);
+        }
+        
+
+        // 2. 드래그 중
+        if (IsDragging && Input.GetMouseButton(0))
+        {
+            Vector3 newDirection = DetermineDirection(dragVector);
+
+            // 방향 변경 시에만 업데이트
+            if (placementDirection != newDirection)
+            {
+                placementDirection = newDirection;
+                if (currentDeployableEntity is Operator op)
+                {
+                    op.SetDirection(placementDirection);
+                    op.HighlightAttackRange();
+                }
+                deployManager.UpdatePreviewRotation(placementDirection);
+            }
+        }
+
+        // 3. 드래그 종료
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (!IsDragging) return;
+
+            float dragDistance = dragVector.magnitude;
+
+            // 일정 거리 이상 커서 이동 시 배치
+            if (dragDistance > minDirectionDistance)
+            {
+                // 배치 시 이 스크립트의 상태도 초기화됨
+                deployManager.DeployDeployable(currentHoveredTile, placementDirection);
+                lastPlacementTime = Time.time;
+            }
+
+            // 일정 거리 이상 이동하지 않았다면 타일이 선택된 상태는 유지함
+            else
+            {
+                deployManager.ResetHighlights();
+                IsDragging = false;
+            }
+        }
+    }
+```
+
+
+## Deployable 배치 안되는 문제 수정
+- `placementDirection`이 `Vector3.zero`가 기본 설정인데, `DeployDeployable`의 `placementDirection`은 `Vector3.zero`이면 아무 동작도 실행하지 않음
+	- `DeployableManager`의 조건을 `CurrentDeployableEntity`가 `Operator`일 때만 적용하는 식으로 수정
+
+
+## 체력, SP Bar 클릭 시..
+- 배치시킨 다음에 테스트해봤는데 그냥 멀쩡히 잘 동작한다. 클릭 감지하는 콜라이더가 먼저 클릭 이벤트를 가져가는 것 같음.
+
 # 251028 - 짭명방
 >[!wip]
 >- 클릭 충돌 문제 해결하기 : `DeploymentInputHandler`와 `InstageInfoPanel.CancelPanel`
