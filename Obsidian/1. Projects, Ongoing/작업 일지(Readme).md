@@ -60,6 +60,147 @@
 
 ---
 
+# 251031 - 짭명방
+
+>[!wip]
+> 1. 메인메뉴 -> 스테이지 씬 전환 과정
+> 	- 로딩화면 게이지
+> 2.
+
+## 메인메뉴 -> 스테이지 씬 진입 로딩 패널 / 설정
+- 어제의 이슈
+	- 스테이지 씬으로 진입할 때 UI가 제대로 초기화되지 않은 상태로 미리 나타나는 문제
+		- ~~비활성화 상태에서 초기화를 진행한 뒤, 활성화하면 될 듯.~~
+		- 패널이 사라지기 전에 `StageUIManager`의 초기화를 진행하면 되지 않나?
+
+### 어제의 이슈 수정
+- `StageUIManager`의 최종 초기화 위치 
+```cs
+    // StageLoader에서의 동작이 끝난 후에 호출됨
+    public IEnumerator InitializeStageCoroutine(StageData stageData, List<SquadOperatorInfo> squadData, StageLoadingScreen stageLoadingScreen, Action<float> onProgress)
+    {
+        this.stageData = stageData;
+        this.stageLoadingScreen = stageLoadingScreen;
+
+        // 맵 준비
+        InitializeMap();
+        onProgress?.Invoke(.1f);
+        yield return null;
+
+        // 스테이지에 필요한 모든 재료(오브젝트 풀)를 준비함
+        // PreloadStageObjectPoolsCoroutine(squadData);
+        yield return StartCoroutine(PreloadStageObjectPoolsCoroutine(squadData, progress => onProgress?.Invoke(0.1f + progress + 0.8f)));
+
+        // ★★ 스테이지 씬의 메인 캔버스 초기화 & 활성화
+        StageUIManager.Instance!.Initialize();
+
+        // 맵에서 가져올 게 있어서 맵 초기화 후에 진행해야 함
+        PrepareDeployables(squadData);
+        onProgress?.Invoke(0.95f);
+        yield return null;
+
+        // 스테이지 준비
+        PrepareStage();
+        onProgress?.Invoke(1.0f);
+        yield return null;
+
+        // 로딩 화면이 사라진 후에 StartStage가 동작함
+        stageLoadingScreen.OnHideComplete += StartStageCoroutine;
+    }
+```
+> **스테이지에서 필요한 준비물이 모두 갖춰진 직후에 `StageUIManager`를 초기화하는 식으로 설정**했다. 지금 상태에서 잘 동작함.
+
+### 추가 버그
+- `CostParticleMotionVFXController` : 캔버스가 비활성화돼서 `transform.Find`가 동작하지 않는 현상
+	- `transform.Find`를 사용하는 부분을 쓰는 곳이 없다. 해당 변수와 관련 요소를 제거함.
+
+## 버튼 위치에 클릭 가능 오브젝트 있을 때 동시 클릭 현상
+- `EventSystem`에서 처리되었다면 `ClickDetectionSystem`에서의 처리를 막아버리면 되지 않을까?
+- 그래서 최종적으로 `ClickDetectionsystem`은
+```cs
+// Before
+private void Update()
+{
+	if (Input.GetMouseButtonDown(0))
+	{
+		// UI 요소 클릭 시의 동작
+		if (EventSystem.current.IsPointerOverGameObject())
+		{
+			return;
+		}
+	}
+	if (Input.GetMouseButtonUp(0))
+	{
+		PointerEventData pointerData = new PointerEventData(EventSystem.current);
+		pointerData.position = Input.mousePosition;
+
+		List<RaycastResult> results = new List<RaycastResult>();
+		EventSystem.current.RaycastAll(pointerData, results);
+
+		if (results.Count > 0)
+		{
+			Debug.Log("UI 요소 클릭되어서 동작 중단됨. 감지된 첫 번째 요소: " + results[0].gameObject.name);
+
+			// 디버깅을 위해 모든 감지된 요소 출력
+			// foreach (var result in results)
+			// {
+			//     Debug.Log("감지된 UI: " + result.gameObject.name);
+			// }
+
+			return;
+		}
+
+		// UI가 클릭되지 않았을 때의 로직 (예: ProcessClickMapObject())
+		ProcessClickMapObject();
+	}
+}
+
+// ---------------------
+
+// After
+private void Update()
+{   
+	if (EventSystem.current.IsPointerOverGameObject())
+	{
+		#if UNITY_EDITOR
+		Debug.Log("EventSystem이 UI 클릭을 처리했습니다. 오브젝트 클릭 처리를 무시합니다.");
+		#endif
+		return;
+	}
+
+	if (Input.GetMouseButtonUp(0))
+	{
+		// UI가 클릭되지 않았을 때의 로직 (예: ProcessClickMapObject())
+		ProcessClickMapObject();
+	}
+}
+```
+처럼 크게 단순화됐다. 
+
+- [[Unity - 로깅 방법]]에 관해 정리해둠
+	- 빌드 버전에서는 `Debug.Log()`를 넣지 않는 게 좋음
+	- `#if UNITY_EDITOR, #endif`로 로그문을 감싸거나, 아예 정적 클래스에 `[System.Diagnostics.Conditional("UNITY_EDITOR")]`으로 정의한 정적 메서드들을 이용하는 방법도 있음.
+
+```cs
+// 2번째 방법의 예시
+public static class MyLogger
+{
+    // [System.Diagnostics.Conditional("UNITY_EDITOR")]
+    // 에디터에서만 정의되고 사용되며, 빌드 시에는 아예 없는 것처럼 처리됨
+    [System.Diagnostics.Conditional("UNITY_EDITOR")]
+    public static void Log(object message)
+    {
+        Debug.Log(message);
+    }
+}
+
+// 사용 예시
+MyLogger.Log("메시지");
+```
+
+
+
+
 # 251030 - 짭명방
 
 >[!wip]
