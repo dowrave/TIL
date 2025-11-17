@@ -75,6 +75,7 @@
 	- [[짭명방_25년 8월]]
 	- [[짭명방_25년 9월]]
 	- [[짭명방_25년 10월]]
+	- [[2025년 11월 일지]]
 ## 블로그
 - [React + Django 프로젝트 일지 월별 작업 기록 깃허브 링크](https://github.com/dowrave/TIL/tree/main/Obsidian/1.%20Projects%2C%20Ongoing/%ED%8F%AC%ED%8F%B4%20%EA%B2%B8%20%EB%B8%94%EB%A1%9C%EA%B7%B8%20%EB%A7%8C%EB%93%A4%EA%B8%B0/%EC%9B%94%EB%B3%84%20%EC%9E%91%EC%97%85%20%EA%B8%B0%EB%A1%9D)
 - 옵시디언 링크
