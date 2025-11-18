@@ -24,7 +24,7 @@
             }
           },
           {
-            "id": "c2afcc0d28cf2441",
+            "id": "c5a80d7bc14cdaa2",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -70,7 +70,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "asyncLoad",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -218,10 +218,18 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "c2afcc0d28cf2441",
+  "active": "c5a80d7bc14cdaa2",
   "lastOpenFiles": [
     "1. Projects, Ongoing/Readme.md",
     "1. Projects, Ongoing/2025년 11월 일지.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/프로젝트 완료 기준에 대해.md",
+    "README.md",
+    "무제.base",
+    "무제 1.base",
+    "4. Archive/짬통",
+    "2025-11-18.md",
+    "4. Archive/레트로의 유니티 게임 프로그래밍 에센스/18장 - (멀티 좀비 서바이버) 네트워크 이론과 로비 구현.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/프로젝트와 멘탈리티",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/유니티/고유 식별자 명명 규칙.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/지식이 늘었다/유니티/유니티 언어 관리.md",
     "3. Resource/Image/Pasted image 20251107172737.png",
@@ -253,19 +261,11 @@
     "1. Projects, Ongoing/블로그 만들기/참고 사항.md",
     "3. Resource/Image/ForObsidian_AnimationTextureSheet01 (1).png",
     "3. Resource/Image/ForObsidian_VFXTextureSheet01 (1).png",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트/VFX 공부/유데미 강의 - Gabriel Aguiar/폭발 이펙트 강의/5. Aftermath 구현 - GroundCrack.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트/VFX 공부/유데미 강의 - Gabriel Aguiar/기초 강의/6_유니티VFX_범위효과.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트/VFX 공부/유데미 강의 - Gabriel Aguiar/기초 강의/7_유니티VFX_투사체&주문.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트/VFX 공부/유데미 강의 - Gabriel Aguiar/센세 유튜브 강의/유니티 VFX - 핵폭발 이펙트.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트/VFX 공부/유데미 강의 - Gabriel Aguiar/센세 유튜브 강의",
     "1. Projects, Ongoing/들고 다닐 지식들/유니티/무제",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트/VFX 공부/유데미 강의 - Gabriel Aguiar/폭발 이펙트 강의",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트/VFX 공부/유데미 강의 - Gabriel Aguiar/기초 강의",
     "1. Projects, Ongoing/들고 다닐 지식들/유니티/시스템",
-    "1. Projects, Ongoing/들고 다닐 지식들/시스템/무제",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트/VFX 공부/개별 노트",
-    "1. Projects, Ongoing/들고 다닐 지식들/유니티",
-    "1. Projects, Ongoing/들고 다닐 지식들",
     "3. Resource/Canvas/ListView 상속계층도.canvas"
   ]
 }
