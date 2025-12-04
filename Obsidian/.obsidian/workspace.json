@@ -22,37 +22,8 @@
               "icon": "lucide-file",
               "title": "Readme"
             }
-          },
-          {
-            "id": "c5a80d7bc14cdaa2",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1. Projects, Ongoing/2025년 12월 일지.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "2025년 12월 일지"
-            }
-          },
-          {
-            "id": "14c927e6a369fe21",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/적 스탯 정리.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "적 스탯 정리"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -232,7 +203,7 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "c5a80d7bc14cdaa2",
+  "active": "e4fdd5a87720a73f",
   "lastOpenFiles": [
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/적 스탯 정리.md",
     "1. Projects, Ongoing/2025년 12월 일지.md",
