@@ -26,6 +26,7 @@
           {
             "id": "7fe3ece53d4b6a53",
             "type": "leaf",
+            "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
@@ -33,6 +34,7 @@
                 "mode": "source",
                 "source": false
               },
+              "pinned": true,
               "icon": "lucide-file",
               "title": "2025년 12월 일지"
             }
@@ -220,8 +222,11 @@
   },
   "active": "7fe3ece53d4b6a53",
   "lastOpenFiles": [
-    "3. Resource/Image/TransparentToWhite.png",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/짭일방주 - 겹쳤을 때 이동 구현.md",
+    "1. Projects, Ongoing/2025년 12월 일지.md",
     "1. Projects, Ongoing/Readme.md",
+    "3. Resource/Image/MovementEarthQuake.gif",
+    "3. Resource/Image/TransparentToWhite.png",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트/프로크리에이트로 텍스쳐 작업 시 유의할 점.md",
     "4. Archive/독서/스토리텔링, 어떻게 할 것인가/3. 스토리텔링, 어떻게 할 것인가 - 이야기의 요소와 층위.md",
     "4. Archive/독서/스토리텔링, 어떻게 할 것인가/2. 스토리텔링, 어떻게 할 것인가 - 스토리, 스토리텔링.md",
@@ -232,7 +237,6 @@
     "1. Projects, Ongoing/독서 - 당신의 음악 취향은/당신의 음악 취향은 - 2. 사실성.md",
     "1. Projects, Ongoing/독서 - 당신의 음악 취향은",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/구조, 시스템/적 스탯 정리.md",
-    "1. Projects, Ongoing/2025년 12월 일지.md",
     "1. Projects, Ongoing/블로그 만들기/월별 작업 기록/블로그_25년 11월.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/짭명방_25년 11월.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/프로젝트 완료 기준에 대해.md",
@@ -263,8 +267,6 @@
     "3. Resource/Image/Pasted image 20251013152719.png",
     "3. Resource/Image/VFX_Skill_Shield.gif",
     "3. Resource/Image/Pasted image 20251001175626.png",
-    "3. Resource/Image/ForObsidian_AnimationTextureSheet01 (1).png",
-    "3. Resource/Image/ForObsidian_VFXTextureSheet01 (1).png",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/이펙트/VFX 공부/유데미 강의 - Gabriel Aguiar/센세 유튜브 강의",
     "3. Resource/Canvas/ListView 상속계층도.canvas"
   ]
