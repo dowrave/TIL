@@ -1,4 +1,4 @@
-
+#FLStudio 
 ## 1. Strumizer(Alt + S)
 
 ![[Pasted image 20251212013710.png]]
