@@ -45,12 +45,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1. Projects, Ongoing/게임 프로그래밍 패턴/1. 디자인 패턴/04. 프로토타입.md",
+                "file": "1. Projects, Ongoing/게임 프로그래밍 패턴/4. 디커플링 패턴/13. 컴포넌트.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "04. 프로토타입"
+              "title": "13. 컴포넌트"
             }
           }
         ],
@@ -236,6 +236,10 @@
   },
   "active": "758f26bf335286cf",
   "lastOpenFiles": [
+    "1. Projects, Ongoing/2025년 12월 일지.md",
+    "1. Projects, Ongoing/게임 프로그래밍 패턴/4. 디커플링 패턴/13. 컴포넌트.md",
+    "1. Projects, Ongoing/게임 프로그래밍 패턴/3. 행동 패턴/11. 하위 클래스 샌드박스.md",
+    "1. Projects, Ongoing/게임 프로그래밍 패턴/1. 디자인 패턴/04. 프로토타입.md",
     "1. Projects, Ongoing/게임 프로그래밍 패턴/1. 디자인 패턴/03. 관찰자.md",
     "1. Projects, Ongoing/게임 프로그래밍 패턴/1. 디자인 패턴/02. 경량.md",
     "1. Projects, Ongoing/게임 프로그래밍 패턴/1. 디자인 패턴/01. 명령.md",
@@ -248,17 +252,13 @@
     "1. Projects, Ongoing/게임 프로그래밍 패턴/4. 디커플링 패턴/15. 서비스 중개자.md",
     "1. Projects, Ongoing/게임 프로그래밍 패턴/5. 최적화 패턴",
     "1. Projects, Ongoing/게임 프로그래밍 패턴/4. 디커플링 패턴/14. 이벤트 큐.md",
-    "1. Projects, Ongoing/게임 프로그래밍 패턴/4. 디커플링 패턴/13. 컴포넌트.md",
-    "1. Projects, Ongoing/2025년 12월 일지.md",
     "1. Projects, Ongoing/게임 프로그래밍 패턴/3. 행동 패턴/12. 타입 객체.md",
-    "1. Projects, Ongoing/게임 프로그래밍 패턴/3. 행동 패턴/11. 하위 클래스 샌드박스.md",
     "1. Projects, Ongoing/게임 프로그래밍 패턴/3. 행동 패턴/10. 바이트코드.md",
     "1. Projects, Ongoing/게임 프로그래밍 패턴/2. 순서 패턴/09. 업데이트 메서드.md",
     "1. Projects, Ongoing/게임 프로그래밍 패턴/2. 순서 패턴/08. 게임 루프.md",
     "1. Projects, Ongoing/게임 프로그래밍 패턴/2. 순서 패턴/07. 이중 버퍼.md",
     "1. Projects, Ongoing/게임 프로그래밍 패턴/1. 디자인 패턴/06. 상태.md",
     "1. Projects, Ongoing/게임 프로그래밍 패턴/1. 디자인 패턴/05. 싱글턴.md",
-    "1. Projects, Ongoing/게임 프로그래밍 패턴/1. 디자인 패턴/04. 프로토타입.md",
     "1. Projects, Ongoing/게임 프로그래밍 패턴/4. 디커플링 패턴",
     "1. Projects, Ongoing/게임 프로그래밍 패턴/2. 순서 패턴",
     "1. Projects, Ongoing/게임 프로그래밍 패턴/1. 디자인 패턴",
