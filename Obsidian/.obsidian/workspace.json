@@ -38,9 +38,23 @@
               "icon": "lucide-file",
               "title": "이번 달 일지"
             }
+          },
+          {
+            "id": "27ea670551841dea",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1. Projects, Ongoing/이번 달 일지.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "이번 달 일지"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -220,16 +234,23 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "7fe3ece53d4b6a53",
+  "active": "27ea670551841dea",
   "lastOpenFiles": [
-    "이야기.md",
+    "1. Projects, Ongoing/Readme.md",
+    "2. Area/게임 프로그래밍 패턴/1. 디자인 패턴/05. 싱글턴.md",
     "1. Projects, Ongoing/이번 달 일지.md",
     "1. Projects, Ongoing/FL Studio/FL Studio 04. 비트 만들기.md",
+    "3. Resource/Image/Pasted image 20260108002925.png",
+    "1. Projects, Ongoing/FL Studio/세부 팁들/FL Studio - Arpeggio.md",
+    "3. Resource/Image/Pasted image 20260108001311.png",
+    "3. Resource/Image/Pasted image 20260108000751.png",
+    "3. Resource/Image/Pasted image 20260108000144.png",
+    "3. Resource/Image/Pasted image 20260107235318.png",
+    "이야기.md",
     "1. Projects, Ongoing/FL Studio/세부 팁들/FL Studio - 곡 저장하기.md",
     "1. Projects, Ongoing/FL Studio/세부 팁들/FL Studio - 3x OSC.md",
     "1. Projects, Ongoing/FL Studio/FL Studio 02. 오토메이션.md",
     "1. Projects, Ongoing/FL Studio/FL Studio 01. 믹싱 기초.md",
-    "1. Projects, Ongoing/FL Studio/세부 팁들/FL Studio - Arpeggio.md",
     "1. Projects, Ongoing/FL Studio/세부 팁들/Piano Roll - Strumizer, Velocity.md",
     "1. Projects, Ongoing/FL Studio/세부 팁들/FL Studio - 키보드 입력으로 패턴 녹음.md",
     "1. Projects, Ongoing/FL Studio/세부 팁들/FL Studio - 잘린 오디오 합치기.md",
@@ -242,15 +263,10 @@
     "3. Resource/Image/Pasted image 20260105001518.png",
     "3. Resource/Image/Pasted image 20260105000530.png",
     "3. Resource/Image/Pasted image 20260104235525.png",
-    "3. Resource/Image/Pasted image 20260104234945.png",
     "1. Projects, Ongoing/FL Studio/세부 팁들/FL Studio - MiniSynth.md",
     "1. Projects, Ongoing/FL Studio/강의",
-    "3. Resource/Image/Pasted image 20260103015201.png",
-    "3. Resource/Image/Pasted image 20260103012017.png",
-    "3. Resource/Image/Pasted image 20260103011447.png",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/최근 기록/Csharp - 읽기 전용 인터페이스.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2025년/짭명방_25년 12월.md",
-    "3. Resource/Image/Pasted image 20260101224750.png",
     "1. Projects, Ongoing/FL Studio/세부 팁들/FL Studio - Delay.md",
     "2. Area/짭명방 관련/셰이더 - UV.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/최근 기록/Csharp - 상속 vs 구현.md",
@@ -258,8 +274,6 @@
     "2. Area/게임 프로그래밍 패턴/3. 행동 패턴/11. 하위 클래스 샌드박스.md",
     "2. Area/게임 프로그래밍 패턴/1. 디자인 패턴/04. 프로토타입.md",
     "2. Area/게임 프로그래밍 패턴/1. 디자인 패턴/03. 관찰자.md",
-    "2. Area/게임 프로그래밍 패턴/1. 디자인 패턴/02. 경량.md",
-    "2. Area/게임 프로그래밍 패턴/1. 디자인 패턴/01. 명령.md",
     "2. Area/게임 프로그래밍 패턴/5. 최적화 패턴",
     "2. Area/게임 프로그래밍 패턴/4. 디커플링 패턴",
     "2. Area/게임 프로그래밍 패턴/2. 순서 패턴",
