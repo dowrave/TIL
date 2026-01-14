@@ -1,5 +1,3 @@
-#EDA 
-
 [SQL vs Pandas](https://www.inflearn.com/questions/540838)
 
 #### SQL이 편한 경우

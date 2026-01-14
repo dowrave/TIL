@@ -1,5 +1,3 @@
-#tableau_levelup 
-
 > 예제
 > `평균(Sales)`와 `Category`를 넣음
 >> Category에 따른 평균값이 나오겠죠?

@@ -1,4 +1,3 @@
-#코테 
 ### 그래프 구현
 ```python
 N, M, v = map(int, input().split())

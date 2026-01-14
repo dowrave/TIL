@@ -1,5 +1,3 @@
-#tableau_levelup 
-
 - `WINDOW_AVG, WINDOW_COUNT, WINDOW_MAX, WINDOW_MIN, WINDOW_SUM`을 알면 나머지도 적절하게 쓸 수 있다
 - 데이터의 분포가 상이하게 나타나는 차원값을 정규화할 때 유용함
 ## 1. Window

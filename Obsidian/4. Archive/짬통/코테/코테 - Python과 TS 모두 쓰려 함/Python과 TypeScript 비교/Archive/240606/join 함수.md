@@ -1,5 +1,3 @@
-#비교-Python-TypeScript 
-
 `array = ['apple', 'banana', 'cherry']`
 ## 파이썬
 ```python

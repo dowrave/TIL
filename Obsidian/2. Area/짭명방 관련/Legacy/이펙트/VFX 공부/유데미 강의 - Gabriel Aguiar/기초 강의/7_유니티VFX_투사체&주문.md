@@ -1,5 +1,3 @@
-#유니티VFX 
-
 1. [[#강사님 스케치|강사님 스케치]]
 2. [[#Projectile Mesh|Projectile Mesh]]
 	1. [[#Projectile Mesh#블렌더 작업|블렌더 작업]]

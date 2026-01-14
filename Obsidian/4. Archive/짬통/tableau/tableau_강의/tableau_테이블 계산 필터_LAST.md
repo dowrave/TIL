@@ -1,5 +1,3 @@
-#tableau_levelup 
-
 ## Order Of Operations
 - **계산과 필터의 작동 순서**
 - 무엇이 먼저 작동하고 나중에 작동되는지 아는 것은 매우매우 중요함

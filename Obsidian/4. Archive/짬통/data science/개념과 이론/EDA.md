@@ -1,4 +1,3 @@
-#EDA
 [EDA의 개념과 데이터분석 잘하는 법](https://jalynne-kim.medium.com/%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B6%84%EC%84%9D-%EA%B8%B0%EC%B4%88-eda%EC%9D%98-%EA%B0%9C%EB%85%90%EA%B3%BC-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B6%84%EC%84%9D-%EC%9E%98-%ED%95%98%EB%8A%94-%EB%B2%95-a3cac2cc5ebc)
 `EDA(Exploratory Data Analysis)탐색적 데이터 분석`
 	- **데이터를 분석하고 결과를 내는 과정**에서  **지속적으로 해당 데이터에 대한 탐색과 이해가 기본적으로 갖춰져야 한다.**

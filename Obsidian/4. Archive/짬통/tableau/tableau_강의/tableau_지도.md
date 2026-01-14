@@ -1,4 +1,3 @@
-#tableau_basic 
 - Superstore KR 데이터를 이용함
 - 지도 기능이 많이 쓰이는 건 아니나, 인사이트를 얻기 좋기도 함
 

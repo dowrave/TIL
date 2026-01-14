@@ -1,5 +1,3 @@
-#tableau_levelup 
-
 > 예제 : Category, Sub-Category, 평균(Sales)
 > 여기서 특성 `{EXCLUDE [Sub-Category] : AVG([Sales])`을 추가함
 

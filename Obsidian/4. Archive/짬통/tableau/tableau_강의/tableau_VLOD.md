@@ -1,5 +1,3 @@
-#tableau_levelup 
-
 ## 1. VLOD란?
 - `View Level Of Detail`
 - 가장 단순화된 레벨부터, 가장 디테일한 레벨까지

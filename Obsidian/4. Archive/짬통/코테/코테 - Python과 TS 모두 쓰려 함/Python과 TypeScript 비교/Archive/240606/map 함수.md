@@ -1,5 +1,3 @@
-#비교-Python-TypeScript 
-
 `stringArray = ["1", "2", "3", "4", "5"];`
 
 위 배열의 원소들을 숫자로 변환하기

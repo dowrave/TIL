@@ -1,5 +1,3 @@
-#tableau_levelup 
-
 > 세팅(Sample Superstore)
 > `Order Date` : 년, 분기 설정
 > `Region` 더블 클릭

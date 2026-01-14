@@ -1,5 +1,3 @@
-#VFX #유니티VFX
-
 1. [[#1. Additive Shader|1. Additive Shader]]
 	1. [[#1. Additive Shader#파티클 시스템의 `Start Color`가 적용되도록 그래프 수정|파티클 시스템의 `Start Color`가 적용되도록 그래프 수정]]
 2. [[#2. 내 텍스쳐 만들기|2. 내 텍스쳐 만들기]]

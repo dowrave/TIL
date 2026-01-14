@@ -1,5 +1,3 @@
-#tableau_levelup 
-
 ## 1. 선언한 차원이 VLOD에 포함될 때
 
 ### 1. 선언한 차원이 VLOD와 같을 때

@@ -1,5 +1,3 @@
-#tableau_levelup 
-
 ## 정의 : Confiugrable Secondary Calculation
 
 ### 1. Calculation

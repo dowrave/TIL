@@ -1,4 +1,3 @@
-#pandas 
 ```python
 df.filter(regex = 'col')
 ```

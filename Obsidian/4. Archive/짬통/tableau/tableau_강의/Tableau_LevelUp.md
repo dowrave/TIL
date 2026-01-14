@@ -1,5 +1,3 @@
-#tableau_levelup 
-
 ## 목차
 
 ### 1. 테이블 계산
