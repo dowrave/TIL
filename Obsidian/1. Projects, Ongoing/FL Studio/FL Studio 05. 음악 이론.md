@@ -1,5 +1,21 @@
 #FLStudio 
 
+1. [[#**메이저 스케일의 패턴 : `T T S T T T S`|**메이저 스케일의 패턴 : `T T S T T T S`]]
+2. [[#Natural Minor Scale `T S T T S T T`|Natural Minor Scale `T S T T S T T`]]
+3. [[#5도권 - Circle Of Fifth|5도권 - Circle Of Fifth]]
+	1. [[#5도권 - Circle Of Fifth#궁금증|궁금증]]
+		1. [[#궁금증#답변 1.|답변 1.]]
+		2. [[#궁금증#답변 2.|답변 2.]]
+	2. [[#5도권 - Circle Of Fifth#계속|계속]]
+4. [[#Chords(코드)|Chords(코드)]]
+	1. [[#Chords(코드)#1 - 3 - 5로 알아보는 M m m M M m dim M|1 - 3 - 5로 알아보는 M m m M M m dim M]]
+5. [[#Chords Progression(코드 진행)|Chords Progression(코드 진행)]]
+	1. [[#Chords Progression(코드 진행)#ii vi IV V|ii vi IV V]]
+	2. [[#Chords Progression(코드 진행)#I V vi IV|I V vi IV]]
+	3. [[#Chords Progression(코드 진행)#I iv ii V|I iv ii V]]
+
+
+
 - 여기선 일렉트로닉에 한정된 음악 이론을 다룸
 	- 모든 장르에 활용할 수 있음
 
