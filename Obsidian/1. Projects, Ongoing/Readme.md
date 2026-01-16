@@ -39,196 +39,253 @@
 > - `Operator` 체력이 다했을 때 사망처리가 되지 않았는데도 적이 지나가는 현상
 
 ## 현재 이슈
+- `Enemy`의 컨트롤러 구현하기
 - `PathNavigator`의 구현 관련 
 	- `Enemy`나 `PathIndicator`에 구현된 필드가 너무 많아서 굳이 서브 컴포넌트로 빼둔 의미를 잘 못 느끼겠음
 - `CombatController`
 	- 적군 구현 필요
 - `UnitEntity.ExecuteSkillSequence`을 `SkillController`에 통합하기
-- 스탯 정리 : 공격 속도와 공격 쿨다운 간의 정리 필요
 
 ## 작업 내용 정리
 - 여기에는 가장 최근에 작업한 것만 기록해두고, 이전의 내용은 파일로 만들어서 옮겨뒀다.
-## 260115
+
+## 260116
 
 >[!done]
->- 버그 수정
->	- `ArcaneField` 
->		- 스킬이 꺼질 때 적이 멈추는 현상
->		- 스킬 범위에 진입 / 이탈 시 적이 진행 반대 방향으로 날아가는 현상
->	- `DoubleShotSkill` 
->		- 스킬 아이콘 클릭 시 나타나는 스택 오버플로우
->	- 일부 스킬 사용 후 SP가 회복되지 않는 현상 
->		- `OpSkillController`의 종료 로직 이슈
->- 스탯 시스템 다시 정리 : `ArcaneField` 만지는 과정에서 정리했음
->	- **`Modifier`의 기준값 : 0**
->- 보류
->	- `Barricade` 배치 시 어떤 상황에서 배치되지 않는 현상
->	- `Operator`의 체력이 다했을 때 사망 처리 X인데 적이 지나가는 현상
+>1. `UnitStats`으로 시작되는 `struct`들의 구조 수정
+>	- 세터 프로퍼티 제거 & 생성자 추가 & 필드로 초기화하는 것까지 고려
+>2. 직렬화와 인스펙터 노출 공부
+>3. 스탯 정리 : 공격 속도와 쿨다운 개념 명확하게
 
-### 버그 수정
+## 스탯 정리 : 공격 속도 vs 쿨다운
 
-#### <해결> `ArcaneField` :  스킬이 꺼질 때 적이 멈추는 현상
-- 체크 1 : `Enemy.Update.MoveAlongPath` 동작 (갑자기 저지당한다든가 하는 이슈는 아님)
+### 수정 방향 
+1. 캐릭터마다의 기본 공격 속도를 `BaseAttackRate`으로 생각
+	- 현재의 `AttackSpeed`인데, 이를 `BaseAttackRate`으로 변경
+	- 이 `BaseAttackRate`는 불변값
+2. 공격 속도 스탯 개념을 추가 : `AttackSpeed`. 
+	- 별도의 설정이 없으면 런타임에만 동작하며 `1`에서 시작하는 값
+	- 버프로 계수가 추가되는 값
+3. 최종 값은 아래의 공식을 따름 - 즉 공격 속도는 분모로 들어감
+$$
+최종 쿨다운 = \frac{기본쿨다운}{공격속도}
+$$
 
-> [!think]
-> - 하나씩 점검하려던 중, 번뜩인 게 하나 있다
-> - `ArcaneField`는 `SlowBuff`가 포함되어 있음
-> - **`SlowBuff`가 풀리는 과정에서 원상 복구가 제대로 안된 거 아닐까?** 
-> - 이런 논리로 접근하면 **또다른 이슈인 범위에 진입/이탈 시에 반대로 날아가는 현상도 설명할 수 있을 것 같음**
+- `BaseAttackRate = 2.0`이라고 하면
+- 예시) 공격 속도 50% 증가 
+	- 기본 공격 속도는 1이므로 50% 증가는 1.5
+	- 원래 최종 쿨다운 : 2
+	- 버프 최종 쿨다운 : 1.333
 
-- `SlowBuff`의 `modifier` 값이 얼마인가 봤다 : `0.3`임. (30% 감소시킨다는 의미)
-- 그리고 `Buff`의 메서드들을 보면
+### 반영
+1. 기존의 `AttackSpeed` => `BaseAttackCooldown`으로 변경
+2. `StatController`에서 관리하는 타입은 `AttackSpeed`로 동일
+	- 기본값에 `BaseAttackCooldown`을 넣음
+	- 모디파이어에 `AttackSpeed`에 해당하는 값을 넣음
+	- `GetStats`에서 나가는 부분만 수정해주면 됨
 ```cs
-    public void AddModifier(StatType type, float value)
-    {
-        float actualValue = value - 1.0f;
-        
-        // ...
-    }
-
-    public void RemoveModifier(StatType type, float value)
-    {
-        float actualValue = value - 1.0f;
-        
-        // ..
-    }
-```
-> 들어온 계수값에서 1을 빼고 `modifier`에 추가하는 방식임
-
-- `modifier`에서 값이 활용되는 방식은 **`base * (1 + modifier)`임**
-- ~~그래서 모든 스탯은 1을 기준으로 생각해야 한다. 30% 증가라면 1.3, 30% 감소라면 0.7..~~
-
->[!question]
->- 일단 `StatModifier`를 어떻게 관리할지부터 다시 점검해보면 좋을 것 같다. `Modifier` 값은 **1을 기준으로 넣을 것인가? 아니면 0을 기준으로 할까?**
-
->[!answer]
->- **`0`을 기준으로 하는 게 일반적임**
->- 사용하는 쪽에서는 **저 시스템만 알고, 메서드를 호출할 때 이를 반영**하면 됨
-
-- 예를 들어서 `SlowAmount`라는 값으로 이동 속도를 저하시키는 로직이 있다고 하자. 
-- "이동 속도 저하 30%"라는 로직을 구현하겠다면, 0이 기준일 경우 `0.3`이라는 값을 넣으면 됨. 
-- 이것의 실제 의미는 "원래 이동속도의 70%로 이동하게 만들겠다"이므로 
-- `AddModifier()`에서 넣는 값은 `-slowAmount` 만 넣어주면 된다. 
-
-1. **`BuffController`의 `actualValue` 부분은 전부 제거**
-2. `SlowBuff`도 아래처럼 반영
-```cs
-	// 30%의 SlowAmount는 modifier에서 `-0.3`이 됨
-	// modifier는 baseValue * (1 + modifier)이므로 0.7배가 된다
-    public override void OnApply(UnitEntity owner, UnitEntity caster)
-    {
-        base.OnApply(owner, caster);
-        owner.AddStatModifier(StatType.MovementSpeed, -slowAmount); 
-    }
-
-    public override void OnRemove()
-    {
-        // owner.SetMovementSpeed(originalSpeed);
-        owner.RemoveStatModifier(StatType.MovementSpeed, -slowAmount);
-        base.OnRemove();
-    }
-```
-
-- 이러니까 딱 막히는 지점이 생겼음 : **공격 속도 부분**
-	- 이거는 **별도로 빼둠 - 복잡할 듯**
-	- 공격 속도 : 1초에 몇 번 때리냐(타수/초)
-	- ..를 뒤집으면(초/타수) 1번 때리는 데 몇 초 걸리냐라는 개념이 됨
-	- 그래서 **공격 속도와 쿨다운을 구분해서 생각**할 필요가 있고, 별도의 로직도 필요해보인다. 이건 일단 보류.
-
-> 리팩토링하다가 발생한 이슈이긴 하지만
-> 일일이 언제 테스트해보나 하고 막막한 순간에 번뜩하고 해결한 이슈라서 오랜만에 쾌감을 느꼈다. 
-
-#### <해결> DoubleShotSkill 클릭 시 스택 오버플로우
-- `DoubleShotBuff` 부분을 보면 아래처럼 구현됨
-```cs
-private IEnumerator PerformDoubleAttack(UnitEntity owner)
+public float GetStat(StatType type)
 {
-	if (owner is Operator op)
+	// 1. 오버라이드에 있는 값이라면 최우선으로 나감(덮어쓰기 값)
+	// 공격속도 관련해서 생각할 게 있긴 한데 지금까진 공격속도를 덮어쓰는 로직은 없었음
+	if (_overrides.TryGetValue(type, out float overrideValue))
 	{
-		UnitEntity? target = op.CurrentTarget;
-		if (target == null) yield break;
-
-		float modifiedDamage = op.AttackPower * damageMultiplier;
-
-		op.PerformAction(target, modifiedDamage);
-		yield return new WaitForSeconds(delayBetweenShots);
-
-		if (target != null && target.CurrentHealth >= 0)
-		{
-			op.PerformAction(target, modifiedDamage);
-		}
+		return overrideValue;
 	}
+
+	float baseValue = _baseStats.TryGetValue(type, out float val) ? val : 0f;
+	float modifierValue = _modifiers.TryGetValue(type, out float mod) ? mod : 0f;
+	float calculatedValue;
+
+	if (type == StatType.AttackSpeed)
+	{
+		// 공격 속도 : 기본 1
+		float attackSpeed = (1 + modifierValue);
+
+		// 최종 공격 쿨다운 : 기본 공격 쿨다운 / 공격 속도
+		// 공격 속도가 빨라진다 = attackSpeed가 올라간다 = 공격 쿨다운이 줄어든다
+		calculatedValue = baseValue / attackSpeed;
+	}
+	else
+	{
+		calculatedValue = baseValue * (1 + modifierValue);
+	}
+	
+	return calculatedValue;
+}
+```
+## 스탯 시스템 수정
+
+>[!flow]
+>- `struct`로 구현된 스탯 시스템의 각 프로퍼티의 setter 제거
+>	- setter를 제거하면서 사용 불가능해진 코드가 발생 : 레벨에 따른 스탯을 갱신하는 부분이 프로퍼티의 세터로 구현되어 있었음 -> 수정 필요
+>- `struct`의 생성자를 구현하는 것으로 접근
+>	- `struct`는 `UnitStats` -> `DeployableUnitStats` -> `OperatorStats` 처럼 이전의 코드를 재활용하는 부분이 있음
+>		- 하위 구조체에서 상위 구조체를 받아 초기화하는 방식으로 구현하는 게 가능함
+>		- 하지만 이렇게만 구현하면 쓰는 입장에서, `OperatorStats`을 초기화하기 위해 `UnitStats`와 `DeployableUnitStats`을 초기화한 다음에 `OperatorStats`에 인자로 넣어야 함
+>		- 그래서 **각 `struct`의 초기화 메서드는 더 상위 구조체를 받는 것 외에도, 단순히 각 필드를 받는 식의 구현도 추가**해줘야 함(편의 생성자) 
+
+1. 기존의 `SO.UnitStats` 관련 필드들의 프로퍼티의 세터들을 제거
+
+2. 각 `struct`에 생성자 추가
+```cs
+[System.Serializable]
+public struct UnitStats
+{
+    [SerializeField] private float _health;
+    [SerializeField] private float _defense;
+    [SerializeField] private float _magicResistance;
+
+    public UnitStats(float health, float defense, float magicResistance)
+    {
+        _health = health;
+        _defense = defense;
+        _magicResistance = magicResistance; 
+    }
+
+    public float Health => _health;
+    public float Defense => _defense; 
+    public float MagicResistance => _magicResistance;
+}
+
+[System.Serializable]
+public struct DeployableUnitStats
+{
+    [SerializeField] private UnitStats _baseStats;
+    [SerializeField] private int _deploymentCost;
+    [SerializeField] private float _redeployTime;
+
+    public DeployableUnitStats(UnitStats baseStats, int deploymentCost, float redeployTime)
+    {
+        _baseStats = baseStats; // UnitStats 자체를 전달해주면 됨
+        _deploymentCost = deploymentCost;
+        _redeployTime = redeployTime;
+    }
+
+    public int DeploymentCost => _deploymentCost;
+    public float RedeployTime => _redeployTime;
+    public float Health => _baseStats.Health;
+    public float Defense => _baseStats.Defense;
+    public float MagicResistance => _baseStats.MagicResistance;
 }
 ```
 
-어제 `DualBlade`에서 고민한 문제와 정확히 동일한 문제다. `PerformAction - PerformChangedAction - PerformAction`이라는 무한히 순환하는 재귀 호출 형태임
+- 그런데 이렇게만 구현하면 `DeployableStats`을 초기화하기 위해 `UnitStats`의 초기화부터 해야 함. `OperatorStats`까지 있으니 **쓰는 입장에서 구조체 초기화만 3번 해야 함**
 
-1. `PerformAction -> PerformActualAction`으로 구현
-2. 이 이슈랑은 관계 없지만 `modifiedDamage`도 아래처럼 수정 - 스탯 자체에 들어간 보정치 값에 스킬의 보정치를 곱함
+- 그래서 **`flat`한 필드들을 받는 생성자를 추가해준다. 대신 가장 하위 구조체에서 상위 구조체들을 초기화하는 로직을 넣어주면 됨.**
+
 ```cs
-float modifiedDamage = op.GetStat(StatType.AttackPower) * damageMultiplier;
+// 모든 유닛에 적용되는 스탯 생성자
+public UnitStats(float health, float defense, float magicResistance)
+{
+	_health = health;
+	_defense = defense;
+	_magicResistance = magicResistance; 
+}
+// ---
+
+// 상위 구조체를 받아 초기화
+public DeployableUnitStats(UnitStats baseStats, int deploymentCost, float redeployTime)
+{
+	_baseStats = baseStats;
+	_deploymentCost = deploymentCost;
+	_redeployTime = redeployTime;
+}
+
+// 구조체 없이 필드들만 받아 초기화
+public DeployableUnitStats(float health, float defense, float magicResistance, int deploymentCost, float redeployTime)
+{
+	_baseStats = new UnitStats(health, defense, magicResistance);
+	_deploymentCost = deploymentCost;
+	_redeployTime = redeployTime;
+}
+// ---
+
+public OperatorStats(
+	DeployableUnitStats deployableUnitStats,
+	float attackPower,
+	float baseAttackCooldown,
+	int maxBlockableEnemies,
+	float spRecoveryRate
+	)
+{
+	_deployableUnitStats = deployableUnitStats;
+	_attackPower = attackPower;
+	_baseAttackCooldown = baseAttackCooldown;
+	_maxBlockableEnemies = maxBlockableEnemies;
+	_spRecoveryRate = spRecoveryRate;
+}
+
+public OperatorStats(
+	float health,
+	float defense,
+	float magicResistance,
+	int deploymentCost,
+	float redeployTime,
+	float attackPower,
+	float baseAttackCooldown,
+	int maxBlockableEnemies,
+	float spRecoveryRate
+	)
+{
+	_deployableUnitStats = new DeployableUnitStats(new UnitStats(health, defense, magicResistance), deploymentCost, redeployTime);
+	_attackPower = attackPower;
+	_baseAttackCooldown = baseAttackCooldown;
+	_maxBlockableEnemies = maxBlockableEnemies;
+	_spRecoveryRate = spRecoveryRate;
+}
 ```
 
-#### <해결?> 1번 시전 후, SP가 회복되지 않는 스킬이 있음
-- `OpSkillController`에서 스킬 실행이 다 종료되고 나서 실행되는 로직이 달랐다
-	- 지속시간이 있으면 `CompleteActiveSkill` (내부에 `OnSkillEnd` 포함)
-	- 지속시간이 없는 즉발이면 `OnSkillEnd`
-- `OnSkillEnd()`을 `CompleteActiveSkill` 외부로 빼서 실행 메서드에서도 흐름을 볼 수 있게 하고, 양쪽 모두 `CompleteActiveSkill()`로 끝나게끔 수정
+생성자에 필드를 일일이 나열하는 게 번거롭긴 한데 그걸 빼면 **생각보다 간단하게 구현할 수 있다.** 괜찮은 방법 같음.
+
+>[!question]
+>- 지금처럼 `Nested`한 구조를 유지해야 하는가? 아니면 각 `Stats`을 개별 필드로 받아서 곧바로 쓸 수 있는 `Flat`한 구조를 받아줘야 하는가?
+
+>[!answer] 
+> - `Flat` 구조는 초기화가 쉽고, 직접 접근이 미세하게 빠르지만 구조적인 의미를 잃고 코드의 중복도 발생한다
+> - `Nested` 구조는 계층 구조가 명확하고 재사용성이 좋은 반면, 중첩 생성자 및 약간의 메모리 오버헤드가 생김(사소함)
+> - Claude는 `Nested + 편의 생성자`를 쓸 걸 추천
+
+### private [SerializeField] struct에 관해
+- 구조가 헷갈려서 정리함. `struct` 내부에서도 필드의 접근자를 정의할 수 있어서.
+
 ```cs
-    private void ExecuteInstantSkill(ActiveSkill skill)
-    {
-        skill.OnActivated(_owner);
-        skill.OnUpdate(_owner);
-        skill.OnEnd(_owner);
-        CompleteActiveSkill(skill);
-    }
+// SO의 설정
+[SerializeField] protected OperatorStats stats;
+    
+// OperatorStats    
+[System.Serializable]
+public struct OperatorStats
+{
+    [SerializeField] private DeployableUnitStats _deployableUnitStats;
+    [SerializeField] private float _attackPower;
+    [SerializeField] private float _baseAttackCooldown; // 기본 공격 쿨다운
+    [SerializeField] private int _maxBlockableEnemies;
+    [SerializeField] private float _spRecoveryRate;
     
-    private IEnumerator Co_HandleDurationSkill(ActiveSkill skill)
-    {
-        skill.OnActivated(_owner);
-
-        float elapsed = 0f;
-        float duration = skill.Duration; 
-
-        while (elapsed < duration)
-        {
-            // 소유자 파괴 시 중단
-            if (_owner == null)
-            {
-                CleanupSkill();
-                yield break;
-            }
-
-            elapsed += Time.deltaTime;
-            float progress = elapsed / duration;
-
-            // UI용 - SP 시각적 감소
-            CurrentSP = MaxSP * (1f - progress);
-
-            // 스킬 틱 호출
-            skill.OnUpdate(_owner);
-
-            yield return null;
-        }
-
-        // 정상 종료
-        skill.OnEnd(_owner);
-        CompleteActiveSkill(skill);
-    }    
+    // ...
+}
 ```
 
-- 이 문제가 발생하는 스킬에선 동일한 현상 발생 X
-
-#### <간헐적, 보류> Barricade 배치 시 특정 상황에서 배치되지 않음
-- 다시 테스트했을 때는 또 잘 된다. 보류.
-#### <간헐적, 보류> Operator 체력이 없는데 안 죽고 그냥 지나감
-- 얘도 잘 되는데? 흠..
-
-#### <해결> DeployableActionUI - 스킬 버튼 관련
-1. 커서 올릴 때 색깔 변하게 하기
-2. 스킬 활성화 시에 주황색이 줄어들어야 함
-	- **텍스쳐가 누락되면 `Image.filled` 효과가 아예 나지 않음**
-	- 이전에 `square_sprite`을 지운 적이 있는데 그것 때문이었다. 로직 자체는 잘 동작하고 있음.
+1. `직렬화Serialize` : 메모리의 데이터를 파일에 저장 가능한 형태로 변환하고, 나중에 다시 불러올 수 있게 만드는 과정
+	- 저장하고 불러올 수 있게 만드는 과정
+2. **`struct`는 유니티에서 기본적으로 직렬화되지 않지만, 직렬화 자체는 가능하다.**
+	- 이 부분은 구분을 잘 해야 한다 : "직렬화 가능 여부"와 "유니티의 기본 설정"
+	- 유니티에서 아무 설정 없이 직렬화할 수 있는 타입들이 있음(예시는 안 듦)
+	- `struct`, `class`는 직렬화할 수 있지만, **기본 설정은 "직렬화하지 않는다"** 임
+		- 안전성, 성능, 호환성 등의 이슈 때문. 
+		- 직렬화하고 싶다면 따로 명시하라는 의미.
+	- `Dictionary`나 `Delegate`는 **직렬화 자체가 불가능.**
+	- 주의) 여기서 얘기하는 직렬화와 "`struct`가 값 타입이다"는 완전히 별개의 얘기임
+		- 즉 "값 타입이므로 직렬화되지 않는다, 참조 타입이니까 직렬화된다" 라는 말이 아니라는 뜻. 
+3. **인스펙터에 노출되는 필드** : 아래 요소들을 다 갖춤
+	- 직렬화 가능한 타입의 필드이면서
+	- `public`이거나 `[SerializeField]` 가 붙은 `protected/private`이며
+	- `const, static, 프로퍼티`가 아니며
+	- `[HideInInspector], [NonSerialized]`가 없어야 한다.
+4. **`[System.Serializable]`은 해당 타입을 직렬화 가능하게 할 뿐**이다. 내부 필드들은 원래의 규칙을 따른다. 
+	- `[System.Serializable]`은 타입 자체를 "직렬화 가능하다"라고 등록하는 것임
+	- 만약 `[System.Serializable]`이 없는 타입의 필드가 `[SerializeField]`이 붙으면, 직렬화되지 않고 인스펙터에도 나타나지 않는다.
 
 ---
 # 이전 일지
