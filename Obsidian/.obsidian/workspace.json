@@ -22,23 +22,8 @@
               "icon": "lucide-file",
               "title": "Readme"
             }
-          },
-          {
-            "id": "a7f5e5c7610a3924",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/2026년 1월/짭명방_260116.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "짭명방_260116"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -218,27 +203,30 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "a7f5e5c7610a3924",
+  "active": "e4fdd5a87720a73f",
   "lastOpenFiles": [
+    "3. Resource/Image/Pasted image 20260119215405.png",
+    "3. Resource/Image/SlowBuff01_256.png",
+    "3. Resource/Image/Pasted image 20260119181227.png",
+    "1. Projects, Ongoing/FL Studio/FL Studio 07. 편곡(Arrangement).md",
+    "3. Resource/Image/Pasted image 20260118221744.png",
+    "3. Resource/Image/Pasted image 20260118215800.png",
+    "1. Projects, Ongoing/FL Studio/FL Studio 06. 곡 만들기.md",
+    "3. Resource/Image/Pasted image 20260118214445.png",
+    "3. Resource/Image/Pasted image 20260118214033.png",
+    "3. Resource/Image/Pasted image 20260118213628.png",
+    "3. Resource/Image/Pasted image 20260118210950.png",
+    "3. Resource/Image/Pasted image 20260118210234.png",
     "1. Projects, Ongoing/Readme.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/2026년 1월/짭명방_260116.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/2026년 1월/짭명방_260115.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/기타 참고 사항.md",
     "1. Projects, Ongoing/이번 달 일지.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/프로젝트 완료 기준에 대해.md",
-    "1. Projects, Ongoing/FL Studio/FL Studio 06. 곡 만들기.md",
     "3. Resource/Image/Pasted image 20260115014239.png",
-    "3. Resource/Image/Pasted image 20260115014033.png",
-    "3. Resource/Image/Pasted image 20260115013748.png",
-    "3. Resource/Image/Pasted image 20260115013511.png",
-    "3. Resource/Image/Pasted image 20260115012707.png",
-    "3. Resource/Image/Pasted image 20260115010411.png",
-    "3. Resource/Image/Pasted image 20260115005554.png",
-    "3. Resource/Image/Pasted image 20260115003809.png",
     "1. Projects, Ongoing/FL Studio/FL Studio 05. 음악 이론.md",
     "1. Projects, Ongoing/FL Studio/FL Studio 04. 비트 만들기.md",
     "1. Projects, Ongoing/FL Studio/FL Studio 03. 마스터링.md",
-    "3. Resource/Image/MKQ9J3lgo8TU6nLNFNptGl4neYIfzdEbiPyOfc9lvlg5Qmc8QlD2B1VsQ9U6mxkztXXz22sPthbcX3vWvszJVuhtjPaFV1uJaMY1LJGm-loeXEAPGGqt4ZgYNzvnnnoB2Ir35slJdkUkmLDMN9zpbg.webp",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/2026년 1월/짭명방_260114.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/2026년 1월/짭명방_260113.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/2026년 1월/짭명방_260109.md",
@@ -255,9 +243,6 @@
     "2. Area/짭명방 관련/Legacy/이펙트/VFX 공부/유데미 강의 - Gabriel Aguiar/기초 강의/6_유니티VFX_범위효과.md",
     "2. Area/짭명방 관련/Legacy/이펙트/VFX 공부/유데미 강의 - Gabriel Aguiar/기초 강의/5_유니티VFX_스파크만들기.md",
     "2. Area/짭명방 관련/Legacy/이펙트/VFX 공부/유데미 강의 - Gabriel Aguiar/기초 강의/4_유니티VFX_실습 사전 세팅.md",
-    "2. Area/짭명방 관련/Legacy/이펙트/VFX 공부/유데미 강의 - Gabriel Aguiar/기초 강의/3_유니티VFX_제작 전.md",
-    "2. Area/짭명방 관련/Legacy/이펙트/VFX 공부/유데미 강의 - Gabriel Aguiar/기초 강의/2_유니티VFX_VFX의 기초, 원칙.md",
-    "3. Resource/Image/Pasted image 20260114023923.png",
     "1. Projects, Ongoing/FL Studio/세부 팁들",
     "1. Projects, Ongoing/FL Studio/강의",
     "2. Area/게임 프로그래밍 패턴/5. 최적화 패턴",
