@@ -44,83 +44,150 @@
 	- `Enemy`나 `PathIndicator`에 구현된 필드가 너무 많아서 굳이 서브 컴포넌트로 빼둔 의미를 잘 못 느끼겠음
 - `ArcaneFieldSkill`의 타격 이펙트에 노란색도 추가해볼까?
 - `UnitEntity.ExecuteSkillSequence`을 `SkillController`에 통합하기
-	- `BossSkillController`에서 사용 중. 보스가 스킬을 시전할 때 잠깐 멈추는 효과로 구현하고 있다.
+	- `BossSkillController`에서 사용 중. 보스가 스킬을 시전할 때 잠깐 멈추는 효과로 구현하고 있다
+- `PathIndicator`는 최초 `pathData`가 아니라 **생성된 다음 경로를 재생성하는 것으로 보임**
 
-> [!wip]
-> - `Enemy` God Class 분리 중
->	- `Enemy` 관련 스크립트들 잘 동작하는지 확인 필요
-> 	- 이외에도 근접 공격 이펙트 처리할 곳도 찾아야 할 듯.
+
 
 ## 작업 내용 정리
 - 여기에는 가장 최근에 작업한 것만 기록해두고, 이전의 내용은 파일로 만들어서 옮겨뒀다.
 
-## 260121
-- 몸이 으슬으슬하다.
+## 260123
 
 >[!done]
->- 기타 이슈 수정
->- `EnemySkillController`, `EnemyAttackController` 구현
->- `Enemy, EnemyBoss` 및 스킬 컨트롤러들 사이의 조율
+>- `Enemy` 클래스 분리 관련 테스트
+>	- 생성되었으나 이동하지 않는 현상
+>	- 게임 끝났는데 `Spawn` 동작하는 현상
+>	- 공격 이펙트 실행되지 않는 현상
+>	- 저지되지 않는 현상
+### `Enemy` 클래스 분리
+- 일단 그저께까지 구현한 것부터 테스트.
 
->[!wip]
+- [x] `Enemy`가 스폰되지만 이동하지 않음
+	- `AttackController.OnUpdate` 정리
+		1) 이동 조건 체크하는 로직이 공격을 판단하는 `AttackController`에 있었음 : 분리
+		2) `OnUpdate`의 `return` 조건을 상단에서 아래처럼 판단하기로 바꿨는데 정작 `OnUpdate`문 자체의 `return`이 그대로였음
+			- `true` : 공격을 했을 경우
+			- `false` : 공격을 하지 않았을 경우
+- [x] 게임이 끝났는데 `EnemySpawner.Spawn()`이 동작
+	- `Spawn()`의 동작 조건을 `GameState.Battle`로만 한정
 
+- [x] (디)버프 이펙트 사라지는 과정에서의 오류
+```
+Cannot set the parent of the GameObject 'StunBuffVFX(Clone)' while activating or deactivating the parent GameObject 'Enemy_Normal_Fast(Clone)'.
+```
+> `OnDisable`이 실행되고 있는 도중에 자식 오브젝트의 `Hierarchy`에서의 이동이 있어서 발생하는 오류
+- VFX 오브젝트를 풀로 반환하는 과정에서 발생하는 오류였다.
+- 사망 과정에서 발생하는 이벤트는 `OnDeathStarted`와 `OnDisabled` 2개를 구현해뒀다. 전자는 체력이 0이 된 순간 발생하고 후자는 `OnDisable`에 직접 들어 있음
+- `OnDisabled`에서 `OnDeathStarted`로 바꿔봄.
 
+> 일단 같은 내용의 오류가 발생하지 않아서 이렇게 유지해둠
 
-- 일단 스킬 관련 로직은 `EnemyBossSkill`에 있었기 때문에 이들을 `EnemySkillController`로 이동시킴
+- [x] Enemy 공격 이펙트 실행 안됨
+####  저지가 안됨
+- 어떻게 수정하느냐에 따라서 이슈가 왔다갔다 했는데, "저지당했을 때 적이 멈추지 않았다"로 요약할 수 있을 듯
 
-- `OnUpdate`와 `UpdateAllCooldowns`을 분리
+1. `EnemyAttackController`의 저지당했을 때의 `OnUpdate` 로직 수정
 ```cs
-// Enemy.Update
-// 템플릿 메서드 패턴. EnemyBoss에선 Update를 구현하지 않아도 됨
-protected override void Update()
+// 저지당함 - 근거리 공격
+if (_blockingOperator != null)
 {
-	// update 동작 조건 : 전투 중 & 디스폰되지 않음 && 초기화됨 
-	if (!IsUpdateValid()) return; 
+	if (CanAttack())
+	{
+		PerformMeleeAttack(CurrentTarget!, _owner.AttackPower);
+	}
 
-
-	base.Update(); // 버프 효과 갱신
-
-	// 행동 제약에 관계 없이 업데이트되어야 하는 요소들 처리
-	// 예시) 스킬 쿨다운, 공격 쿨다운
-	UpdateAllCooldowns();
-
-	// 공격 시도
-	OnUpdateAction();
+	// 저지 당한 상태라면 공격 여부에 관계 없이 추가 동작을 막기 위해 true 반환
+	return true; 
 }
-
-// Enemy의 메서드들 ---
-protected virtual void UpdateAllCooldowns()
+else 
 {
-	_attack.UpdateAllCooldowns();
+	// ...
 }
+```
+> - 기존엔 `return true`문이 `PerformMeleeAttack` 내부에 있었는데 "저지 당한 상태에서는 이동하지 않는다"여야 하므로 항상 true를 반환하도록 수정함
 
-protected virtual void OnUpdateAction()
+2. `UnitOverlapSolver` 관련
+	- 저지가 동작할 때 **`Enemy`가 겹치는 현상을 방지하기 위해 구현**했던 요소
+	- 그런데 부자연스러운 경우가 좀 많다. 
+		- 이미 저지당한 적 위치에 새로운 적이 들어갈 때 그대로 밀고 들어감
+		- 저지당했을 때에만 동작하면서 기존 적을 밀리지 않게 구현했을 경우, 콜라이더의 동작 시점이 가장자리에 위치했을 때이기 때문에 `저지함 <-> 하지 않음`을 오가면서 버벅이는 현상
+	- 이 부분은 아래처럼 작업해봄
+		1) 저지당하는 순간 Enemy의 위치가 살짝 바뀌도록 동작
+		2) `UnitOverlapSolver`의 기능은 살려놓되 오퍼레이터 배치 시에 밀려나는 기능은 살려놓음, `Enemy` 간의 충돌 기능은 꺼둠
+
+> 일단 이 정도로 구현
+
+```cs
+// OpBlockController.TryBlockNextEnemy()
+
+// 이 적을 저지할 수 있는지 확인
+if (CanBlockEnemy(candidateEnemy))
 {
-	// 공격을 시도함
-	bool attacked = _attack.OnUpdate();
-	if (attacked) return;
+	BlockEnemy(candidateEnemy);
+	candidateEnemy.UpdateBlockingOperator(_owner);
 
-	// 공격을 하지 않았다면 이동
-	MoveAlongPath();
-}
-
-// EnemyBoss의 메서드들 ---
-protected override void OnUpdateAction()
-{
-	bool skillUsed = _skillController.OnUpdate();
-	if (skillUsed) return;  
-
-	base.OnUpdateAction();
-}
-
-protected override void UpdateAllCooldowns()
-{
-	base.UpdateAllCooldowns();
-	_skillController.UpdateAllCooldowns();
+	// 저지 중인 적이 2명 이상일 때, 2번째 적부터는 약간의 사이드 이동(완전히 겹치는 현상 방지)
+	if (blockedEnemies.Count >= 2)
+	{
+		candidateEnemy.SmoothAvoidance(_owner);
+	}
 }
 ```
 
-> 이걸 `FSM(유한상태기계)`로 전환하는 게 장기적으로 보면 더 낫겠지만 기능을 추가할 게 아니라서 지금은 그렇게 구현할 필요는 없을 듯. 시간만 잡아먹힌다.
+```cs
+// Enemy 컨테이너에 추가
+public void SmoothAvoidance(Operator op)
+{
+	// 저지 시에만 동작
+	if (op != null)
+	{
+		// 겹쳤을 때를 고려한 위치 이동
+		if (_adjustmentCoroutine != null)
+		{
+			StopCoroutine(_adjustmentCoroutine);
+		}
+
+		_adjustmentCoroutine = StartCoroutine(SmoothAvoidanceCoroutine(op.transform.position));
+	}
+}
+
+// Enemy 끼리 겹쳤을 때 살짝의 이동
+protected IEnumerator SmoothAvoidanceCoroutine(Vector3 targetPos)
+{
+	float duration = 0.1f;
+	float elapsed = 0f;   
+
+	Vector3 startPos = transform.position;
+	
+	// 방향, 수직 벡터
+	Vector3 direction = startPos - targetPos;
+	direction.y = 0f;
+
+	// 수직 벡터 : (x, z)에 수직인 벡터는 (-z, x) 또는 (z, -x)
+	Vector3 perpendicular = new Vector3(-direction.z, 0, direction.x).normalized;
+
+	// 최종 목적지
+	float randomSide = UnityEngine.Random.Range(0, 2) == 0 ? 1f : -1f;
+	float randomDistance = UnityEngine.Random.Range(0.03f, 0.05f);
+	Vector3 targetOffset = perpendicular * randomSide * randomDistance;
+	Vector3 finalDestination = startPos + targetOffset;
+
+	// 시간 동안 부드럽게 이동
+	while (elapsed < duration)
+	{
+		elapsed += Time.deltaTime;
+		float t = elapsed / duration;
+
+		transform.position = Vector3.Lerp(startPos, finalDestination, t);
+		yield return null;
+	}
+
+	transform.position = finalDestination;
+	_adjustmentCoroutine = null;
+}
+```
+
 
 
 ---
