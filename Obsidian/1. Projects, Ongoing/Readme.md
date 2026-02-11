@@ -38,7 +38,7 @@
 >	- 통계 패널에 추가할까 말까..? 
 >		- BGM을 직접 만들어서 넣는 건 좋은데 그 작업이 너무 길어지면 안됨
 >- 필요 효과음
->	- 타격음 수정?
+>	- 타격음 수정
 >	- 근접 공격(Slash, Smash 상관 없이 하나로?)
 >	- 스킬 발동 
 >	- 배치 
@@ -55,19 +55,19 @@
 
 ## 최근 작업 내용
 - 블로그 : [[블로그_260127 EC2에서 Lightsail로 이사 가기]]
-- 짭명방 : [[짭명방_260209]]
+- 짭명방 : [[짭명방_260211]]
 ## 작업 내용 정리
 - 여기에는 가장 최근에 작업한 것만 기록해두고, 이전의 내용은 파일로 만들어서 옮겨뒀다.
 
 >[!wip]
 >1. 효과음 구현(ElevenLabs)
 >	- AI 딸깍이라고 쉬운 건 아니다! 를 실감하는 중
-
+>	- 수정 필요한 거
+>		- `Throwing01` : 너무 소리가 눈에 띔. 거의 있는 둥 없는 둥으로 줄여도 될 듯?
+>		- `LandingSFX` : 저음 부스트해도 될 듯?
+>	- 이외 기타 등등은 새로 만들거나 애셋 찾아봐야 함
 # 이전 일지
-
-- 깃허브 링크는 향후 프로젝트 폴더 링크 이동에 따라 손상될 수 있음
-- 이 경우 대부분 `4.Archive` 폴더에서 볼 수 있다.
 ## 짭명방
 - [짭명방 프로젝트 일지 깃허브 링크](https://github.com/dowrave/TIL/tree/main/Obsidian/1.%20Projects%2C%20Ongoing/%EC%9C%A0%EB%8B%88%ED%8B%B0%20-%20%EC%9E%91%EC%9D%80%20%EB%AA%85%EB%B0%A9%20%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0/%EC%9E%91%EC%97%85%20%EC%9D%BC%EC%A7%80/%EC%A7%81%EC%A0%91%20%EC%9E%91%EC%84%B1)
 ## 블로그
-- [React + Django 프로젝트 일지 월별 작업 기록 깃허브 링크](https://github.com/dowrave/TIL/tree/main/Obsidian/1.%20Projects%2C%20Ongoing/%ED%8F%AC%ED%8F%B4%20%EA%B2%B8%20%EB%B8%94%EB%A1%9C%EA%B7%B8%20%EB%A7%8C%EB%93%A4%EA%B8%B0/%EC%9B%94%EB%B3%84%20%EC%9E%91%EC%97%85%20%EA%B8%B0%EB%A1%9D)
+- [React + Django 프로젝트 일지 월별 작업 기록 깃허브 링크](https://github.com/dowrave/TIL/tree/main/Obsidian/1.%20Projects%2C%20Ongoing/%EB%B8%94%EB%A1%9C%EA%B7%B8%20%EB%A7%8C%EB%93%A4%EA%B8%B0/%EC%9B%94%EB%B3%84%20%EC%9E%91%EC%97%85%20%EA%B8%B0%EB%A1%9D)
