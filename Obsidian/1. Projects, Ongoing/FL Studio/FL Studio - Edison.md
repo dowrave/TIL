@@ -107,5 +107,9 @@
 
 ## 이외에도 다양한 기능이 있음
 - `Time Stretcher / Pitch Shifter`
+	- 소리 텍스쳐를 유지한 채로 음원의 길이를 늘이거나 줄일 수 있다.
+![[Pasted image 20260216195920.png]]
+> `3e generic`을 유지한 채로 `time Mul`을 건드려주면 텍스쳐는 유지하면서 길이만 줄일 수 있다. 되게 강력한 기능인 듯.
+
 - `Reverb`
 - `Tune Looper`
