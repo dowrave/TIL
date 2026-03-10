@@ -8,8 +8,6 @@
 # 작업 일지
 
 ## 블로그 고치고 싶은거
-
-
 ## 짭명방 
 - 지난 내역 : [짭명방 프로젝트 일지 링크](https://github.com/dowrave/TIL/tree/main/Obsidian/1.%20Projects%2C%20Ongoing/%EC%9C%A0%EB%8B%88%ED%8B%B0%20-%20%EC%9E%91%EC%9D%80%20%EB%AA%85%EB%B0%A9%20%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0/%EC%9E%91%EC%97%85%20%EC%9D%BC%EC%A7%80/%EC%A7%81%EC%A0%91%20%EC%9E%91%EC%84%B1)
 - [[기타 참고 사항]]
@@ -42,7 +40,7 @@
 
 ### 최근 작업 내용
 - 블로그 : [[블로그_260127 EC2에서 Lightsail로 이사 가기]]
-- 짭명방 : [[짭명방_260305]]
+- 짭명방 : [[짭명방_260309]]
 
 >[!wip]
 >1. 효과음 구현
@@ -58,95 +56,149 @@
 
 >[!note]
 >- 버그 기록 및 개선할 요소
->- 유지
+>- 생각해봤으나 유지하기로 결정
 >	- 로비 BGM 
->		- Slap 외의 다른 베이스 테스트 & 후반부가 초딩 때의 음악 같은 인상이 있어서 손대봤으나 기존 버전이 더 낫고 긴 노트를 억지로 끊는 게 더 어색하게 들림
->		- 어쩌면 기존 BGM에 너무 익숙해진 걸지도 모르겠는데... 내 생각은 그렇다.
 
-## 260309
-
+## 260310
 >[!done]
->- 배치 미리보기 : 배치 시 배치 불가능/가능 여부에 따라 공격 범위가 흑백 / 컬러로 바뀜
->- 이슈 수정
->	- 마스터 볼륨이 -80dB임에도 제대로 적용되지 않는 현상 : `Awake` => `Start`
->	- 스킬 켜졌을 떄 SP 게이지 색깔 바뀌지 않는 현상 
->	- `AreaHasteHeal` : HP가 가득 찼을 땐 힐하지 않도록 수정
+>- 1-3 스테이지 구현
+>- 버그 / 기타 수정
+>	- `DoubleShotSkill` : 지속시간 VFX 나타나지 않는 현상
+>	- `Operator`들 색깔 변경
 
-## 배치 로직 시각화
-- **배치가 불가능할 땐 공격 범위를 회색으로, 배치 가능할 때 색이 들어오는 방식**으로 수정 진행
-- `DeployableManager`에서 `Tile`들의 `ShowAttackRange`를 켜는 방식임
-- 오해 : 이중 처리 아닌가? `DeploymentInputHandler -> Operator -> DeployableManager`라는 방식으로 하이라이트가 처리 중이었음
+## 1-3 스테이지
+- 스폰 간격 늘림
+	- 한꺼번에 쏟아지는 경우가 나왔을 때 그 다음의 간격을 살짝 늘려줌
+	- 예를 들어 `Weak`이 3마리 나왔다(`Weak` 간의 간격은 1초)면 기존엔 3초 후에 그 다음 몹이 스폰됐는데 5초로 늘렸음
 
-- 공격 범위를 처리하는 타일 자체의 로직. `isPlaceable`이 추가됨.
+- 
+
+## 버그 / 기타 수정
+- `DoubleShotSkill` - 지속시간 VFX 나타나지 않는 현상
 ```cs
-public void ShowAttackRange(bool isMedic, bool isPlaceable = true)
+public override void OnActivated(Operator op)
 {
-	Color targetColor;
-	
-	if (!isPlaceable)
-		targetColor = disabledIndicatorColor;
-	else 
-		targetColor = isMedic ? medicIndicatorColor : defaultIndicatorColor;
 
-	attackRangeIndicator.GetPropertyBlock(indicatorPropBlock);
-	indicatorPropBlock.SetColor("_Color", targetColor); // URP Lit과 달리, attackRange라는 별도의 셰이더가 있고 Color라는 프로퍼티가 있음
-	attackRangeIndicator.SetPropertyBlock(indicatorPropBlock);
-
-	attackRangeIndicator.gameObject.SetActive(true);
+	_doubleShotBuff = new DoubleShotBuff(delayBetweenShots, damageMultiplier);
+	op.AddBuff(_doubleShotBuff);
+	PlayDurationVFX(op, _doubleShotBuff); // 추가
 }
 ```
+### SFX 수정 : `MeleeImpact01` - 타격감이 너무 강해서 로우컷
 
-### 테스트 및 수정
-- 배치 불가능한 상태의 색을 RGB 0.3으로 잡았는데 너무 어두움 -> 0.5로 수정
-- `MouseButtonDown`만 처리했는데 드래그 중인 상황도 추가로 처리
-- 버튼 다운 시 방향 변경할 때만 Update되는 로직 수정
+### `Operator`들 색깔 변경
+
+### 간헐적으로 발생하는 허공을 쏘는 이슈
+- 오랜만에 다시 발생해서 점검해본다
+- `Enemy` 자체는 이미 `Disabled` 된 상태, 그럼에도 빈 곳을 때리고 있는 현상임
+
+- **일단 `Claude`에게 던져봄 : `OpAttackController`**
+#### 이슈 1 : OnTargetDespawn
 ```cs
-// if (placementDirection != newDirection)
-// {
-	placementDirection = newDirection;
-	if (currentDeployableEntity is Operator op)
+public override void OnTargetDespawn(UnitEntity target)
+{
+	if (target is Enemy enemy && enemy == CurrentTarget)
 	{
-		op.SetDirection(placementDirection);
-		op.HighlightAttackRange(isPlaceable: pointerOverDistance);
+		RemoveEnemyInRange(enemy); 
+		CurrentTarget = null;
 	}
-	deployManager.UpdatePreviewRotation(placementDirection);
-// }
+}
 ```
-> 원래는 방향이 변경될 때만 업데이트됐는데, 이제 거리도 반영되기 때문에 변경 로직 자체가 필요없어 보임. 미리보기 동작이 끊기는 느낌도 아니라서 주석처럼 제거함.
+> 여기서 `currentTarget`일 때만 현재 공격범위에서 제거하고 있다. 
+> - 즉 현재 타겟이 아닌데 제거됐을 때, 공격 범위 내의 대상 리스트에는 여전히 남아 있을 가능성이 있음
 
-
-## 이슈 수정
-### 볼륨 관련
-- 에디터 다시 켰을 때의 볼륨 설정이 반영되지 않는 현상
-
-![[Pasted image 20260309152457.png]]
-> - 게임을 켰을 때 값이 이렇게 잡히지만 실제로는 소리가 나오고 있음
-> - 씬 변경 후 다시 돌아왔을 때는 잘 반영되고 있음
-
-#### 과정
-- `Awake` 시점에서 볼륨들이 세팅되고 있음
+- 따라서 상위 조건문에서 `and`로 묶는 게 아니라 세부 조건으로 빼줘야 함
 ```cs
-private void Awake()
+public override void OnTargetDespawn(UnitEntity target)
 {
-	// PlayerPrefs에 저장된 값들 불러오기
-	masterVolume = GetMasterVolume();
-	bgmVolume = GetBGMVolume();
-	sfxVolume = GetSFXVolume();
-
-	// 값 적용하기(없으면 1)
-	SetMasterVolume(masterVolume);
-	SetBGMVolume(bgmVolume);
-	SetSFXVolume(sfxVolume);
+	if (target is Enemy enemy)
+	{
+		RemoveEnemyInRange(enemy); 
+		if (enemy == CurrentTarget)
+		{
+			CurrentTarget = null;
+		}           
+	}
 }
 ```
 
-그런데 이 시점에서는 `AudioMixer`의 초기화가 제대로 되지 않았을 수 있음 : `Awake`이기 때문- 
-- `Start`로 바꿔주니 잘 적용됨
+#### 이슈 2 : SetCurrentTarget
+```cs
+if (blockedEnemies.Count > 0)
+{
+	for (int i = 0; i < blockedEnemies.Count; i++)
+	{
+		if (blockedEnemies[i]) // 이슈 1
+		{
+			CurrentTarget = blockedEnemies[i];
+			break; 
+		}
+	}
+	return; // 이슈 2
+}
+```
+> - 지적 사항
+> 1. `blockedEnemies[i]` 체크는 유니티 오브젝트의 bool 체크
+> 	- 실제로는 **`null` 체크를 해야 하고, `activeInHierarchy` 체크도 해야 한다.** `null`의 경우 유니티와 C#의 동작이 다름. 
+> 	- 오브젝트 풀링을 쓸 경우 `null`일 경우는 거의 없지만, `Destroy`가 일어나지 않는다는 보장은 아니기 때문에 조건문에서 둘 다 체크해주는 게 좋음
+ > 2. `blockedEnemies`가 있으면 무조건 여기서 끝남 - 모든 `blockedEnemy`가 파괴되어 있더라도`return` 문에서 걸림(이것도 위의 유니티 - C# 동작 이슈와 연관 O)
+ 
+ - 따라서 코드는 이렇게 수정됨
+```cs
+if (blockedEnemies.Count > 0)
+{
+	Enemy? validBlockedTarget = null;
+	for (int i = 0; i < blockedEnemies.Count; i++)
+	{
+		// 1. 유효성 검사는 null 체크 & 활성화 모두에 대해 진행
+		if (blockedEnemies[i] != null && blockedEnemies[i].gameObject.activeInHierarchy)
+		{
+			validBlockedTarget = blockedEnemies[i];
+			break;
+		}
+	}
 
-### 스킬 켜졌을 때 SP 게이지 색깔 안 바뀌는 현상
-- `OpSkillController.OnSkillStateChanged`가 있는데 사용하지 않았음
-	- `bool` 필드를 받도록 변경
-- 처리하는 김에 `_isSkillOn` 상태를 변화하는 로직을 전부 `SetSkillState` 메서드 내에 집어넣고 그 안에서 이벤트 발생시키는 식으로 변경
+	// 2. 저지된 적이 지금 존재할 때만 타겟으로 선정하고 리턴
+	// 없다면 아래 로직(공격 범위 내의 적 탐색)으로 넘어감
+	if (validBlockedTarget != null)
+	{
+		CurrentTarget = validBlockedTarget;
+		return;
+	}
+}
+```
+
+- 공격 범위 내의 적을 탐색하는 로직도 `activeInHierarchy` 조건을 추가해준다.
+```cs
+CurrentTarget = _enemiesInRange
+	.Where(e => e != null && e.gameObject != null && e.gameObject.activeInHierarchy) // 조건 추가
+	.OrderBy(E => E.Path.GetRemainingPathDistance()) 
+	.FirstOrDefault(); 
+```
+
+
+#### 간헐적인 버그를 다루는 방법
+>[!note]
+>Claude에게 질문 : 가끔씩 발생해서 재현성이 떨어지는 현상을 어떻게 고쳐야 하는가?
+>1. 로그 심기 : 버그가 발생했는지 여부를 명확히 기록하기
+>2. 버그를 발생시키는 테스트 환경 만들기
+>	- 이건 정확한 원인을 모르기 때문에 테스트 환경을 만든다는 것도 약간 어폐가 있다고 생각함
+>3. 수정 후 검증은 부재 증명이 아니라 방어 코드로
+>	- 물리적으로 버그가 발생할 수 없는 코드 구조를 만들라는 것
+>4. 핵심 상태에서 Assertion 걸기
+
+> 4번 예시
+```cs
+// 공격 수행 직전에 항상 타겟 유효성 검증
+Debug.Assert(
+	target != null && target.gameObject.activeInHierarchy,
+	$"[AttackController] 유효하지 않은 타겟에 공격 시도: {target?.name}"
+);
+```
+
+> 여기선 1번 작업만 수행했음 - `activeInHierarchy`가 `false`인데 메서드가 동작하는 경우에 로그를 발생하도록 처리
+
+
 
 # 이전 일지
 ## 짭명방
