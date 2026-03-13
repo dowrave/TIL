@@ -29,12 +29,6 @@
 > - `Barricade` 배치 시 가끔 배치되지 않음
 > - `Operator` 체력이 다했을 때 사망처리가 되지 않았는데도 적이 지나가는 현상
 
-## 현재 계획 및 이슈
-
->[!plan]
->1. 스테이지 밸런싱, 버그 수정
->2. 배경음, 효과음 추가 및 수정
-
 ## 작업 내용 정리
 - 여기에는 가장 최근에 작업한 것만 기록해두고, 이전의 내용은 파일로 만들어서 옮겨뒀다.
 
@@ -56,13 +50,23 @@
 >3. 기타 필요성 느낀 지점
 
 >[!note]
->- 버그 기록 및 개선할 요소
+>- 작업 예정
 >	- `Defender`의 방어력이 너무 높은 듯
+>	- SFX
+>		- `EnemyBoss`
+>			- `ExplosionSkill`
+>				- 시전 
+>				- 폭발 파티클 떨어지는 소리
+>				- 폭발 
+>				- 도트
+>			- `SlashThroughSkill`
+>				- 시전 
+>				- 긋는 소리
+>		- `Stage`
+>			- `Operator` HP가 0이 됐을 때 
+>			- `Enemy` 목적지점에 들어갔을 때
 >- 생각해봤으나 유지하기로 결정
 >	- 로비 BGM 
-
-
-
 # 이전 일지
 ## 짭명방
 - [짭명방 프로젝트 일지 깃허브 링크(Private 전환)](https://github.com/dowrave/TIL/tree/main/Obsidian/1.%20Projects%2C%20Ongoing/%EC%9C%A0%EB%8B%88%ED%8B%B0%20-%20%EC%9E%91%EC%9D%80%20%EB%AA%85%EB%B0%A9%20%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0/%EC%9E%91%EC%97%85%20%EC%9D%BC%EC%A7%80/%EC%A7%81%EC%A0%91%20%EC%9E%91%EC%84%B1)
