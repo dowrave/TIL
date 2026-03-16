@@ -22,6 +22,20 @@
               "icon": "lucide-file",
               "title": "Readme"
             }
+          },
+          {
+            "id": "804bfc72e89c4708",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 3월/짭명방_260316.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "짭명방_260316"
+            }
           }
         ]
       }
@@ -55,7 +69,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "playoneshot",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -205,20 +219,30 @@
   },
   "active": "e4fdd5a87720a73f",
   "lastOpenFiles": [
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 3월/짭명방_260313.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 3월/짭명방_260316.md",
     "1. Projects, Ongoing/Readme.md",
-    "1. Projects, Ongoing/FL Studio/세부 팁들/FL Studio - Sytrus.md",
-    "3. Resource/Image/Pasted image 20260312025628.png",
-    "3. Resource/Image/Pasted image 20260312025324.png",
-    "3. Resource/Image/Pasted image 20260312023912.png",
-    "3. Resource/Image/Pasted image 20260312023731.png",
-    "3. Resource/Image/Pasted image 20260312023545.png",
-    "3. Resource/Image/Pasted image 20260312023357.png",
-    "3. Resource/Image/Pasted image 20260312022950.png",
-    "3. Resource/Image/Pasted image 20260312022607.png",
-    "3. Resource/Image/Pasted image 20260312021647.png",
+    "1. Projects, Ongoing/FL Studio/신디사이저/Vital/Vital - Bass 만들기.md",
+    "3. Resource/Image/Pasted image 20260316000419.png",
+    "3. Resource/Image/Pasted image 20260315235526.png",
+    "3. Resource/Image/Pasted image 20260315234556.png",
+    "3. Resource/Image/Pasted image 20260315233551.png",
+    "3. Resource/Image/Pasted image 20260315233451.png",
+    "3. Resource/Image/Pasted image 20260315233329.png",
+    "3. Resource/Image/Pasted image 20260315232139.png",
+    "3. Resource/Image/Pasted image 20260315230844.png",
+    "3. Resource/Image/Pasted image 20260315225709.png",
+    "3. Resource/Image/Pasted image 20260315225252.png",
+    "1. Projects, Ongoing/FL Studio/신디사이저/3x OSC/3x OSC - 킥 사운드 만들기.md",
+    "1. Projects, Ongoing/FL Studio/신디사이저/Sytrus",
+    "1. Projects, Ongoing/FL Studio/신디사이저/3x OSC",
+    "1. Projects, Ongoing/FL Studio/신디사이저/Sytrus/FL Studio - Sytrus.md",
+    "1. Projects, Ongoing/FL Studio/신디사이저/FL Studio - 신디사이저(Synth).md",
+    "1. Projects, Ongoing/FL Studio/신디사이저/Vital/Vital 튜토리얼.md",
+    "1. Projects, Ongoing/FL Studio/신디사이저/Vital",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/컴퓨터 공부/컴퓨터 - 부품 별 처리 속도 차이.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/최근 기록/BGM, 효과음 설정법(FL Studio, Unity).md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 3월/짭명방_260313.md",
     "1. Projects, Ongoing/FL Studio/세부 팁들/FL Studio - Delay.md",
-    "3. Resource/Image/Pasted image 20260312014646.png",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 3월/짭명방_260311.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 3월/짭명방_260310.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 3월/짭명방_260309.md",
@@ -235,22 +259,12 @@
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 2월/짭명방_260224.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 2월/짭명방_260223.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 2월/짭명방_260222.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/최근 기록/Csharp - 제네릭 공변성(Covariance).md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 2월/짭명방_260220.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 2월/짭명방_260219.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 2월/짭명방_260216.md",
-    "1. Projects, Ongoing/FL Studio/FL Studio - Edison.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/오디오 공부/유니티 - 오디오 Load Type.md",
     "Weapons, Misc, Throwing Star, Throw, Spin, Hit Person, Squelch, Blood SND34592 5.wav",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/컴퓨터 공부/컴퓨터 - 처리 속도 차이.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/컴퓨터 공부",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/오디오 공부",
     "1. Projects, Ongoing/FL Studio/신디사이저",
     "무제.base",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 2월",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 1월",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년",
-    "1. Projects, Ongoing/FL Studio/세부 팁들",
     "3. Resource/Canvas/ListView 상속계층도.canvas"
   ]
 }

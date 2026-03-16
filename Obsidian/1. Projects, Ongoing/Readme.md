@@ -34,8 +34,8 @@
 
 ### 최근 작업 내용
 - 블로그 : [[블로그_260127 EC2에서 Lightsail로 이사 가기]]
-- 짭명방 : [[짭명방_260313]]
-	- 내용 : 버그/시스템 수정, 범위 스킬의 공격 대상 제한
+- 짭명방 : [[짭명방_260316]]
+	- 내용 : `BossSkill - Explosion` 파티클 떨어질 때 BGM/SFX 페이드아웃, 폭발음 후 BGM/SFX 페이드인
 
 >[!wip]
 >1. 효과음 구현
@@ -67,6 +67,11 @@
 >			- `Enemy` 목적지점에 들어갔을 때
 >- 생각해봤으나 유지하기로 결정
 >	- 로비 BGM 
+
+
+
+
+
 # 이전 일지
 ## 짭명방
 - [짭명방 프로젝트 일지 깃허브 링크(Private 전환)](https://github.com/dowrave/TIL/tree/main/Obsidian/1.%20Projects%2C%20Ongoing/%EC%9C%A0%EB%8B%88%ED%8B%B0%20-%20%EC%9E%91%EC%9D%80%20%EB%AA%85%EB%B0%A9%20%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0/%EC%9E%91%EC%97%85%20%EC%9D%BC%EC%A7%80/%EC%A7%81%EC%A0%91%20%EC%9E%91%EC%84%B1)
