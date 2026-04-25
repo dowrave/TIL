@@ -8,6 +8,9 @@
 # 작업 일지
 
 ## 블로그 고치고 싶은거
+- 도메인 이전 : 현재 `htlee-blog.com` -> `waltwaez.com`으로 이전할 예정
+	- 5월 8일 쯤에 만료 / 대충 5월 들어설 떄 쯤에 작업할 듯
+
 ## 짭명방 
 - 지난 내역 : [짭명방 프로젝트 일지 링크](https://github.com/dowrave/TIL/tree/main/Obsidian/1.%20Projects%2C%20Ongoing/%EC%9C%A0%EB%8B%88%ED%8B%B0%20-%20%EC%9E%91%EC%9D%80%20%EB%AA%85%EB%B0%A9%20%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0/%EC%9E%91%EC%97%85%20%EC%9D%BC%EC%A7%80/%EC%A7%81%EC%A0%91%20%EC%9E%91%EC%84%B1)
 - [[기타 참고 사항]]
@@ -24,13 +27,9 @@
 
 ### 최근 작업 내용
 - 블로그 : [[블로그_260127 EC2에서 Lightsail로 이사 가기]]
-- 짭명방 : [[짭명방_260424]]
-	- 스테이지 실패 Sting(짧은 음악) 작업
-		- 스테이지 클리어 시점에 나오는 소리(원본겜의 MissionAccomplished)는 아이디어가 떠오르지 않는다. 다음에 하기로...
-	- 버그 / 기타 수정 사항
-		- 1-3 통계 패널에서 Sting이 제대로 들리지 않는 현상
-		- StageResultPanel - 클릭 방지 시간 공통 로직으로 수정
-
+- 짭명방 : [[짭명방_260425]]
+	- `StageFinishSting01` 작업 완료
+	- 첼로랑 바이올린으로 짤막하게 구현
 
 >[!note]
 >1. 효과음 구현
@@ -45,16 +44,14 @@
 
 >[!wip]
 >- 작업 중
->	- 스테이지 클리어 시점의 사운드(클리어 효과음, 원본 겜의 `Mission Accomplished` 같은)
 >- 작업 예정
->	- `Defender`의 방어력이 너무 높은 듯?
->	- SFX
->		- `EnemyBoss`
->			- `SlashThroughSkill`
->				- 긋는 소리 : `Slash01/02`와 다른 게 필요?
-
+>	- 스테이지 1-3 구현 끝내기
+>	- 기타 이슈
+>		- `Defender`의 너무 높은 방어력
+>		- `BossSlashSkill`의 효과음 수정?
+>		- BGM의 저음 줄이기?
 # 이전 일지
 ## 짭명방
-- [짭명방 프로젝트 일지 깃허브 링크(Private 전환)](https://github.com/dowrave/TIL/tree/main/Obsidian/1.%20Projects%2C%20Ongoing/%EC%9C%A0%EB%8B%88%ED%8B%B0%20-%20%EC%9E%91%EC%9D%80%20%EB%AA%85%EB%B0%A9%20%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0/%EC%9E%91%EC%97%85%20%EC%9D%BC%EC%A7%80/%EC%A7%81%EC%A0%91%20%EC%9E%91%EC%84%B1)
+- [짭명방 프로젝트 일지 깃허브 링크(프로젝트 자체는 Private 전환)](https://github.com/dowrave/TIL/tree/main/Obsidian/1.%20Projects%2C%20Ongoing/%EC%9C%A0%EB%8B%88%ED%8B%B0%20-%20%EC%9E%91%EC%9D%80%20%EB%AA%85%EB%B0%A9%20%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0/%EC%9E%91%EC%97%85%20%EC%9D%BC%EC%A7%80/%EC%A7%81%EC%A0%91%20%EC%9E%91%EC%84%B1)
 ## 블로그
 - [React + Django 프로젝트 일지 월별 작업 기록 깃허브 링크](https://github.com/dowrave/TIL/tree/main/Obsidian/1.%20Projects%2C%20Ongoing/%EB%B8%94%EB%A1%9C%EA%B7%B8%20%EB%A7%8C%EB%93%A4%EA%B8%B0/%EC%9B%94%EB%B3%84%20%EC%9E%91%EC%97%85%20%EA%B8%B0%EB%A1%9D)
