@@ -1,3 +1,5 @@
+#유니티-FMOD
+
 ## 기본 세팅(프로젝트 생성부터 유니티 연결까지)
 - 2가지가 필요하다.
 	- 패키지 : `FMOD for Unity`(유니티 패키지 매니저)
@@ -217,60 +219,5 @@ public void SetMasterVolume(float volume)
 }
 ```
 > 이외의 `PlayerPrefs`로 값을 저장하고 가져오는 방식은 동일하다. 
-
----
-## 파일 선택 및 재생(AudioClip -> EventReference)
-- 기존 오디오는 `AudioClip` 타입을 이용했음
-- 관리하는 곳은 여러 `SO`에 나뉘었다.
-	- 전체 공용이라면 `SoundDatabase`
-	- 유닛마다 지정할 요소는 유닛이나 스킬의 `SO`
-	- 스테이지마다 지정할 요소도 스테이지의 `SO`
-
-- **`AudioClip` 타입을 `FMODUnity.EventRefernce`로 변경해줌**
-![[Pasted image 20260508210645.png]]
-> 그러면 인스펙터가 이렇게 바뀐다. 돋보기 클릭해서 지정하고 싶은 요소를 지정하면 됨.
-
->[!warning]
->- 여기서 이슈 발생 
->![[Pasted image 20260508211610.png]]
->- 위 항목을 보면 `OneShot : true`로 되어 있음 : 즉 1번만 실행된다는 의미임
->- `FMOD Studio`에서 해당 `Event`의 `Loop`를 켰는데도 반영이 안된다. 빌드를 다시 해봐도 반영이 안됨.
-
----
-### FMOD Studio에서 이벤트에 루프 세팅하는 방법
-![[Pasted image 20260508212344.png]]
-> 음원이 들어간 **오디오 트랙 우클릭 > `New Loop Region`로 설정** 
-![[Pasted image 20260508212503.png]]
-
-- 참고) `FMOD Studio`에서 상단의 루프 표시나 오디오 트랙 클릭했을 때 하단에 나타나는 박스의 루프 표시 모두 효과 없음. `New Loop Region`만 효과가 있었다.
-
----
-### Stream 관련
-![[Pasted image 20260508214346.png]]
-- `Event Editor`의 좌측 탭의 `Assets`으로 접근한다. 
-
-
-![[Pasted image 20260508214441.png]] ![[Pasted image 20260508214602.png]]
-- 각 요소를 클릭하면 위 2가지 중 하나로 나타난다. 
-	- 좌측은 `Advanced Loading Mode`가 나타나는데, 여기서 `Compressed/Decompressed/Streaming` 중 1가지로 설정할 수 있음.
-	- 우측은 단순히 `Loading`의 `STREAM`을 활성화/비활성화 처리.
-
-- `Assets`을 관리하는 것에서 보이듯, 음원 단위로 처리된다.
-	- 정확히는 이벤트 안의 음원 중 1개라도 `Streaming`이 켜져 있다면 유니티에서 `true`, 아니라면 `false`로 나타남.
-
-> 변경 후 빌드했을 때 유니티에서 `Stream` 값이 바뀌는지 여부까지 확인했음
-#### 기능 설명
-- 말 그대로 스트리밍이다. 음원을 잘라서 그때그때 올리냐 한꺼번에 올리냐 차이.
-- 요소에 따른 설정법
-	- `BGM : true`
-		- 일반적으로 길기 때문에 메모리에 한꺼번에 올리면 부담되기 때문(I/O가 일반적으로 제일 느리다는 걸 생각하면 됨)
-	- `SFX : false`
-		- 짧기 때문에 메모리에 올려두는 게 유리함
-
----
-
-> 추가 참고
-> - `AudioClip`은 `null`비교가 가능하다 (`!= null`)
-> - `EventReference`는 구조체라서 `null` 비교가 불가능하다. `IsNull` 프로퍼티로 접근해야 함.
 
 ---
