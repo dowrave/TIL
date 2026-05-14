@@ -60,6 +60,8 @@
 > - 유니티에 있던 BGM, SFX, Sting들 다 옮기고 `Assign to Bank > Browse > Master`로 설정
 > - `Sting`은 BGM처럼 처리되는 것도 있고 SFX처럼 처리되는 것도 있어서 뒤에 이름 더 붙여둠
 
+
+---
 ## AudioClip => EventReference 변경 과정 중 이슈
 
 1. 파라미터로 전달하던 `AudioClip? field = null`은 `EventReference`로 바꾸면 `nullable`이 아니기 때문에 아예 형태가 달라져야 함
@@ -85,6 +87,8 @@ public AttackSource(EventReference hitSFX = default)
 - `AudioClip`으로 설정됐던 요소들 모두 `EventReference` 기반으로 바꾸는 중...
 - `VS Code` 기준, **`Shift + F`로 검색 기능을 여러 파일에 대해 일괄적으로 수행**할 수 있다. 처음 알았다. 왜 그 고생을 했나 싶어지는..
 
+---
+
 ## FMOD에서의 BGM 관리 - EventInstance
 - `RuntimeManager.PlayOneShot`는 여기서도 유니티 내장 오디오처럼 "쏘고 잊는" 방식임 -> 그래서 BGM 용도는 아님
 
@@ -109,3 +113,5 @@ public AttackSource(EventReference hitSFX = default)
 		- `FMOD.Studio.STOP_MODE.ALLOWFADEOUT` - 페이드아웃
 		- `FMOD.Studio.STOP_MODE.IMMEDIATE` - 바로 멈추기
 - `SetPaused(bool pause)` - 일시정지, `true`일 때 멈춤
+
+---
