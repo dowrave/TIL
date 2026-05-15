@@ -104,7 +104,7 @@ public class FMODTest : MonoBehaviour
 
 #### 볼륨 조절 기능 구현 - VCA (FMOD Studio)
 - **`VCA`라는 게 필요하다고 한다.** 
-	- `전압 제어 증폭기Voltage Controlled Amplifier`의 약어라는 듯.
+	- `Volume Control Automation`이라는 듯
 	- `Group`은 실제로 오디오가 흐르는 통로
 	- `VCA`는 오디오가 얼마나 흐를지(=볼륨)만 결정하는 요소라고 보면 됨
 - ~~사실 `Bus`를 직접 제어해도 되긴 하지만 용어가 나온 김에 적용까지 해보자. 밥 먹고.~~
