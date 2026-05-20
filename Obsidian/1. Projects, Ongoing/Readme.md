@@ -38,14 +38,34 @@
 
 ## 작업 내용 정리
 - 여기에는 가장 최근에 작업한 것만 기록해두고, 이전의 내용은 파일로 만들어서 옮겨뒀다.
-### 최근 작업 내용 - 짭명방
-- [[짭명방_260518 - Localization]]
->[!done]
->- 유니티 Localization 패키지 적용 중
+## 최근 작업 내용 - 짭명방
+- [[짭명방_260520 - Localization 적용]]
 
->[!note]
-> - 언어 전환 시 폰트 설정 어떻게 해야 하나? 부터 시작해야 함
-> - 다국어를 지원하는 폰트가 있다고는 하는데, 여기서는 언어를 변경했을 때 `TMP`에 설정하는 폰트들을 어떻게 바꾸는지부터 시작하고 싶음.
+### 260520 - AI 요약
+**Unity Localization (StringTable) 적용 작업**
+#### 구조 설계
+- StringTable을 용도별로 분리 (`UI_Strings`, `Stage_Strings` 등)
+- `LocalizationManager`는 테이블 관리보단 편의 메서드 제공 역할로 정리
+- 적용 방식을 두 가지로 확립
+    - 상태에 따라 달라지는 텍스트 → 코드로 `GetLocalizedString(table, key)` 호출
+    - 고정 텍스트 → 인스펙터에서 `Localize String Event` 사용
+
+#### 주요 작업
+- `StageData`의 `StageName`, `StageDesc` 필드를 StringTable 키 기반으로 교체, 필드도 `[SerializeField] private + 게터` 구조로 리팩토링
+- `KeybindingSection`, `OperatorName` 등 기존 `GetText()` 방식 Localization으로 교체
+- `SquadEditPanel`, `OperatorInventoryPanel`, `OperatorDetailPanel`, `OperatorLevelUpPanel` 작업 완료
+
+#### 이슈 및 해결
+- 코드로 텍스트를 할당하는 경우 **언어 전환 시 즉시 반영 안 됨** → `SelectedLocaleChanged` 이벤트 구독으로 해결
+- `OperatorPromotionPanel`에서 하드코딩된 한국어 텍스트 발견 → StringTable 키로 분리 및 이벤트 구독 적용
+- 일본어 폰트 Atlas/SDF 연결 이슈 → SDF 대신 새로 생성한 Atlas 파일 연결로 해결
+
+#### 남은 작업
+- `OperatorPromotionPanel` 영어 텍스트 레이아웃 문제 (공격 범위 영역 침범)
+- `MainMenuScene` : `ItemInventoryPanel`, 각종 팝업, 튜토리얼 문구
+- `StageScene` 전체 (아직 미착수)
+- `Operator` 스킬 정보
+
 
 
 - Claude로 요약 정리 : [[Unity - FMOD 작업본 통합 정리]]

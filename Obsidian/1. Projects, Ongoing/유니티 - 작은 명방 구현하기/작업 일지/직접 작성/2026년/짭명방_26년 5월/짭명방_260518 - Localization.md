@@ -53,7 +53,7 @@ Assets
 
 
 ### 테스트 - 필드에 할당
-- `TMP` 컴포넌트에 `Localize String Event` 컴포넌트를 추가
+- `TMP` 컴포넌트에 **`Localize String Event` 컴포넌트**를 추가
 ![[Pasted image 20260518160010.png]]
 1. `String Reference`에 적용할 키값 설정
 2. `Update String`에 이벤트 추가
