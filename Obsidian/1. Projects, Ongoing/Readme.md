@@ -22,7 +22,7 @@
 
 >[!wip]
 >- 작업 중
->	- `fmod` 프로젝트에 통합
+>	- `Localization` 지원 및 여기에 맞게 프로젝트 구조 변경
 >- 작업 예정
 >	- 스테이지 1-3 구현 끝내기
 >	- 기타 이슈
@@ -32,44 +32,20 @@
 
 >[!note]
 >- 마지막 맵 테스트 전 추가로 구현하고 싶은 것들
->- `Localization` 세팅이 되어 있기 때문에, 한 / 영 / 일 3가지 버전으로 텍스트들을 만들어보는 것?
 >- `BossBGM`의 보스 스폰 후의 BGM으로 전환되더라도 크게 바뀌었는지 모르겠다. 이 부분은 수정이 필요해보임.
 >- `LightningHit`의 소리가 겹칠 때 너무 커진다. 갯수는 2개로 제한했는데도 그런데, 이전처럼 관리하고 제어하는 방법밖에 없나?
 
 ## 작업 내용 정리
 - 여기에는 가장 최근에 작업한 것만 기록해두고, 이전의 내용은 파일로 만들어서 옮겨뒀다.
 ## 최근 작업 내용 - 짭명방
-- [[짭명방_260520 - Localization 적용]]
+- [[짭명방_260522 - Localization]]
+>[!done]
+>- 260522 작업물
+>- `Localization` 작업
+>	- `Item` 관련 요소들 : `ItemData`, `ItemUIElement(+Small)`, `ItemInfoPopup`
+>- 아이템 데이터 관리, SO ID 명명법 등도 수정했음
 
-### 260520 - AI 요약
-**Unity Localization (StringTable) 적용 작업**
-#### 구조 설계
-- StringTable을 용도별로 분리 (`UI_Strings`, `Stage_Strings` 등)
-- `LocalizationManager`는 테이블 관리보단 편의 메서드 제공 역할로 정리
-- 적용 방식을 두 가지로 확립
-    - 상태에 따라 달라지는 텍스트 → 코드로 `GetLocalizedString(table, key)` 호출
-    - 고정 텍스트 → 인스펙터에서 `Localize String Event` 사용
-
-#### 주요 작업
-- `StageData`의 `StageName`, `StageDesc` 필드를 StringTable 키 기반으로 교체, 필드도 `[SerializeField] private + 게터` 구조로 리팩토링
-- `KeybindingSection`, `OperatorName` 등 기존 `GetText()` 방식 Localization으로 교체
-- `SquadEditPanel`, `OperatorInventoryPanel`, `OperatorDetailPanel`, `OperatorLevelUpPanel` 작업 완료
-
-#### 이슈 및 해결
-- 코드로 텍스트를 할당하는 경우 **언어 전환 시 즉시 반영 안 됨** → `SelectedLocaleChanged` 이벤트 구독으로 해결
-- `OperatorPromotionPanel`에서 하드코딩된 한국어 텍스트 발견 → StringTable 키로 분리 및 이벤트 구독 적용
-- 일본어 폰트 Atlas/SDF 연결 이슈 → SDF 대신 새로 생성한 Atlas 파일 연결로 해결
-
-#### 남은 작업
-- `OperatorPromotionPanel` 영어 텍스트 레이아웃 문제 (공격 범위 영역 침범)
-- `MainMenuScene` : `ItemInventoryPanel`, 각종 팝업, 튜토리얼 문구
-- `StageScene` 전체 (아직 미착수)
-- `Operator` 스킬 정보
-
-
-
-- Claude로 요약 정리 : [[Unity - FMOD 작업본 통합 정리]]
-	- 깃허브로 보려면 `유니티 / 보관함 / 최근 기록 / Unity - FMOD 세팅 디렉토리`에 있음
+않이 정리하니까 왤케 적어보임? ㅜ
 
 ### 최근 작업 내용 - 블로그(도메인 이전)
 
