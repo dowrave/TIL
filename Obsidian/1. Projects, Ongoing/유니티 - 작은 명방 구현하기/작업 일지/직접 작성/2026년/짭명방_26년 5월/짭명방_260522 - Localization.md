@@ -33,7 +33,7 @@ public string DescKey => $"{_ID}_DESC";
 
 public string GetName() => LocalizationSettings.StringDatabase.GetLocalizedString(LocalizationManager.TableName, key)
 
-// 기억 리셋을 위한 메모 : LocalizationManager에 전역 string 필드로 테이블의 이름들을 관리하는 중임. 개별 SO에서 테이블 이름을 일일이 저장할 필요 없다.
+// LocalizationManager에 전역 string 필드로 테이블의 이름들을 관리하는 중임. 개별 SO에서 테이블 이름을 일일이 저장할 필요 없다.
 ```
 
 #### UI 반영
@@ -71,7 +71,7 @@ void Refresh()
 
 - [[기타 참고 사항#스테이지별 경험치 아이템 갯수]]에 아예 정리해둠. 
 
-#### Localization에서 SO의 값 참조하게 하기
+#### Localization에서 SO의 값 참조하게 하기 - Smart String
 - 예를 들어서 경험치 아이템의 경험치 지급량을 바꾸고 싶다고 하자
 - 지금은 `StringTable`에 해당 값을 직접 적어넣었기 때문에, 지급량이 바뀌면 텍스트도 바꿔야 함.
 - `Unity Localization`은 `Smart String`을 지원한다. 

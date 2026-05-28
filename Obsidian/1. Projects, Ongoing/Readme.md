@@ -38,14 +38,10 @@
 ## 작업 내용 정리
 - 여기에는 가장 최근에 작업한 것만 기록해두고, 이전의 내용은 파일로 만들어서 옮겨뒀다.
 ## 최근 작업 내용 - 짭명방
-- [[짭명방_260522 - Localization]]
->[!done]
->- 260522 작업물
->- `Localization` 작업
->	- `Item` 관련 요소들 : `ItemData`, `ItemUIElement(+Small)`, `ItemInfoPopup`
->- 아이템 데이터 관리, SO ID 명명법 등도 수정했음
+- [[짭명방_260528 - Localization]]
+	- `NotificationToast` 관련 수정
+	- 기타 이슈 수정
 
-않이 정리하니까 왤케 적어보임? ㅜ
 
 ### 최근 작업 내용 - 블로그(도메인 이전)
 

@@ -22,20 +22,6 @@
               "icon": "lucide-file",
               "title": "Readme"
             }
-          },
-          {
-            "id": "2c82652f295c9462",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 5월/짭명방_260520 - Localization 적용.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "짭명방_260520 - Localization 적용"
-            }
           }
         ]
       }
@@ -214,9 +200,12 @@
   },
   "active": "ca7fa93e1dc7cb13",
   "lastOpenFiles": [
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 5월/짭명방_260520 - Localization 적용.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 5월/짭명방_260528 - Localization.md",
     "1. Projects, Ongoing/Readme.md",
+    "3. Resource/Image/Pasted image 20260528164317.png",
+    "3. Resource/Image/Pasted image 20260528164257.png",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 5월/짭명방_260522 - Localization.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 5월/짭명방_260520 - Localization 적용.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2025년/25년 4월.md",
     "3. Resource/Image/Pasted image 20260523000802.png",
     "3. Resource/Image/Pasted image 20260523000749.png",
@@ -236,8 +225,6 @@
     "3. Resource/Image/Pasted image 20260520142609.png",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 5월/짭명방_260519 - Localization.md",
     "3. Resource/Image/Pasted image 20260519180318.png",
-    "3. Resource/Image/Pasted image 20260519180226.png",
-    "3. Resource/Image/Pasted image 20260519175137.png",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 5월/짭명방_260515 - fmod.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/최근 기록/Unity - FMOD 세팅/세부 내용/Unity - FMOD 2. AudioClip에서 EventReference로.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/최근 기록/Unity - FMOD 세팅/세부 내용/Unity - FMOD 1. 세팅법.md",
@@ -251,7 +238,6 @@
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 5월/짭명방_260507.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/프로젝트 완료 기준에 대해.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 5월/짭명방_260506.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/AI 대화 요약/24년 11월/241106.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 5월",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 4월",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 4월",
