@@ -38,10 +38,23 @@
 ## 작업 내용 정리
 - 여기에는 가장 최근에 작업한 것만 기록해두고, 이전의 내용은 파일로 만들어서 옮겨뒀다.
 ## 최근 작업 내용 - 짭명방
-- [[짭명방_260605 - 스테이지 씬 Localization]]
+- [[짭명방_260608]]
+>[!done]
+>- `StageScene` Localiation 계속
+>	- `ConfirmationPopup - ReturnToLobby`
+>	- `StageResultPanel`
+>		- 로컬라이제이션 키값 규칙에 대한 고민
+>		- 스마트 스트링 
+>- 기타 이슈 수정
+>	- `DeployedInfoPanel` 사용했다가 멈췄는데 카메라가 돌아오지 않는 현상
+>	- `EnemySpawner`에서 `null`로 출력되는 부분
+>	- `StageScene.OptionPopup` 켰을 때의 이슈
 
-
-
+>[!note]
+>- 로컬라이제이션 남은 거
+>	- 스킬 설명
+>- 이슈 관련
+>	- 사정거리
 
 
 
