@@ -38,17 +38,12 @@
 ## 작업 내용 정리
 - 여기에는 가장 최근에 작업한 것만 기록해두고, 이전의 내용은 파일로 만들어서 옮겨뒀다.
 ## 최근 작업 내용 - 짭명방
-- [[짭명방_260608]]
+- [[짭명방_260609]]
 >[!done]
->- `StageScene` Localiation 계속
->	- `ConfirmationPopup - ReturnToLobby`
->	- `StageResultPanel`
->		- 로컬라이제이션 키값 규칙에 대한 고민
->		- 스마트 스트링 
->- 기타 이슈 수정
->	- `DeployedInfoPanel` 사용했다가 멈췄는데 카메라가 돌아오지 않는 현상
->	- `EnemySpawner`에서 `null`로 출력되는 부분
->	- `StageScene.OptionPopup` 켰을 때의 이슈
+>- 기타 수정 사항
+>	- `StageResultPanel`의 결과 패널 텍스트가 클릭 가능하게 된 후에 바뀌는 현상
+>	- `KeyBindingSection`의 중복 키 처리 & 기타 이슈 수정
+>	- `Localization` - `StringTable`에 비어있던 값들 추가
 
 
 
