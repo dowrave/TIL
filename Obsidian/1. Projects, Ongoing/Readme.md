@@ -50,11 +50,7 @@
 >	- `EnemySpawner`에서 `null`로 출력되는 부분
 >	- `StageScene.OptionPopup` 켰을 때의 이슈
 
->[!note]
->- 로컬라이제이션 남은 거
->	- 스킬 설명
->- 이슈 관련
->	- 사정거리
+
 
 
 
