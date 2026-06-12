@@ -38,15 +38,18 @@
 ## 작업 내용 정리
 - 여기에는 가장 최근에 작업한 것만 기록해두고, 이전의 내용은 파일로 만들어서 옮겨뒀다.
 ## 최근 작업 내용 - 짭명방
-- [[짭명방_260611]]
+- [[짭명방_260612]]
 
 >[!done]
->- `Skill Localization` 관련
->	- `GetDesc()`에 들어가는 `GetDescArg` 및 `BuildDescArgs()` 구조 정의
->	- `ArcaneField`, `StatModifier` 스킬 로컬라이제이션
->		- `AttackType` 로컬라이제이션 구조 생성
+>- Skill Localization
+>	- `ShieldSkill`
+>	- `DoubleShotSkill`
+>	- `SmashSkill`
+>	- 이름 변경 : `StatModifierWithOnHitSkill -> WeaponEmpowerSkill`
+>	- `CostRecoverySkill`
 >- 기타 이슈 수정
->	- UI 참조 풀린 곳들 수정
+>	- `KeyBindingSection`의 초기화 기능이 동작하지 않는 현상
+>		- 매니저에서 이벤트 발생, 각 버튼 컨테이너가 자신의 버튼을 업데이트하도록 수정
 
 
 
