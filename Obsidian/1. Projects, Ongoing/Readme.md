@@ -35,18 +35,17 @@
 ## 작업 내용 정리
 - 여기에는 가장 최근에 작업한 것만 기록해두고, 이전의 내용은 파일로 만들어서 옮겨뒀다.
 ## 최근 작업 내용 - 짭명방
-- [[짭명방_260614]]
+- [[짭명방_260615]]
 
 >[!done]
->- Skill Localization
->	- `ShieldSkill`
->	- `DoubleShotSkill`
->	- `SmashSkill`
->	- 이름 변경 : `StatModifierWithOnHitSkill -> WeaponEmpowerSkill`
->	- `CostRecoverySkill`
->- 기타 이슈 수정
->	- `KeyBindingSection`의 초기화 기능이 동작하지 않는 현상
->		- 매니저에서 이벤트 발생, 각 버튼 컨테이너가 자신의 버튼을 업데이트하도록 수정
+>- `Skill Localization` 마무리
+>	- `BattoSkill`
+>	- `TacticalStrikeSkill`
+>	- `HealingZoneSkill`
+>- `Skill Localization` 점검 및 되지 않았던 부분 / 수정할 부분 수정
+>	- `AreaHasteHealSkill` 구현 X : `HealingZoneSkill`이란 이름으로 구현
+>	- 공격 속도 툴팁 수정 : 공격 쿨다운 감소율을 함께 표시하는 방식
+>	- 한국어의 배치 코스트 정리 : `배치 코스트를 ~만큼 얻습니다.
 
 ## 최근 작업 내용 - 블로그
 - 마지막 수정 내역 : [[블로그_260614 - 모바일 레이아웃 수정]]
