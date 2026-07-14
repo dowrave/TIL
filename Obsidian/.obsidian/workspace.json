@@ -22,20 +22,6 @@
               "icon": "lucide-file",
               "title": "Readme"
             }
-          },
-          {
-            "id": "ff0ef7568e0a0e5d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 7월/짭명방_260710.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "짭명방_260710"
-            }
           }
         ]
       }
@@ -214,14 +200,17 @@
   },
   "active": "ca7fa93e1dc7cb13",
   "lastOpenFiles": [
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 6월/짭명방_260624.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 7월/짭명방_260703.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 7월/짭명방_260710.md",
     "1. Projects, Ongoing/Readme.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 7월/짭명방_260713.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 7월/짭명방_260714.md",
+    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/최근 기록/유한 상태 머신(FSM).md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/최근 기록/Csharp - typeof(), System.Type 클래스.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 7월/짭명방_260703.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2024년/24년 7월.md",
     "1. Projects, Ongoing/블로그 만들기/월별 작업 기록/블로그_260622 - 이것저것.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 7월",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 6월/짭명방_260624.md",
     "3. Resource/Image/Pasted image 20260624153030.png",
     "1. Projects, Ongoing/블로그 만들기/참고 사항.md",
     "1. Projects, Ongoing/블로그 만들기/월별 작업 기록/블로그_260620 - 오류 수정.md",
@@ -249,9 +238,6 @@
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 6월/짭명방_260610.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 6월/짭명방_260609.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 6월/짭명방_260608.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 6월/짭명방_260605 - 스테이지 씬 Localization.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 6월/짭명방_260604 - 스테이지 씬 Localization.md",
-    "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 6월/짭명방_260603.md",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/작업 일지/직접 작성/2026년/짭명방_26년 6월",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/최근 기록/Unity - FMOD 세팅/세부 내용",
     "1. Projects, Ongoing/유니티 - 작은 명방 구현하기/보관함/최근 기록/Unity - FMOD 세팅",
